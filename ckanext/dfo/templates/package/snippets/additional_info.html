@@ -1,0 +1,45 @@
+{%- set pkg = pkg_dict -%}
+{%- set exclude_fields = [
+    'id',
+    'title',
+    'name',
+    'notes',
+    'notes_translated',
+    'tag_string',
+    'license_id',
+    'owner_org',
+  ] -%}
+
+{%- for group in schema.dataset_fields|groupby('group') -%}
+<table class="table table-condensed additional-info">
+    <thead>
+        <tr>
+            <th>{{ group.grouper }}</th>
+        </tr>
+    </thead>
+    <tbody>
+      {%- for field in group.list -%}
+        {%- if field.field_name not in exclude_fields
+            and field.display_snippet is not none and pkg_dict[field.field_name]-%}
+          <tr>
+            <th scope="row" class="dataset-label">{{
+              h.scheming_language_text(field.label) }}</th>
+            <td class="dataset-details"{%
+              if field.display_property %} property="{{ field.display_property
+              }}"{% endif %}>{%- snippet 'scheming/snippets/display_field.html',
+              field=field, data=pkg_dict, schema=schema -%}</td>
+          </tr>
+        {%- endif -%}
+      {%- endfor -%}
+    </tbody>
+</table>
+{%- endfor -%}
+
+{% if org %}
+  {% set url_field = h.scheming_field_by_name(schema.dataset_fields, 'url') %}
+  {% if url_field %}
+  <div class="read-more">
+    {{ _("View this item at") }} <a href="{{ pkg_dict[url_field.field_name] }}">{{ _(org.title) }}</a>.
+  </div>
+  {% endif %}
+{% endif %}

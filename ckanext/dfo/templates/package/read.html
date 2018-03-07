@@ -1,0 +1,51 @@
+{% ckan_extends %}
+
+{% block package_info %}
+{% endblock %}
+
+{% block package_description %}
+  {% if pkg.private %}
+    <span class="dataset-private label label-inverse pull-right">
+      <i class="fa fa-lock"></i>
+      {{ _('Private') }}
+    </span>
+  {% endif %}
+  {% block package_archive_notice %}
+  {% if c.is_activity_archive %}
+  <div class="alert alert-error">
+    {% trans url=h.url_for(controller='package', action='read', id=pkg.id) %}
+    You're currently viewing an old version of this dataset. Some resources
+    may no longer exist or the dataset may not display correctly. To see the
+    current version, click <a href="{{ url }}">here</a>.
+    {% endtrans %}
+  </div>
+  {% endif %}
+  {% endblock %}
+  <h1>
+    {% block page_heading %}
+      {{ h.dataset_display_name(pkg) }}
+      {% if pkg.state.startswith('draft') %}
+        [{{ _('Draft') }}]
+      {% endif %}
+      {% if pkg.state == 'deleted' %}
+        [{{ _('Deleted') }}]
+      {% endif %}
+    {% endblock %}
+  </h1>
+  {% if pkg.notes_translated %}
+    <div class="notes embedded-content">
+      {{ h.render_markdown(h.get_translated(pkg, "notes")) }}
+    </div>
+  {% endif %}
+
+  {% set thumbnail = h.get_thumbnail(pkg.id) %}
+  {% if thumbnail %}
+  <div class="dataset-thumbnail-embedded">
+    <img src="{{ thumbnail }}">
+  </div>
+  {% endif %}
+
+  {% if pkg.spatial %}
+    {% snippet "spatial/snippets/dataset_map.html", extent=pkg['spatial'] %}
+  {% endif %}
+{% endblock %}

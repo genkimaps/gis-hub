@@ -1,0 +1,68 @@
+scheming_presets_version: 1
+
+presets:
+
+- preset_name: role
+  values:
+    label:
+      en: Contact Role
+      fr: Rôle de contact
+    display_snippet: select.html
+    form_snippet: select.html
+    choices:
+    - label:
+        en: Custodian
+        fr: Custodian
+      value: custodian
+    - label:
+        en: Owner
+        fr: Owner
+      value: owner
+    - label:
+        en: User
+        fr: User
+      value: user
+    - label:
+        en: Distributor
+        fr: Distributor
+      value: distributor
+    - label:
+        en: originator
+        fr: originator
+      value: Originator
+    - label:
+        en: Point of Contact
+        fr: Point of Contact
+      value: pointOfContact
+    - label:
+        en: Principal Investigator
+        fr: Principal Investigator
+      value: principalInvestigator
+    - label:
+        en: Processor
+        fr: Processor
+      value: processor
+    - label:
+        en: Publisher
+        fr: Publisher
+      value: publisher
+    - label:
+        en: Author
+        fr: Author
+      value: author
+    - label:
+        en: Collaborator
+        fr: Collaborator
+      value: collaborator
+    - label:
+        en: Editor
+        fr: Editor
+      value: editor
+    - label:
+        en: Mediator
+        fr: Mediator
+      value: mediator
+    - label:
+        en: Rights Holder
+        fr: Rights Holder
+      value: rightsHolder

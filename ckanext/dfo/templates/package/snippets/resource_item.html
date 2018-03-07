@@ -1,0 +1,49 @@
+{% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
+{% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
+
+<div class="resource-item-dfo" data-id="{{ res.id }}">
+    <span class="format-label pull-left" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">
+        {{ h.get_translated(res, 'format') }}
+    </span>
+    <div class="title pull-left">
+        {{ h.resource_display_name(res) | truncate(50) }}
+    </div>
+    <div class="resource-item-actions pull-right">
+        <ul class="inline">
+            <li>
+                <a href="{{ url }}" class="btn">Details</a>
+            </li>
+            <li>
+                {%- if res.disclaimer -%}
+                <button class="btn btn-success" data-toggle="modal" data-target="#r_{{ res.id }}">
+                    Download {{ h.get_translated(res, 'format') }}
+                </button>
+                {%- else -%}
+                <a href="{{ res.url }}" class="btn btn-success" target="_blank">
+                    Download {{ h.get_translated(res, 'format') }}
+                </a>
+                {%- endif -%}
+            </li>
+        </ul>
+    </div>
+    {%- if res.disclaimer -%}
+    <div id="r_{{ res.id }}" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>{{ _('Disclaimer') }}</h3>
+      </div>
+      <div class="modal-body">
+          <p>{{ res.disclaimer }}</p>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-default" class="close" data-dismiss="modal">
+              {{ _('I do not accept') }}
+          </button>
+          <a href="{{ res.url }}" class="btn btn-primary" target="_blank" class="close" data-dismiss="modal">
+              {{ _('Accept') }}
+          </a>
+      </div>
+    </div>
+    {%- endif -%}
+    <div class="clearfix"></div>
+</div>
