@@ -2,18 +2,20 @@
     border: none;
 }
 
-.additional-info tbody tr th,
-.additional-info tbody tr td {
+.additional-info .dataset-group-label {
+    border-bottom: 2px solid #000;
+}
+
+.additional-info .dataset-label,
+.additional-info .dataset-details {
     vertical-align: middle;
 }
 
-.additional-info tbody tr th {
+.additional-info .dataset-label {
     font-weight: bold;
     color: #666;
-    text-align: right;
-    width: 30%;
-    white-space: normal;
-    padding: 8px 20px;
+    white-space: nowrap;
+    padding: 8px 0px;
 }
 
 .additional-info .tag {
@@ -24,7 +26,7 @@
     padding: 0;
 }
 
-.resource-item-dfo {
+.resource-item-dfo-preview {
     line-height: 40px;
     height: 40px;
     vertical-align: middle;
@@ -32,11 +34,6 @@
     border-left: 4px solid #FFFFFF;
 }
 
-.resource-item-dfo:hover {
-    border-left: 4px solid #cccccc;
-}
-
-.resource-item-dfo .format-label {
-    margin-left: 8px;
-    margin-right: 8px;
+.resource-item-dfo-preview .title {
+    padding-left: 8px;
 }

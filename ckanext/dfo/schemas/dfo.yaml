@@ -365,5 +365,18 @@ resource_fields:
   label:
     en: Download Disclaimer
     fr: Download Disclaimer
+  help_text:
+    en: A disclaimer that must be accepted before downloading this resource.
+    fr: A disclaimer that must be accepted before downloading this resource.
   form_snippet: textarea.html
+  display_snippet: null
+
+- field_name: disclaimer_url
+  label:
+    en: Download Disclaimer (Remote)
+    fr: Download Disclaimer (Remote)
+  help_text:
+    en: The URL to a remote disclaimer that must be accepted before downloading this resource.
+    fr: The URL to a remote disclaimer that must be accepted before downloading this resource.
+  form_snippet: text.html
   display_snippet: null
