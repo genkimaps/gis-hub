@@ -1,0 +1,17 @@
+{% ckan_extends %}
+
+{% block search_input %}
+    {{ super() }}
+    {% if not error %}
+    <small>
+        {% snippet 'snippets/search_result_text.html', count=count, type=type %}.
+        <a href="/advanced_search">
+            {{ _('Try advanced search?') }}
+        </a>
+    </small>
+    {% endif %}
+{% endblock %}
+
+{% block search_title %}
+{% endblock %}
+

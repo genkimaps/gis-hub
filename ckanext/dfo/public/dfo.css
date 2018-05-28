@@ -37,3 +37,7 @@
 .resource-item-dfo-preview .title {
     padding-left: 8px;
 }
+
+#resource-edit .form-horizontal .info-block {
+    padding: 0;
+}

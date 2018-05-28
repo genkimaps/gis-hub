@@ -10,7 +10,9 @@
     'owner_org',
   ] -%}
 
-{%- for group in schema.dataset_fields|groupby('group') -%}
+{%- for group in schema.dataset_fields|groupby('display_group') -%}
+{%- set group_fields = h.non_empty_fields(group.list|list, pkg_dict, exclude) -%}
+{% if group_fields %}
 <table class="table table-condensed additional-info">
     <thead>
         <tr>
@@ -18,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-      {%- for field in group.list -%}
+      {%- for field in group_fields -%}
         {%- if field.field_name not in exclude_fields
             and field.display_snippet is not none and pkg_dict[field.field_name]-%}
           <tr>
@@ -33,6 +35,7 @@
       {%- endfor -%}
     </tbody>
 </table>
+{% endif %}
 {%- endfor -%}
 
 {% if org %}

@@ -1,6 +1,11 @@
 scheming_version: 1
 dataset_type: dataset
 
+display_group_default: General
+display_group_order:
+  - General
+  - Metadata Contact
+
 about:
 about_url:
 form_languages:
@@ -58,12 +63,50 @@ dataset_fields:
   validators: fluent_text
   output_validators: fluent_core_translated_output
 
+- field_name: theme
+  label:
+    en: Theme
+  form_snippet: select.html
+  choices:
+  - label:
+      en: Base Mapping
+    value: base_mapping
+  - label:
+      en: Bathymetry
+    value: bathymetry
+  - label:
+      en: Salmon
+    value: salmon
+  - label:
+      en: Marine Mammals
+    value: marine_mammals
+  - label:
+      en: Shellfish
+    value: shellfish
+  - label:
+      en: Benthic Fisheries
+    value: benthic_fisheries
+  - label:
+      en: Pelagic Fisheries
+    value: pelagic_fisheries
+  - label:
+      en: Coastal Fisheries
+    value: coastal_fisheries
+  - label:
+      en: Protected Areas
+    value: protected_areas
+  - label:
+      en: Classification
+    value: classification
+
 - field_name: topic_category
   label:
     en: Topic Category
     fr: Topic Category
   display_snippet: select.html
   form_snippet: select.html
+  restrict: dfo_retricted_view
+  make_searchable: True
   choices:
   - label:
       en: Farming
@@ -143,6 +186,7 @@ dataset_fields:
     value: utilitiesCommunication
 
 # Charset/language
+
 - field_name: language
   label:
     en: Primary Language
@@ -174,20 +218,17 @@ dataset_fields:
     en: Metadata Standard
     fr: Metadata Standard
 
-#- field_name: second_language
-#  label:
-#    en: Secondary Language
-#    fr: Secondary Language
-#
-#- field_name: second_country
-#  label:
-#    en: Secondary Country
-#    fr: Secondary Country
-#
-#- field_name: second_character_set
-#  label:
-#    en: Secondary Character Set
-#    fr: Secondary Character Set
+- field_name: start_date
+  label:
+    en: Start Data
+    fr: Start Date
+  form_snippet: date.html
+
+- field_name: end_date
+  label:
+    en: End Date
+    fr: End Date
+  form_snippet: date.html
 
 - field_name: hierarchyLevel
   label:
@@ -196,21 +237,26 @@ dataset_fields:
   display_snippet: null
 
 # Contact fields
+
 - field_name: contact_name
   label:
     en: Contact Name
     fr: Contact Name
-  group: Metadata Contact
+  display_group: Metadata Contact
+  make_searchable: True
 
 - field_name: contact_email
   label:
     en: Contact Email
     fr: Email du contact
-  group: Metadata Contact
+  display_group: Metadata Contact
+  make_searchable: True
 
 - preset: role
   field_name: contact_role
-  group: Metadata Contact
+  display_group: Metadata Contact
+  make_searchable: True
+  restrict: dfo_no_downloda_no_preview
 
 - field_name: keywords
   label:
@@ -242,13 +288,401 @@ dataset_fields:
     data-module: autocomplete
     data-module-tags: ""
 
+# Project
+
+- field_name: project_name
+  label:
+    en: Project Name
+    fr: Project Name
+  help_text:
+    en: The project field contains information on the project in which this
+        dataset was collected.  It includes information such as project personnel,
+        funding, study area, project design and related projects.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Project
+
+- field_name: program
+  label:
+    en: Program
+    fr: Program
+  help_text:
+    en: Program to which this project belongs.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Project
+
+- field_name: jurisdiction
+  label:
+    en: Jurisdiction
+  help_text:
+    en: One or more of National, Regional, Provincial, Municipal, FNs
+        (this about relevance than spatial footprint).
+  form_snippet: select.html
+  display_snippet: select.html
+  display_group: Project
+  choices:
+  - label:
+      en: National
+    value: national
+  - label:
+      en: Regional
+    value: regional
+  - label:
+      en: Provincial
+    value: provincial
+  - label:
+      en: Municipal
+    value: municipal
+  - label:
+      en: FNs
+    value: fns
+
+- field_name: objective
+  label:
+    en: Objective
+  help_text:
+    en: How this project is intended to contribute to the overarching program.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Project
+
+- field_name: program_duration
+  label:
+    en: Program Duration
+  help_text:
+    en: Duration of the program (e.g. 2012 - present).
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Project
+
+- field_name: program_manager
+  label:
+    en: Program Manager
+  help_text:
+    en: Program manager or section head.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Project
+
+- field_name: section
+  label:
+    en: Section
+  help_text:
+    en: DFO section in charge of the project.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Project
+
+- field_name: relevant_documentation
+  label:
+    en: Relevant Documentation
+  help_text:
+    en: Supporting documents or even a reference list provided in a
+        standard format.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Project
+
+# Science
+
+- field_name: methods
+  label:
+    en: Methods
+  help_text:
+    en: The methods field documents scientific methods used in the collection
+        or derivation of this dataset.  It includes information on items such
+        as tools, instrument calibration and software. It can also include a
+        complete description of the lineage of the data.  It may refer to
+        sections of an associated academic citation or other published
+        resource.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: data_inputs
+  label:
+    en: Data Inputs
+  help_text:
+    en: List of inputs used to produce this dataset.  Provide a link to the
+        source data where possible (to another dataset on the GIS Hub, or an
+        external link).  Include the date that the input was extracted,
+        if known.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: data_outputs
+  label:
+    en: Data Outputs
+  help_text:
+    en: List of output dataset(s).
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: scripts_or_software_routines
+  label:
+    en: Scripts or Software Routines
+  help_text:
+    en: Link to script(s) used to process the data, for example on GitLab.
+        Alternatively, include the scripts or queries in a "Scripts" folder
+        inside in the zip file used to submit the resource.  Document the
+        purpose of each script, and anything required to run the script again.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: spatial_data_quality
+  label:
+    en: Spatial Data Quality
+  help_text:
+    en: A measure of the quality of the spatial data representing some
+        real-world entity.  Although quantitative estimates of
+        horizontal/vertical accuracy can be included, it is important to
+        describe the spatial data quality with reference to the data
+        processing steps.  Was location data captured with survey-grade GPS,
+        consumer GPS, paper charts, ships log?  Was data digitized from a
+        scanned and georeferenced paper map? Is this dataset the result of
+        intentional degradation of the input data to preserve privacy
+        (e.g. 3 boat rule) and therefore has a known spatial resolution?
+        Were multiple datasets captured at different spatial resolutions
+        used in this analysis? Were point data extrapolated to polygons, or
+        polygons/lines converted to centroids?
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: attribute_accuracy
+  label:
+    en: Attribute Accuracy
+  help_text:
+    en: General description of the degree to which attribute values reflect
+        real-world conditions.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: logical_consistency_report
+  label:
+    en: Logical Consistency Report
+  help_text:
+    en: Report on fidelity of relationships in the data set, the validity of its relationships to other data sets, and the degree to which the entities represent the real-world objects or concepts they are intended to capture.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: completeness_report
+  label:
+    en: Completeness Report
+  help_text:
+    en: Report on the completeness of the dataset relative to its areal coverage, and the overall completeness of attributes.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: absence_data
+  label:
+    en: Absence Data
+  help_text:
+    en: Does the dataset include recorded (observed) absence of specific features, and if so, for which attributes?
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: change_history
+  label:
+    en: Change History
+  help_text:
+    en: A description of changes made to the data since its release.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: change_comment
+  label:
+    en: Change Comment
+  help_text:
+    en: Explanation or justification for the changes made to the data.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: temporal_coverage
+  label:
+    en: Temporal Coverage
+  help_text:
+    en: Temporal coverage of the dataset.  Coverages may be a single point in time, multiple points in time or a range of dates.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: taxonomic_coverage
+  label:
+    en: Taxonomic Coverage
+  help_text:
+    en: A list of species names / species codes.  Was the species observed incidentally, or was it targeted as part of the survey data?  Was the presence of species inferred or observed?
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: citations
+  label:
+    en: Citations
+  help_text:
+    en: Academic citations associated with the resource.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: biases_in_data_collection
+  label:
+    en: Biases in Data Collection
+  help_text:
+    en: Describe known biases. Was data collection opportunistic, or part of the survey design? Any known bias from individual observers?
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: collaboration
+  label:
+    en: Collaboration
+  help_text:
+    en: Describe any collaboration with academia, external contributors. Was there interagency cooperation, or was it produced internally by DFO?
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: knowledge_gaps
+  label:
+    en: Knowledge Gaps
+  help_text:
+    en: Knowledge gaps that you are trying to fill in the survey, or a gap that you know exists but cannot be filled now
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: uncertainties
+  label:
+    en: Uncertainties
+  help_text:
+    en: Uncertainties in measurement and methodology.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: caveats
+  label:
+    en: Caveats
+  help_text:
+    en: Warnings about the data inputs, outputs, model, or methods.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: use_restrictions
+  label:
+    en: Use Restrictions
+  help_text:
+    en: Restrictions on appropriate use of the resource, usually informed by the caveats.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: administrative_boundaries
+  label:
+    en: Administrative Boundaries
+  help_text:
+    en: "A list of administrative boundaries that the dataset overlaps, at different scales: bioregions, PFMA's, other regions that have been defined."
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: other_information
+  label:
+    en: Other Information
+  help_text:
+    en: Any relevant information that does not fit in any other category.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: confidentiality
+  label:
+    en: Confidentiality
+  help_text:
+    en: Level of confidentiality or sensitivity of the dataset.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+- field_name: reliability
+  label:
+    en: Reliability
+  help_text:
+    en: "May be added to metadata template in future: A measure or estimate of the reliability of the dataset. We have not yet come up with a standard way of estimating data reliability."
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+
+# Spatial
+
+- field_name: spatial_code
+  label:
+    en: Spatial Code
+    fr: Spatial Code
+  display_group: Spatial
+
+- field_name: spatial_codespace
+  label:
+    en: Spatial Codespace
+    fr: Spatial Codespace
+  display_group: Spatial
+
+- field_name: spatial_version
+  label:
+    en: Spatial Version
+    fr: Spatial Version
+  display_group: Spatial
+
+- field_name: spatial_representation_type
+  label:
+    en: Spatial Representation Type
+    fr: Spatial Representation Type
+  choices:
+    - label:
+        en: Vector
+        fr: Vector
+      value: vector
+    - label:
+        en: Grid
+        fr: Grid
+      value: grid
+    - label:
+        en: Text Table
+        fr: Text Table
+      value: textTable
+    - label:
+        en: Tin
+        fr: Tin
+      value: tin
+    - label:
+        en: Stereo Model
+        fr: Stereo Model
+      value: stereoModel
+    - label:
+        en: Video
+        fr: Video
+      value: video
+  display_group: Spatial
+
+# Extras
+
 - field_name: fts_blob
   label:
     en: Free Text Search Blob
-    fr: Free Text Search Blob
   help_text:
     en: Temporary field to index arbitrary full-text-search content.
-    fr: Temporary field to index arbitrary full-text-search content.
   form_snippet: textarea.html
   display_snippet: null
 
@@ -299,51 +733,274 @@ resource_fields:
       en: N/A
       fr: N/A
     value: NA
-# Spatial
-- field_name: spatial_code
-  label:
-    en: Spatial Code
-    fr: Spatial Code
 
-- field_name: spatial_codespace
+- field_name: OBJECTID
   label:
-    en: Spatial Codespace
-    fr: Spatial Codespace
+    en: OBJECTID
+  help_text:
+    en: Internal feature number
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
 
-- field_name: spatial_version
+- field_name: Shape
   label:
-    en: Spatial Version
-    fr: Spatial Version
+    en: Shape
+  help_text:
+    en: Feature geometry
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
 
-- field_name: spatial_representation_type
+- field_name: BType1
   label:
-    en: Spatial Representation Type
-    fr: Spatial Representation Type
-  choices:
-    - label:
-        en: Vector
-        fr: Vector
-      value: vector
-    - label:
-        en: Grid
-        fr: Grid
-      value: grid
-    - label:
-        en: Text Table
-        fr: Text Table
-      value: textTable
-    - label:
-        en: Tin
-        fr: Tin
-      value: tin
-    - label:
-        en: Stereo Model
-        fr: Stereo Model
-      value: stereoModel
-    - label:
-        en: Video
-        fr: Video
-      value: video
+    en: BType1
+  help_text:
+    en: Primary bottom type code
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: BType2
+  label:
+    en: BType2
+  help_text:
+    en: Secondary bottom type code
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: SourceKey
+  label:
+    en: SourceKey
+  help_text:
+    en: The value of the Key field (s) in the source data used to define this bottom patch. Source data can be inferred from the format of the keys. Keys from records with multiple sources are concatenated.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: DepthCode
+  label:
+    en: DepthCode
+  help_text:
+    en:  The depth range (or ribbon) to which the BoP is constrained.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: Confidence
+  label:
+    en: Confidence
+  help_text:
+    en: Index of data density and coherence.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: ObsDepthCode
+  label:
+    en: ObsDepthCode
+  help_text:
+    en: Depth code associated with the Obs data source, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: ObsSourceKey
+  label:
+    en: ObsSourceKey
+  help_text:
+    en: Source Key associated with the Obs data source, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: ObsBType1
+  label:
+    en: ObsBType1
+  help_text:
+    en: Primary bottom type associated with Obs data, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: ObsBType2
+  label:
+    en: ObsBType2
+  help_text:
+    en: Secondary bottom type associated with Obs data, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: ObsArea
+  label:
+    en: ObsArea
+  help_text:
+    en: Area of the polygon around the Obs point
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: ObsDist
+  label:
+    en: ObsDist
+  help_text:
+    en: Centriod distance between the bottom patch and the Obs source polygon
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: GrabDepthCode
+  label:
+    en: GrabDepthCode
+  help_text:
+    en: Depth code associated with the Grab data source, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: GrabSourceKey
+  label:
+    en: GrabSourceKey
+  help_text:
+    en: Source Key associated with the Grab data source, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: GrabBType1
+  label:
+    en: GrabBType1
+  help_text:
+    en: Primary bottom type associated with Grab data, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: GrabBType2
+  label:
+    en: GrabBType2
+  help_text:
+    en: Secondary bottom type associated with Grab data, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: GrabArea
+  label:
+    en: GrabArea
+  help_text:
+    en: Area of the polygon around the Grab point
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: GrabDist
+  label:
+    en: GrabDist
+  help_text:
+    en: Centriod distance between the bottom patch and the Grab source polygon
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: SZDepthCode
+  label:
+    en: SZDepthCode
+  help_text:
+    en: Depth code associated with the ShoreZone data source, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: SZSourceKey
+  label:
+    en: SZSourceKey
+  help_text:
+    en: Source Key associated with the ShoreZone data source, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: SZBType1
+  label:
+    en: SZBType1
+  help_text:
+    en: Primary bottom type associated with ShoreZone data, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: SZBType2
+  label:
+    en: SZBType2
+  help_text:
+    en: Secondary bottom type associated with ShoreZone data, if any.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: SZArea
+  label:
+    en: SZArea
+  help_text:
+    en: Area of the polygon around the ShoreZone point
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: SZITDDist
+  label:
+    en: SZITDDist
+  help_text:
+    en: Distance to centriod of ITD ShoreZone source polygon
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: SZ0to5Dist
+  label:
+    en: SZ0to5Dist
+  help_text:
+    en: Distance to centriod of 0to5 ShoreZone source polygon
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: Shape_Length
+  label:
+    en: Shape_Length
+  help_text:
+    en: Length of feature in units of the spatial reference.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: Shape_Area
+  label:
+    en: Shape_Area
+  help_text:
+    en: Area of feature in units of the spatial reference.
+  form_snippet: text.html
+  display_snippet: text.html
+  display_group: Attributes
+
+- field_name: disclaimer
+  label:
+    en: Download Disclaimer
+  help_text:
+    en: A disclaimer that must be accepted before downloading this resource.
+  form_snippet: textarea.html
+  display_snippet: null
+
+- field_name: disclaimer_url
+  label:
+    en: Download Disclaimer (Remote)
+  help_text:
+    en: The URL to a remote disclaimer that must be accepted before downloading this resource.
+  form_snippet: text.html
+  display_snippet: null
 
 - field_name: url
   label:
@@ -361,22 +1018,3 @@ resource_fields:
   upload_field: upload
   upload_clear: clear_upload
 
-- field_name: disclaimer
-  label:
-    en: Download Disclaimer
-    fr: Download Disclaimer
-  help_text:
-    en: A disclaimer that must be accepted before downloading this resource.
-    fr: A disclaimer that must be accepted before downloading this resource.
-  form_snippet: textarea.html
-  display_snippet: null
-
-- field_name: disclaimer_url
-  label:
-    en: Download Disclaimer (Remote)
-    fr: Download Disclaimer (Remote)
-  help_text:
-    en: The URL to a remote disclaimer that must be accepted before downloading this resource.
-    fr: The URL to a remote disclaimer that must be accepted before downloading this resource.
-  form_snippet: text.html
-  display_snippet: null

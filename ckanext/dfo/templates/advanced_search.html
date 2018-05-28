@@ -1,0 +1,44 @@
+{% extends "page.html" %}
+
+{% block custom_styles %}
+    {{ super() }}
+    <style>
+        .advanced-search input,
+        .daterangepicker input {
+            box-sizing: border-box;
+        }
+
+        .advanced-search .form-control {
+            width: 100%;
+            padding: 20px;
+        }
+    </style>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+{% endblock %}
+
+{% block body_extras %}
+    {{ super() }}
+    {% resource 'dfo/daterangepicker.js' %}
+    {% resource 'dfo/search.js' %}
+{% endblock %}
+
+{% block primary %}
+<article class="module">
+    <div class="module-content">
+        <h1>{{ _('Advanced Search') }}</h1>
+        <form method="post" class="advanced-search">
+            <label for="range_picker">Date</label>
+            <input type="text" name="range_picker" class="form-control">
+
+            {%- for field in schema.dataset_fields if field.make_searchable and field.form_snippet is not none -%}
+                {%- snippet 'scheming/snippets/form_field.html',
+                    field=field, data={}, errors=[], licenses=c.licenses,
+                    entity_type='dataset', object_type=dataset_type -%}
+            {%- endfor -%}
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </form>
+    </div>
+</article>
+{% endblock %}
+
+{% block secondary %}{% endblock %}
