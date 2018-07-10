@@ -1,0 +1,29 @@
+The GIS Hub is the central place to find key spatial datasets for MSEA staff and other users in DFO Pacific Science.  It is designed to allow users to search, preview, download, and find detailed information (metadata) about the datasets.
+
+We need your help to make sure that the rollout of this system goes as smoothly as possible.  In addition to registering using the link below, please explore the system and upload your own data, once it is ready to publish.
+
+A key part of the GIS Hub is the metadata standard and metadata entry tool.  We have designed a metadata standard that is both flexible and comprehensive, and meets the needs of DFO Science.  The metadata entry tool makes the process of writing your metadata simple and standardized. If you have already been writing metadata, this step will not be much more than copying and pasting.
+
+You can find documentation on the data preparation guidelines and metadata standard on the Tanker Safety drive at:  \\dcbcpbsna01a\WC_Tanker_Safety\MSEA\GIS Hub Docs
+
+To upload your data and create metadata, use the metadata entry tool at https://www.gis-hub.ca/meta/. Once your data is uploaded and metadata are complete, a GIS Hub administrator will publish your data.  Note that this metadata tool is not yet fully integrated with the GIS Hub—the integration will be completed in the next upgrade.  No login information is required to create a metadata entry.  When it is published, you can access the data on the GIS Hub using the login information below.
+
+GIS Hub:  {{ site_url }}
+
+Your account on the GIS Hub:
+Username: {{ user_name }}
+
+You have been added to the {{ group_type }} {{ group_title }} with the following role: {{ role_name }}.
+
+To accept this invitation, please reset your password by clicking the link below.
+
+{{ reset_link }}
+
+Once again, thank you for your participation and contribution to the success of this tool.
+
+
+Michael Peterman
+MSDI Science Lead
+Marine Spatial Ecology and Analysis Section
+Fisheries and Oceans Canada
+Michael.Peterman@dfo-mpo.gc.ca / 604-787-2168

@@ -41,3 +41,8 @@
 #resource-edit .form-horizontal .info-block {
     padding: 0;
 }
+
+#dataset-edit .info-block {
+    font-size: 11px;
+    color: #aaaaaa;
+}

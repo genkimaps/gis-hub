@@ -4,22 +4,36 @@ dataset_type: dataset
 display_group_default: General
 display_group_order:
   - General
-  - Metadata Contact
+  - Data Creator
+  - Program Manager
+  - Project
+  - Science
 
 about:
 about_url:
 form_languages:
 - en
-- fr
 
 dataset_fields:
-# General
-- field_name: title
-  label: Title
-  required: true
 
+# General
 - preset: dataset_slug
   field_name: name
+
+- field_name: short_title
+  label: Short Title
+  help_text: "Short (headline-length) title of the dataset."
+  required: true
+
+- field_name: title_english
+  label: Title English
+  help_text: "Full title of the dataset. This may be longer and more descriptive than the short title."
+  required: true
+
+- field_name: title_french
+  label: Title French
+  help_text: "Placeholder for French title."
+  default: "Placeholder for French title."
 
 - field_name: owner_org
   label:
@@ -32,81 +46,26 @@ dataset_fields:
   validators: owner_org_validator unicode
   form_snippet: organization.html
 
-- field_name: notes_translated
-  label:
-    en: Description
-    fr: Description
-  fluent_form_label:
-    en:
-      en: "Description (English)"
-      fr: "Description (anglais)"
-    fr:
-      en: "Description (French)"
-      fr: "Description (français)"
-  form_placeholder:
-    en: The National Pollutant Release Inventory (NPRI) is Canada's public inventory
-      of pollutant releases (to air, water and land), disposals and transfers for
-      recycling. The NPRI includes...
-    fr: L’Inventaire national des rejets de polluants (INRP) est l’inventaire public
-      des rejets de polluants du Canada…
-  fluent_help_text:
-    en:
-      en: "An account of the dataset, in English. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
-      fr: "Description du jeu de données, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
-    fr:
-      en: "An account of the dataset, in French. A description may include but is not limited to: an abstract, a table of contents, or a free-text account of the resource."
-      fr: "Description du jeu de données, en anglais. La description peut comprendre un résumé, une table des matières ou un texte libre."
+- field_name: abstract_english
+  label: Abstract English
+  help_text: "Brief narrative summary of the dataset's contents."
+  form_snippet: textarea.html
+  display_snippet: text.html
   required: true
-  form_snippet: fluent_markdown.html
-  display_snippet: fluent_markdown.html
-  error_snippet: fluent_text.html
-  validators: fluent_text
-  output_validators: fluent_core_translated_output
 
-- field_name: theme
-  label:
-    en: Theme
-  form_snippet: select.html
-  choices:
-  - label:
-      en: Base Mapping
-    value: base_mapping
-  - label:
-      en: Bathymetry
-    value: bathymetry
-  - label:
-      en: Salmon
-    value: salmon
-  - label:
-      en: Marine Mammals
-    value: marine_mammals
-  - label:
-      en: Shellfish
-    value: shellfish
-  - label:
-      en: Benthic Fisheries
-    value: benthic_fisheries
-  - label:
-      en: Pelagic Fisheries
-    value: pelagic_fisheries
-  - label:
-      en: Coastal Fisheries
-    value: coastal_fisheries
-  - label:
-      en: Protected Areas
-    value: protected_areas
-  - label:
-      en: Classification
-    value: classification
+- field_name: abstract_french
+  label: Abstract French
+  help_text: "Brief narrative summary of the dataset's contents."
+  form_snippet: textarea.html
+  display_snippet: text.html
+  default: "Placeholder for French abstract"
 
 - field_name: topic_category
-  label:
-    en: Topic Category
-    fr: Topic Category
+  label: Topic Category
+  help_text: Main theme of the data. Choose the best match.
   display_snippet: select.html
   form_snippet: select.html
-  restrict: dfo_retricted_view
-  make_searchable: True
+  required: true
   choices:
   - label:
       en: Farming
@@ -188,155 +147,232 @@ dataset_fields:
 # Charset/language
 
 - field_name: language
-  label:
-    en: Primary Language
-    fr: Primary Langue
-  required: true
+  label: Metadata Language
+  help_text: "Language code and country of the metadata. Default: English."
   display_snippet: select.html
   form_snippet: select.html
+  required: true
   choices:
-  - label:
-      en: English
-      fr: Anglais
-    value: English
-  - label:
-      en: French
-      fr: Français
-    value: French
-  - label:
-      en: N/A
-      fr: N/A
-    value: NA
+  - label: English
+    value: "eng; CAN"
+  - label: French
+    value: "fr; CAN"
+  default: "eng; CAN"
 
 - field_name: character_set
-  label:
-    en: Character Set
-    fr: Character Set
+  label: Metadata Character Set
+  help_text: "Encoding of the metadata record. Default: utf8"
+  default: "utf8"
+  required: true
 
 - field_name: metadata_standard
-  label:
-    en: Metadata Standard
-    fr: Metadata Standard
+  label: Metadata Standard
+  help_text: Name of the metadata standard/profile used.
+  default: "North American Profile of ISO 19115:2003 - Geographic information - Metadata"
+  required: true
 
-- field_name: start_date
+- field_name: date_created
   label:
-    en: Start Data
-    fr: Start Date
+    en: Date Created
+    fr: Date Created
+  help_text: Date of creation of dataset. The date on which the dataset was substantially complete in its current form.
   form_snippet: date.html
+  required: true
 
-- field_name: end_date
+- field_name: date_published
   label:
-    en: End Date
-    fr: End Date
+    en: Date Published
+    fr: Date Published
+  help_text: "Date of publication of dataset. Default: today's date. This refers to publication of the data on this portal or on another data hosting environment, not necessarily the date of publication of related academic research. Academic citations are described elsewhere."
   form_snippet: date.html
+  required: true
+
+- field_name: status
+  label: Status
+  help_text: Development phase of the dataset.
+  display_snippet: select.html
+  form_snippet: select.html
+  required: true
+  choices:
+  - label: Completed
+    value: Completed
+  - label: Ongoing
+    value: Ongoing
+  - label: Proposed
+    value: Proposed
+  - label: Obsolete
+    value: Obsolete
+  - label: Historical Archive
+    value: Historical Archive
+
+- field_name: update_frequency
+  label: Update Frequency
+  help_text: Revision cycle of the data.
+  display_snippet: select.html
+  form_snippet: select.html
+  required: true
+  choices:
+  - label: Annually
+    value: Annually
+  - label: Biannually
+    value: Biannually
+  - label: Quarterly
+    value: Quarterly
+  - label: Monthly
+    value: Monthly
+  - label: Fortnightly
+    value: Fortnightly
+  - label: Weekly
+    value: Weekly
+  - label: Daily
+    value: Daily
+  - label: Continual
+    value: Continual
+  - label: As Needed
+    value: As Needed
+  - label: Irregular
+    value: Irregular
+  - label: Not Planned
+    value: Not Planned
+
+- field_name: data_charset
+  label: Data Character Set
+  help_text: "Character coding standard in the dataset. Default: utf8"
+  default: "utf8"
+  required: true
+
+- field_name: data_language
+  label: Data Language
+  help_text: "Language of the data (attributes and values). Default: English."
+  default: English
+  required: true
 
 - field_name: hierarchyLevel
-  label:
-    en: Hierarchy Level
-    fr: Hierarchy Level
-  display_snippet: null
+  label: Hierarchy Level
+  help_text: Level to which the metadata applies. Usually Dataset or Series.
+  display_snippet: select.html
+  form_snippet: select.html
+  required: true
+  default: Dataset
+  choices:
+  - label: Dataset
+    value: Dataset
+  - label: Series
+    value: Series
+  - label: Software
+    value: Software
+  - label: Model
+    value: Model
 
-# Contact fields
+- field_name: file_format
+  label: File Format
+  help_text: Format of the data distributed. Do not enter zip as the format; use the format of the data inside the zip file.
+  required: true
 
-- field_name: contact_name
-  label:
-    en: Contact Name
-    fr: Contact Name
-  display_group: Metadata Contact
+# Contacts
+
+- field_name: creator_name
+  label: Name
+  help_text: The Principal Analyst. The lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, Email.
+  display_group: Data Creator
   make_searchable: True
+  required: true
 
-- field_name: contact_email
-  label:
-    en: Contact Email
-    fr: Email du contact
-  display_group: Metadata Contact
+- field_name: creator_email
+  label: Email
+  display_group: Data Creator
   make_searchable: True
+  required: true
 
-- preset: role
-  field_name: contact_role
-  display_group: Metadata Contact
+- field_name: creator_position
+  label: Position
+  display_group: Data Creator
+  required: true
+
+- field_name: creator_organization
+  label: Organization
+  display_group: Data Creator
+  required: true
+
+- field_name: creator_address
+  label: Address
+  display_group: Data Creator
+  required: true
+
+- field_name: creator_phone
+  label: Phone
+  display_group: Data Creator
+  required: true
+
+# Program Manager
+
+- field_name: manager_name
+  label: Name
+  help_text: The DFO Program Head (must be a permanent DFO employee). Provide the Name, Position, Department, Address, Phone, Email.
+  display_group: Program Manager
   make_searchable: True
-  restrict: dfo_no_downloda_no_preview
+  required: true
+
+- field_name: manager_email
+  label: Email
+  display_group: Program Manager
+  make_searchable: True
+  required: true
+
+- field_name: manager_position
+  label: Position
+  display_group: Program Manager
+  required: true
+
+- field_name: manager_organization
+  label: Organization
+  display_group: Program Manager
+  required: true
+
+- field_name: manager_address
+  label: Address
+  display_group: Program Manager
+  required: true
+
+- field_name: manager_phone
+  label: Phone
+  display_group: Program Manager
+  required: true
 
 - field_name: keywords
-  label:
-    en: Keywords
-    fr: Mots clés
-  fluent_form_label:
-    en:
-      en: "Keywords (English)"
-      fr: "Mots clés (anglais)"
-    fr:
-      en: "Keywords (French)"
-      fr: "Mots clés (français)"
-
-  fluent_help_text:
-    en:
-      en: Commonly used words or phrases which describe the dataset, in English. (Separate multiple entries by commas)
-      fr: Mots ou phrases couramment utilisés qui décrivent le jeu de données, en anglais. (Séparer les mots ou phrases par une virgule)
-    fr:
-      en: Commonly used words or phrases which describe the dataset, in French. (Separate multiple entries by commas)
-      fr: Mots ou phrases couramment utilisés qui décrivent le jeu de données, en français. (Séparer les mots ou phrases par une virgule)
+  preset: tag_string_autocomplete
+  label: Keywords
+  help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated."
   required: true
-  # copied from fluent_tags preset
-  form_snippet: fluent_tags.html
-  display_snippet: fluent_tags.html
-  error_snippet: fluent_text.html
-  validators: fluent_tags
-  output_validators: fluent_tags_output
-  form_attrs:
-    data-module: autocomplete
-    data-module-tags: ""
+  validators: tags
+  output_validators: tags_output
 
 # Project
 
 - field_name: project_name
-  label:
-    en: Project Name
-    fr: Project Name
-  help_text:
-    en: The project field contains information on the project in which this
-        dataset was collected.  It includes information such as project personnel,
-        funding, study area, project design and related projects.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Project
-
-- field_name: program
-  label:
-    en: Program
-    fr: Program
-  help_text:
-    en: Program to which this project belongs.
+  label: Project Name
+  help_text: Information on the project in which this data was collected.
   form_snippet: text.html
   display_snippet: text.html
   display_group: Project
 
 - field_name: jurisdiction
-  label:
-    en: Jurisdiction
-  help_text:
-    en: One or more of National, Regional, Provincial, Municipal, FNs
-        (this about relevance than spatial footprint).
+  label: Jurisdiction
+  help_text: One or more of National, Regional, Provincial, Municipal, FNs (this about relevance than spatial footprint).
   form_snippet: select.html
   display_snippet: select.html
   display_group: Project
   choices:
-  - label:
-      en: National
-    value: national
-  - label:
-      en: Regional
-    value: regional
-  - label:
-      en: Provincial
-    value: provincial
-  - label:
-      en: Municipal
-    value: municipal
-  - label:
-      en: FNs
-    value: fns
+  - label: National
+    value: National
+  - label: Regional
+    value: Regional
+  - label: Provincial
+    value: Provincial
+  - label: Municipal
+    value: Municipal
+  - label: First Nations
+    value: First Nations
 
 - field_name: objective
   label:
@@ -356,15 +392,6 @@ dataset_fields:
   display_snippet: text.html
   display_group: Project
 
-- field_name: program_manager
-  label:
-    en: Program Manager
-  help_text:
-    en: Program manager or section head.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Project
-
 - field_name: section
   label:
     en: Section
@@ -373,18 +400,68 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Project
+  required: true
 
 - field_name: relevant_documentation
   label:
     en: Relevant Documentation
   help_text:
-    en: Supporting documents or even a reference list provided in a
-        standard format.
+    en: Supporting documents or even a reference list provided in a standard format.
   form_snippet: text.html
   display_snippet: text.html
   display_group: Project
 
+
 # Science
+
+- field_name: science_keywords
+  preset: tag_string_autocomplete
+  label: Science Keywords
+  help_text: Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. Keywords can be domain-specific and more detailed than general keywords.
+  required: true
+  display_group: Science
+  validators: tags
+  output_validators: tags_output
+
+- field_name: theme
+  label: Theme
+  help_text: Choose the best match from the list.
+  display_snippet: select.html
+  form_snippet: select.html
+  make_searchable: True
+  display_group: Science
+  required: true
+  choices:
+  - label:
+      en: Base Mapping
+    value: base_mapping
+  - label:
+      en: Bathymetry
+    value: bathymetry
+  - label:
+      en: Salmon
+    value: salmon
+  - label:
+      en: Marine Mammals
+    value: marine_mammals
+  - label:
+      en: Shellfish
+    value: shellfish
+  - label:
+      en: Benthic Fisheries
+    value: benthic_fisheries
+  - label:
+      en: Pelagic Fisheries
+    value: pelagic_fisheries
+  - label:
+      en: Coastal Fisheries
+    value: coastal_fisheries
+  - label:
+      en: Protected Areas
+    value: protected_areas
+  - label:
+      en: Classification
+    value: classification
 
 - field_name: methods
   label:
@@ -399,6 +476,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: data_inputs
   label:
@@ -411,6 +489,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: data_outputs
   label:
@@ -420,6 +499,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: scripts_or_software_routines
   label:
@@ -429,9 +509,12 @@ dataset_fields:
         Alternatively, include the scripts or queries in a "Scripts" folder
         inside in the zip file used to submit the resource.  Document the
         purpose of each script, and anything required to run the script again.
+        If no scripts were used to create the data, indicate how it was created
+        (e.g. manually created).
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: spatial_data_quality
   label:
@@ -452,6 +535,15 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
+
+- field_name: positional_accuracy
+  label: Positional Accuracy
+  help_text: May include horizontal and vertical. Express in metric units where possible.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+  required: true
 
 - field_name: attribute_accuracy
   label:
@@ -462,6 +554,7 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: logical_consistency_report
   label:
@@ -471,6 +564,7 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: completeness_report
   label:
@@ -480,15 +574,19 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: absence_data
   label:
     en: Absence Data
   help_text:
-    en: Does the dataset include recorded (observed) absence of specific features, and if so, for which attributes?
+    en: Does the dataset include recorded (observed) absence of specific features,
+        and if so, for which attributes? If no absence data was recorded, enter
+        No Absence Data in this field.
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: change_history
   label:
@@ -499,14 +597,26 @@ dataset_fields:
   display_snippet: text.html
   display_group: Science
 
-- field_name: change_comment
-  label:
-    en: Change Comment
-  help_text:
-    en: Explanation or justification for the changes made to the data.
-  form_snippet: text.html
-  display_snippet: text.html
+- field_name: change_date
+  label: Date of Change
+  form_snippet: date.html
+  display_snippet: date.html
   display_group: Science
+
+- field_name: start_date
+  label:
+    en: Start Data
+    fr: Start Date
+  help_text: Temporal coverage of the dataset. Indicate the earliest date represented in this dataset.
+  form_snippet: date.html
+  required: true
+
+- field_name: end_date
+  label:
+    en: End Date
+    fr: End Date
+  help_text: Temporal coverage of the dataset. Indicate the latest date represented in this dataset. If data collection is ongoing, leave this blank.
+  form_snippet: date.html
 
 - field_name: temporal_coverage
   label:
@@ -516,24 +626,36 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
-- field_name: taxonomic_coverage
+- field_name: species_codes
   label:
-    en: Taxonomic Coverage
+    en: Species Codes
   help_text:
     en: A list of species names / species codes.  Was the species observed incidentally, or was it targeted as part of the survey data?  Was the presence of species inferred or observed?
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
 
-- field_name: citations
+- field_name: references
   label:
-    en: Citations
+    en: References
   help_text:
-    en: Academic citations associated with the resource.
+    en: Academic references associated with the resource.
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
+
+- field_name: citation
+  label:
+    en: Citation
+  help_text:
+    en: Citation format to be used when this dataset is referenced in another publication.
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+  required: true
 
 - field_name: biases_in_data_collection
   label:
@@ -543,6 +665,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: collaboration
   label:
@@ -552,6 +675,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: knowledge_gaps
   label:
@@ -561,6 +685,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: uncertainties
   label:
@@ -570,6 +695,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: caveats
   label:
@@ -579,6 +705,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: use_restrictions
   label:
@@ -588,12 +715,11 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: administrative_boundaries
-  label:
-    en: Administrative Boundaries
-  help_text:
-    en: "A list of administrative boundaries that the dataset overlaps, at different scales: bioregions, PFMA's, other regions that have been defined."
+  label: Administrative Boundaries
+  help_text: "A list of administrative boundaries that the dataset overlaps, at different scales: bioregions, PFMA's, other regions that have been defined."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -602,7 +728,7 @@ dataset_fields:
   label:
     en: Other Information
   help_text:
-    en: Any relevant information that does not fit in any other category.
+    en: Relevant information that does not fit in any other category.
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -615,376 +741,167 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  required: true
 
 - field_name: reliability
   label:
     en: Reliability
   help_text:
-    en: "May be added to metadata template in future: A measure or estimate of the reliability of the dataset. We have not yet come up with a standard way of estimating data reliability."
+    en: A measure or estimate of the reliability of the dataset for a specific purpose, if known.
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
 
-# Spatial
-
-- field_name: spatial_code
-  label:
-    en: Spatial Code
-    fr: Spatial Code
-  display_group: Spatial
-
-- field_name: spatial_codespace
-  label:
-    en: Spatial Codespace
-    fr: Spatial Codespace
-  display_group: Spatial
-
-- field_name: spatial_version
-  label:
-    en: Spatial Version
-    fr: Spatial Version
-  display_group: Spatial
-
-- field_name: spatial_representation_type
-  label:
-    en: Spatial Representation Type
-    fr: Spatial Representation Type
-  choices:
-    - label:
-        en: Vector
-        fr: Vector
-      value: vector
-    - label:
-        en: Grid
-        fr: Grid
-      value: grid
-    - label:
-        en: Text Table
-        fr: Text Table
-      value: textTable
-    - label:
-        en: Tin
-        fr: Tin
-      value: tin
-    - label:
-        en: Stereo Model
-        fr: Stereo Model
-      value: stereoModel
-    - label:
-        en: Video
-        fr: Video
-      value: video
-  display_group: Spatial
 
 # Extras
 
-- field_name: fts_blob
-  label:
-    en: Free Text Search Blob
-  help_text:
-    en: Temporary field to index arbitrary full-text-search content.
-  form_snippet: textarea.html
-  display_snippet: null
-
 resource_fields:
-- field_name: name_translated
-  label:
-    en: Title
-    fr: Titre
-  fluent_form_label:
-    en:
-      en: "Title English"
-      fr: "Titre anglais"
-    fr:
-      en: "Title French"
-      fr: "Titre français"
+- field_name: resource_name
+  label: Resource Name
+  help_text: A name given to the resource.
+  required: true
+  form_snippet: text.html
+  display_snippet: text.html
 
-  fluent_help_text:
-    en:
-      en: An English name given to the resource.
-      fr: Nom anglais attribué à la ressource
-    fr:
-      en: A French name given to the resource.
-      fr: Nom français attribué à la ressource
+# Projection
+
+- field_name: projection_text
+  label: Projection
+  display_group: Projection
   required: true
-  # copied from fluent_text preset
-  form_snippet: fluent_text.html
-  display_snippet: fluent_text.html
-  error_snippet: fluent_text.html
-  validators: fluent_text
-  output_validators: fluent_core_translated_output
-- field_name: language
-  label:
-    en: Language
-    fr: Langue
+
+- field_name: projection_code
+  label: Projection Code
+  display_group: Projection
   required: true
-  display_snippet: select.html
+
+- field_name: projection_codespace
+  label: Codespace
+  default: "http://www.epsg-registry.org"
+  display_group: Projection
+  required: true
+
+- field_name: codespace_version
+  label: Codespace Version
+  default: "9.2.2"
+  display_group: Projection
+  required: true
+
+# Spatial
+
+- field_name: data_format
+  label: Format
+  display_group: Spatial
+  required: true
+
+- field_name: layer_name
+  label: Layer Name
+  display_group: Spatial
+  required: true
+
+- field_name: spatial_type
+  label: Spatial Type
   form_snippet: select.html
+  display_snippet: select.html
+  display_group: Spatial
+  required: true
   choices:
-  - label:
-      en: English
-      fr: Anglais
-    value: English
-  - label:
-      en: French
-      fr: Français
-    value: French
-  - label:
-      en: N/A
-      fr: N/A
-    value: NA
+    - label: Vector
+      value: vector
+    - label: Grid
+      value: grid
+    - label: Table
+      value: table
+    - label: TIN
+      value: tin
+    - label: Video
+      value: video
 
-- field_name: OBJECTID
-  label:
-    en: OBJECTID
-  help_text:
-    en: Internal feature number
+- field_name: geometry_type
+  label: Geometry Type
+  form_snippet: select.html
+  display_snippet: select.html
+  display_group: Spatial
+  required: true
+  choices:
+    - label: Point
+      value: point
+    - label: Polyline
+      value: polyline
+    - label: Polygon
+      value: polygon
+    - label: TIN
+      value: tin
+    - label: Geometry
+      value: geometry
+    - label: Coverage
+      value: coverage
+    - label: None
+      value: none
+
+- field_name: bbox
+  label: Bounding Box (lat-lon)
+  display_group: Spatial
+  required: true
+
+- field_name: uuid
+  label: Unique ID (auto-generated)
+  display_group: Spatial
+
+
+# One to many relationship for attribute table fields
+
+- field_name: column_name
+  label: Field Name
+  help_text: The name of the field in the attribute table
   form_snippet: text.html
   display_snippet: text.html
   display_group: Attributes
 
-- field_name: Shape
-  label:
-    en: Shape
-  help_text:
-    en: Feature geometry
+- field_name: column_type
+  label: Field Type
+  form_snippet: select.html
+  display_snippet: select.html
+  display_group: Attributes
+  choices:
+    - label: Text
+      value: Text
+    - label: Integer
+      value: Integer
+    - label: Float
+      value: Float
+    - label: Date
+      value: Date
+    - label: Boolean
+      value: Boolean
+    - label: ObjectId
+      value: ObjectId
+    - label: Geometry
+      value: Geometry
+
+- field_name: description
+  label: Field Description
+  help_text: Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable).
   form_snippet: text.html
   display_snippet: text.html
   display_group: Attributes
 
-- field_name: BType1
-  label:
-    en: BType1
-  help_text:
-    en: Primary bottom type code
+- field_name: units
+  label: Units
+  help_text: If relevant, indicate the units.
   form_snippet: text.html
   display_snippet: text.html
   display_group: Attributes
 
-- field_name: BType2
-  label:
-    en: BType2
-  help_text:
-    en: Secondary bottom type code
+- field_name: coded_values
+  label: Coded Values
+  help_text: If the attribute contains values from a list of coded domains, describe each of the code-domain pairs. If the list of domain values is excessively long, do not try to paste it in this box; instead include a link to a document describing the domain values.
   form_snippet: text.html
   display_snippet: text.html
   display_group: Attributes
 
-- field_name: SourceKey
-  label:
-    en: SourceKey
-  help_text:
-    en: The value of the Key field (s) in the source data used to define this bottom patch. Source data can be inferred from the format of the keys. Keys from records with multiple sources are concatenated.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
 
-- field_name: DepthCode
-  label:
-    en: DepthCode
-  help_text:
-    en:  The depth range (or ribbon) to which the BoP is constrained.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: Confidence
-  label:
-    en: Confidence
-  help_text:
-    en: Index of data density and coherence.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: ObsDepthCode
-  label:
-    en: ObsDepthCode
-  help_text:
-    en: Depth code associated with the Obs data source, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: ObsSourceKey
-  label:
-    en: ObsSourceKey
-  help_text:
-    en: Source Key associated with the Obs data source, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: ObsBType1
-  label:
-    en: ObsBType1
-  help_text:
-    en: Primary bottom type associated with Obs data, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: ObsBType2
-  label:
-    en: ObsBType2
-  help_text:
-    en: Secondary bottom type associated with Obs data, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: ObsArea
-  label:
-    en: ObsArea
-  help_text:
-    en: Area of the polygon around the Obs point
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: ObsDist
-  label:
-    en: ObsDist
-  help_text:
-    en: Centriod distance between the bottom patch and the Obs source polygon
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: GrabDepthCode
-  label:
-    en: GrabDepthCode
-  help_text:
-    en: Depth code associated with the Grab data source, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: GrabSourceKey
-  label:
-    en: GrabSourceKey
-  help_text:
-    en: Source Key associated with the Grab data source, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: GrabBType1
-  label:
-    en: GrabBType1
-  help_text:
-    en: Primary bottom type associated with Grab data, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: GrabBType2
-  label:
-    en: GrabBType2
-  help_text:
-    en: Secondary bottom type associated with Grab data, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: GrabArea
-  label:
-    en: GrabArea
-  help_text:
-    en: Area of the polygon around the Grab point
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: GrabDist
-  label:
-    en: GrabDist
-  help_text:
-    en: Centriod distance between the bottom patch and the Grab source polygon
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: SZDepthCode
-  label:
-    en: SZDepthCode
-  help_text:
-    en: Depth code associated with the ShoreZone data source, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: SZSourceKey
-  label:
-    en: SZSourceKey
-  help_text:
-    en: Source Key associated with the ShoreZone data source, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: SZBType1
-  label:
-    en: SZBType1
-  help_text:
-    en: Primary bottom type associated with ShoreZone data, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: SZBType2
-  label:
-    en: SZBType2
-  help_text:
-    en: Secondary bottom type associated with ShoreZone data, if any.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: SZArea
-  label:
-    en: SZArea
-  help_text:
-    en: Area of the polygon around the ShoreZone point
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: SZITDDist
-  label:
-    en: SZITDDist
-  help_text:
-    en: Distance to centriod of ITD ShoreZone source polygon
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: SZ0to5Dist
-  label:
-    en: SZ0to5Dist
-  help_text:
-    en: Distance to centriod of 0to5 ShoreZone source polygon
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: Shape_Length
-  label:
-    en: Shape_Length
-  help_text:
-    en: Length of feature in units of the spatial reference.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
-
-- field_name: Shape_Area
-  label:
-    en: Shape_Area
-  help_text:
-    en: Area of feature in units of the spatial reference.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
+# Other
 
 - field_name: disclaimer
   label:
@@ -1017,4 +934,3 @@ resource_fields:
   form_snippet: upload.html
   upload_field: upload
   upload_clear: clear_upload
-
