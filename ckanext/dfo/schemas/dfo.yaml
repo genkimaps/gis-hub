@@ -604,9 +604,7 @@ dataset_fields:
   display_group: Science
 
 - field_name: start_date
-  label:
-    en: Start Data
-    fr: Start Date
+  label: Start Date
   help_text: Temporal coverage of the dataset. Indicate the earliest date represented in this dataset.
   form_snippet: date.html
   required: true
