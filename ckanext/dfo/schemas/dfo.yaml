@@ -347,70 +347,6 @@ dataset_fields:
   validators: tags
   output_validators: tags_output
 
-# Project
-
-- field_name: project_name
-  label: Project Name
-  help_text: Information on the project in which this data was collected.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Project
-
-- field_name: jurisdiction
-  label: Jurisdiction
-  help_text: One or more of National, Regional, Provincial, Municipal, FNs (this about relevance than spatial footprint).
-  form_snippet: select.html
-  display_snippet: select.html
-  display_group: Project
-  choices:
-  - label: National
-    value: National
-  - label: Regional
-    value: Regional
-  - label: Provincial
-    value: Provincial
-  - label: Municipal
-    value: Municipal
-  - label: First Nations
-    value: First Nations
-
-- field_name: objective
-  label:
-    en: Objective
-  help_text:
-    en: How this project is intended to contribute to the overarching program.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Project
-
-- field_name: program_duration
-  label:
-    en: Program Duration
-  help_text:
-    en: Duration of the program (e.g. 2012 - present).
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Project
-
-- field_name: section
-  label:
-    en: Section
-  help_text:
-    en: DFO section in charge of the project.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Project
-  required: true
-
-- field_name: relevant_documentation
-  label:
-    en: Relevant Documentation
-  help_text:
-    en: Supporting documents or even a reference list provided in a standard format.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Project
-
 
 # Science
 
@@ -432,35 +368,25 @@ dataset_fields:
   display_group: Science
   required: true
   choices:
-  - label:
-      en: Base Mapping
+  - label: Base Mapping
     value: base_mapping
-  - label:
-      en: Bathymetry
+  - label: Bathymetry
     value: bathymetry
-  - label:
-      en: Salmon
+  - label: Salmon
     value: salmon
-  - label:
-      en: Marine Mammals
+  - label: Marine Mammals
     value: marine_mammals
-  - label:
-      en: Shellfish
+  - label: Shellfish
     value: shellfish
-  - label:
-      en: Benthic Fisheries
+  - label: Benthic Fisheries
     value: benthic_fisheries
-  - label:
-      en: Pelagic Fisheries
+  - label: Pelagic Fisheries
     value: pelagic_fisheries
-  - label:
-      en: Coastal Fisheries
+  - label: Coastal Fisheries
     value: coastal_fisheries
-  - label:
-      en: Protected Areas
+  - label: Protected Areas
     value: protected_areas
-  - label:
-      en: Classification
+  - label: Classification
     value: classification
 
 - field_name: methods
@@ -605,7 +531,7 @@ dataset_fields:
 
 - field_name: start_date
   label: Start Date
-  help_text: Temporal coverage of the dataset. Indicate the earliest date represented in this dataset.
+  help_text: Indicate the earliest date represented in this dataset.
   form_snippet: date.html
   required: true
 
@@ -613,7 +539,7 @@ dataset_fields:
   label:
     en: End Date
     fr: End Date
-  help_text: Temporal coverage of the dataset. Indicate the latest date represented in this dataset. If data collection is ongoing, leave this blank.
+  help_text: Indicate the latest date represented in this dataset. If data collection is ongoing, leave this blank.
   form_snippet: date.html
 
 - field_name: temporal_coverage
@@ -635,51 +561,43 @@ dataset_fields:
   display_snippet: text.html
   display_group: Science
 
+# Composite Repeating Field for references
+
 - field_name: references
-  label:
-    en: References
-  help_text:
-    en: Academic references associated with the resource.
-  form_snippet: textarea.html
-  display_snippet: text.html
+  label: References
+  help_text: Academic references associated with the resource.
+  preset: composite_repeating
+  form_blanks: 1
   display_group: Science
-  required: true
+  subfields:
+
+  - field_name: reference
+    label: Reference
+    help_text: Citation for an academic reference. Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201.
+    form_snippet: textarea.html
+    display_snippet: text.html
+    display_group: Science
+    required: true
 
 - field_name: citation
-  label:
-    en: Citation
-  help_text:
-    en: Citation format to be used when this dataset is referenced in another publication.
-  form_snippet: textarea.html
-  display_snippet: text.html
-  display_group: Science
-  required: true
-
-- field_name: biases_in_data_collection
-  label:
-    en: Biases in Data Collection
-  help_text:
-    en: Describe known biases. Was data collection opportunistic, or part of the survey design? Any known bias from individual observers?
+  label: Citation
+  help_text: Citation format to be used when this dataset is referenced in another publication.
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   required: true
 
 - field_name: collaboration
-  label:
-    en: Collaboration
-  help_text:
-    en: Describe any collaboration with academia, external contributors. Was there interagency cooperation, or was it produced internally by DFO?
+  label: Collaboration
+  help_text: Describe collaboration with academia, other government agencies, and external contributors. If produced internally by DFO, indicate "No collaboration outside of DFO."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   required: true
 
 - field_name: knowledge_gaps
-  label:
-    en: Knowledge Gaps
-  help_text:
-    en: Knowledge gaps that you are trying to fill in the survey, or a gap that you know exists but cannot be filled now
+  label: Knowledge Gaps
+  help_text:  Brief description of the knowledge gap these data are intended to fill.
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -689,27 +607,15 @@ dataset_fields:
   label:
     en: Uncertainties
   help_text:
-    en: Uncertainties in measurement and methodology.
-  form_snippet: textarea.html
-  display_snippet: text.html
-  display_group: Science
-  required: true
-
-- field_name: caveats
-  label:
-    en: Caveats
-  help_text:
-    en: Warnings about the data inputs, outputs, model, or methods.
+    en: Describe uncertainties in measurement and methodology. Include any known biases. For example, was data collection opportunistic, or part of the survey design? In there any known bias from individual observers?
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   required: true
 
 - field_name: use_restrictions
-  label:
-    en: Use Restrictions
-  help_text:
-    en: Restrictions on appropriate use of the resource, usually informed by the caveats.
+  label: Use Restrictions
+  help_text: Restrictions on appropriate use of the resource.  For example:  Not suitable for navigation.
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -719,8 +625,7 @@ dataset_fields:
   label: Administrative Boundaries
   help_text: "A list of administrative boundaries that the dataset overlaps, at different scales: bioregions, PFMA's, other regions that have been defined."
   form_snippet: textarea.html
-  display_snippet: text.html
-  display_group: Science
+  display_snippet: null
 
 - field_name: other_information
   label:
@@ -742,10 +647,8 @@ dataset_fields:
   required: true
 
 - field_name: reliability
-  label:
-    en: Reliability
-  help_text:
-    en: A measure or estimate of the reliability of the dataset for a specific purpose, if known.
+  label: Reliability
+  help_text: A measure or estimate of the reliability of the dataset for a specific purpose, if known.
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -846,66 +749,72 @@ resource_fields:
   label: Unique ID (auto-generated)
   display_group: Spatial
 
-
+# Composite Repeating Field for Attributes
 # One to many relationship for attribute table fields
 
-- field_name: column_name
-  label: Field Name
-  help_text: The name of the field in the attribute table
-  form_snippet: text.html
-  display_snippet: text.html
+- field_name: attribute
+  label: Attribute
+  preset: composite_repeating
+  form_blanks: 1
   display_group: Attributes
+  subfields:
 
-- field_name: column_type
-  label: Field Type
-  form_snippet: select.html
-  display_snippet: select.html
-  display_group: Attributes
-  choices:
-    - label: Text
-      value: Text
-    - label: Integer
-      value: Integer
-    - label: Float
-      value: Float
-    - label: Date
-      value: Date
-    - label: Boolean
-      value: Boolean
-    - label: ObjectId
-      value: ObjectId
-    - label: Geometry
-      value: Geometry
+  - field_name: column_name
+    label: Field Name
+    help_text: The name of the field in the attribute table
+    form_snippet: text.html
+    display_snippet: text.html
+    display_group: Attributes
 
-- field_name: description
-  label: Field Description
-  help_text: Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable).
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
+  - field_name: column_type
+    label: Field Type
+    form_snippet: select.html
+    display_snippet: select.html
+    display_group: Attributes
+    choices:
+      - label: Text
+        value: Text
+      - label: Integer
+        value: Integer
+      - label: Float
+        value: Float
+      - label: Date
+        value: Date
+      - label: Boolean
+        value: Boolean
+      - label: ObjectId
+        value: ObjectId
+      - label: Geometry
+        value: Geometry
 
-- field_name: units
-  label: Units
-  help_text: If relevant, indicate the units.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
+  - field_name: description
+    label: Field Description
+    help_text: Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable).
+    form_snippet: text.html
+    display_snippet: text.html
+    display_group: Attributes
 
-- field_name: coded_values
-  label: Coded Values
-  help_text: If the attribute contains values from a list of coded domains, describe each of the code-domain pairs. If the list of domain values is excessively long, do not try to paste it in this box; instead include a link to a document describing the domain values.
-  form_snippet: text.html
-  display_snippet: text.html
-  display_group: Attributes
+  - field_name: units
+    label: Units
+    help_text: If relevant, indicate the units.
+    form_snippet: text.html
+    display_snippet: text.html
+    display_group: Attributes
+
+  - field_name: coded_values
+    label: Coded Values
+    help_text: If the attribute contains values from a list of coded domains, describe each of the code-domain pairs. If the list of domain values is excessively long, do not try to paste it in this box; instead include a link to a document describing the domain values.
+    form_snippet: text.html
+    display_snippet: text.html
+    display_group: Attributes
 
 
 # Other
 
 - field_name: disclaimer
-  label:
-    en: Download Disclaimer
-  help_text:
-    en: A disclaimer that must be accepted before downloading this resource.
+  label: Download Disclaimer
+  help_text: A disclaimer that is displayed to authorized users before allowing data download.
+  default: This data is intended for scientific research only. DFO is not responsible for damages resulting from any omissions or errors that may be contained in these data and expressly disclaims any warranty of fitness for any particular purpose. DFO shall not be liable for any losses, financial or otherwise, due to the use of these data. The user assumes the entire risk as to the suitability, results and performance of the data for their proposed use.
   form_snippet: textarea.html
   display_snippet: null
 
