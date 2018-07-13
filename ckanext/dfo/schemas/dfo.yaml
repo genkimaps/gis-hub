@@ -573,7 +573,7 @@ dataset_fields:
 
   - field_name: reference
     label: Reference
-    help_text: Citation for an academic reference. Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201.
+    help_text: "Citation for an academic reference. Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
     form_snippet: textarea.html
     display_snippet: text.html
     display_group: Science
@@ -615,7 +615,7 @@ dataset_fields:
 
 - field_name: use_restrictions
   label: Use Restrictions
-  help_text: Restrictions on appropriate use of the resource.  For example:  Not suitable for navigation.
+  help_text: "Restrictions on appropriate use of the resource.  For example:  Not suitable for navigation."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
