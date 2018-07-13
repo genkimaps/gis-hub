@@ -4,10 +4,10 @@ dataset_type: dataset
 display_group_default: General
 display_group_order:
   - General
+  - Science
   - Data Creator
   - Program Manager
-  - Project
-  - Science
+
 
 about:
 about_url:
@@ -36,18 +36,14 @@ dataset_fields:
   default: "Placeholder for French title."
 
 - field_name: owner_org
-  label:
-    en: Publisher - Current Organization Name
-    fr: Éditeur - Nom actuel de l’organisation
-  help_text:
-    en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the dataset
-    fr: Titre de l’organisation actuelle (organisme ou ministère du GC) principalement responsable de publier le jeu de données
+  label: Publisher - Current Organization Name
+  help_text: The organization (GC Department or Agency) primarily responsible for publishing the dataset
   required: true
   validators: owner_org_validator unicode
   form_snippet: organization.html
 
-- field_name: abstract_english
-  label: Abstract English
+- field_name: summary_english
+  label: Summary
   help_text: "Brief narrative summary of the dataset's contents."
   form_snippet: textarea.html
   display_snippet: text.html
@@ -56,8 +52,8 @@ dataset_fields:
 - field_name: abstract_french
   label: Abstract French
   help_text: "Brief narrative summary of the dataset's contents."
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: null
+  display_snippet: null
   default: "Placeholder for French abstract"
 
 - field_name: topic_category
@@ -66,82 +62,45 @@ dataset_fields:
   display_snippet: select.html
   form_snippet: select.html
   required: true
+  default: oceans
   choices:
-  - label:
-      en: Farming
-      fr: Farming
-    value: farming
-  - label:
-      en: Biota
-      fr: Biota
+  - label: Biota
     value: biota
-  - label:
-      en: Boundaries
-      fr: Boundaries
-    value: boundaries
-  - label:
-      en: Climatology/Meteorology/Atmosphere
-      fr: Climatology/Meteorology/Atmosphere
-    value: climatologyMeteorologyAtmosphere
-  - label:
-      en: Economy
-      fr: Economy
-    value: economy
-  - label:
-      en: Elevation
-      fr: Elevation
-    value: elevation
-  - label:
-      en: Environment
-      fr: Environment
-    value: environment
-  - label:
-      en: Geoscientific Information
-      fr: Geoscientific Information
-    value: geoscientificInformation
-  - label:
-      en: Health
-      fr: Health
-    value: health
-  - label:
-      en: Imagery Base Maps Earth Cover
-      fr: Imagery Base Maps Earth Cover
-    value: imageryBaseMapsEarthCover
-  - label:
-      en: Military Intelligence
-      fr: Military Intelligence
-    value: intelligenceMilitary
-  - label:
-      en: Inland Waters
-      fr: Inland Waters
-    value: inlandWaters
-  - label:
-      en: Location
-      fr: Location
-    value: location
-  - label:
-      en: Oceans
-      fr: Oceans
+  - label: Oceans
     value: oceans
-  - label:
-      en: Planning Cadastre
-      fr: Planning Cadastre
+  - label: Environment
+    value: environment
+  - label: Boundaries
+    value: boundaries
+  - label: Imagery Base Maps Earth Cover
+    value: imageryBaseMapsEarthCover
+  - label: Inland Waters
+    value: inlandWaters
+  - label: Geoscientific Information
+    value: geoscientificInformation
+  - label: Climatology/Meteorology/Atmosphere
+    value: climatologyMeteorologyAtmosphere
+  - label: Economy
+    value: economy
+  - label: Elevation
+    value: elevation
+  - label: Farming
+    value: farming
+  - label: Health
+    value: health
+  - label: Military Intelligence
+    value: intelligenceMilitary
+  - label: Location
+    value: location
+  - label: Planning Cadastre
     value: planningCadastre
-  - label:
-      en: Society
-      fr: Society
+  - label: Society
     value: society
-  - label:
-      en: Structure
-      fr: Structure
+  - label: Structure
     value: structure
-  - label:
-      en: Transportation
-      fr: Transportation
+  - label: Transportation
     value: transportation
-  - label:
-      en: Communication & Utilities
-      fr: Communication & Utilities
+  - label: Communication & Utilities
     value: utilitiesCommunication
 
 # Charset/language
@@ -149,8 +108,8 @@ dataset_fields:
 - field_name: language
   label: Metadata Language
   help_text: "Language code and country of the metadata. Default: English."
-  display_snippet: select.html
-  form_snippet: select.html
+  display_snippet: null
+  form_snippet: null
   required: true
   choices:
   - label: English
@@ -163,26 +122,26 @@ dataset_fields:
   label: Metadata Character Set
   help_text: "Encoding of the metadata record. Default: utf8"
   default: "utf8"
+  display_snippet: null
+  form_snippet: null
   required: true
 
 - field_name: metadata_standard
   label: Metadata Standard
   help_text: Name of the metadata standard/profile used.
   default: "North American Profile of ISO 19115:2003 - Geographic information - Metadata"
+  display_snippet: null
+  form_snippet: null
   required: true
 
 - field_name: date_created
-  label:
-    en: Date Created
-    fr: Date Created
-  help_text: Date of creation of dataset. The date on which the dataset was substantially complete in its current form.
+  label: Date Created
+  help_text: The date on which the dataset was substantially complete in its current form.
   form_snippet: date.html
   required: true
 
 - field_name: date_published
-  label:
-    en: Date Published
-    fr: Date Published
+  label: Date Published
   help_text: "Date of publication of dataset. Default: today's date. This refers to publication of the data on this portal or on another data hosting environment, not necessarily the date of publication of related academic research. Academic citations are described elsewhere."
   form_snippet: date.html
   required: true
@@ -239,11 +198,15 @@ dataset_fields:
   label: Data Character Set
   help_text: "Character coding standard in the dataset. Default: utf8"
   default: "utf8"
+  display_snippet: null
+  form_snippet: null
   required: true
 
 - field_name: data_language
   label: Data Language
   help_text: "Language of the data (attributes and values). Default: English."
+  display_snippet: null
+  form_snippet: null
   default: English
   required: true
 
@@ -342,7 +305,7 @@ dataset_fields:
 - field_name: keywords
   preset: tag_string_autocomplete
   label: Keywords
-  help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated."
+  help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated."
   required: true
   validators: tags
   output_validators: tags_output
@@ -390,10 +353,8 @@ dataset_fields:
     value: classification
 
 - field_name: methods
-  label:
-    en: Methods
-  help_text:
-    en: The methods field documents scientific methods used in the collection
+  label: Methods
+  help_text: The methods field documents scientific methods used in the collection
         or derivation of this dataset.  It includes information on items such
         as tools, instrument calibration and software. It can also include a
         complete description of the lineage of the data.  It may refer to
@@ -405,10 +366,8 @@ dataset_fields:
   required: true
 
 - field_name: data_inputs
-  label:
-    en: Data Inputs
-  help_text:
-    en: List of inputs used to produce this dataset.  Provide a link to the
+  label: Data Inputs
+  help_text: List of inputs used to produce this dataset.  Provide a link to the
         source data where possible (to another dataset on the GIS Hub, or an
         external link).  Include the date that the input was extracted,
         if known.
@@ -418,20 +377,16 @@ dataset_fields:
   required: true
 
 - field_name: data_outputs
-  label:
-    en: Data Outputs
-  help_text:
-    en: List of output dataset(s).
+  label: Data Outputs
+  help_text: List of output dataset(s).
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   required: true
 
 - field_name: scripts_or_software_routines
-  label:
-    en: Scripts or Software Routines
-  help_text:
-    en: Link to script(s) used to process the data, for example on GitLab.
+  label: Scripts or Software Routines
+  help_text: Link to script(s) used to process the data, for example on GitLab.
         Alternatively, include the scripts or queries in a "Scripts" folder
         inside in the zip file used to submit the resource.  Document the
         purpose of each script, and anything required to run the script again.
@@ -536,17 +491,13 @@ dataset_fields:
   required: true
 
 - field_name: end_date
-  label:
-    en: End Date
-    fr: End Date
+  label: End Date
   help_text: Indicate the latest date represented in this dataset. If data collection is ongoing, leave this blank.
   form_snippet: date.html
 
 - field_name: temporal_coverage
-  label:
-    en: Temporal Coverage
-  help_text:
-    en: Temporal coverage of the dataset.  Coverages may be a single point in time, multiple points in time or a range of dates.
+  label: Temporal Coverage
+  help_text: Temporal coverage of the dataset.  Coverages may be a single point in time, multiple points in time or a range of dates.
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
