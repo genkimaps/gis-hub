@@ -8,6 +8,8 @@ then itself be extended to add/remove blocks of functionality. #}
         {{ h.snippet('package/snippets/stages.html', stages=stage) }}
     {% endblock %}
 
+    {{ form.required_message() }}
+
     <input type="hidden" name="_ckan_phase" value="dataset_new_1" />
     {# pkg_name used in 3 stage edit #}
     <input type="hidden" name="pkg_name" value="{{ data.id }}" />
@@ -59,7 +61,6 @@ then itself be extended to add/remove blocks of functionality. #}
             {% block save_button %}
                 <button class="btn btn-primary" type="submit" name="save">{% block save_button_text %}{{ _('Next: Add Data') }}{% endblock %}</button>
             {% endblock %}
-            {{ form.required_message() }}
         </div>
     {% endblock %}
 </form>
