@@ -18,22 +18,13 @@ dataset_fields:
 
 # General
 - preset: dataset_slug
-  field_name: name
+  field_name: Dataset URL
+  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
 
-- field_name: short_title
-  label: Short Title
-  help_text: "Short (headline-length) title of the dataset."
+- field_name: title
+  label: Title
+  help_text: "Title of the dataset. Titles should be concise (no more than headline-length)."
   required: true
-
-- field_name: title_english
-  label: Title English
-  help_text: "Full title of the dataset. This may be longer and more descriptive than the short title."
-  required: true
-
-- field_name: title_french
-  label: Title French
-  help_text: "Placeholder for French title."
-  default: "Placeholder for French title."
 
 - field_name: owner_org
   label: Publisher - Current Organization Name
@@ -49,8 +40,8 @@ dataset_fields:
   display_snippet: text.html
   required: true
 
-- field_name: abstract_french
-  label: Abstract French
+- field_name: summary_french
+  label: Summary French
   help_text: "Brief narrative summary of the dataset's contents."
   form_snippet: null
   display_snippet: null
@@ -333,6 +324,8 @@ dataset_fields:
   choices:
   - label: Base Mapping
     value: base_mapping
+  - label: Administrative Boundaries
+    value: admin_boundaries
   - label: Bathymetry
     value: bathymetry
   - label: Salmon
@@ -341,12 +334,12 @@ dataset_fields:
     value: marine_mammals
   - label: Shellfish
     value: shellfish
-  - label: Benthic Fisheries
-    value: benthic_fisheries
-  - label: Pelagic Fisheries
-    value: pelagic_fisheries
-  - label: Coastal Fisheries
-    value: coastal_fisheries
+  - label: Benthic Species or Ecosystem
+    value: benthic_species
+  - label: Pelagic Species or Ecosystem
+    value: pelagic_species
+  - label: Coastal Species or Ecosystem
+    value: coastal_species
   - label: Protected Areas
     value: protected_areas
   - label: Classification
@@ -365,16 +358,27 @@ dataset_fields:
   display_group: Science
   required: true
 
+
+# Composite Repeating Field for Data Inputs
+
 - field_name: data_inputs
   label: Data Inputs
-  help_text: List of inputs used to produce this dataset.  Provide a link to the
+  help_text: "List of inputs used to produce this dataset.  Provide a link to the
         source data where possible (to another dataset on the GIS Hub, or an
         external link).  Include the date that the input was extracted,
-        if known.
+        if known.  Add as many inputs as you need. "
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   required: true
+  preset: composite_repeating
+  form_blanks: 1
+  subfields:
+  - field_name: input_description
+    label: Description of Input
+    form_snippet: text.html
+    display_snippet: text.html
+    display_group: Science
 
 - field_name: data_outputs
   label: Data Outputs
@@ -386,12 +390,12 @@ dataset_fields:
 
 - field_name: scripts_or_software_routines
   label: Scripts or Software Routines
-  help_text: Link to script(s) used to process the data, for example on GitLab.
-        Alternatively, include the scripts or queries in a "Scripts" folder
-        inside in the zip file used to submit the resource.  Document the
+  help_text: "Link to script(s) used to process the data, for example on the GCCode
+        GitLab site. Alternatively, include the scripts or queries in a Scripts folder
+        inside in the zip file that you will upload. Document the
         purpose of each script, and anything required to run the script again.
-        If no scripts were used to create the data, indicate how it was created
-        (e.g. manually created).
+        If no scripts were used to create the data, ues this field to indicate how it was created
+        (e.g. manually created using analysis tools in ArcGIS)."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -401,9 +405,7 @@ dataset_fields:
   label:
     en: Spatial Data Quality
   help_text:
-    en: A measure of the quality of the spatial data representing some
-        real-world entity.  Although quantitative estimates of
-        horizontal/vertical accuracy can be included, it is important to
+    en: "A description of the quality of the spatial data. It is important to
         describe the spatial data quality with reference to the data
         processing steps.  Was location data captured with survey-grade GPS,
         consumer GPS, paper charts, ships log?  Was data digitized from a
@@ -412,7 +414,7 @@ dataset_fields:
         (e.g. 3 boat rule) and therefore has a known spatial resolution?
         Were multiple datasets captured at different spatial resolutions
         used in this analysis? Were point data extrapolated to polygons, or
-        polygons/lines converted to centroids?
+        polygons/lines converted to centroids?"
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -420,7 +422,7 @@ dataset_fields:
 
 - field_name: positional_accuracy
   label: Positional Accuracy
-  help_text: May include horizontal and vertical. Express in metric units where possible.
+  help_text: "Quantitative estimate of horizontal/vertical accuracy. Express in metric units where possible."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -497,11 +499,10 @@ dataset_fields:
 
 - field_name: temporal_coverage
   label: Temporal Coverage
-  help_text: Temporal coverage of the dataset.  Coverages may be a single point in time, multiple points in time or a range of dates.
+  help_text: "If the temporal coverage of the dataset is more complex than a simple start and end date, describe it here.  You may describe temporal coverage as a single point in time, multiple points in time, and one or more range of dates.  Seasonality can also be described here."
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
-  required: true
 
 - field_name: species_codes
   label:
@@ -575,7 +576,7 @@ dataset_fields:
 - field_name: administrative_boundaries
   label: Administrative Boundaries
   help_text: "A list of administrative boundaries that the dataset overlaps, at different scales: bioregions, PFMA's, other regions that have been defined."
-  form_snippet: textarea.html
+  form_snippet: null
   display_snippet: null
 
 - field_name: other_information
@@ -588,14 +589,21 @@ dataset_fields:
   display_group: Science
 
 - field_name: confidentiality
-  label:
-    en: Confidentiality
-  help_text:
-    en: Level of confidentiality or sensitivity of the dataset.
-  form_snippet: textarea.html
-  display_snippet: text.html
+  label: Confidentiality
+  help_text: "Level of confidentiality or sensitivity of the dataset.  For a description of the categories, refer to: https://www.tpsgc-pwgsc.gc.ca/esc-src/protection-safeguarding/niveaux-levels-eng.html.  Data classified as Protected B or Secret or any higher classification cannot be stored on this system."
+  form_snippet: select.html
+  display_snippet: select.html
   display_group: Science
   required: true
+  choices:
+    - label: Public
+      value: Public
+    - label: Protected
+      value: Protected
+    - label: Protected A
+      value: Protected A
+    - label: Confidential
+      value: Confidential
 
 - field_name: reliability
   label: Reliability
@@ -603,6 +611,8 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  form_snippet: null
+  display_snippet: null
 
 
 # Extras
