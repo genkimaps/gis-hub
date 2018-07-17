@@ -24,13 +24,23 @@ dataset_fields:
 - field_name: title
   label: Title
   help_text: "Title of the dataset. Titles should be concise (no more than headline-length)."
-  required: true
+  validators: require_when_published
+
+- field_name: maintainer_email
+  label: Resource Access Request Email
+  help_text: "Email address to use when requesting access to restricted datasets."
+  validators: not_empty
 
 - field_name: owner_org
   label: Publisher - Current Organization Name
   help_text: The organization (GC Department or Agency) primarily responsible for publishing the dataset
-  required: true
-  validators: owner_org_validator unicode
+  label:
+    en: Publisher - Current Organization Name
+    fr: Éditeur - Nom actuel de l’organisation
+  help_text:
+    en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the dataset
+    fr: Titre de l’organisation actuelle (organisme ou ministère du GC) principalement responsable de publier le jeu de données
+  validators: require_when_published owner_org_validator unicode
   form_snippet: organization.html
 
 - field_name: summary_english
@@ -38,7 +48,7 @@ dataset_fields:
   help_text: "Brief narrative summary of the dataset's contents."
   form_snippet: textarea.html
   display_snippet: text.html
-  required: true
+  validators: require_when_published
 
 - field_name: summary_french
   label: Summary French
@@ -52,8 +62,8 @@ dataset_fields:
   help_text: Main theme of the data. Choose the best match.
   display_snippet: select.html
   form_snippet: select.html
-  required: true
   default: oceans
+  validators: require_when_published
   choices:
   - label: Biota
     value: biota
@@ -63,13 +73,13 @@ dataset_fields:
     value: environment
   - label: Boundaries
     value: boundaries
-  - label: Imagery Base Maps Earth Cover
+  - label: "Imagery, Base Maps, and Earth Cover"
     value: imageryBaseMapsEarthCover
   - label: Inland Waters
     value: inlandWaters
   - label: Geoscientific Information
     value: geoscientificInformation
-  - label: Climatology/Meteorology/Atmosphere
+  - label: "Climatology, Meteorology, and Atmosphere"
     value: climatologyMeteorologyAtmosphere
   - label: Economy
     value: economy
@@ -91,7 +101,7 @@ dataset_fields:
     value: structure
   - label: Transportation
     value: transportation
-  - label: Communication & Utilities
+  - label: "Communication & Utilities"
     value: utilitiesCommunication
 
 # Charset/language
@@ -101,7 +111,7 @@ dataset_fields:
   help_text: "Language code and country of the metadata. Default: English."
   display_snippet: null
   form_snippet: null
-  required: true
+  validators: require_when_published
   choices:
   - label: English
     value: "eng; CAN"
@@ -115,34 +125,34 @@ dataset_fields:
   default: "utf8"
   display_snippet: null
   form_snippet: null
-  required: true
+  validators: require_when_published
 
 - field_name: metadata_standard
   label: Metadata Standard
-  help_text: Name of the metadata standard/profile used.
+  help_text: "Name of the metadata standard/profile used."
   default: "North American Profile of ISO 19115:2003 - Geographic information - Metadata"
   display_snippet: null
   form_snippet: null
-  required: true
+  validators: require_when_published
 
 - field_name: date_created
   label: Date Created
   help_text: The date on which the dataset was substantially complete in its current form.
   form_snippet: date.html
-  required: true
+  validators: require_when_published
 
 - field_name: date_published
   label: Date Published
   help_text: "Date of publication of dataset. Default: today's date. This refers to publication of the data on this portal or on another data hosting environment, not necessarily the date of publication of related academic research. Academic citations are described elsewhere."
   form_snippet: date.html
-  required: true
+  validators: require_when_published
 
 - field_name: status
   label: Status
   help_text: Development phase of the dataset.
   display_snippet: select.html
   form_snippet: select.html
-  required: true
+  validators: require_when_published
   choices:
   - label: Completed
     value: Completed
@@ -160,7 +170,7 @@ dataset_fields:
   help_text: Revision cycle of the data.
   display_snippet: select.html
   form_snippet: select.html
-  required: true
+  validators: require_when_published
   choices:
   - label: Annually
     value: Annually
@@ -191,7 +201,7 @@ dataset_fields:
   default: "utf8"
   display_snippet: null
   form_snippet: null
-  required: true
+  validators: require_when_published
 
 - field_name: data_language
   label: Data Language
@@ -199,14 +209,14 @@ dataset_fields:
   display_snippet: null
   form_snippet: null
   default: English
-  required: true
+  validators: require_when_published
 
 - field_name: hierarchyLevel
   label: Hierarchy Level
   help_text: Level to which the metadata applies. Usually Dataset or Series.
   display_snippet: select.html
   form_snippet: select.html
-  required: true
+  validators: require_when_published
   default: Dataset
   choices:
   - label: Dataset
@@ -221,7 +231,7 @@ dataset_fields:
 - field_name: file_format
   label: File Format
   help_text: Format of the data distributed. Do not enter zip as the format; use the format of the data inside the zip file.
-  required: true
+  validators: require_when_published
 
 # Contacts
 
@@ -230,33 +240,33 @@ dataset_fields:
   help_text: The Principal Analyst. The lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, Email.
   display_group: Data Creator
   make_searchable: True
-  required: true
+  validators: require_when_published
 
 - field_name: creator_email
   label: Email
   display_group: Data Creator
   make_searchable: True
-  required: true
+  validators: require_when_published
 
 - field_name: creator_position
   label: Position
   display_group: Data Creator
-  required: true
+  validators: require_when_published
 
 - field_name: creator_organization
   label: Organization
   display_group: Data Creator
-  required: true
+  validators: require_when_published
 
 - field_name: creator_address
   label: Address
   display_group: Data Creator
-  required: true
+  validators: require_when_published
 
 - field_name: creator_phone
   label: Phone
   display_group: Data Creator
-  required: true
+  validators: require_when_published
 
 # Program Manager
 
@@ -265,42 +275,39 @@ dataset_fields:
   help_text: The DFO Program Head (must be a permanent DFO employee). Provide the Name, Position, Department, Address, Phone, Email.
   display_group: Program Manager
   make_searchable: True
-  required: true
+  validators: require_when_published
 
 - field_name: manager_email
   label: Email
   display_group: Program Manager
   make_searchable: True
-  required: true
+  validators: require_when_published
 
 - field_name: manager_position
   label: Position
   display_group: Program Manager
-  required: true
+  validators: require_when_published
 
 - field_name: manager_organization
   label: Organization
   display_group: Program Manager
-  required: true
+  validators: require_when_published
 
 - field_name: manager_address
   label: Address
   display_group: Program Manager
-  required: true
+  validators: require_when_published
 
 - field_name: manager_phone
   label: Phone
   display_group: Program Manager
-  required: true
+  validators: require_when_published
 
 - field_name: keywords
   preset: tag_string_autocomplete
   label: Keywords
   help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated."
-  required: true
-  validators: tags
-  output_validators: tags_output
-
+  validators: require_when_published tag_string_convert
 
 # Science
 
@@ -308,10 +315,8 @@ dataset_fields:
   preset: tag_string_autocomplete
   label: Science Keywords
   help_text: Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. Keywords can be domain-specific and more detailed than general keywords.
-  required: true
+  validators: require_when_published tag_string_convert
   display_group: Science
-  validators: tags
-  output_validators: tags_output
 
 - field_name: theme
   label: Theme
@@ -320,7 +325,7 @@ dataset_fields:
   form_snippet: select.html
   make_searchable: True
   display_group: Science
-  required: true
+  validators: require_when_published
   choices:
   - label: Base Mapping
     value: base_mapping
@@ -356,7 +361,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 
 # Composite Repeating Field for Data Inputs
@@ -367,18 +372,16 @@ dataset_fields:
         source data where possible (to another dataset on the GIS Hub, or an
         external link).  Include the date that the input was extracted,
         if known.  Add as many inputs as you need. "
-  form_snippet: textarea.html
-  display_snippet: text.html
   display_group: Science
-  required: true
   preset: composite_repeating
   form_blanks: 1
   subfields:
   - field_name: input_description
     label: Description of Input
-    form_snippet: text.html
+    form_snippet: textarea.html
     display_snippet: text.html
     display_group: Science
+    validators: require_when_published
 
 - field_name: data_outputs
   label: Data Outputs
@@ -386,7 +389,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: scripts_or_software_routines
   label: Scripts or Software Routines
@@ -399,7 +402,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: spatial_data_quality
   label:
@@ -418,7 +421,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: positional_accuracy
   label: Positional Accuracy
@@ -426,7 +429,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: attribute_accuracy
   label:
@@ -437,7 +440,7 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: logical_consistency_report
   label:
@@ -447,7 +450,7 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: completeness_report
   label:
@@ -457,7 +460,7 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: absence_data
   label:
@@ -469,7 +472,7 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: change_history
   label:
@@ -490,7 +493,7 @@ dataset_fields:
   label: Start Date
   help_text: Indicate the earliest date represented in this dataset.
   form_snippet: date.html
-  required: true
+  validators: require_when_published
 
 - field_name: end_date
   label: End Date
@@ -503,6 +506,7 @@ dataset_fields:
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
+  validators: require_when_published
 
 - field_name: species_codes
   label:
@@ -525,11 +529,11 @@ dataset_fields:
 
   - field_name: reference
     label: Reference
-    help_text: Citation for an academic reference. Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201.
+    help_text: "Citation for an academic reference. Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
     form_snippet: textarea.html
     display_snippet: text.html
     display_group: Science
-    required: true
+    validators: require_when_published
 
 - field_name: citation
   label: Citation
@@ -537,7 +541,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: collaboration
   label: Collaboration
@@ -545,7 +549,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: knowledge_gaps
   label: Knowledge Gaps
@@ -553,7 +557,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: uncertainties
   label:
@@ -563,15 +567,15 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: use_restrictions
   label: Use Restrictions
-  help_text: Restrictions on appropriate use of the resource.  For example:  Not suitable for navigation.
+  help_text: "Restrictions on appropriate use of the resource.  For example:  Not suitable for navigation."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  required: true
+  validators: require_when_published
 
 - field_name: administrative_boundaries
   label: Administrative Boundaries
@@ -594,7 +598,6 @@ dataset_fields:
   form_snippet: select.html
   display_snippet: select.html
   display_group: Science
-  required: true
   choices:
     - label: Public
       value: Public
@@ -604,6 +607,7 @@ dataset_fields:
       value: Protected A
     - label: Confidential
       value: Confidential
+  validators: require_when_published
 
 - field_name: reliability
   label: Reliability
@@ -618,55 +622,52 @@ dataset_fields:
 # Extras
 
 resource_fields:
-- field_name: resource_name
+- field_name: name
   label: Resource Name
   help_text: A name given to the resource.
-  required: true
-  form_snippet: text.html
-  display_snippet: text.html
 
 # Projection
 
 - field_name: projection_text
   label: Projection
   display_group: Projection
-  required: true
+  validators: require_when_published
 
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
-  required: true
+  validators: require_when_published
 
 - field_name: projection_codespace
   label: Codespace
   default: "http://www.epsg-registry.org"
   display_group: Projection
-  required: true
+  validators: require_when_published
 
 - field_name: codespace_version
   label: Codespace Version
   default: "9.2.2"
   display_group: Projection
-  required: true
+  validators: require_when_published
 
 # Spatial
 
 - field_name: data_format
   label: Format
   display_group: Spatial
-  required: true
+  validators: require_when_published
 
 - field_name: layer_name
   label: Layer Name
   display_group: Spatial
-  required: true
+  validators: require_when_published
 
 - field_name: spatial_type
   label: Spatial Type
   form_snippet: select.html
   display_snippet: select.html
   display_group: Spatial
-  required: true
+  validators: require_when_published
   choices:
     - label: Vector
       value: vector
@@ -684,7 +685,7 @@ resource_fields:
   form_snippet: select.html
   display_snippet: select.html
   display_group: Spatial
-  required: true
+  validators: require_when_published
   choices:
     - label: Point
       value: point
@@ -704,7 +705,7 @@ resource_fields:
 - field_name: bbox
   label: Bounding Box (lat-lon)
   display_group: Spatial
-  required: true
+  validators: require_when_published
 
 - field_name: uuid
   label: Unique ID (auto-generated)
@@ -788,17 +789,35 @@ resource_fields:
   display_snippet: null
 
 - field_name: url
-  label:
-    en: Download URL
-    fr: URL de téléchargement
-  upload_label:
-    en: "File Upload"
-    fr: "Téléchargement du fichier"
-  help_text:
-    en: The location for online access to the distribution of the resource, if the file resides elsewhere.
-    fr: Emplacement pour l’accès en ligne aux fins de la distribution de la ressource.
-  required: true
+  label: Download URL
+  upload_label: "File Upload"
+  help_text: The location for online access to the distribution of the resource, if the file resides elsewhere.
   validators: not_empty unicode remove_whitespace
   form_snippet: upload.html
   upload_field: upload
   upload_clear: clear_upload
+
+- field_name: restricted
+  label: "Access Restriction"
+  preset: composite
+  subfields:
+  - field_name: level
+    label: Level
+    preset: select
+    form_include_blank_choice: False
+    validators: require_when_published
+    choices:
+    - value: public
+      label: Public
+    - value: registered
+      label: Registered Users
+    - value: any_organization
+      label: Any Organization Members
+    - value: same_organization
+      label: Same Organization Members
+    - value: only_allowed_users
+      label: Allowed Users Only
+  - field_name: allowed_users
+    label: Allowed Users
+    preset: tag_string_autocomplete
+    data-module-source: "/api/2/util/user/autocomplete?q=?"

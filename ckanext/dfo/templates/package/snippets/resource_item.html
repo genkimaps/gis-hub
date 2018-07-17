@@ -1,6 +1,9 @@
 {% set url_action = 'resource_edit' if url_is_edit and can_edit else 'resource_read' %}
 {% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
 
+{% set authorized = h.check_access('resource_show',{'id':res.id, 'resource':res }) %}
+{% set user_id = h.restricted_get_user_id() %}
+
 <div class="resource-item-dfo" data-id="{{ res.id }}">
     <div class="resource-item-dfo-preview">
         <span class="format-label pull-left" property="dc:format"
@@ -12,6 +15,7 @@
         </div>
         <div class="resource-item-actions pull-right">
             <ul class="inline">
+                {% if authorized %}
                 <li>
                     <a href="{{ url }}" class="btn">{{ _('Details') }}</a>
                 </li>
@@ -28,6 +32,14 @@
                         </a>
                     {%- endif -%}
                 </li>
+                {% else %}
+                    <div class="dropdown btn-group">
+                        <a href="{{ h.url_for('restricted_request_access', package_id=pkg.name, resource_id=res.id) }}" class="btn">
+                            <i class="fa fa-icon fa-unlock-alt" style="margin-right: 5px;"></i>
+                            {{ _('Request Access')}}
+                        </a>
+                    </div>
+                {% endif %}
             </ul>
         </div>
     </div>

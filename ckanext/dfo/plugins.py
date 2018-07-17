@@ -6,6 +6,7 @@ import ckan.lib.helpers as h
 from ckan.lib import base
 from ckan.common import request
 from ckanext.scheming import helpers as scheming_helpers
+from ckantoolkit import get_validator
 
 
 def non_empty_fields(field_list, pkg_dict, exclude):
@@ -28,6 +29,7 @@ class DFOPlugin(p.SingletonPlugin):
     p.implements(p.IPackageController)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes)
+    p.implements(p.IValidators)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates')
@@ -99,7 +101,8 @@ class DFOPlugin(p.SingletonPlugin):
     def get_helpers(self):
         return {
             'get_thumbnail': get_thumbnail,
-            'non_empty_fields': non_empty_fields
+            'non_empty_fields': non_empty_fields,
+            'scheming_field_required': self.field_required_helper
         }
 
     def before_map(self, map):
@@ -113,12 +116,58 @@ class DFOPlugin(p.SingletonPlugin):
     def after_map(self, map):
         return map
 
+    def get_validators(self):
+        return {
+            'require_when_published': self.required_validator
+        }
+
+    @staticmethod
+    def required_validator(key, flattened_data, errors, context):
+        """
+        A custom required validator that prevents publishing if a required
+        field is not provided.
+        """
+        is_private = flattened_data[('private',)]
+        if not is_private:
+            return get_validator('not_empty')(
+                key,
+                flattened_data,
+                errors,
+                context
+            )
+
+        return get_validator('ignore_missing')(
+            key,
+            flattened_data,
+            errors,
+            context
+        )
+
+    @staticmethod
+    def field_required_helper(field):
+        """
+        Return field['required'] or guess based on validators if not present.
+        """
+        if 'required' in field:
+            return field['required']
+
+        validators = field.get('validators', '').split()
+
+        # The standard CKAN "required" validator.
+        if 'not_empty' in validators:
+            return True
+
+        # Our custom DFO validator to only require a field on publishing.
+        if 'require_when_published' in validators:
+            return True
+
 
 def get_thumbnail(package_id):
     package = toolkit.get_action('package_show')(data_dict={'id': package_id})
 
-    for resource in package['resources']:
-        if resource['name'].lower() == 'thumbnail':
+    for resource in package.get('resources', []):
+        name = resource.get('name')
+        if name and name.lower() == 'thumbnail':
             return resource['url']
 
 

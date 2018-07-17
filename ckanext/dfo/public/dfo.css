@@ -46,3 +46,8 @@
     font-size: 18px;
     color: #aaaaaa;
 }
+
+.first-subfield-info {
+    padding-left: 0;
+    margin-top: 0;
+}
