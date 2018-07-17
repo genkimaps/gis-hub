@@ -3,6 +3,7 @@ dataset_type: dataset
 
 display_group_default: General
 display_group_order:
+  - Basic Information
   - General
   - Science
   - Data Creator
@@ -16,32 +17,33 @@ form_languages:
 
 dataset_fields:
 
-# General
-- preset: dataset_slug
-  field_name: Dataset URL
-  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
+# Basic Information
 
 - field_name: title
   label: Title
   help_text: "Title of the dataset. Titles should be concise (no more than headline-length)."
   validators: require_when_published
+  display_group: Basic Information
 
 - field_name: maintainer_email
-  label: Resource Access Request Email
-  help_text: "Email address to use when requesting access to restricted datasets."
+  label: Maintainer Email
+  help_text: "Email address of the person responsible for the dataset.  Notifications about access requests and other updates will be send to this email."
   validators: not_empty
+  display_group: Basic Information
+
+- preset: dataset_slug
+  field_name: Dataset URL
+  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
+  display_group: Basic Information
 
 - field_name: owner_org
-  label: Publisher - Current Organization Name
-  help_text: The organization (GC Department or Agency) primarily responsible for publishing the dataset
-  label:
-    en: Publisher - Current Organization Name
-    fr: Éditeur - Nom actuel de l’organisation
-  help_text:
-    en: The Title of the current Organization (GC Department or Agency) primarily responsible for publishing the dataset
-    fr: Titre de l’organisation actuelle (organisme ou ministère du GC) principalement responsable de publier le jeu de données
+  label: "Publisher - Organization Name"
+  help_text: "The organization (GC Department or Agency) primarily responsible for publishing the dataset."
   validators: require_when_published owner_org_validator unicode
   form_snippet: organization.html
+  display_group: Basic Information
+
+# General
 
 - field_name: summary_english
   label: Summary
@@ -55,7 +57,7 @@ dataset_fields:
   help_text: "Brief narrative summary of the dataset's contents."
   form_snippet: null
   display_snippet: null
-  default: "Placeholder for French abstract"
+  default: "Placeholder for French summary"
 
 - field_name: topic_category
   label: Topic Category
@@ -135,15 +137,15 @@ dataset_fields:
   form_snippet: null
   validators: require_when_published
 
-- field_name: date_created
-  label: Date Created
+- field_name: date_completed
+  label: Date Completed
   help_text: The date on which the dataset was substantially complete in its current form.
   form_snippet: date.html
   validators: require_when_published
 
 - field_name: date_published
   label: Date Published
-  help_text: "Date of publication of dataset. Default: today's date. This refers to publication of the data on this portal or on another data hosting environment, not necessarily the date of publication of related academic research. Academic citations are described elsewhere."
+  help_text: "Date of publication of the dataset. Default: today's date. This refers to publication of the data on this portal or on another data hosting environment, not necessarily the date of publication of related academic research. Academic citations are described elsewhere."
   form_snippet: date.html
   validators: require_when_published
 
@@ -208,12 +210,12 @@ dataset_fields:
   help_text: "Language of the data (attributes and values). Default: English."
   display_snippet: null
   form_snippet: null
-  default: English
+  default: "English"
   validators: require_when_published
 
 - field_name: hierarchyLevel
-  label: Hierarchy Level
-  help_text: Level to which the metadata applies. Usually Dataset or Series.
+  label: Dataset Level
+  help_text: "Use Dataset if this is a standalone data product.  Series is for datasets that cover one region in a series of datasets covering a larger area, or some other subset of a larger data package."
   display_snippet: select.html
   form_snippet: select.html
   validators: require_when_published
@@ -223,14 +225,10 @@ dataset_fields:
     value: Dataset
   - label: Series
     value: Series
-  - label: Software
-    value: Software
-  - label: Model
-    value: Model
 
 - field_name: file_format
   label: File Format
-  help_text: Format of the data distributed. Do not enter zip as the format; use the format of the data inside the zip file.
+  help_text: "Format of the data distributed. Do not enter zip as the format; use the format of the data inside the zip file."
   validators: require_when_published
 
 # Contacts
@@ -371,7 +369,7 @@ dataset_fields:
   help_text: "List of inputs used to produce this dataset.  Provide a link to the
         source data where possible (to another dataset on the GIS Hub, or an
         external link).  Include the date that the input was extracted,
-        if known.  Add as many inputs as you need. "
+        if known.  Add as many inputs as you need."
   display_group: Science
   preset: composite_repeating
   form_blanks: 1
@@ -405,19 +403,15 @@ dataset_fields:
   validators: require_when_published
 
 - field_name: spatial_data_quality
-  label:
-    en: Spatial Data Quality
-  help_text:
-    en: "A description of the quality of the spatial data. It is important to
+  label: Spatial Data Quality
+  help_text: "A description of the quality of the spatial data. It is important to
         describe the spatial data quality with reference to the data
         processing steps.  Was location data captured with survey-grade GPS,
-        consumer GPS, paper charts, ships log?  Was data digitized from a
-        scanned and georeferenced paper map? Is this dataset the result of
-        intentional degradation of the input data to preserve privacy
-        (e.g. 3 boat rule) and therefore has a known spatial resolution?
-        Were multiple datasets captured at different spatial resolutions
-        used in this analysis? Were point data extrapolated to polygons, or
-        polygons/lines converted to centroids?"
+        consumer GPS, georeferenced paper charts, ships log?  Is this dataset
+        the result of intentional degradation of the input data to preserve privacy
+        (e.g. 3 boat rule)?  Were multiple datasets captured at different
+        spatial resolutions used in this analysis?  Were point data extrapolated
+        to polygons, or polygons/lines converted to centroids?"
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -425,17 +419,16 @@ dataset_fields:
 
 - field_name: positional_accuracy
   label: Positional Accuracy
-  help_text: "Quantitative estimate of horizontal/vertical accuracy. Express in metric units where possible."
+  help_text: "Quantitative estimate of horizontal/vertical accuracy. Express
+        in metric units where possible."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
 - field_name: attribute_accuracy
-  label:
-    en: Attribute Accuracy
-  help_text:
-    en: General description of the degree to which attribute values reflect
+  label: Attribute Accuracy
+  help_text: General description of the degree to which attribute values reflect
         real-world conditions.
   form_snippet: text.html
   display_snippet: text.html
@@ -443,30 +436,24 @@ dataset_fields:
   validators: require_when_published
 
 - field_name: logical_consistency_report
-  label:
-    en: Logical Consistency Report
-  help_text:
-    en: Report on fidelity of relationships in the data set, the validity of its relationships to other data sets, and the degree to which the entities represent the real-world objects or concepts they are intended to capture.
+  label: Logical Consistency Report
+  help_text: Report on fidelity of relationships in the data set, the validity of its relationships to other data sets, and the degree to which the entities represent the real-world objects or concepts they are intended to capture.
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
 - field_name: completeness_report
-  label:
-    en: Completeness Report
-  help_text:
-    en: Report on the completeness of the dataset relative to its areal coverage, and the overall completeness of attributes.
+  label: Completeness Report
+  help_text: Report on the completeness of the dataset relative to its areal coverage, and the overall completeness of attributes.
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
 - field_name: absence_data
-  label:
-    en: Absence Data
-  help_text:
-    en: Does the dataset include recorded (observed) absence of specific features,
+  label: Absence Data
+  help_text: Does the dataset include recorded (observed) absence of specific features,
         and if so, for which attributes? If no absence data was recorded, enter
         No Absence Data in this field.
   form_snippet: text.html
@@ -474,20 +461,31 @@ dataset_fields:
   display_group: Science
   validators: require_when_published
 
+# Composite Repeating Field for Change History
 - field_name: change_history
-  label:
-    en: Change History
-  help_text:
-    en: A description of changes made to the data since its release.
-  form_snippet: text.html
-  display_snippet: text.html
+  label: Change History
+  help_text: "A description of changes made to the data since its release. For each
+        change, indicate the date of change and describe what was changed and why.
+        When a dataset is first published, there is one change history entry for the
+        initial creation of the dataset.  Add additional change history
+        entries as needed."
   display_group: Science
+  preset: composite_repeating
+  form_blanks: 1
+  subfields:
+  - field_name: change_description
+    label: Description of Change
+    default: "Initial creation of the dataset"
+    form_snippet: textarea.html
+    display_snippet: text.html
+    display_group: Science
+    validators: require_when_published
 
-- field_name: change_date
-  label: Date of Change
-  form_snippet: date.html
-  display_snippet: date.html
-  display_group: Science
+  - field_name: change_date
+    label: Date of Change
+    form_snippet: date.html
+    display_snippet: date.html
+    display_group: Science
 
 - field_name: start_date
   label: Start Date
@@ -503,16 +501,14 @@ dataset_fields:
 - field_name: temporal_coverage
   label: Temporal Coverage
   help_text: "If the temporal coverage of the dataset is more complex than a simple start and end date, describe it here.  You may describe temporal coverage as a single point in time, multiple points in time, and one or more range of dates.  Seasonality can also be described here."
-  form_snippet: text.html
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
 - field_name: species_codes
-  label:
-    en: Species Codes
-  help_text:
-    en: A list of species names / species codes.  Was the species observed incidentally, or was it targeted as part of the survey data?  Was the presence of species inferred or observed?
+  label: Species Codes
+  help_text: "A list of species names / species codes.  Was the species observed incidentally, or was it targeted as part of the survey data?  Was the presence of species inferred or observed?"
   form_snippet: text.html
   display_snippet: text.html
   display_group: Science
@@ -521,7 +517,7 @@ dataset_fields:
 
 - field_name: references
   label: References
-  help_text: Academic references associated with the resource.
+  help_text: "Citations for academic references associated with the resource. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
   preset: composite_repeating
   form_blanks: 1
   display_group: Science
@@ -529,7 +525,6 @@ dataset_fields:
 
   - field_name: reference
     label: Reference
-    help_text: "Citation for an academic reference. Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
     form_snippet: textarea.html
     display_snippet: text.html
     display_group: Science
@@ -560,10 +555,8 @@ dataset_fields:
   validators: require_when_published
 
 - field_name: uncertainties
-  label:
-    en: Uncertainties
-  help_text:
-    en: Describe uncertainties in measurement and methodology. Include any known biases. For example, was data collection opportunistic, or part of the survey design? In there any known bias from individual observers?
+  label: Uncertainties
+  help_text: "Describe uncertainties in measurement and methodology. Include any known biases. For example, was data collection opportunistic, or part of the survey design? In there any known bias from individual observers?"
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -571,7 +564,7 @@ dataset_fields:
 
 - field_name: use_restrictions
   label: Use Restrictions
-  help_text: "Restrictions on appropriate use of the resource.  For example:  Not suitable for navigation."
+  help_text: "Restrictions on appropriate use of the resource.  Examples:  Not suitable for navigation.  Do not use for fisheries assessment."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -584,17 +577,15 @@ dataset_fields:
   display_snippet: null
 
 - field_name: other_information
-  label:
-    en: Other Information
-  help_text:
-    en: Relevant information that does not fit in any other category.
+  label: Other Information
+  help_text: Relevant information that does not fit in any other category.
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
 
 - field_name: confidentiality
   label: Confidentiality
-  help_text: "Level of confidentiality or sensitivity of the dataset.  For a description of the categories, refer to: https://www.tpsgc-pwgsc.gc.ca/esc-src/protection-safeguarding/niveaux-levels-eng.html.  Data classified as Protected B or Secret or any higher classification cannot be stored on this system."
+  help_text: "Level of confidentiality or sensitivity of the dataset.  For a description of the categories, refer to: https://www.tpsgc-pwgsc.gc.ca/esc-src/protection-safeguarding/niveaux-levels-eng.html.  Data classified as Protected B, Secret, or any higher classification cannot be uploaded on this system.  If your data is of a higher-security classification, you can still create a dataset record using this system, but do not upload the actual data. "
   form_snippet: select.html
   display_snippet: select.html
   display_group: Science
@@ -623,39 +614,57 @@ dataset_fields:
 
 resource_fields:
 - field_name: name
-  label: Resource Name
-  help_text: A name given to the resource.
+  label: Label for Data Package
+  help_text: "A label for the data package uploaded with this dataset.  Example: Bottom Patches - Geodatabase and Scripts."
 
 # Projection
 
 - field_name: projection_text
-  label: Projection
+  label: Projection Name
   display_group: Projection
+  help_text: "The name of the projection of the data. Example: BC Albers Equal Area"
   validators: require_when_published
 
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
+  help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/"
   validators: require_when_published
 
 - field_name: projection_codespace
   label: Codespace
   default: "http://www.epsg-registry.org"
   display_group: Projection
+  form_snippet: null
+  display_snippet: null
   validators: require_when_published
 
 - field_name: codespace_version
   label: Codespace Version
   default: "9.2.2"
   display_group: Projection
+  form_snippet: null
+  display_snippet: null
   validators: require_when_published
 
 # Spatial
 
 - field_name: data_format
   label: Format
+  help_text: "The format in which this dataset is distributed."
   display_group: Spatial
   validators: require_when_published
+  form_snippet: select.html
+  display_snippet: select.html
+  choices:
+    - label: File Geodatabase
+      value: File Geodatabase
+    - label: Shapefile
+      value: Shapefile
+    - label: GeoTiff
+      value: GeoTiff
+    - label: GeoJson
+      value: GeoJson
 
 - field_name: layer_name
   label: Layer Name
@@ -671,7 +680,7 @@ resource_fields:
   choices:
     - label: Vector
       value: vector
-    - label: Grid
+    - label: Grid (Raster)
       value: grid
     - label: Table
       value: table
@@ -751,7 +760,7 @@ resource_fields:
 
   - field_name: description
     label: Field Description
-    help_text: Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable).
+    help_text: "Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable)."
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes
@@ -765,7 +774,7 @@ resource_fields:
 
   - field_name: coded_values
     label: Coded Values
-    help_text: If the attribute contains values from a list of coded domains, describe each of the code-domain pairs. If the list of domain values is excessively long, do not try to paste it in this box; instead include a link to a document describing the domain values.
+    help_text: "If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. If the list of coded values is excessively long, do not try to paste it in this box; instead include a link to a document or website describing the coded values."
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes
@@ -776,29 +785,28 @@ resource_fields:
 - field_name: disclaimer
   label: Download Disclaimer
   help_text: A disclaimer that is displayed to authorized users before allowing data download.
-  default: This data is intended for scientific research only. DFO is not responsible for damages resulting from any omissions or errors that may be contained in these data and expressly disclaims any warranty of fitness for any particular purpose. DFO shall not be liable for any losses, financial or otherwise, due to the use of these data. The user assumes the entire risk as to the suitability, results and performance of the data for their proposed use.
+  default: "This data is intended for scientific research only. Fisheries and Oceans Canada (DFO) is not responsible for damages resulting from any omissions or errors that may be contained in these data and expressly disclaims any warranty of fitness for any particular purpose. DFO shall not be liable for any losses, financial or otherwise, due to the use of these data. The user assumes the entire risk as to the suitability, results and performance of the data for their proposed use."
   form_snippet: textarea.html
   display_snippet: null
 
 - field_name: disclaimer_url
-  label:
-    en: Download Disclaimer (Remote)
-  help_text:
-    en: The URL to a remote disclaimer that must be accepted before downloading this resource.
+  label: Download Disclaimer (Remote)
+  help_text: "The URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
   form_snippet: text.html
   display_snippet: null
 
 - field_name: url
   label: Download URL
   upload_label: "File Upload"
-  help_text: The location for online access to the distribution of the resource, if the file resides elsewhere.
+  help_text: "Prepare your data for uploading. ESRI File Geodatabases and Shapefiles are supported, but need to be uploaded as a zip file. For a shapefile, include all components (.shp, .dbf, .shx and so on) in the zip file. For a file geodatabase, create a new geodatabase and copy only the feature classes/tables that you want to publish. Zip the entire file geodatabase folder (.gdb).  You may also include documents and scripts in separate folders inside the zip file.  If you are not uploading a file with your data, you may instead provide the URL to the data download on another website, outside of the GIS Hub.  This is used, for example, when you are creating a metadata record that points to a dataset hosted on the BC Geographic Data Warehouse."
   validators: not_empty unicode remove_whitespace
   form_snippet: upload.html
   upload_field: upload
   upload_clear: clear_upload
 
 - field_name: restricted
-  label: "Access Restriction"
+  label: "Access Restrictions"
+  help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be selected on the next page. "
   preset: composite
   subfields:
   - field_name: level
@@ -807,16 +815,14 @@ resource_fields:
     form_include_blank_choice: False
     validators: require_when_published
     choices:
-    - value: public
-      label: Public
     - value: registered
-      label: Registered Users
+      label: All Registered Users
     - value: any_organization
       label: Any Organization Members
     - value: same_organization
       label: Same Organization Members
     - value: only_allowed_users
-      label: Allowed Users Only
+      label: Allowed Users/Groups Only
   - field_name: allowed_users
     label: Allowed Users
     preset: tag_string_autocomplete
