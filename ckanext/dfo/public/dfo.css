@@ -47,7 +47,14 @@
     color: #aaaaaa;
 }
 
-.first-subfield-info {
+#dataset-edit .control-group .btn {
+    /* Fix alignment of +/- buttons with text inputs */
+    margin-bottom: 10px;
+    padding-top: unset;
+    padding-bottom: unset;
+}
+
+#dataset-edit div.first-subfield-info {
     padding-left: 0;
     margin-top: 0;
 }
