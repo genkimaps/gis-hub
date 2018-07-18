@@ -38,7 +38,14 @@ class DFOPlugin(p.SingletonPlugin):
 
     def dataset_facets(self, facets_dict, package_type):
         if package_type == 'dataset':
-            facets_dict['theme'] = p.toolkit._('Theme')
+            facets_dict.pop('license_id', None)
+            facets_dict.pop('tags', None)
+            facets_dict.pop('res_format', None)
+
+            facets_dict['data_format'] = p.toolkit._('Formats')
+            facets_dict['science_keywords'] = p.toolkit._('Tags')
+            facets_dict['theme'] = p.toolkit._('Themes')
+
         return facets_dict
 
     def group_facets(self, facets_dict, organization_type, package_type):
