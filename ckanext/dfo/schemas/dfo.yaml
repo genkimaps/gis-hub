@@ -32,7 +32,7 @@ dataset_fields:
   display_group: Basic Information
 
 - preset: dataset_slug
-  field_name: Dataset URL
+  field_name: name
   help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
   display_group: Basic Information
 
