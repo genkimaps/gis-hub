@@ -460,23 +460,23 @@ dataset_fields:
   label: Attribute Accuracy
   help_text: General description of the degree to which attribute values reflect
         real-world conditions.
-  form_snippet: text.html
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
-- field_name: logical_consistency_report
+- field_name: logical_consistency
   label: Logical Consistency
   help_text: Report on fidelity of relationships in the data set, the validity of its relationships to other data sets, and the degree to which the entities represent the real-world objects or concepts they are intended to capture.
-  form_snippet: text.html
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
-- field_name: completeness_report
+- field_name: completeness
   label: Completeness
   help_text: Report on the completeness of the dataset relative to its areal coverage, and the overall completeness of attributes.
-  form_snippet: text.html
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
@@ -484,7 +484,7 @@ dataset_fields:
 - field_name: absence_data
   label: Absence Data
   help_text: "Does the dataset include recorded (observed) absence of specific features, and if so, for which attributes? If no absence data was recorded, enter 'No Absence Data' in this field."
-  form_snippet: text.html
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
@@ -516,11 +516,13 @@ dataset_fields:
   help_text: Indicate the earliest date represented in this dataset.
   form_snippet: date.html
   validators: require_when_published
+  display_group: Science
 
 - field_name: end_date
   label: End Date
   help_text: Indicate the latest date represented in this dataset. If data collection is ongoing, leave this blank.
   form_snippet: date.html
+  display_group: Science
 
 - field_name: temporal_coverage
   label: Temporal Coverage
@@ -528,14 +530,60 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  validators: require_when_published
 
+  # TODO: Composite repeating field for species codes
 - field_name: species_codes
   label: Species Codes
-  help_text: "A list of species names / species codes.  Was the species observed incidentally, or was it targeted as part of the survey data?  Was the presence of species inferred or observed?"
-  form_snippet: text.html
-  display_snippet: text.html
+  help_text: "A list of species names / species codes.  For each species, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Vulnerability Score: Select a score from 1 (minimum) to 10 (maximum).  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred."
+  preset: composite_repeating
+  form_blanks: 1
   display_group: Science
+  subfields:
+
+  - field_name: sp_code
+    label: Species Code
+    form_snippet: text.html
+    make_searchable: True
+    display_snippet: text.html
+    display_group: Science
+
+  - field_name: age_data
+    label: Age Data
+    display_snippet: select.html
+    form_snippet: select.html
+    display_group: Science
+    choices:
+    - label: Yes
+      value: Yes
+    - label: No
+      value: No
+    display_group: Science
+
+  - field_name: vuln_score
+    label: Vulnerability Score
+    display_snippet: select.html
+    form_snippet: select.html
+    display_group: Science
+    choices:
+    - label: 1
+      value: 1
+    - label: 2
+      value: 2
+    display_group: Science
+
+  - field_name: obs_type
+    label: Observation Type
+    display_snippet: select.html
+    form_snippet: select.html
+    display_group: Science
+    choices:
+    - label: Targeted observation
+      value: Targeted observation
+    - label: Incidental observation
+      value: Incidental observation
+    - label: Inferred
+      value: Inferred
+    display_group: Science
 
 # Composite Repeating Field for references
 
@@ -639,20 +687,25 @@ resource_fields:
 - field_name: name
   label: Label for Data Package
   help_text: "A label for the data package uploaded with this dataset.  Example: Bottom Patches - Geodatabase and Scripts."
+  validators: require_when_published
 
 # Projection
+# Spatial metadata fields that are both annoying for users to enter manually and cannot have a default should be
+# optional and hidden for now (will be populated later by Python script on backend).
 
 - field_name: projection_text
   label: Projection Name
   display_group: Projection
   help_text: "The name of the projection of the data. Example: BC Albers Equal Area"
-  validators: require_when_published
+  form_snippet: null
+  #validators: require_when_published
 
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
   help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/"
-  validators: require_when_published
+  form_snippet: null
+  #validators: require_when_published
 
 - field_name: projection_codespace
   label: Codespace
@@ -679,6 +732,7 @@ resource_fields:
   validators: require_when_published
   form_snippet: select.html
   display_snippet: select.html
+  default: File Geodatabase
   choices:
     - label: File Geodatabase
       value: File Geodatabase
@@ -692,13 +746,15 @@ resource_fields:
 - field_name: layer_name
   label: Layer Name
   display_group: Spatial
-  validators: require_when_published
+  form_snippet: null
+  #validators: require_when_published
 
 - field_name: spatial_type
   label: Spatial Type
   form_snippet: select.html
   display_snippet: select.html
   display_group: Spatial
+  default: vector
   validators: require_when_published
   choices:
     - label: Vector
@@ -717,6 +773,7 @@ resource_fields:
   form_snippet: select.html
   display_snippet: select.html
   display_group: Spatial
+  default: point
   validators: require_when_published
   choices:
     - label: Point
@@ -737,18 +794,21 @@ resource_fields:
 - field_name: bbox
   label: Bounding Box (lat-lon)
   display_group: Spatial
-  validators: require_when_published
+  form_snippet: null
+  #validators: require_when_published
 
 - field_name: uuid
-  label: Unique ID (auto-generated)
+  label: Unique ID
   display_group: Spatial
+  form_snippet: null
 
 # Composite Repeating Field for Attributes
 # One to many relationship for attribute table fields
 
 - field_name: attribute
-  label: Attribute
+  label: Attributes
   preset: composite_repeating
+  help_text: "Describe the attributes. As part of the metadata for this spatial dataset, you must clearly document all attributes for each layer (and any standalone tables) in your uploaded file.  The name of the field in the attribute table, the field type, and a description are required. The description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)"
   form_blanks: 1
   display_group: Attributes
   subfields:
@@ -783,21 +843,21 @@ resource_fields:
 
   - field_name: description
     label: Field Description
-    help_text: "Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable)."
+    #help_text: "Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable)."
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes
 
   - field_name: units
     label: Units
-    help_text: If relevant, indicate the units.
+    #help_text: If relevant, indicate the units.
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes
 
   - field_name: coded_values
     label: Coded Values
-    help_text: "If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. If the list of coded values is excessively long, do not try to paste it in this box; instead include a link to a document or website describing the coded values."
+    #help_text: "If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. If the list of coded values is excessively long, do not try to paste it in this box; instead include a link to a document or website describing the coded values."
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes
@@ -814,7 +874,7 @@ resource_fields:
 
 - field_name: disclaimer_url
   label: Download Disclaimer (Remote)
-  help_text: "The URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
+  help_text: "Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
   form_snippet: text.html
   display_snippet: null
 
