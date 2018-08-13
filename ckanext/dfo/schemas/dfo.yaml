@@ -4,10 +4,10 @@ dataset_type: dataset
 display_group_default: General
 display_group_order:
   - Basic Information
-  - General
-  - Science
   - Data Creator
   - Program Manager
+  - General
+  - Science
 
 
 about:
@@ -215,7 +215,7 @@ dataset_fields:
 
 - field_name: hierarchyLevel
   label: Dataset Level
-  help_text: "Use Dataset if this is a standalone data product.  Series is for datasets that cover one region in a series of datasets covering a larger area, or some other subset of a larger data package."
+  help_text: "Use Dataset if this is a standalone data product.  Series is individual regions in a series of datasets covering a larger area, or some other subset of a larger data package."
   display_snippet: select.html
   form_snippet: select.html
   validators: require_when_published
@@ -226,93 +226,109 @@ dataset_fields:
   - label: Series
     value: Series
 
-- field_name: file_format
-  label: File Format
-  help_text: "Format of the data distributed. Do not enter zip as the format; use the format of the data inside the zip file."
-  validators: require_when_published
-
-# Contacts
-
-- field_name: creator_name
-  label: Name
-  help_text: The Principal Analyst. The lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, Email.
-  display_group: Data Creator
-  make_searchable: True
-  validators: require_when_published
-
-- field_name: creator_email
-  label: Email
-  display_group: Data Creator
-  make_searchable: True
-  validators: require_when_published
-
-- field_name: creator_position
-  label: Position
-  display_group: Data Creator
-  validators: require_when_published
-
-- field_name: creator_organization
-  label: Organization
-  display_group: Data Creator
-  validators: require_when_published
-
-- field_name: creator_address
-  label: Address
-  display_group: Data Creator
-  validators: require_when_published
-
-- field_name: creator_phone
-  label: Phone
-  display_group: Data Creator
-  validators: require_when_published
-
-# Program Manager
-
-- field_name: manager_name
-  label: Name
-  help_text: The DFO Program Head (must be a permanent DFO employee). Provide the Name, Position, Department, Address, Phone, Email.
-  display_group: Program Manager
-  make_searchable: True
-  validators: require_when_published
-
-- field_name: manager_email
-  label: Email
-  display_group: Program Manager
-  make_searchable: True
-  validators: require_when_published
-
-- field_name: manager_position
-  label: Position
-  display_group: Program Manager
-  validators: require_when_published
-
-- field_name: manager_organization
-  label: Organization
-  display_group: Program Manager
-  validators: require_when_published
-
-- field_name: manager_address
-  label: Address
-  display_group: Program Manager
-  validators: require_when_published
-
-- field_name: manager_phone
-  label: Phone
-  display_group: Program Manager
-  validators: require_when_published
-
 - field_name: keywords
   preset: tag_string_autocomplete
   label: Keywords
   help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated."
   validators: require_when_published tag_string_convert
 
+# Contacts
+
+- field_name: data_creator
+  label: Data Creator
+  help_text: "Provide contact information for the Principal Analyst: The lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, and Email."
+  display_group: Data Creator
+  validators: require_when_published
+  preset: composite
+  subfields:
+
+  - field_name: creator_name
+    label: Name
+    display_group: Data Creator
+    make_searchable: True
+    validators: require_when_published
+
+  - field_name: creator_email
+    label: Email
+    display_group: Data Creator
+    make_searchable: True
+    validators: require_when_published
+
+  - field_name: creator_position
+    label: Position
+    display_group: Data Creator
+    validators: require_when_published
+
+  - field_name: creator_organization
+    label: Organization
+    display_group: Data Creator
+    validators: require_when_published
+
+  - field_name: creator_address
+    label: Address
+    display_group: Data Creator
+    validators: require_when_published
+
+  - field_name: creator_phone
+    label: Phone
+    display_group: Data Creator
+    validators: require_when_published
+
+- field_name: co_creators
+  label: Co-Creators
+  form_snippet: textarea.html
+  help_text: "Provide the names of any additional co-creators (secondary authors) for this dataset."
+  display_group: Data Creator
+
+# Program Manager
+
+- field_name: program_manager
+  label: Program Manager
+  help_text: "Provide contact information for the DFO Program Head (must be a permanent DFO employee). Provide the Name, Position, Department, Address, Phone, and Email."
+  display_group: Program Manager
+  validators: require_when_published
+  preset: composite
+  subfields:
+
+  - field_name: manager_name
+    label: Name
+    display_group: Program Manager
+    make_searchable: True
+    validators: require_when_published
+
+  - field_name: manager_email
+    label: Email
+    display_group: Program Manager
+    make_searchable: True
+    validators: require_when_published
+
+  - field_name: manager_position
+    label: Position
+    display_group: Program Manager
+    validators: require_when_published
+
+  - field_name: manager_organization
+    label: Organization
+    display_group: Program Manager
+    validators: require_when_published
+
+  - field_name: manager_address
+    label: Address
+    display_group: Program Manager
+    validators: require_when_published
+
+  - field_name: manager_phone
+    label: Phone
+    display_group: Program Manager
+    validators: require_when_published
+
+
 # Science
 
 - field_name: science_keywords
   preset: tag_string_autocomplete
   label: Science Keywords
-  help_text: Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. Keywords can be domain-specific and more detailed than general keywords.
+  help_text: "Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. Keywords can be domain-specific and more detailed than general keywords."
   validators: require_when_published tag_string_convert
   display_group: Science
 
@@ -335,8 +351,22 @@ dataset_fields:
     value: salmon
   - label: Marine Mammals
     value: marine_mammals
-  - label: Shellfish
-    value: shellfish
+  - label: Shellfish Fisheries
+    value: shellfish_fisheries
+  - label: Shellfish Survey
+    value: shellfish_survey
+  - label: Groundfish Fisheries
+    value: groundfish_fisheries
+  - label: Groundfish Survey
+    value: groundfish_survey
+  - label: Salmon Fisheries
+    value: salmon_fisheries
+  - label: Salmon Survey
+    value: salmon_survey
+  - label: Herring Fisheries
+    value: herring_fisheries
+  - label: Herring Survey
+    value: herring_survey
   - label: Benthic Species or Ecosystem
     value: benthic_species
   - label: Pelagic Species or Ecosystem
@@ -395,7 +425,7 @@ dataset_fields:
         GitLab site. Alternatively, include the scripts or queries in a Scripts folder
         inside in the zip file that you will upload. Document the
         purpose of each script, and anything required to run the script again.
-        If no scripts were used to create the data, ues this field to indicate how it was created
+        If no scripts were used to create the data, indicate how it was created
         (e.g. manually created using analysis tools in ArcGIS)."
   form_snippet: textarea.html
   display_snippet: text.html
@@ -430,33 +460,31 @@ dataset_fields:
   label: Attribute Accuracy
   help_text: General description of the degree to which attribute values reflect
         real-world conditions.
-  form_snippet: text.html
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
-- field_name: logical_consistency_report
-  label: Logical Consistency Report
+- field_name: logical_consistency
+  label: Logical Consistency
   help_text: Report on fidelity of relationships in the data set, the validity of its relationships to other data sets, and the degree to which the entities represent the real-world objects or concepts they are intended to capture.
-  form_snippet: text.html
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
-- field_name: completeness_report
-  label: Completeness Report
+- field_name: completeness
+  label: Completeness
   help_text: Report on the completeness of the dataset relative to its areal coverage, and the overall completeness of attributes.
-  form_snippet: text.html
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
 
 - field_name: absence_data
   label: Absence Data
-  help_text: Does the dataset include recorded (observed) absence of specific features,
-        and if so, for which attributes? If no absence data was recorded, enter
-        No Absence Data in this field.
-  form_snippet: text.html
+  help_text: "Does the dataset include recorded (observed) absence of specific features, and if so, for which attributes? If no absence data was recorded, enter 'No Absence Data' in this field."
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
@@ -464,11 +492,7 @@ dataset_fields:
 # Composite Repeating Field for Change History
 - field_name: change_history
   label: Change History
-  help_text: "A description of changes made to the data since its release. For each
-        change, indicate the date of change and describe what was changed and why.
-        When a dataset is first published, there is one change history entry for the
-        initial creation of the dataset.  Add additional change history
-        entries as needed."
+  help_text: "A description of changes made to the data since its release. For each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed."
   display_group: Science
   preset: composite_repeating
   form_blanks: 1
@@ -492,11 +516,13 @@ dataset_fields:
   help_text: Indicate the earliest date represented in this dataset.
   form_snippet: date.html
   validators: require_when_published
+  display_group: Science
 
 - field_name: end_date
   label: End Date
   help_text: Indicate the latest date represented in this dataset. If data collection is ongoing, leave this blank.
   form_snippet: date.html
+  display_group: Science
 
 - field_name: temporal_coverage
   label: Temporal Coverage
@@ -504,14 +530,60 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
-  validators: require_when_published
 
+  # TODO: Composite repeating field for species codes
 - field_name: species_codes
   label: Species Codes
-  help_text: "A list of species names / species codes.  Was the species observed incidentally, or was it targeted as part of the survey data?  Was the presence of species inferred or observed?"
-  form_snippet: text.html
-  display_snippet: text.html
+  help_text: "A list of species names / species codes.  For each species, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Vulnerability Score: Select a score from 1 (minimum) to 10 (maximum).  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred."
+  preset: composite_repeating
+  form_blanks: 1
   display_group: Science
+  subfields:
+
+  - field_name: sp_code
+    label: Species Code
+    form_snippet: text.html
+    make_searchable: True
+    display_snippet: text.html
+    display_group: Science
+
+  - field_name: age_data
+    label: Age Data
+    display_snippet: select.html
+    form_snippet: select.html
+    display_group: Science
+    choices:
+    - label: Yes
+      value: Yes
+    - label: No
+      value: No
+    display_group: Science
+
+  - field_name: vuln_score
+    label: Vulnerability Score
+    display_snippet: select.html
+    form_snippet: select.html
+    display_group: Science
+    choices:
+    - label: 1
+      value: 1
+    - label: 2
+      value: 2
+    display_group: Science
+
+  - field_name: obs_type
+    label: Observation Type
+    display_snippet: select.html
+    form_snippet: select.html
+    display_group: Science
+    choices:
+    - label: Targeted observation
+      value: Targeted observation
+    - label: Incidental observation
+      value: Incidental observation
+    - label: Inferred
+      value: Inferred
+    display_group: Science
 
 # Composite Repeating Field for references
 
@@ -540,7 +612,7 @@ dataset_fields:
 
 - field_name: collaboration
   label: Collaboration
-  help_text: Describe collaboration with academia, other government agencies, and external contributors. If produced internally by DFO, indicate "No collaboration outside of DFO."
+  help_text: "Describe collaboration with academia, other government agencies, and external contributors. If produced internally by DFO, enter 'No collaboration outside of DFO.' "
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -585,15 +657,14 @@ dataset_fields:
 
 - field_name: confidentiality
   label: Confidentiality
-  help_text: "Level of confidentiality or sensitivity of the dataset.  For a description of the categories, refer to: https://www.tpsgc-pwgsc.gc.ca/esc-src/protection-safeguarding/niveaux-levels-eng.html.  Data classified as Protected B, Secret, or any higher classification cannot be uploaded on this system.  If your data is of a higher-security classification, you can still create a dataset record using this system, but do not upload the actual data. "
+  help_text: "Level of confidentiality or sensitivity of the dataset.  For a description of the categories, refer to: https://www.tpsgc-pwgsc.gc.ca/esc-src/protection-safeguarding/niveaux-levels-eng.html.  Not Protected means that no harm would occur if the data were released to the public.  However, choosing this option does not mean that your data will be made public on this website (all datasets published on this site are restricted to registered users).  Protected A applies to data that could harm individuals or corporations if released, such as fishing events and bathymetry.  Note that fishing data received 'in confidence' should be Protected A, not Confidential.  Confidential applies to data that could harm the national interest if released.  At this time, Confidential should be used only for abalone data.  Data classified as Protected B, Secret, or any higher classification cannot be uploaded on this system.  For these security classification, you may still create a dataset record using this system, but do not upload the actual data. "
   form_snippet: select.html
   display_snippet: select.html
   display_group: Science
+  default: Not Protected
   choices:
-    - label: Public
-      value: Public
-    - label: Protected
-      value: Protected
+    - label: Not Protected
+      value: Not Protected
     - label: Protected A
       value: Protected A
     - label: Confidential
@@ -616,20 +687,25 @@ resource_fields:
 - field_name: name
   label: Label for Data Package
   help_text: "A label for the data package uploaded with this dataset.  Example: Bottom Patches - Geodatabase and Scripts."
+  validators: require_when_published
 
 # Projection
+# Spatial metadata fields that are both annoying for users to enter manually and cannot have a default should be
+# optional and hidden for now (will be populated later by Python script on backend).
 
 - field_name: projection_text
   label: Projection Name
   display_group: Projection
   help_text: "The name of the projection of the data. Example: BC Albers Equal Area"
-  validators: require_when_published
+  form_snippet: null
+  #validators: require_when_published
 
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
   help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/"
-  validators: require_when_published
+  form_snippet: null
+  #validators: require_when_published
 
 - field_name: projection_codespace
   label: Codespace
@@ -650,12 +726,13 @@ resource_fields:
 # Spatial
 
 - field_name: data_format
-  label: Format
-  help_text: "The format in which this dataset is distributed."
+  label: Data Format
+  help_text: "Indicate the format of the spatial data inside the zip file. Note that there may be other components to a dataset (e.g. PDF report, R script) that do not fall into any of these categories. Do not enter zip as the format."
   display_group: Spatial
   validators: require_when_published
   form_snippet: select.html
   display_snippet: select.html
+  default: File Geodatabase
   choices:
     - label: File Geodatabase
       value: File Geodatabase
@@ -669,13 +746,15 @@ resource_fields:
 - field_name: layer_name
   label: Layer Name
   display_group: Spatial
-  validators: require_when_published
+  form_snippet: null
+  #validators: require_when_published
 
 - field_name: spatial_type
   label: Spatial Type
   form_snippet: select.html
   display_snippet: select.html
   display_group: Spatial
+  default: vector
   validators: require_when_published
   choices:
     - label: Vector
@@ -694,6 +773,7 @@ resource_fields:
   form_snippet: select.html
   display_snippet: select.html
   display_group: Spatial
+  default: point
   validators: require_when_published
   choices:
     - label: Point
@@ -714,18 +794,21 @@ resource_fields:
 - field_name: bbox
   label: Bounding Box (lat-lon)
   display_group: Spatial
-  validators: require_when_published
+  form_snippet: null
+  #validators: require_when_published
 
 - field_name: uuid
-  label: Unique ID (auto-generated)
+  label: Unique ID
   display_group: Spatial
+  form_snippet: null
 
 # Composite Repeating Field for Attributes
 # One to many relationship for attribute table fields
 
 - field_name: attribute
-  label: Attribute
+  label: Attributes
   preset: composite_repeating
+  help_text: "Describe the attributes. As part of the metadata for this spatial dataset, you must clearly document all attributes for each layer (and any standalone tables) in your uploaded file.  The name of the field in the attribute table, the field type, and a description are required. The description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)"
   form_blanks: 1
   display_group: Attributes
   subfields:
@@ -760,21 +843,21 @@ resource_fields:
 
   - field_name: description
     label: Field Description
-    help_text: "Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable)."
+    #help_text: "Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable)."
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes
 
   - field_name: units
     label: Units
-    help_text: If relevant, indicate the units.
+    #help_text: If relevant, indicate the units.
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes
 
   - field_name: coded_values
     label: Coded Values
-    help_text: "If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. If the list of coded values is excessively long, do not try to paste it in this box; instead include a link to a document or website describing the coded values."
+    #help_text: "If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. If the list of coded values is excessively long, do not try to paste it in this box; instead include a link to a document or website describing the coded values."
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes
@@ -791,7 +874,7 @@ resource_fields:
 
 - field_name: disclaimer_url
   label: Download Disclaimer (Remote)
-  help_text: "The URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
+  help_text: "Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
   form_snippet: text.html
   display_snippet: null
 
@@ -806,7 +889,7 @@ resource_fields:
 
 - field_name: restricted
   label: "Access Restrictions"
-  help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be selected on the next page. "
+  help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be added by typing names into the Allowed Users field below. "
   preset: composite
   subfields:
   - field_name: level
