@@ -42,7 +42,8 @@
     padding: 0;
 }
 
-#dataset-edit .info-block {
+#dataset-edit .info-block,
+#resource-edit .info-block {
     font-size: 15px;
     color: #aaaaaa;
 }

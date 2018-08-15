@@ -238,7 +238,7 @@ dataset_fields:
   label: Data Creator
   help_text: "Provide contact information for the Principal Analyst: The lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, and Email."
   display_group: Data Creator
-  validators: require_when_published
+  # validators: require_when_published
   preset: composite
   subfields:
 
@@ -252,7 +252,7 @@ dataset_fields:
     label: Email
     display_group: Data Creator
     make_searchable: True
-    validators: require_when_published
+    validators: require_when_published email_validator
 
   - field_name: creator_position
     label: Position
@@ -286,7 +286,7 @@ dataset_fields:
   label: Program Manager
   help_text: "Provide contact information for the DFO Program Head (must be a permanent DFO employee). Provide the Name, Position, Department, Address, Phone, and Email."
   display_group: Program Manager
-  validators: require_when_published
+  # validators: require_when_published
   preset: composite
   subfields:
 
@@ -300,7 +300,7 @@ dataset_fields:
     label: Email
     display_group: Program Manager
     make_searchable: True
-    validators: require_when_published
+    validators: require_when_published email_validator
 
   - field_name: manager_position
     label: Position

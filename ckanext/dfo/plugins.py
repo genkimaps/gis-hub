@@ -43,7 +43,7 @@ class DFOPlugin(p.SingletonPlugin):
             facets_dict.pop('res_format', None)
 
             facets_dict['data_format'] = p.toolkit._('Formats')
-            facets_dict['science_keywords'] = p.toolkit._('Tags')
+            facets_dict['science_keywords'] = p.toolkit._('Keywords')
             facets_dict['theme'] = p.toolkit._('Themes')
 
         return facets_dict
