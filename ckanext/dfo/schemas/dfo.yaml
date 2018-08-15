@@ -531,6 +531,19 @@ dataset_fields:
   display_snippet: text.html
   display_group: Science
 
+- field_name: species_code_autocomplete
+  label: Species Code (BETA)
+  preset: select
+  choices_helper: scheming_datastore_choices
+  datastore_choices_resource: species-code-autocomplete
+  datastore_choices_columns:
+    value: code
+    label: species_name
+  form_attrs:
+    data-module: autocomplete
+  display_group: Science
+
+
   # TODO: Composite repeating field for species codes
 - field_name: species_codes
   label: Species Codes
@@ -557,7 +570,6 @@ dataset_fields:
       value: Yes
     - label: No
       value: No
-    display_group: Science
 
   - field_name: vuln_score
     label: Vulnerability Score
@@ -569,7 +581,6 @@ dataset_fields:
       value: 1
     - label: 2
       value: 2
-    display_group: Science
 
   - field_name: obs_type
     label: Observation Type
@@ -583,7 +594,6 @@ dataset_fields:
       value: Incidental observation
     - label: Inferred
       value: Inferred
-    display_group: Science
 
 # Composite Repeating Field for references
 

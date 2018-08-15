@@ -1,0 +1,38 @@
+scheming_version: 1
+dataset_type: autocomplete
+
+about:
+about_url:
+
+dataset_fields:
+
+- field_name: title
+  label: Title
+  help_text: "Title of the dataset. Titles should be concise (no more than headline-length)."
+  required: True
+
+- preset: dataset_slug
+  field_name: name
+  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
+  display_group: Basic Information
+
+- field_name: owner_org
+  label: "Publisher - Organization Name"
+  help_text: "The organization (GC Department or Agency) primarily responsible for publishing the dataset."
+  validators: require_when_published owner_org_validator unicode
+  form_snippet: organization.html
+  display_group: Basic Information
+
+resource_fields:
+- field_name: name
+  label: Label for Data Package
+  help_text: "A label for the data package uploaded with this dataset.  Example: Bottom Patches - Geodatabase and Scripts."
+
+- field_name: url
+  label: Download URL
+  upload_label: "File Upload"
+  help_text: "Prepare your data for uploading. "
+  validators: not_empty unicode remove_whitespace
+  form_snippet: upload.html
+  upload_field: upload
+  upload_clear: clear_upload
