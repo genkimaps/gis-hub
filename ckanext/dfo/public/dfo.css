@@ -15,7 +15,20 @@
     font-weight: bold;
     color: #666;
     white-space: nowrap;
-    padding: 8px 0px;
+    padding: 8px 0;
+    border-bottom: 1px solid #dddddd;
+    margin-bottom: 8px;
+}
+
+.dataset-repeating-list {
+    list-style: none;
+    margin-left: 0;
+}
+
+.dataset-repeating-list > li {
+    border-left: 3px solid #ccc;
+    padding-left: 8px;
+    margin-bottom: 8px;
 }
 
 .additional-info .tag {
