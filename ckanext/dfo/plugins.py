@@ -18,7 +18,7 @@ def non_empty_fields(field_list, pkg_dict, exclude):
         if field.get('display_snippet', False) is None:
             continue
 
-        if pkg_dict.get(field.get('field_name')):
+        if pkg_dict.get(field['field_name']):
             r.append(field)
     return r
 
