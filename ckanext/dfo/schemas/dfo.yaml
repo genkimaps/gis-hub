@@ -45,7 +45,7 @@ dataset_fields:
 
 # General
 
-- field_name: summary_english
+- field_name: notes
   label: Summary
   help_text: "Brief narrative summary of the dataset's contents."
   form_snippet: textarea.html
@@ -531,20 +531,8 @@ dataset_fields:
   display_snippet: text.html
   display_group: Science
 
-- field_name: species_code_autocomplete
-  label: Species Code (BETA)
-  preset: select
-  choices_helper: scheming_datastore_choices
-  datastore_choices_resource: species-code-autocomplete
-  datastore_choices_columns:
-    value: code
-    label: species_name
-  form_attrs:
-    data-module: autocomplete
-  display_group: Science
 
-
-  # TODO: Composite repeating field for species codes
+  # Composite repeating field for species codes
 - field_name: species_codes
   label: Species Codes
   help_text: "A list of species names / species codes.  For each species, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Vulnerability Score: Select a score from 1 (minimum) to 10 (maximum).  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred."
@@ -555,9 +543,14 @@ dataset_fields:
 
   - field_name: sp_code
     label: Species Code
-    form_snippet: text.html
-    make_searchable: True
-    display_snippet: text.html
+    preset: select
+    choices_helper: scheming_datastore_choices
+    datastore_choices_resource: species-code-autocomplete
+    datastore_choices_columns:
+      value: code
+      label: species_name
+    form_attrs:
+      data-module: autocomplete
     display_group: Science
 
   - field_name: age_data
@@ -581,6 +574,22 @@ dataset_fields:
       value: 1
     - label: 2
       value: 2
+    - label: 3
+      value: 3
+    - label: 4
+      value: 4
+    - label: 5
+      value: 5
+    - label: 6
+      value: 6
+    - label: 7
+      value: 7
+    - label: 8
+      value: 8
+    - label: 9
+      value: 9
+    - label: 10
+      value: 10
 
   - field_name: obs_type
     label: Observation Type
@@ -684,8 +693,6 @@ dataset_fields:
 - field_name: reliability
   label: Reliability
   help_text: A measure or estimate of the reliability of the dataset for a specific purpose, if known.
-  form_snippet: textarea.html
-  display_snippet: text.html
   display_group: Science
   form_snippet: null
   display_snippet: null
@@ -769,8 +776,8 @@ resource_fields:
   choices:
     - label: Vector
       value: vector
-    - label: Grid (Raster)
-      value: grid
+    - label: Raster
+      value: raster
     - label: Table
       value: table
     - label: TIN
@@ -811,6 +818,13 @@ resource_fields:
   label: Unique ID
   display_group: Spatial
   form_snippet: null
+
+- field_name: raster_info
+  label: Raster Metadata
+  display_group: Spatial
+  form_snippet: null
+  display_snippet: textarea.html
+  help_text: "Field for raster metadata, including pixel size, dimensions, and raster band details. This field will be filled automatically when a GeoTiff or other recognized raster file is uploaded. Do not populate this field manually."
 
 # Composite Repeating Field for Attributes
 # One to many relationship for attribute table fields
