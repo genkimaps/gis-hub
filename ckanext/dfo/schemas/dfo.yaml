@@ -823,7 +823,7 @@ resource_fields:
   label: Raster Metadata
   display_group: Spatial
   form_snippet: null
-  display_snippet: textarea.html
+  display_snippet: text.html
   help_text: "Field for raster metadata, including pixel size, dimensions, and raster band details. This field will be filled automatically when a GeoTiff or other recognized raster file is uploaded. Do not populate this field manually."
 
 # Composite Repeating Field for Attributes
