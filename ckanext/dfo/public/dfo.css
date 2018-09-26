@@ -15,9 +15,9 @@
     font-weight: bold;
     color: #666;
     white-space: nowrap;
-    padding: 8px 0;
-    border-bottom: 1px solid #dddddd;
-    margin-bottom: 8px;
+    padding: 12px 1px 0;
+    border-bottom: 1px solid #cccccc;
+    margin-bottom: 3px;
 }
 
 .dataset-repeating-list {

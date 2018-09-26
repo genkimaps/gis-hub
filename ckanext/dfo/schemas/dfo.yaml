@@ -146,6 +146,7 @@ dataset_fields:
 - field_name: date_published
   label: Date Published
   help_text: "Date of publication of the dataset. Default: today's date. This refers to publication of the data on this portal or on another data hosting environment, not necessarily the date of publication of related academic research. Academic citations are described elsewhere."
+  default: "Citation will be automatically generated."
   form_snippet: date.html
   validators: require_when_published
 
@@ -277,7 +278,7 @@ dataset_fields:
 - field_name: co_creators
   label: Co-Creators
   form_snippet: textarea.html
-  help_text: "Provide the names of any additional co-creators (secondary authors) for this dataset."
+  help_text: "Provide the names, comma-separated, of any additional co-creators (secondary authors) for this dataset."
   display_group: Data Creator
 
 # Program Manager
@@ -608,7 +609,7 @@ dataset_fields:
 
 - field_name: references
   label: References
-  help_text: "Citations for academic references associated with the resource. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
+  help_text: "Academic references associated with the resource. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
   preset: composite_repeating
   form_blanks: 1
   display_group: Science
