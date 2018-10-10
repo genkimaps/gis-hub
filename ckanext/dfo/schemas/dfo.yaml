@@ -23,6 +23,7 @@ dataset_fields:
   help_text: "Title of the dataset. Titles should be concise (no more than headline-length)."
   validators: require_when_published
   display_group: Basic Information
+  display_snippet: text.html
 
 - field_name: notes
   label: Summary
@@ -44,12 +45,14 @@ dataset_fields:
   help_text: "Email address of the person responsible for the dataset.  Notifications about access requests and other updates will be send to this email."
   validators: not_empty
   display_group: Basic Information
+  display_snippet: text.html
 
 - preset: dataset_slug
   field_name: name
   label: Dataset ID
   help_text: "Enter a unique ID for this dataset. The ID should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
   display_group: Basic Information
+  display_snippet: text.html
 
 - field_name: owner_org
   label: "Publisher - Organization Name"
@@ -57,6 +60,7 @@ dataset_fields:
   validators: require_when_published owner_org_validator unicode
   form_snippet: organization.html
   display_group: Basic Information
+  display_snippet: text.html
 
 - field_name: primary_reference
   label: Primary Reference
