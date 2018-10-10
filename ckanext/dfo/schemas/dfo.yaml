@@ -9,7 +9,6 @@ display_group_order:
   - General
   - Science
 
-
 about:
 about_url:
 form_languages:
@@ -25,6 +24,21 @@ dataset_fields:
   validators: require_when_published
   display_group: Basic Information
 
+- field_name: notes
+  label: Summary
+  help_text: "Brief narrative summary of the dataset's contents."
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Basic Information
+  validators: require_when_published
+  default: "Please summarize the following:
+    - What data is included:
+    - What accessory information (reports, scripts) is included:
+    - Objectives:
+    - Describe the knowledge gap(s) the dataset is intended to fill:
+    - If there are multiple tables/layers in the dataset, how are they related?
+    "
+
 - field_name: maintainer_email
   label: Maintainer Email
   help_text: "Email address of the person responsible for the dataset.  Notifications about access requests and other updates will be send to this email."
@@ -33,23 +47,37 @@ dataset_fields:
 
 - preset: dataset_slug
   field_name: name
-  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
+  label: Dataset ID
+  help_text: "Enter a unique ID for this dataset. The ID should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
   display_group: Basic Information
 
 - field_name: owner_org
   label: "Publisher - Organization Name"
-  help_text: "The organization (GC Department or Agency) primarily responsible for publishing the dataset."
+  help_text: "The organization (GoC Department or Agency) primarily responsible for publishing the dataset."
   validators: require_when_published owner_org_validator unicode
   form_snippet: organization.html
   display_group: Basic Information
 
-# General
-
-- field_name: notes
-  label: Summary
-  help_text: "Brief narrative summary of the dataset's contents."
+- field_name: primary_reference
+  label: Primary Reference
+  help_text: "The primary academic reference describing this dataset."
   form_snippet: textarea.html
   display_snippet: text.html
+  display_group: Basic Information
+  validators: require_when_published
+
+- field_name: start_date
+  label: Start Date
+  help_text: "Indicate the earliest date represented in this dataset."
+  form_snippet: date.html
+  validators: require_when_published
+  display_group: Basic Information
+
+- field_name: end_date
+  label: End Date
+  help_text: "Indicate the latest date represented in this dataset. If data collection is ongoing, do not leave this blank; choose Ongoing under the Status section."
+  form_snippet: date.html
+  display_group: Basic Information
   validators: require_when_published
 
 - field_name: summary_french
@@ -59,9 +87,58 @@ dataset_fields:
   display_snippet: null
   default: "Placeholder for French summary"
 
+# Contacts
+
+- field_name: data_creator
+  label: Data Creator
+  help_text: "Provide contact information for the Principal Analyst: The lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, and Email."
+  display_group: Data Creator
+  preset: composite
+  subfields:
+
+  - field_name: creator_name
+    label: Name
+    display_group: Data Creator
+    make_searchable: True
+    validators: require_when_published
+
+  - field_name: creator_email
+    label: Email
+    display_group: Data Creator
+    make_searchable: True
+    validators: require_when_published email_validator
+
+  - field_name: creator_position
+    label: Position
+    display_group: Data Creator
+    validators: require_when_published
+
+  - field_name: creator_organization
+    label: Organization
+    display_group: Data Creator
+    validators: require_when_published
+
+  - field_name: creator_address
+    label: Address
+    display_group: Data Creator
+    validators: require_when_published
+
+  - field_name: creator_phone
+    label: Phone
+    display_group: Data Creator
+    validators: require_when_published
+
+- field_name: co_creators
+  label: Co-Creators
+  form_snippet: textarea.html
+  help_text: "Provide the names, comma-separated, of any additional co-creators (secondary authors) for this dataset."
+  display_group: Data Creator
+
+# General
+
 - field_name: topic_category
   label: Topic Category
-  help_text: Main theme of the data. Choose the best match.
+  help_text: "Main theme of the data. Choose the best match."
   display_snippet: select.html
   form_snippet: select.html
   default: oceans
@@ -232,54 +309,14 @@ dataset_fields:
   label: Keywords
   help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated."
   validators: require_when_published tag_string_convert
-
-# Contacts
-
-- field_name: data_creator
-  label: Data Creator
-  help_text: "Provide contact information for the Principal Analyst: The lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, and Email."
-  display_group: Data Creator
-  # validators: require_when_published
-  preset: composite
-  subfields:
-
-  - field_name: creator_name
-    label: Name
-    display_group: Data Creator
-    make_searchable: True
-    validators: require_when_published
-
-  - field_name: creator_email
-    label: Email
-    display_group: Data Creator
-    make_searchable: True
-    validators: require_when_published email_validator
-
-  - field_name: creator_position
-    label: Position
-    display_group: Data Creator
-    validators: require_when_published
-
-  - field_name: creator_organization
-    label: Organization
-    display_group: Data Creator
-    validators: require_when_published
-
-  - field_name: creator_address
-    label: Address
-    display_group: Data Creator
-    validators: require_when_published
-
-  - field_name: creator_phone
-    label: Phone
-    display_group: Data Creator
-    validators: require_when_published
-
-- field_name: co_creators
-  label: Co-Creators
-  form_snippet: textarea.html
-  help_text: "Provide the names, comma-separated, of any additional co-creators (secondary authors) for this dataset."
-  display_group: Data Creator
+  # Not sure if this is the right way to limit keywords?
+  choices_helper: scheming_datastore_choices
+    datastore_choices_resource: goc-themes
+    datastore_choices_columns:
+      value: theme
+      label: theme
+    form_attrs:
+      data-module: autocomplete
 
 # Program Manager
 
@@ -342,42 +379,42 @@ dataset_fields:
   display_group: Science
   validators: require_when_published
   choices:
-  - label: Base Mapping
-    value: base_mapping
   - label: Administrative Boundaries
     value: admin_boundaries
+  - label: Base Mapping
+    value: base_mapping
   - label: Bathymetry
     value: bathymetry
-  - label: Salmon
-    value: salmon
-  - label: Marine Mammals
-    value: marine_mammals
-  - label: Shellfish Fisheries
-    value: shellfish_fisheries
-  - label: Shellfish Survey
-    value: shellfish_survey
+  - label: Benthic Species or Ecosystem
+    value: benthic_species
+  - label: Classification
+    value: classification
+  - label: Coastal Species or Ecosystem
+    value: coastal_species
   - label: Groundfish Fisheries
     value: groundfish_fisheries
   - label: Groundfish Survey
     value: groundfish_survey
-  - label: Salmon Fisheries
-    value: salmon_fisheries
-  - label: Salmon Survey
-    value: salmon_survey
   - label: Herring Fisheries
     value: herring_fisheries
   - label: Herring Survey
     value: herring_survey
-  - label: Benthic Species or Ecosystem
-    value: benthic_species
+  - label: Marine Mammals
+    value: marine_mammals
   - label: Pelagic Species or Ecosystem
     value: pelagic_species
-  - label: Coastal Species or Ecosystem
-    value: coastal_species
   - label: Protected Areas
     value: protected_areas
-  - label: Classification
-    value: classification
+  - label: Salmon
+    value: salmon
+  - label: Salmon Fisheries
+    value: salmon_fisheries
+  - label: Salmon Survey
+    value: salmon_survey
+  - label: Shellfish Fisheries
+    value: shellfish_fisheries
+  - label: Shellfish Survey
+    value: shellfish_survey
 
 - field_name: methods
   label: Methods
@@ -490,6 +527,22 @@ dataset_fields:
   display_group: Science
   validators: require_when_published
 
+- field_name: uncertainties
+  label: Uncertainties
+  help_text: "Describe uncertainties in measurement and methodology. Include any known biases. For example, was data collection opportunistic, or part of the survey design? In there any known bias from individual observers?"
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+  validators: require_when_published
+
+- field_name: use_restrictions
+  label: Use Restrictions
+  help_text: "Restrictions on appropriate use of the resource.  Examples:  Not suitable for navigation.  Do not use for fisheries assessment."
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
+  validators: require_when_published
+
 # Composite Repeating Field for Change History
 - field_name: change_history
   label: Change History
@@ -511,19 +564,6 @@ dataset_fields:
     form_snippet: date.html
     display_snippet: date.html
     display_group: Science
-
-- field_name: start_date
-  label: Start Date
-  help_text: Indicate the earliest date represented in this dataset.
-  form_snippet: date.html
-  validators: require_when_published
-  display_group: Science
-
-- field_name: end_date
-  label: End Date
-  help_text: Indicate the latest date represented in this dataset. If data collection is ongoing, leave this blank.
-  form_snippet: date.html
-  display_group: Science
 
 - field_name: temporal_coverage
   label: Temporal Coverage
@@ -565,33 +605,6 @@ dataset_fields:
     - label: No
       value: No
 
-  - field_name: vuln_score
-    label: Vulnerability Score
-    display_snippet: select.html
-    form_snippet: select.html
-    display_group: Science
-    choices:
-    - label: 1
-      value: 1
-    - label: 2
-      value: 2
-    - label: 3
-      value: 3
-    - label: 4
-      value: 4
-    - label: 5
-      value: 5
-    - label: 6
-      value: 6
-    - label: 7
-      value: 7
-    - label: 8
-      value: 8
-    - label: 9
-      value: 9
-    - label: 10
-      value: 10
-
   - field_name: obs_type
     label: Observation Type
     display_snippet: select.html
@@ -608,8 +621,8 @@ dataset_fields:
 # Composite Repeating Field for references
 
 - field_name: references
-  label: References
-  help_text: "Academic references associated with the resource. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
+  label: Other References
+  help_text: "Academic references, other than the primary reference, that are closely associated with the data. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
   preset: composite_repeating
   form_blanks: 1
   display_group: Science
@@ -623,7 +636,7 @@ dataset_fields:
     validators: require_when_published
 
 - field_name: citation
-  label: Citation
+  label: Cite this data as
   help_text: Citation format to be used when this dataset is referenced in another publication.
   form_snippet: textarea.html
   display_snippet: text.html
@@ -633,30 +646,6 @@ dataset_fields:
 - field_name: collaboration
   label: Collaboration
   help_text: "Describe collaboration with academia, other government agencies, and external contributors. If produced internally by DFO, enter 'No collaboration outside of DFO.' "
-  form_snippet: textarea.html
-  display_snippet: text.html
-  display_group: Science
-  validators: require_when_published
-
-- field_name: knowledge_gaps
-  label: Knowledge Gaps
-  help_text:  Brief description of the knowledge gap these data are intended to fill.
-  form_snippet: textarea.html
-  display_snippet: text.html
-  display_group: Science
-  validators: require_when_published
-
-- field_name: uncertainties
-  label: Uncertainties
-  help_text: "Describe uncertainties in measurement and methodology. Include any known biases. For example, was data collection opportunistic, or part of the survey design? In there any known bias from individual observers?"
-  form_snippet: textarea.html
-  display_snippet: text.html
-  display_group: Science
-  validators: require_when_published
-
-- field_name: use_restrictions
-  label: Use Restrictions
-  help_text: "Restrictions on appropriate use of the resource.  Examples:  Not suitable for navigation.  Do not use for fisheries assessment."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -704,7 +693,7 @@ dataset_fields:
 resource_fields:
 - field_name: name
   label: Label for Data Package
-  help_text: "A label for the data package uploaded with this dataset.  Example: Bottom Patches - Geodatabase and Scripts."
+  help_text: "A label for the data package uploaded with this dataset.  Example: Bottom Patches."
   validators: require_when_published
 
 # Projection
@@ -731,7 +720,7 @@ resource_fields:
   display_group: Projection
   form_snippet: null
   display_snippet: null
-  validators: require_when_published
+  #validators: require_when_published
 
 - field_name: codespace_version
   label: Codespace Version
@@ -739,7 +728,7 @@ resource_fields:
   display_group: Projection
   form_snippet: null
   display_snippet: null
-  validators: require_when_published
+  #validators: require_when_published
 
 # Spatial
 
@@ -814,6 +803,13 @@ resource_fields:
   display_group: Spatial
   form_snippet: null
   #validators: require_when_published
+
+- field_name: locale
+  label: Locale
+  help_text: "Location of the spatial data in DFO's regions and bioregions."
+  form_snippet: null
+  display_snippet: text.html
+  display_group: Spatial
 
 - field_name: uuid
   label: Unique ID
@@ -915,6 +911,7 @@ resource_fields:
 - field_name: restricted
   label: "Access Restrictions"
   help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be added by typing names into the Allowed Users field below. "
+  display_snippet: null
   preset: composite
   subfields:
   - field_name: level
