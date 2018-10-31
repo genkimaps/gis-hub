@@ -227,7 +227,7 @@ dataset_fields:
 - field_name: date_published
   label: Date Published
   help_text: "Date of publication of the dataset. Default: today's date. This refers to publication of the data on this portal or on another data hosting environment, not necessarily the date of publication of related academic research. Academic citations are described elsewhere."
-  default: "Citation will be automatically generated."
+  default: "{{ now().strftime('%m/%d/%Y') }}"
   form_snippet: date.html
   validators: require_when_published
 
@@ -370,7 +370,11 @@ dataset_fields:
 - field_name: science_keywords
   preset: tag_string_autocomplete
   label: Science Keywords
-  help_text: "Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. Keywords can be domain-specific and more detailed than general keywords."
+  help_text: "Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. These keywords may include domain-specific vocabulary appropriate for scientific users.  The format of keywords should be:
+  -	General terms: lowercase
+  -	Place names: Camel Case
+  -	Acronyms:  ALL CAPS
+  "
   validators: require_when_published tag_string_convert
   display_group: Science
 
@@ -580,7 +584,7 @@ dataset_fields:
   # Composite repeating field for species codes
 - field_name: species_codes
   label: Species Codes
-  help_text: "A list of species names / species codes.  For each species, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Vulnerability Score: Select a score from 1 (minimum) to 10 (maximum).  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred."
+  help_text: "A list of species names / species codes.  For each species, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred."
   preset: composite_repeating
   form_blanks: 1
   display_group: Science
@@ -616,9 +620,9 @@ dataset_fields:
     display_group: Science
     choices:
     - label: Targeted observation
-      value: Targeted observation
+      value: Targeted
     - label: Incidental observation
-      value: Incidental observation
+      value: Incidental
     - label: Inferred
       value: Inferred
 
@@ -649,7 +653,8 @@ dataset_fields:
 
 - field_name: collaboration
   label: Collaboration
-  help_text: "Describe collaboration with academia, other government agencies, and external contributors. If produced internally by DFO, enter 'No collaboration outside of DFO.' "
+  help_text: "Describe collaboration with academia, other government agencies, and external contributors. If produced internally by DFO, enter 'No collaboration outside of DFO.'  Indicate collaboration with organizations rather than individuals. "
+  default: "No collaboration outside of DFO."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -735,6 +740,12 @@ resource_fields:
   #validators: require_when_published
 
 # Spatial
+
+- field_name: spatial
+  label: Spatial Extent Preview
+  display_group: Spatial
+  display_snippet: dataset_map.html
+  form_snippet: null
 
 - field_name: data_format
   label: Data Format
