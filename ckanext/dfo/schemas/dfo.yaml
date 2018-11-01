@@ -32,8 +32,8 @@ dataset_fields:
   display_snippet: text.html
   display_group: Basic Information
   validators: require_when_published
-  default: "Please summarize the following:
-    - What data is included:
+  default: "Please describe the following:
+    - What data is included (data products):
     - What accessory information (reports, scripts) is included:
     - Objectives:
     - Describe the knowledge gap(s) the dataset is intended to fill:
@@ -438,12 +438,12 @@ dataset_fields:
   validators: require_when_published
 
 
-# Composite Repeating Field for Data Inputs
+# Composite Repeating Field for Source Data
 
 - field_name: data_inputs
-  label: Data Inputs
-  help_text: "List of inputs used to produce this dataset.  Provide a link to the
-        source data where possible (to another dataset on the GIS Hub, or an
+  label: Data Sources
+  help_text: "List of source data inputs used to produce this dataset.  Provide a link to the
+        source data where possible (link to another dataset on the GIS Hub, or an
         external link).  Include the date that the input was extracted,
         if known.  Add as many inputs as you need."
   display_group: Science
@@ -451,19 +451,11 @@ dataset_fields:
   form_blanks: 1
   subfields:
   - field_name: input_description
-    label: Description of Input
+    label: Source
     form_snippet: textarea.html
     display_snippet: text.html
     display_group: Science
     validators: require_when_published
-
-- field_name: data_outputs
-  label: Data Outputs
-  help_text: List of output dataset(s).
-  form_snippet: textarea.html
-  display_snippet: text.html
-  display_group: Science
-  validators: require_when_published
 
 - field_name: scripts_or_software_routines
   label: Scripts or Software Routines
