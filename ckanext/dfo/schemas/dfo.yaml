@@ -315,12 +315,12 @@ dataset_fields:
   validators: require_when_published tag_string_convert
   # Not sure if this is the right way to limit keywords?
   choices_helper: scheming_datastore_choices
-    datastore_choices_resource: goc-themes
-    datastore_choices_columns:
-      value: theme
-      label: theme
-    form_attrs:
-      data-module: autocomplete
+  datastore_choices_resource: goc-themes
+  datastore_choices_columns:
+    value: theme
+    label: theme
+  form_attrs:
+    data-module: autocomplete
 
 # Program Manager
 
