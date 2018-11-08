@@ -313,14 +313,14 @@ dataset_fields:
   label: Keywords
   help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated."
   validators: require_when_published tag_string_convert
-  # Not sure if this is the right way to limit keywords?
-  choices_helper: scheming_datastore_choices
-  datastore_choices_resource: goc-themes
-  datastore_choices_columns:
-    value: theme
-    label: theme
-  form_attrs:
-    data-module: autocomplete
+# TODO: limit keywords to those in the goc-themes resource
+#  choices_helper: scheming_datastore_choices
+#  datastore_choices_resource: goc-themes
+#  datastore_choices_columns:
+#    value: theme
+#    label: theme
+#  form_attrs:
+#    data-module: autocomplete
 
 # Program Manager
 
@@ -741,7 +741,7 @@ resource_fields:
 
 - field_name: data_format
   label: Data Format
-  help_text: "Indicate the format of the spatial data inside the zip file. Note that there may be other components to a dataset (e.g. PDF report, R script) that do not fall into any of these categories. Do not enter zip as the format."
+  help_text: "Indicate the format of the spatial data inside the zip file. Note that there may be other non-spatial components included with a dataset (e.g. PDF report, R script). Do not enter zip as the format."
   display_group: Spatial
   validators: require_when_published
   form_snippet: select.html
@@ -756,6 +756,8 @@ resource_fields:
       value: GeoTiff
     - label: GeoJson
       value: GeoJson
+    - label: Other (Document, non-spatial, etc.)
+      value: Other
 
 - field_name: layer_name
   label: Layer Name
@@ -781,6 +783,8 @@ resource_fields:
       value: tin
     - label: Video
       value: video
+    - label: None
+      value: none
 
 - field_name: geometry_type
   label: Geometry Type
