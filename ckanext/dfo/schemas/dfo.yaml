@@ -4,8 +4,8 @@ dataset_type: dataset
 display_group_default: General
 display_group_order:
   - Basic Information
-  - Data Creator
-  - Program Manager
+  - Contact Information
+#  - Program Manager
   - General
   - Science
 
@@ -95,48 +95,87 @@ dataset_fields:
 
 - field_name: data_creator
   label: Data Creator
-  help_text: "Provide contact information for the Principal Analyst: The lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, and Email."
-  display_group: Data Creator
+  help_text: "Contact information for the Principal Analyst: the lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, and Email."
+  display_group: Contact Information
   preset: composite
   subfields:
 
   - field_name: creator_name
     label: Name
-    display_group: Data Creator
+    display_group: Contact Information
     make_searchable: True
     validators: require_when_published
 
   - field_name: creator_email
     label: Email
-    display_group: Data Creator
+    display_group: Contact Information
     make_searchable: True
     validators: require_when_published email_validator
 
   - field_name: creator_position
     label: Position
-    display_group: Data Creator
+    display_group: Contact Information
     validators: require_when_published
 
   - field_name: creator_organization
     label: Organization
-    display_group: Data Creator
+    display_group: Contact Information
     validators: require_when_published
 
   - field_name: creator_address
     label: Address
-    display_group: Data Creator
+    display_group: Contact Information
     validators: require_when_published
 
   - field_name: creator_phone
     label: Phone
-    display_group: Data Creator
+    display_group: Contact Information
     validators: require_when_published
 
 - field_name: co_creators
   label: Co-Creators
   form_snippet: textarea.html
   help_text: "Provide the names, comma-separated, of any additional co-creators (secondary authors) for this dataset."
-  display_group: Data Creator
+  display_group: Contact Information
+
+- field_name: program_manager
+  label: Program Manager
+  help_text: "Contact information for the DFO Program Head (must be a permanent DFO employee). Provide the Name, Position, Department, Address, Phone, and Email."
+  display_group: Contact Information
+  preset: composite
+  subfields:
+
+  - field_name: manager_name
+    label: Name
+    display_group: Contact Information
+    make_searchable: True
+    validators: require_when_published
+
+  - field_name: manager_email
+    label: Email
+    display_group: Contact Information
+    make_searchable: True
+    validators: require_when_published email_validator
+
+  - field_name: manager_position
+    label: Position
+    display_group: Contact Information
+    validators: require_when_published
+
+  - field_name: manager_organization
+    label: Organization
+    display_group: Contact Information
+    validators: require_when_published
+
+  - field_name: manager_address
+    label: Address
+    display_group: Contact Information
+    validators: require_when_published
+
+  - field_name: manager_phone
+    label: Phone
+    display_group: Contact Information
+    validators: require_when_published
 
 # General
 
@@ -321,49 +360,6 @@ dataset_fields:
 #    label: theme
 #  form_attrs:
 #    data-module: autocomplete
-
-# Program Manager
-
-- field_name: program_manager
-  label: Program Manager
-  help_text: "Contact information for the DFO Program Head (must be a permanent DFO employee). Provide the Name, Position, Department, Address, Phone, and Email."
-  display_group: Program Manager
-  # validators: require_when_published
-  preset: composite
-  subfields:
-
-  - field_name: manager_name
-    label: Name
-    display_group: Program Manager
-    make_searchable: True
-    validators: require_when_published
-
-  - field_name: manager_email
-    label: Email
-    display_group: Program Manager
-    make_searchable: True
-    validators: require_when_published email_validator
-
-  - field_name: manager_position
-    label: Position
-    display_group: Program Manager
-    validators: require_when_published
-
-  - field_name: manager_organization
-    label: Organization
-    display_group: Program Manager
-    validators: require_when_published
-
-  - field_name: manager_address
-    label: Address
-    display_group: Program Manager
-    validators: require_when_published
-
-  - field_name: manager_phone
-    label: Phone
-    display_group: Program Manager
-    validators: require_when_published
-
 
 # Science
 
@@ -637,7 +633,8 @@ dataset_fields:
 
 - field_name: citation
   label: Cite this data as
-  help_text: Citation format to be used when this dataset is referenced in another publication.
+  help_text: "Citation format to be used when this dataset is referenced in another publication."
+  default: "Citation will be automatically generated from your metadata. You may edit this later if needed."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
