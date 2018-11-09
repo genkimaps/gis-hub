@@ -20,6 +20,35 @@
     margin-bottom: 3px;
 }
 
+/* Adjust spacing of some items in template */
+input, textarea, select {
+    margin-bottom: 4px;
+}
+
+.info-block {
+    margin-bottom: 15px;
+}
+
+.info-block.composite-header-info {
+    margin-bottom: 2px;
+}
+
+hr {
+    margin: 5px 0px
+}
+
+h3.page-heading {
+    margin-bottom: 0px;
+}
+
+p.composite-header {
+    color: black;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 3px;
+    margin-top: 10px;
+}
+
 .dataset-repeating-list {
     list-style: none;
     margin-left: 0;
