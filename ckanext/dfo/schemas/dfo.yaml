@@ -97,39 +97,31 @@ dataset_fields:
   label: Data Creator
   help_text: "Contact information for the Principal Analyst: the lead person responsible for creating the data. Provide the Name, Position, Department, Address, Phone, and Email."
   display_group: Contact Information
-  preset: composite
   subfields:
-
   - field_name: creator_name
     label: Name
-    display_group: Contact Information
     make_searchable: True
     validators: require_when_published
 
   - field_name: creator_email
     label: Email
-    display_group: Contact Information
     make_searchable: True
     validators: require_when_published email_validator
 
   - field_name: creator_position
     label: Position
-    display_group: Contact Information
     validators: require_when_published
 
   - field_name: creator_organization
     label: Organization
-    display_group: Contact Information
     validators: require_when_published
 
   - field_name: creator_address
     label: Address
-    display_group: Contact Information
     validators: require_when_published
 
   - field_name: creator_phone
     label: Phone
-    display_group: Contact Information
     validators: require_when_published
 
 - field_name: co_creators
@@ -142,7 +134,6 @@ dataset_fields:
   label: Program Manager
   help_text: "Contact information for the DFO Program Head (must be a permanent DFO employee). Provide the Name, Position, Department, Address, Phone, and Email."
   display_group: Contact Information
-  preset: composite
   subfields:
 
   - field_name: manager_name
@@ -443,8 +434,8 @@ dataset_fields:
         external link).  Include the date that the input was extracted,
         if known.  Add as many inputs as you need."
   display_group: Science
-  preset: composite_repeating
   form_blanks: 1
+  repeatable: true
   subfields:
   - field_name: input_description
     label: Source
@@ -544,7 +535,7 @@ dataset_fields:
   label: Change History
   help_text: "A description of changes made to the data since its release. For each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed."
   display_group: Science
-  preset: composite_repeating
+  repeatable: true
   form_blanks: 1
   subfields:
   - field_name: change_description
@@ -573,7 +564,7 @@ dataset_fields:
 - field_name: species_codes
   label: Species Codes
   help_text: "A list of species names / species codes.  For each species, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred."
-  preset: composite_repeating
+  repeatable: true
   form_blanks: 1
   display_group: Science
   subfields:
@@ -619,7 +610,7 @@ dataset_fields:
 - field_name: references
   label: Other References
   help_text: "Academic references, other than the primary reference, that are closely associated with the data. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
-  preset: composite_repeating
+  repeatable: true
   form_blanks: 1
   display_group: Science
   subfields:
@@ -844,7 +835,7 @@ resource_fields:
 
 - field_name: attribute
   label: Attributes
-  preset: composite_repeating
+  repeatable: true
   help_text: "Describe the attributes. As part of the metadata for this spatial dataset, you must clearly document all attributes for each layer (and any standalone tables) in your uploaded file.  The name of the field in the attribute table, the field type, and a description are required. The description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)"
   form_blanks: 1
   display_group: Attributes
@@ -928,7 +919,6 @@ resource_fields:
   label: "Access Restrictions"
   help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be added by typing names into the Allowed Users field below. "
   display_snippet: null
-  preset: composite
   subfields:
   - field_name: level
     label: Level
