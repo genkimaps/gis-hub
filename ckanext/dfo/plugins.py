@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 import ckan.plugins as p
 import ckan.plugins.toolkit as toolkit
 import ckan.lib.helpers as h
@@ -109,7 +111,9 @@ class DFOPlugin(p.SingletonPlugin):
         return {
             'get_thumbnail': get_thumbnail,
             'non_empty_fields': non_empty_fields,
-            'scheming_field_required': self.field_required_helper
+            'scheming_field_required': self.field_required_helper,
+            'now': datetime.now,
+            'utcnow': datetime.utcnow
         }
 
     def before_map(self, map):

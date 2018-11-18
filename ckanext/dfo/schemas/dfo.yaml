@@ -266,7 +266,7 @@ dataset_fields:
 - field_name: date_published
   label: Date Published
   help_text: "Date of publication of the dataset on this portal or on another data hosting environment. Default: today's date. (Not necessarily the same as the publication date of related academic research. Academic citations are described elsewhere.)"
-  default: "{{ now().strftime('%m/%d/%Y') }}"
+  default: "{{ h.now().strftime('%m/%d/%Y') }}"
   form_snippet: date.html
   validators: require_when_published
 
