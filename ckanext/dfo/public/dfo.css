@@ -20,18 +20,36 @@
     margin-bottom: 3px;
 }
 
+/* Enclose composite fields in a box with background for visual offset */
 .composite-subfield-group {
-    border-top: 2px solid #999999;
-    padding-top: 10px;
+    border: 1px solid #c5c5c5;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
 }
 
-/* Adjust spacing of some items in template */
-input, textarea, select {
-    margin-bottom: 4px;
-}
-
-.info-block {
+.composite-fieldset {
     margin-bottom: 15px;
+}
+
+/* Adjust spacing in template between text box and help text */
+select, textarea, input[type="text"], input[type="email"], input[type="url"], input[type="tel"], legend {
+    margin-bottom: 5px;
+}
+
+.select2-container {
+    margin-bottom: 5px;
+}
+
+.control-group {
+    margin-bottom: 15px;
+}
+
+.composite-repeating-list {
+    margin-top: 0px;
+    margin-bottom: 5px;
+
 }
 
 .info-block.composite-header-info {
@@ -97,7 +115,8 @@ p.composite-header {
 #dataset-edit .info-block,
 #resource-edit .info-block {
     font-size: 15px;
-    color: #aaaaaa;
+    color: #869fb7;
+    margin-bottom: 5px;
 }
 
 #dataset-edit .control-group .btn {
