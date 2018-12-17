@@ -5,7 +5,6 @@ display_group_default: General
 display_group_order:
   - Basic Information
   - Contact Information
-#  - Program Manager
   - General
   - Science
 
@@ -62,9 +61,20 @@ dataset_fields:
   display_group: Basic Information
   display_snippet: text.html
 
+# This field is no longer used. But we cannot remove it from the schema,
+# or it causes CKAN to crash
 - field_name: primary_reference
   label: Primary Reference
   help_text: "The primary academic reference describing this dataset."
+  form_snippet: null
+  display_snippet: null
+  display_group: Basic Information
+#  validators: require_when_published
+
+- field_name: citation
+  label: Cite this data as
+  help_text: "Citation format to be used when this dataset is referenced in another publication."
+  default: "A citation will be automatically generated from your metadata. You may edit this later if needed."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Basic Information
@@ -79,7 +89,7 @@ dataset_fields:
 
 - field_name: end_date
   label: End Date
-  help_text: "Indicate the latest date represented in this dataset. If data collection is ongoing, do not leave this blank; choose Ongoing under the Status section."
+  help_text: "Indicate the latest date represented in this dataset. If data collection is ongoing, enter the date of the most recent record in the data, and choose Ongoing under the Status section.  If this is a model or derived data (as opposed to data collected in the field), enter the last date that the model used to generate this data was updated.  In this case, end date can be the same as start date.  "
   form_snippet: date.html
   display_group: Basic Information
   validators: require_when_published
@@ -340,17 +350,21 @@ dataset_fields:
 
 - field_name: keywords
   preset: tag_string_autocomplete
+#  preset: select
   label: Keywords
   help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated."
   validators: require_when_published tag_string_convert
-# TODO: limit keywords to those in the goc-themes resource
+# TODO: limit keywords to those in the goc-themes resource. This is not working.
 #  choices_helper: scheming_datastore_choices
 #  datastore_choices_resource: goc-themes
+#  datastore_choices_resource: 88f5c7a2-7b25-4ce8-a0c6-081236f5da76
 #  datastore_choices_columns:
 #    value: theme
 #    label: theme
 #  form_attrs:
 #    data-module: autocomplete
+#  validators: require_when_published tag_string_convert
+
 
 # Science
 
@@ -554,7 +568,7 @@ dataset_fields:
 
 - field_name: temporal_coverage
   label: Temporal Coverage
-  help_text: "If the temporal coverage of the dataset is more complex than a simple start and end date, describe it here.  You may describe temporal coverage as a single point in time, multiple points in time, and one or more range of dates.  Seasonality can also be described here."
+  help_text: "If the temporal coverage of the dataset is more complex than a simple start and end date, describe it here.  You may describe temporal coverage as a single point in time, multiple points in time, and one or more range of dates.  Seasonality can also be described here.  For derived datasets, please specify the temporal coverage of all input data here. Specific start and end dates are preferable, but year ranges are acceptable if the exact dates are uncertain or not applicable."
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
@@ -563,7 +577,7 @@ dataset_fields:
   # Composite repeating field for species codes
 - field_name: species_codes
   label: Species Codes
-  help_text: "A list of species names / species codes.  For each species, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred."
+  help_text: "A list of species names / species codes.  If your data does not contain any species codes, disregard this section and leave the fields blank in the section below.  For each species in your data, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred.  If you have a large number of species codes, you may include a file named species_codes.csv.  For a detailed description of the format of this file, refer to the GIS Hub publishing guide document. "
   repeatable: true
   form_blanks: 1
   display_group: Science
@@ -608,8 +622,8 @@ dataset_fields:
 # Composite Repeating Field for references
 
 - field_name: references
-  label: Other References
-  help_text: "Academic references, other than the primary reference, that are closely associated with the data. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
+  label: References
+  help_text: "Academic references that are closely associated with the data. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
   repeatable: true
   form_blanks: 1
   display_group: Science
@@ -621,15 +635,6 @@ dataset_fields:
     display_snippet: text.html
     display_group: Science
     validators: require_when_published
-
-- field_name: citation
-  label: Cite this data as
-  help_text: "Citation format to be used when this dataset is referenced in another publication."
-  default: "Citation will be automatically generated from your metadata. You may edit this later if needed."
-  form_snippet: textarea.html
-  display_snippet: text.html
-  display_group: Science
-  validators: require_when_published
 
 - field_name: collaboration
   label: Collaboration
@@ -682,16 +687,25 @@ dataset_fields:
 resource_fields:
 - field_name: name
   label: Name
-  help_text: "Name of the layer or file. This is extracted automatically from your data, but you can edit the name later."
+  help_text: "Name of the uploaded data package.  This is populated automatically from your uploaded data. DO NOT EDIT. "
+  default: "Placeholder - DO NOT EDIT"
+#  form_snippet: null  <<< doesn't work for the name field -- crashes CKAN.
   display_snippet: text.html
   validators: require_when_published
 
+- field_name: layer_name
+  label: Layer Name
+  help_text: "Layer name is detected by the GIS Hub after data upload.  You do not need to complete this field manually. "
+  display_group: Spatial
+  form_snippet: text.html
+  #validators: require_when_published
+
 - field_name: layer_description
-  label: Description
-  help_text: "Describe what this layer/table/document represents, in the context of the entire dataset."
+  label: Layer Description
+  help_text: "Describe what this layer/table/document represents, in the context of the entire dataset.  If there is more than one layer in your uploaded data, complete this field only after the data has been uploaded and a metadata entry has been created for each layer. "
   form_snippet: textarea.html
   display_snippet: text.html
-  validators: require_when_published
+  # validators: require_when_published
 
 # Projection
 # Spatial metadata fields that are both annoying for users to enter manually and cannot have a default should be
@@ -701,14 +715,16 @@ resource_fields:
   label: Projection Name
   display_group: Projection
   help_text: "The name of the projection of the data. Example: BC Albers Equal Area"
-  form_snippet: null
+  form_snippet: text.html
+  default: "Detected by the GIS Hub after data upload."
   #validators: require_when_published
 
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
   help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/"
-  form_snippet: null
+  form_snippet: text.html
+  default: "Detected by the GIS Hub after data upload."
   #validators: require_when_published
 
 - field_name: projection_codespace
@@ -737,7 +753,7 @@ resource_fields:
 
 - field_name: data_format
   label: Data Format
-  help_text: "Indicate the format of the spatial data inside the zip file. Note that there may be other non-spatial components included with a dataset (e.g. PDF report, R script). Do not enter zip as the format."
+  help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly.  Indicate the format of the spatial data inside the zip file. Note that there may be other non-spatial components included with a dataset (e.g. PDF report, R script). Do not enter zip as the format."
   display_group: Spatial
   validators: require_when_published
   form_snippet: select.html
@@ -755,17 +771,12 @@ resource_fields:
     - label: Other (Document, non-spatial, etc.)
       value: Other
 
-- field_name: layer_name
-  label: Layer Name
-  display_group: Spatial
-  form_snippet: null
-  #validators: require_when_published
-
 - field_name: spatial_type
   label: Spatial Type
   form_snippet: select.html
   display_snippet: select.html
   display_group: Spatial
+  help_text: "Spatial type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the spatial type was detected incorrectly. "
   default: vector
   validators: require_when_published
   choices:
@@ -787,6 +798,7 @@ resource_fields:
   form_snippet: select.html
   display_snippet: select.html
   display_group: Spatial
+  help_text: "Geometry type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the geometry type was detected incorrectly. "
   default: point
   validators: require_when_published
   choices:
@@ -807,15 +819,19 @@ resource_fields:
 
 - field_name: bbox
   label: Bounding Box (lat-lon)
+  help_text: "Bounding Box is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
   display_group: Spatial
-  form_snippet: null
+  form_snippet: textarea.html
+  display_snippet: text.html
+  default: "Detected by the GIS Hub after data upload."
   #validators: require_when_published
 
 - field_name: locale
   label: Locale
-  help_text: "Location of the spatial data in DFO's regions and bioregions."
-  form_snippet: null
+  help_text: "Location of the spatial data in DFO's regions and bioregions.  This is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
+  form_snippet: textarea.html
   display_snippet: text.html
+  default: "Detected by the GIS Hub after data upload."
   display_group: Spatial
 
 - field_name: uuid
@@ -835,15 +851,15 @@ resource_fields:
 
 - field_name: attribute
   label: Attributes
+  help_text: "You must clearly document all attributes for all spatial layers and standalone tables in your uploaded data.  Note: attribute information (field name and type) will be populated automatically after you upload spatial data with attributes.  If you have not yet uploaded data, or you are replacing the existing data, leave these fields blank for now.  After your data has been uploaded and field names and types have been extracted, you will still have to edit this section later to add, at minimum, a description for each field.  The field description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)"
+  form_blanks: 0
   repeatable: true
-  help_text: "Describe the attributes. As part of the metadata for this spatial dataset, you must clearly document all attributes for each layer (and any standalone tables) in your uploaded file.  The name of the field in the attribute table, the field type, and a description are required. The description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)"
-  form_blanks: 1
   display_group: Attributes
   subfields:
 
   - field_name: column_name
     label: Field Name
-    help_text: The name of the field in the attribute table
+#    help_text: The name of the field in the attribute table
     form_snippet: text.html
     display_snippet: text.html
     display_group: Attributes

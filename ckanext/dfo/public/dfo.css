@@ -20,6 +20,11 @@
     margin-bottom: 3px;
 }
 
+.composite-subfield-group {
+    border-top: 2px solid #999999;
+    padding-top: 10px;
+}
+
 /* Adjust spacing of some items in template */
 input, textarea, select {
     margin-bottom: 4px;
@@ -74,10 +79,15 @@ p.composite-header {
     vertical-align: middle;
     margin-bottom: 10px;
     border-left: 4px solid #FFFFFF;
+    display: flex;
 }
 
 .resource-item-dfo-preview .title {
     padding-left: 8px;
+}
+
+.resource-item-actions {
+    margin-left: auto;
 }
 
 #resource-edit .form-horizontal .info-block {
