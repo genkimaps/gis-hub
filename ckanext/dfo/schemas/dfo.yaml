@@ -554,7 +554,7 @@ dataset_fields:
   subfields:
   - field_name: change_description
     label: Description of Change
-    default: "Initial creation of the dataset"
+    default: "Initial creation of dataset record"
     form_snippet: textarea.html
     display_snippet: text.html
     display_group: Science
@@ -715,7 +715,7 @@ resource_fields:
 - field_name: projection_text
   label: Projection Name
   display_group: Projection
-  help_text: "The name of the projection of the data. Example: BC Albers Equal Area"
+  help_text: "The name of the projection of the data. Example: BC_Albers_Equal_Area.  This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
   form_snippet: text.html
   default: "Detected by the GIS Hub after data upload."
   #validators: require_when_published
@@ -723,7 +723,7 @@ resource_fields:
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
-  help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/"
+  help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/.   This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
   form_snippet: text.html
   default: "Detected by the GIS Hub after data upload."
   #validators: require_when_published
@@ -852,7 +852,7 @@ resource_fields:
 
 - field_name: attribute
   label: Attributes
-  help_text: "You must clearly document all attributes for all spatial layers and standalone tables in your uploaded data.  Note: attribute information (field name and type) will be populated automatically after you upload spatial data with attributes.  If you have not yet uploaded data, or you are replacing the existing data, leave these fields blank for now.  After your data has been uploaded and field names and types have been extracted, you will still have to edit this section later to add, at minimum, a description for each field.  The field description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)"
+  help_text: "You must clearly document all attributes for all spatial layers and standalone tables in your uploaded data.  Some attribute information (field name and type) will be populated automatically after you upload spatial data.  If you have not yet uploaded data, or you are replacing the existing data, leave these fields blank for now.  After your data has been uploaded and field names and types have been extracted, you will still have to edit this section later to add, at minimum, a description for each field.  The field description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)  Note: raster attributes cannot be detected automatically.  You must add any raster attributes manually using this form. "
   form_blanks: 0
   repeatable: true
   display_group: Attributes
