@@ -2,11 +2,22 @@ scheming_version: 1
 dataset_type: dataset
 
 display_group_default: General
-display_group_order:
-  - Basic Information
-  - Contact Information
-  - General
-  - Science
+#display_group_order:
+#  - Basic Information
+#  - Contact Information
+#  - General
+#  - Science
+
+display_groups:
+  - label: Basic Information
+    description: "This is the Basic Info section. "
+  - label: General
+    description: "This is the General section. "
+  - label: Contact Information
+    description: "This is the Contact Information section. "
+  - label: Science
+    description: "This is the Science section -- should be collapsed by default. "
+    collapse_by_default: true
 
 about:
 about_url:
