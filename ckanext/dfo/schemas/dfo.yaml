@@ -31,7 +31,7 @@ dataset_fields:
 - field_name: title
   label: Title
   help_text: "Title of the dataset. Titles should be concise (no more than headline-length)."
-  validators: require_when_published
+  # validators: require_when_published
   display_group: Basic Information
   display_snippet: text.html
 
@@ -57,6 +57,8 @@ dataset_fields:
   display_group: Basic Information
   display_snippet: text.html
 
+# If the name field is removed from the schema, it should be autoslugged from the title
+# But this does not happen, we get an error "The form contains invalid entries:  name: Missing value"
 - preset: dataset_slug
   field_name: name
   label: Dataset ID
