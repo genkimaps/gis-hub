@@ -1,6 +1,6 @@
 {% extends "page.html" %}
 
-{% block subtitle %}{{ _('Reset your password') }}{% endblock %}
+{% block subtitle %}{{ _('Set a new password') }}{% endblock %}
 
 {% block breadcrumb_content %}
   <li class="active">{% link_for _('Password reset'), controller='user', action='request_reset' %}</li>
@@ -10,7 +10,7 @@
   <article class="module">
     <div class="module-content">
       {% block primary_content_inner %}
-      <h1 class="page-heading">{{ _('Choose a new password') }}</h1>
+      <h1 class="page-heading">{{ _('Set a new password') }}</h1>
       {% block form %}
         <form action="" method="post" class="form-inline control-medium">
           <label for="field-username">{{ _('Username') }}</label>

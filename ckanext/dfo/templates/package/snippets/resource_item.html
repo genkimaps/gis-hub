@@ -16,22 +16,31 @@
         <div class="resource-item-actions pull-right">
             <ul class="inline">
                 {% if authorized %}
-                <li>
-                    <a href="{{ url }}" class="btn">{{ _('Details') }}</a>
-                </li>
-                <li>
-                    {%- if res.disclaimer or res.disclaimer_url -%}
-                        <button class="btn btn-success" data-toggle="modal"
-                                data-target="#r_{{ res.id }}">
-                            {{ _('Download') }} {{ h.get_translated(res, 'format') }}
-                        </button>
-                    {%- else -%}
-                        <a href="{{ res.url }}" class="btn btn-success"
-                           target="_blank">
-                            {{ _('Download') }} {{ h.get_translated(res, 'format') }}
-                        </a>
-                    {%- endif -%}
-                </li>
+
+                    {# Show the Download button only for the data package
+                        placeholder in position 0 #}
+                    {% if res.position == 0 %}
+                        <li>
+                            {%- if res.disclaimer or res.disclaimer_url -%}
+                                <button class="btn btn-success" data-toggle="modal"
+                                        data-target="#r_{{ res.id }}">
+                                    {{ _('Download') }} {{ h.get_translated(res, 'format') }}
+                                </button>
+                            {%- else -%}
+                                <a href="{{ res.url }}" class="btn btn-success"
+                                   target="_blank">
+                                    {{ _('Download') }} {{ h.get_translated(res, 'format') }}
+                                </a>
+                            {%- endif -%}
+                        </li>
+                    {% else %}
+                        {# Show the Details button only for non-placeholder
+                            data contents (layers, tables, documents, etc)
+                            extracted from the uploaded file #}
+                        <li>
+                            <a href="{{ url }}" class="btn">{{ _('Details') }}</a>
+                        </li>
+                    {% endif %}
                 {% else %}
                     <div class="dropdown btn-group">
                         <a href="{{ h.url_for('restricted_request_access', package_id=pkg.name, resource_id=res.id) }}" class="btn">
