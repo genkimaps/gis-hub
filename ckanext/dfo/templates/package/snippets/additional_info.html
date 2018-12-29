@@ -1,14 +1,19 @@
 {%- set pkg = pkg_dict -%}
 {%- set exclude_fields = [
+
+    'tag_string',
+    'license_id',
+
+  ] -%}
+
+{# Removed these fields from excluded list:
     'id',
     'title',
     'name',
     'notes',
     'notes_translated',
-    'tag_string',
-    'license_id',
     'owner_org',
-  ] -%}
+#}
 
 {%- for group in schema.dataset_fields|groupby('display_group') -%}
 {%- set group_fields = h.non_empty_fields(group.list|list, pkg_dict, exclude_fields) -%}

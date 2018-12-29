@@ -72,7 +72,7 @@ dataset_fields:
   validators: require_when_published owner_org_validator unicode
   form_snippet: organization.html
   display_group: Basic Information
-  display_snippet: text.html
+  display_snippet: null
 
 # This field is no longer used. But we cannot remove it from the schema,
 # or it causes CKAN to crash
