@@ -39,27 +39,44 @@ class DFOPlugin(p.SingletonPlugin):
         p.toolkit.add_resource('fanstatic', 'dfo')
 
     def dataset_facets(self, facets_dict, package_type):
-        if package_type == 'dataset':
+        if package_type in ('dataset', None):
             facets_dict.pop('license_id', None)
             facets_dict.pop('tags', None)
             facets_dict.pop('res_format', None)
 
-            facets_dict['data_format'] = p.toolkit._('Formats')
-            facets_dict['science_keywords'] = p.toolkit._('Keywords')
-            facets_dict['theme'] = p.toolkit._('Themes')
+            facets_dict['res_extras_data_format'] = p.toolkit._('Formats')
+            facets_dict['extras_science_keywords'] = p.toolkit._('Keywords')
+            facets_dict['extras_theme'] = p.toolkit._('Themes')
 
         return facets_dict
 
     def group_facets(self, facets_dict, organization_type, package_type):
-        return facets_dict
+        return self.dataset_facets(facets_dict, package_type)
 
     def organization_facets(self, facets_dict, organization_type,
                             package_type):
-        if package_type in (None, 'dataset'):
-            facets_dict['theme'] = p.toolkit._('Theme')
-        return facets_dict
+        return self.dataset_facets(facets_dict, package_type)
 
     def before_index(self, data_dict):
+        data_dict['extras_science_keywords'] = data_dict.get(
+            'extras_science_keywords',
+            ''
+        ).split(',')
+
+        schema = scheming_helpers.scheming_get_dataset_schema('dataset')
+
+        theme = data_dict.get('extras_theme')
+        if theme:
+            theme_field = scheming_helpers.scheming_field_by_name(
+                schema['dataset_fields'],
+                'theme'
+            )
+
+            data_dict['extras_theme'] = scheming_helpers.scheming_choices_label(
+                scheming_helpers.scheming_field_choices(theme_field),
+                theme
+            )
+
         return data_dict
 
     def read(self, entity):
