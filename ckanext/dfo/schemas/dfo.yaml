@@ -972,4 +972,5 @@ resource_fields:
     preset: tag_string_autocomplete
     form_attrs:
         data-module: autocomplete
+        data-module-tags: ""
         data-module-source: "/api/2/util/user/autocomplete?q=?"
