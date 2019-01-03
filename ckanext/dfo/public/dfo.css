@@ -20,6 +20,28 @@
     margin-bottom: 3px;
 }
 
+/* Add icons for additional formats */
+.format-label[data-format=zip],
+.format-label[data-format*=zip] {
+  width: 32px;
+  height: 35px;
+  background-position: -128px -62px;
+}
+
+.format-label[data-format=shp],
+.format-label[data-format*=shp] {
+  width: 32px;
+  height: 35px;
+  background-position: -384px -62px;
+}
+
+.format-label[data-format=gdb],
+.format-label[data-format*=gdb] {
+  width: 32px;
+  height: 35px;
+  background-position: -384px -62px;
+}
+
 /* Enclose composite fields in a box with background for visual offset */
 .composite-subfield-group {
     border: 1px solid #c5c5c5;
