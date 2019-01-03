@@ -42,6 +42,11 @@
   background-position: -384px -62px;
 }
 
+/* Use our own icon file */
+.format-label {
+  background: url(../../../base/images/sprite-gis-icons.png) no-repeat 0 0;
+}
+
 /* Enclose composite fields in a box with background for visual offset */
 .composite-subfield-group {
     border: 1px solid #c5c5c5;
