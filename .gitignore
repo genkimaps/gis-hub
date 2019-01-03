@@ -1,2 +1,5 @@
 .idea
 __temp__
+*.egg-info
+**/*.pyc
+
