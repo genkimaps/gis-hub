@@ -704,7 +704,7 @@ resource_fields:
 # Changed to title
 - field_name: title
   label: Title
-  help_text: "Title of the uploaded data package. "
+  help_text: "Title of the uploaded data package, e.g. Bottom Patches - Data Package.  For layers/files inside your data upload, this field will be populated automatically."
 #  help_text: "Name of the uploaded data package.  This is populated automatically from your uploaded data. DO NOT EDIT. "
 #  default: "Placeholder - DO NOT EDIT"
   display_snippet: text.html
