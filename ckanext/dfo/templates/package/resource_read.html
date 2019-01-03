@@ -166,12 +166,10 @@
                 <th scope="row">{{ _('Format') }}</th>
                 <td>{{ res.mimetype_inner or res.mimetype or res.format or _('unknown') }}</td>
               </tr>
-
               <tr>
                 <th scope="row">{{ _('License') }}</th>
                 <td>{% snippet "snippets/license.html", pkg_dict=pkg, text_only=True %}</td>
               </tr>
-
               {% for key, value in h.format_resource_items(res.items()) %}
                 <tr class="toggle-more"><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
               {% endfor %}
@@ -190,11 +188,8 @@
     {% snippet "package/snippets/resources.html", pkg=pkg, active=res.id %}
   {% endblock %}
 
-  {# Hide license and social media
   {% block resource_license %}
-      {% snippet "snippets/social.html" %}
+    {% snippet "snippets/social.html" %}
   {% endblock %}
-  #}
 {% endblock %}
-
 
