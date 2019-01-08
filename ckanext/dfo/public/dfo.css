@@ -41,6 +41,9 @@
   background-position: -416px -62px;
 }
 
+/* kml and geojson are handled in ckanext-geoview with gis icons file and css:
+   https://www.gis-hub.ca/img/gis-resources-sprite-icons.png
+   https://www.gis-hub.ca/fanstatic/ckanext-geoview/:version:2018-04-10T12:37:05/css/geo-resource-styles.css
 .format-label[data-format=kml],
 .format-label[data-format*=kml] {
   background-position: -448px -62px;
@@ -50,6 +53,7 @@
 .format-label[data-format*=geojson] {
   background-position: -480px -62px;
 }
+*/
 
 .format-label[data-format=mxd],
 .format-label[data-format*=mxd] {
