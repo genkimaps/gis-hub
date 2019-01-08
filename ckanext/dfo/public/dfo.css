@@ -21,25 +21,44 @@
 }
 
 /* Add icons for additional formats */
-.format-label[data-format=zip],
-.format-label[data-format*=zip] {
+.format-label {
   width: 32px;
   height: 35px;
-  background-position: -128px -62px;
 }
 
-.format-label[data-format=shp],
-.format-label[data-format*=shp] {
-  width: 32px;
-  height: 35px;
-  background-position: -384px -62px;
+.format-label[data-format=zip],
+.format-label[data-format*=zip] {
+  background-position: -128px -62px;
 }
 
 .format-label[data-format=gdb],
 .format-label[data-format*=gdb] {
-  width: 32px;
-  height: 35px;
   background-position: -384px -62px;
+}
+
+.format-label[data-format=shp],
+.format-label[data-format*=shp] {
+  background-position: -416px -62px;
+}
+
+.format-label[data-format=kml],
+.format-label[data-format*=kml] {
+  background-position: -448px -62px;
+}
+
+.format-label[data-format=geojson],
+.format-label[data-format*=geojson] {
+  background-position: -480px -62px;
+}
+
+.format-label[data-format=mxd],
+.format-label[data-format*=mxd] {
+  background-position: -512px -62px;
+}
+
+.format-label[data-format=lyr],
+.format-label[data-format*=lyr] {
+  background-position: -544px -62px;
 }
 
 /* Use our own icon file */

@@ -705,7 +705,6 @@ resource_fields:
 - field_name: title
   label: Title
   help_text: "Title of the uploaded data package, e.g. Bottom Patches - Data Package.  For layers/files inside your data upload, this field will be populated automatically."
-#  help_text: "Name of the uploaded data package.  This is populated automatically from your uploaded data. DO NOT EDIT. "
 #  default: "Placeholder - DO NOT EDIT"
   display_snippet: text.html
   validators: require_when_published
@@ -785,6 +784,8 @@ resource_fields:
       value: GeoTiff
     - label: GeoJson
       value: GeoJson
+    - label: Google Earth (KML/KMZ)
+      value: Google Earth
     - label: Other (Document, non-spatial, etc.)
       value: Other
 
@@ -831,6 +832,8 @@ resource_fields:
       value: geometry
     - label: Coverage
       value: coverage
+    - label: Mixed
+      value: mixed
     - label: None
       value: none
 
