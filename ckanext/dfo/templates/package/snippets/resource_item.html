@@ -32,14 +32,14 @@
                             </a>
                         {%- endif -%}
                     </li>
-                {% else %}
-                    {# Show Details button only for data contents
-                        (layers, tables, documents) in the uploaded file #}
-
-                    <li>
-                        <a href="{{ url }}" class="btn">{{ _('Details') }}</a>
-                    </li>
                 {% endif %}
+                {# Show Details button for all items, including data contents
+                    (layers, tables, documents) in the uploaded file #}
+
+                <li>
+                    <a href="{{ url }}" class="btn">{{ _('Details') }}</a>
+                </li>
+
 
                 {% else %}
                     <div class="dropdown btn-group">
