@@ -704,8 +704,7 @@ resource_fields:
 # Changed to title
 - field_name: title
   label: Title
-  help_text: "Title of the uploaded data package, e.g. Bottom Patches - Data Package.  For layers/files inside your data upload, this field will be populated automatically."
-#  default: "Placeholder - DO NOT EDIT"
+  help_text: "If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  For layers/files inside your data upload, this field will be populated automatically with the layer/file name (please do not change it)."
   display_snippet: text.html
   validators: require_when_published
 
@@ -732,16 +731,16 @@ resource_fields:
   display_group: Projection
   help_text: "The name of the projection of the data. Example: BC_Albers_Equal_Area.  This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
   form_snippet: text.html
-  default: "Detected by the GIS Hub after data upload."
-  #validators: require_when_published
+  # default: "Detected by the GIS Hub after data upload."
+  # validators: require_when_published
 
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
   help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/.   This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
   form_snippet: text.html
-  default: "Detected by the GIS Hub after data upload."
-  #validators: require_when_published
+  # default: "Detected by the GIS Hub after data upload."
+  # validators: require_when_published
 
 - field_name: projection_codespace
   label: Codespace
@@ -749,7 +748,7 @@ resource_fields:
   display_group: Projection
   form_snippet: null
   display_snippet: null
-  #validators: require_when_published
+  # validators: require_when_published
 
 - field_name: codespace_version
   label: Codespace Version
@@ -769,7 +768,7 @@ resource_fields:
 
 - field_name: data_format
   label: Data Format
-  help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly.  Indicate the format of the spatial data inside the zip file. Note that there may be other non-spatial components included with a dataset (e.g. PDF report, R script). Do not enter zip as the format."
+  help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly. "
   display_group: Spatial
   validators: require_when_published
   form_snippet: select.html
@@ -841,17 +840,19 @@ resource_fields:
   label: Bounding Box (lat-lon)
   help_text: "Bounding Box is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
   display_group: Spatial
-  form_snippet: textarea.html
+#  form_snippet: textarea.html
+  form_snippet: null
   display_snippet: text.html
-  default: "Detected by the GIS Hub after data upload."
-  #validators: require_when_published
+  # default: "Detected by the GIS Hub after data upload."
+  # validators: require_when_published
 
 - field_name: locale
   label: Locale
-  help_text: "Location of the spatial data in DFO's regions and bioregions.  This is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
-  form_snippet: textarea.html
+  help_text: "Location of the spatial data in DFO's regions and bioregions, calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
+#  form_snippet: textarea.html
+  form_snippet: null
   display_snippet: text.html
-  default: "Detected by the GIS Hub after data upload."
+  # default: "Detected by the GIS Hub after data upload."
   display_group: Spatial
 
 - field_name: uuid
@@ -937,7 +938,7 @@ resource_fields:
   display_snippet: null
 
 - field_name: disclaimer_url
-  label: Download Disclaimer (Remote)
+  label: Download Disclaimer (External Link)
   help_text: "Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
   form_snippet: text.html
   display_snippet: null
