@@ -25,7 +25,12 @@
                 <dt class="dataset-label">
                     {{ h.scheming_language_text(field.label) }}
                 </dt>
-                <dd class="dataset-details">
+                {# Add another class if composite #}
+                {% if field.subfields %}
+                    <dd class="dataset-details composite-holder">
+                {% else %}
+                    <dd class="dataset-details">
+                {% endif %}
                     {%- snippet 'scheming/snippets/display_field.html',
                             field=field,
                             data=pkg_dict,
