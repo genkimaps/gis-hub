@@ -13,10 +13,15 @@
 
 /* Keep user-entered line breaks
    https://github.com/tk-technologies/ckanext-dfo/issues/40
-   Nope, causes composite-repeating fields to have massive whitespace
+   Nope, causes composite-repeating fields to have massive whitespace  */
 .dataset-details {
-    white-space: pre-wrap;
-}  */
+    white-space: pre-line;
+}
+
+/* Override in composite-repeating-list to prevent weird spacing */
+.composite-repeating-list {
+    white-space: normal;
+}
 
 
 .additional-info .dataset-label {
