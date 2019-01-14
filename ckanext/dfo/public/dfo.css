@@ -11,6 +11,12 @@
     vertical-align: middle;
 }
 
+/* Keep user-entered line breaks
+   https://github.com/tk-technologies/ckanext-dfo/issues/40  */
+.dataset-details {
+    white-space: pre-wrap;
+}
+
 .additional-info .dataset-label {
     font-weight: bold;
     color: #666;
