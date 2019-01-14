@@ -2,9 +2,9 @@ The GIS Hub is the central place to find key spatial datasets for MSEA staff and
 
 We need your help to make sure that the rollout of this system goes as smoothly as possible.  In addition to registering using the link below, please explore the system and upload your own data, once it is ready to publish.
 
-A key part of the GIS Hub is metadata.  We have designed a metadata standard that is both flexible and comprehensive, and meets the needs of DFO Science.  The metadata form on the GIS Hub makes the process of writing your metadata simple and standardized. If you have already been writing metadata, this step will not be much more than copying and pasting.  Note that incomplete metadata will be saved as a draft, and you can come back to complete it later.  When all required metadata is complete, you may publish the dataset.
+A key part of the GIS Hub is metadata.  We have designed a metadata standard that is both flexible and comprehensive, and meets the needs of DFO Science.  The metadata form on the GIS Hub makes the process of writing your metadata simple and standardized. If you have already been writing metadata, this step will not be much more than copying and pasting.  Note that incomplete metadata can be saved as a draft, and you can come back to complete it later.  When all required metadata is complete, you may publish the dataset.
 
-You can find documentation on the data preparation guidelines and metadata standard on the Tanker Safety drive at:  \\dcbcpbsna01a\WC_Tanker_Safety\MSEA\GIS Hub Docs
+You can find documentation on the data preparation guidelines and metadata standard on the Spatial Datasets drive at:  \\dcbcpbsna01a\Spatial_Datasets\Documents\GIS_Hub_Docs
 
 You can access the GIS Hub using the login information below.
 

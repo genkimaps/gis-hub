@@ -928,7 +928,7 @@ resource_fields:
     display_group: Attributes
 
 
-# Other
+# Upload
 
 - field_name: disclaimer
   label: Download Disclaimer
@@ -936,12 +936,14 @@ resource_fields:
   default: "This data is intended for scientific research only. Fisheries and Oceans Canada (DFO) is not responsible for damages resulting from any omissions or errors that may be contained in these data and expressly disclaims any warranty of fitness for any particular purpose. DFO shall not be liable for any losses, financial or otherwise, due to the use of these data. The user assumes the entire risk as to the suitability, results and performance of the data for their proposed use."
   form_snippet: textarea.html
   display_snippet: null
+  display_group: Upload Data
 
 - field_name: disclaimer_url
   label: Download Disclaimer (External Link)
   help_text: "Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
   form_snippet: text.html
   display_snippet: null
+  display_group: Upload Data
 
 - field_name: url
   label: Download URL
@@ -951,6 +953,7 @@ resource_fields:
   form_snippet: upload.html
   upload_field: upload
   upload_clear: clear_upload
+  display_group: Upload Data
 
 - field_name: restricted
   label: "Access Restrictions"
