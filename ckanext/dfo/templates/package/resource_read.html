@@ -3,3 +3,33 @@
 {# Hide license #}
 {% block resource_license %}
 {% endblock %}
+
+{% block resource_fields %}
+    {%- for group in schema.resource_fields|groupby('display_group') -%}
+        {%- set group_fields = h.non_empty_fields(group.list|list, res, exclude_fields) -%}
+        {% if group_fields %}
+            <div class="additional-info">
+                <h3 class="dataset-group-label">{{ group.grouper }}</h3>
+                <dl>
+                    {% for field in group_fields %}
+                        <dt class="dataset-label">
+                            {{- h.scheming_language_text(field.label) -}}
+                        </dt>
+                        {# Add another class if composite #}
+                        {%- if field.subfields -%}
+                            <dd class="dataset-details composite-holder">
+                        {%- else -%}
+                            <dd class="dataset-details">
+                        {%- endif -%}
+                            {%- snippet 'scheming/snippets/display_field.html',
+                    field=field,
+                    data=res,
+                    entity_type='dataset',
+                    object_type=dataset_type -%}
+                        </dd>
+                    {% endfor %}
+                </dl>
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
