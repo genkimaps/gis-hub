@@ -12,6 +12,7 @@
                 <h3 class="dataset-group-label">{{ group.grouper }}</h3>
                 <dl>
                     {% for field in group_fields %}
+                        {{ field }}
                         <dt class="dataset-label">
                             {{- h.scheming_language_text(field.label) -}}
                         </dt>
