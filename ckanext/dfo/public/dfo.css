@@ -23,6 +23,10 @@
     white-space: normal;
 }
 
+.composite-holder {
+    line-height: 0;
+}
+
 
 .additional-info .dataset-label {
     font-weight: bold;
