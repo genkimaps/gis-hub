@@ -12,10 +12,12 @@
 }
 
 /* Keep user-entered line breaks
-   https://github.com/tk-technologies/ckanext-dfo/issues/40  */
+   https://github.com/tk-technologies/ckanext-dfo/issues/40
+   Nope, causes composite-repeating fields to have massive whitespace
 .dataset-details {
     white-space: pre-wrap;
-}
+}  */
+
 
 .additional-info .dataset-label {
     font-weight: bold;
