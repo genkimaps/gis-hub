@@ -23,14 +23,14 @@
         <dl>
             {% for field in group_fields %}
                 <dt class="dataset-label">
-                    {{ h.scheming_language_text(field.label) }}
+                    {{- h.scheming_language_text(field.label) -}}
                 </dt>
                 {# Add another class if composite #}
-                {% if field.subfields %}
+                {%- if field.subfields -%}
                     <dd class="dataset-details composite-holder">
-                {% else %}
+                {%- else -%}
                     <dd class="dataset-details">
-                {% endif %}
+                {%- endif -%}
                     {%- snippet 'scheming/snippets/display_field.html',
                             field=field,
                             data=pkg_dict,
