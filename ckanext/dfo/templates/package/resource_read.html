@@ -1,5 +1,14 @@
 {% ckan_extends %}
 
+{%- set exclude_fields = [
+    'name',
+    'description',
+    'url',
+    'format',
+    ] -%}
+{%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+
+
 {% block resource_additional_information_inner %}
     <div class="module-content">
         <h2>{{ _('Additional Information') }}</h2>
