@@ -1,12 +1,5 @@
 {% ckan_extends %}
 
-{%- set exclude_fields = [
-    'name',
-    'description',
-    'url',
-    'format',
-    ] -%}
-{%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
 
 {# Hide license #}
 {%- block resource_license -%}
@@ -21,7 +14,7 @@
             <h3 class="dataset-group-label">{{ group.grouper }}</h3>
             <dl>
                 {% for field in group_fields %}
-                <p>{{ field }}</p>
+                {# Debug fields <p>{{ field }}</p> #}
                     <dt class="dataset-label">
                         {{ h.scheming_language_text(field.label) }}
                     </dt>
