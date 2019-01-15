@@ -6,10 +6,10 @@
 {#- render the field the user requested, or use a default field -#}
 {%- if field.subfields %}
     {% set group_data = h.scheming_composite_load(data[field.field_name]) %}
+
     {% if field.field_name == "attribute" %}
-    <p>attrib data</p>
+    <p>TODO: display attributes as a table here</p>
     {% endif %}
-    <p>{{ field }}</p>
 
     {% for group in group_data %}
     <dl class="composite-repeating-list">
