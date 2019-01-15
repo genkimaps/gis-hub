@@ -1,10 +1,8 @@
 {% ckan_extends %}
 
-
 {# Hide license #}
 {%- block resource_license -%}
 {%- endblock -%}
-
 
 {% block resource_fields %}
 {%- for group in schema.resource_fields|groupby('display_group') -%}
