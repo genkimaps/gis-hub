@@ -1,9 +1,5 @@
 {% ckan_extends %}
 
-{# Hide license #}
-{% block resource_license %}
-{% endblock %}
-
 {% block resource_additional_information_inner %}
     <div class="module-content">
         <h2>{{ _('Additional Information') }}</h2>
@@ -27,11 +23,8 @@
                     <td>{{ res.mimetype_inner or res.mimetype or res.format or _('unknown') }}</td>
                 </tr>
             {%- endblock -%}
+            {# Hide license #}
             {%- block resource_license -%}
-                <tr>
-                    <th scope="row">{{ _('License') }}</th>
-                    <td>{% snippet "snippets/license.html", pkg_dict=pkg, text_only=True %}</td>
-                </tr>
             {%- endblock -%}
             </tbody>
         </table>
