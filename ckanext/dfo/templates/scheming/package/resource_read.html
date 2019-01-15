@@ -1,5 +1,13 @@
 {% ckan_extends %}
 
+{%- set exclude_fields = [
+    'name',
+    'description',
+    'url',
+    'format',
+    ] -%}
+{%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
+
 {# Hide license #}
 {%- block resource_license -%}
 {%- endblock -%}
