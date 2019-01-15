@@ -1,4 +1,4 @@
-{% ckan_extends %}
+{% extends "package/resource_read.html" %}
 
 {% block resource_additional_information_inner %}
     <div class="module-content">
@@ -35,6 +35,7 @@
                 {% if group_fields %}
                     <div class="additional-info">
                         <h3 class="dataset-group-label">{{ group.grouper }}</h3>
+                        <p>**</p>
                         <dl>
                             {% for field in group_fields %}
                                 <dt class="dataset-label">
