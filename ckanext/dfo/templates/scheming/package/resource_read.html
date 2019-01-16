@@ -34,6 +34,14 @@
                             </thead>
 
                             <tbody>
+                            {% for g in group_data %}
+                            <tr>
+                                <th scope="row">{{ g.column_name }}</th>
+                                <td>{{ g.column_type }}</td>
+                                <td>{{ g.description }}</td>
+                                <td>{{ g.units }}</td>
+                                <td>{{ g.coded_values }}</td>
+                            </tr>
 
                             </tbody>
 
