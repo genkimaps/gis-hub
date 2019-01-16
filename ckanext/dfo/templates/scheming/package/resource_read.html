@@ -12,19 +12,17 @@
             <h3 class="dataset-group-label">{{ group.grouper }}</h3>
             <dl>
                 {% for field in group_fields %}
-                    {# Debug fields
-                        <p>{{ field }}</p>
-                    #}
+
                     {% if field.field_name == "attribute" %}
-                    {% set group_data = h.scheming_composite_load(res[field.field_name]) %}
-                    <p>{{ group_data }}</p>
-                    <p>{{ field.subfields }}</p>
+                    {% set field_data = h.scheming_composite_load(res[field.field_name]) %}
+                    {# Debug fields
+                    <p>{{ field_data }}</p>
+                    <p>{{ field.subfields }}</p> #}
                         {# Close dl tag and write table header #}
                         </dl>
                         <table class="table">
                             <thead>
                             <tr>
-                                {# <th scope="col">Field</th> #}
                                 <th scope="col">Field Name</th>
                                 <th scope="col">Type</th>
                                 <th scope="col">Description</th>
@@ -34,13 +32,13 @@
                             </thead>
 
                             <tbody>
-                            {% for g in group_data %}
+                            {% for f in field_data %}
                             <tr>
-                                <th scope="row">{{ g.column_name }}</th>
-                                <td>{{ g.column_type }}</td>
-                                <td>{{ g.description }}</td>
-                                <td>{{ g.units }}</td>
-                                <td>{{ g.coded_values }}</td>
+                                <th scope="row">{{ f.column_name }}</th>
+                                <td>{{ f.column_type }}</td>
+                                <td>{{ f.description }}</td>
+                                <td>{{ f.units }}</td>
+                                <td>{{ f.coded_values }}</td>
                             </tr>
                             {% endfor %}
 
@@ -48,14 +46,14 @@
 
                         </table>
                         <dl>
-                    {% endif %}
+                    {% else %}
 
                         <dt class="dataset-label">
                             {{ h.scheming_language_text(field.label) }}
                         </dt>
                         {# Add another class if composite #}
                         {%- if field.subfields -%}
-                            <dd class="dataset-details composite-holder test78">
+                            <dd class="dataset-details composite-holder">
                         {%- else -%}
                             <dd class="dataset-details">
                         {%- endif -%}
@@ -65,7 +63,7 @@
                                 entity_type='dataset',
                                 object_type=dataset_type -%}
                         </dd>
-                    {#  {% endif %}  #}
+                    {% endif %}
                 {% endfor %}
             </dl>
         </div>
