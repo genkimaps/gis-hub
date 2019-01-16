@@ -7,8 +7,8 @@
 {%- if field.subfields %}
     {% set group_data = h.scheming_composite_load(data[field.field_name]) %}
 
-    {% if field.field_name == "attribute" %}
-    <p>TODO: display attributes as a table here</p>
+    {# {% if field.field_name == "attribute" %}
+    <p>TODO: display attributes as a table here</p>  #}
     {% endif %}
 
     {% for group in group_data %}

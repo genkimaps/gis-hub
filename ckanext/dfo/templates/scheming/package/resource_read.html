@@ -12,22 +12,51 @@
             <h3 class="dataset-group-label">{{ group.grouper }}</h3>
             <dl>
                 {% for field in group_fields %}
-                {# Debug fields <p>{{ field }}</p> #}
-                    <dt class="dataset-label">
-                        {{ h.scheming_language_text(field.label) }}
-                    </dt>
-                    {# Add another class if composite #}
-                    {%- if field.subfields -%}
-                        <dd class="dataset-details composite-holder test78">
-                    {%- else -%}
-                        <dd class="dataset-details">
-                    {%- endif -%}
-                        {%- snippet 'scheming/snippets/display_field.html',
-                field=field,
-                data=res,
-                entity_type='dataset',
-                object_type=dataset_type -%}
-                    </dd>
+                    {# Debug fields
+                        <p>{{ field }}</p>
+                    #}
+                    {% if field.field_name == "attribute" %}
+                    {% set group_data = h.scheming_composite_load(data[field.field_name]) %}
+                    <p>{{ group_data }}</p>
+                    <p>{{ field.subfields }}</p>
+                        {# Close dl tag and write table header #}
+                        </dl>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                {# <th scope="col">Field</th> #}
+                                <th scope="col">Field Name</th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Units</th>
+                                <th scope="col">Coded Values</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            </tbody>
+
+                        </table>
+                        <dl>
+                    {% else %}
+
+                        <dt class="dataset-label">
+                            {{ h.scheming_language_text(field.label) }}
+                        </dt>
+                        {# Add another class if composite #}
+                        {%- if field.subfields -%}
+                            <dd class="dataset-details composite-holder test78">
+                        {%- else -%}
+                            <dd class="dataset-details">
+                        {%- endif -%}
+                            {%- snippet 'scheming/snippets/display_field.html',
+                                field=field,
+                                data=res,
+                                entity_type='dataset',
+                                object_type=dataset_type -%}
+                        </dd>
+                    {% endif %}
                 {% endfor %}
             </dl>
         </div>
