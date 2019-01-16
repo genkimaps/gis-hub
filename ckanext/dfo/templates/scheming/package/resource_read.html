@@ -39,7 +39,7 @@
 
                         </table>
                         <dl>
-                    {% else %}
+                    {% endif %}
 
                         <dt class="dataset-label">
                             {{ h.scheming_language_text(field.label) }}
@@ -56,7 +56,7 @@
                                 entity_type='dataset',
                                 object_type=dataset_type -%}
                         </dd>
-                    {% endif %}
+                    {#  {% endif %}  #}
                 {% endfor %}
             </dl>
         </div>
