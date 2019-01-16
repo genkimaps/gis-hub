@@ -16,7 +16,7 @@
                         <p>{{ field }}</p>
                     #}
                     {% if field.field_name == "attribute" %}
-                    {% set group_data = h.scheming_composite_load(data[field.field_name]) %}
+                    {% set group_data = h.scheming_composite_load(res[field.field_name]) %}
                     <p>{{ group_data }}</p>
                     <p>{{ field.subfields }}</p>
                         {# Close dl tag and write table header #}
