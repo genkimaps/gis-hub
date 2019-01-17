@@ -22,6 +22,9 @@
         <h3 class="dataset-group-label">{{ group.grouper }}</h3>
         <dl>
             {% for field in group_fields %}
+                <dt class="dataset-label">
+                    {{- h.scheming_language_text(field.label) -}}
+                </dt>
 
                 {% if field.field_name == "species_codes" %}
                     {% set field_data = h.scheming_composite_load(pkg_dict[field.field_name]) %}
@@ -54,9 +57,6 @@
                     <dl>
                 {% else %}
 
-                    <dt class="dataset-label">
-                        {{- h.scheming_language_text(field.label) -}}
-                    </dt>
                     {# Add another class if composite #}
                     {%- if field.subfields -%}
                         <dd class="dataset-details composite-holder">
