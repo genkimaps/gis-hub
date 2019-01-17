@@ -24,7 +24,7 @@
             {% for field in group_fields %}
 
                 {% if field.field_name == "species_codes" %}
-                    {% set field_data = h.scheming_composite_load(res[field.field_name]) %}
+                    {% set field_data = h.scheming_composite_load(pkg_dict[field.field_name]) %}
                     {# Debug fields
                     <p>{{ field_data }}</p>
                     <p>{{ field.subfields }}</p> #}
