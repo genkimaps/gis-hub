@@ -9,6 +9,7 @@
           <h1 class="page-heading">GIS Hub Documentation</h1>
           <p>Welcome to the docs page</p>
       {% endblock %}
+
       <h2>Known Issues</h2>
       <p>This section summarizes known issues on the GIS Hub
         that affect the end-user experience, and where available,
@@ -26,11 +27,66 @@
         saved in the csv file, the list of codes can be refreshed
         when this bug is fixed.
       </p>
+
       <p>
-        <b>Problem:</b>
+        <b>Problem:</b> The Download ZIP button shows a disclaimer,
+        but when you click Accept, nothing happens.
         <br>
-        <b>Workaround:</b>
+        <b>Workaround:</b> under Data and Resources, identify the
+        data package you wish to download.  Click the Details button,
+        click the Download button near the top-right.
       </p>
+
+      <p>
+        <b>Problem:</b> Non-science keywords are not restricted to
+        the list of keywords from the Government of Canada
+        <a href="http://canada.multites.net/cst/index.htm" target="_blank">Core
+        Subject Thesaurus</a>.
+        The autocomplete displays only previously-entered keywords,
+        instead of the list from the GoC Thesaurus.  Additionally,
+        it does not prevent you from entering a keyword that does
+        not exist in the GoC Thesaurus.
+        <br>
+        <b>Workaround:</b> Please be careful when entering keywords.
+        Look up the keywords on the thesaurus website first.
+      </p>
+
+      <h2>Introduction</h2>
+      <p>The GIS Hub system is live and ready for users to publish data.
+        This documentation page contains guidelines for preparing
+        your data and metadata for publishing on the system.  Please note
+        that some of these guidelines may change as the system is improved. </p>
+
+      <p>Keep in mind that these are <i>guidelines</i> and not strict rules.
+        We prefer that staff start using the system as soon as possible,
+        so that any unforeseen issues can be resolved before full release.
+        Even if your data does not meet all of the requirements listed here,
+        you may prepare it for publishing anyway, with the understanding
+        that the published data and/or metadata can easily be updated in the future.  </p>
+
+      <h2>Metadata Overview</h2>
+      <p>The Pacific Science metadata working group has created a comprehensive
+        metadata standard with relevant fields for Science.  In addition to
+        ]the science metadata, the standard includes general-purpose
+        geospatial metadata.  The general metadata is required for all spatial
+        data published on the Federal Geospatial Portal (FGP) and/or Open Data.
+        Even if your data is not a candidate for publishing on FGP or Open Data,
+        the general metadata is required since it provides important information
+        for staff downloading and using the data.  </p>
+      <p>The metadata standard is divided into several modules, each of which
+        contains a number of metadata fields.  The same modules are shown on
+        the GIS Hub on the metadata forms, when creating a new dataset.
+        We suggest that you write your metadata in a document and copy and
+        paste the content into the metadata system, when both the data and
+        metadata are ready. </p>
+      <p>During the data upload process, your data is extracted automatically
+        by the server and properties such as projection and spatial extents
+        are recorded.  Metadata fields that are extracted automatically are
+        not shown in the metadata modules below—only the fields that require
+        manual input in the metadata entry system are shown.</p>
+      <p>All fields in each metadata module are required unless shown as
+        Optional with this symbol:  </p>
+
     </div>
   </article>
 {% endblock %}
