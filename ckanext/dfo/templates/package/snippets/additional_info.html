@@ -28,7 +28,7 @@
 
                 {% if field.field_name == "species_codes" %}
                     {% set field_data = h.scheming_composite_load(pkg_dict[field.field_name]) %}
-                    {# Debug fields
+                    {# Display species_codes as a table
                     <p>{{ field_data }}</p>
                     <p>{{ field.subfields }}</p> #}
                     {# Close dl tag and write table header #}
