@@ -14,10 +14,10 @@
                 {% for field in group_fields %}
 
                     {% if field.field_name == "attribute" %}
-                    {% set field_data = h.scheming_composite_load(res[field.field_name]) %}
-                    {# Debug fields
-                    <p>{{ field_data }}</p>
-                    <p>{{ field.subfields }}</p> #}
+                        {% set field_data = h.scheming_composite_load(res[field.field_name]) %}
+                        {# display attributes as a table here
+                        <p>{{ field_data }}</p>
+                        <p>{{ field.subfields }}</p> #}
                         {# Close dl tag and write table header #}
                         </dl>
                         <table class="table">
