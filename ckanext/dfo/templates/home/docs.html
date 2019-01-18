@@ -1,0 +1,14 @@
+{% extends "page.html" %}
+
+{% block subtitle %}Documentation{% endblock %}
+
+{% block primary %}
+  <article class="module">
+    <div class="module-content">
+      {% block docs %}
+          <h1 class="page-heading">Documentation</h1>
+        <p>Welcome to the docs page</p>
+      {% endblock %}
+    </div>
+  </article>
+{% endblock %}
