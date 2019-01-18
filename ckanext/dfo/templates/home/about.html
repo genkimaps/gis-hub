@@ -3,7 +3,7 @@
 {% block primary %}
   <article class="module">
     <div class="module-content">
-      {% link_for 'Documentation', controller='home', action='docs' %}
+      {#  {% link_for 'Documentation', controller='home', action='docs' %}  #}
       {% block about %}
         {% if g.site_about %}
           {{ h.render_markdown(g.site_about) }}
