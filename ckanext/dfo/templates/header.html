@@ -1,5 +1,7 @@
 {% ckan_extends %}
 
+{# Did not work ('docs', _('Documentation'))  #}
+
 {% block header_site_navigation %}
 <nav class="section navigation">
   <ul class="nav nav-pills">
@@ -8,8 +10,8 @@
         ('search', _('Datasets')),
         ('organizations_index', _('Organizations')),
         ('group_index', _('Groups')),
-        ('about', _('About')),
-        {#  ('docs', _('Documentation'))  #}
+        ('about', _('About'))
+
       ) }}
     {% endblock %}
   </ul>
