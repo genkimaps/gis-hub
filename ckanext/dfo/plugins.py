@@ -139,6 +139,11 @@ class DFOPlugin(p.SingletonPlugin):
             controller='ckanext.dfo.plugins:AdvancedSearch',
             action='search'
         )
+        map.connect(
+            '/docs',
+            controller='ckanext.dfo.plugins:DocsController',
+            action='docs'
+        )
         return map
 
     def after_map(self, map):
@@ -198,6 +203,10 @@ def get_thumbnail(package_id):
         if name and name.lower() == 'thumbnail':
             return resource['url']
 
+
+class DocsController(base.BaseController):
+    def docs(self):
+        return p.toolkit.render('templates/docs/docs.html')
 
 class AdvancedSearch(base.BaseController):
     @staticmethod
