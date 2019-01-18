@@ -206,7 +206,7 @@ def get_thumbnail(package_id):
 
 class DocsController(base.BaseController):
     def docs(self):
-        return p.toolkit.render('templates/docs/docs.html')
+        return p.toolkit.render('docs/docs.html')
 
 class AdvancedSearch(base.BaseController):
     @staticmethod
