@@ -6,11 +6,14 @@
   <article class="module">
     <div class="module-content">
       {% block docs %}
-          <h1 class="page-heading">GIS Hub Documentation</h1>
-          <p>Welcome to the docs page</p>
+        <h1 class="page-heading">GIS Hub Documentation</h1>
+        <p>Welcome to the GIS Hub documentation page.  This section of the site
+        contains the latest documentation and should be considered more
+        authoritative than any existing version of the GIS Hub publishing guide. </p>
       {% endblock %}
 
-      <h2>Known Issues</h2>
+
+        <h2 id="issues">Known Issues</h2>
       <p>This section summarizes known issues on the GIS Hub
         that affect the end-user experience, and where available,
         a workaround. </p>
@@ -51,7 +54,8 @@
         Look up the keywords on the thesaurus website first.
       </p>
 
-      <h2>Introduction</h2>
+
+      <h2 id="intro">Introduction</h2>
       <p>The GIS Hub system is live and ready for users to publish data.
         This documentation page contains guidelines for preparing
         your data and metadata for publishing on the system.  Please note
@@ -64,7 +68,7 @@
         you may prepare it for publishing anyway, with the understanding
         that the published data and/or metadata can easily be updated in the future.  </p>
 
-      <h2>Metadata Overview</h2>
+      <h2 id="overview">Metadata Overview</h2>
       <p>The Pacific Science metadata working group has created a comprehensive
         metadata standard with relevant fields for Science.  In addition to
         ]the science metadata, the standard includes general-purpose
@@ -87,8 +91,9 @@
       <p>All fields in each metadata module are required unless marked as
         optional.</p>
 
-      <h2>Metadata Modules</h2>
-      <h3>Basic Information</h3>
+
+      <h2 id="modules">Metadata Modules</h2>
+      <h3 id="basic">Basic Information</h3>
       <p>This section is a set of basic information required for all metadata entries.
         This information is displayed near the top of the page when viewing metadata.</p>
       <p>The metadata standard requires contact information for organizations
@@ -198,7 +203,8 @@
       </tbody>
     </table>
 
-    <h3>General Metadata</h3>
+
+    <h3 id="general">General Metadata</h3>
     <p>This section describes general-purpose metadata required for
       all spatial data. </p>
     <table class="table table-striped table-bordered">
@@ -253,7 +259,8 @@
       </tbody>
     </table>
 
-      <h3>Science Metadata</h3>
+
+    <h3 id="science">Science Metadata</h3>
     <p>This section is required for all scientific data. </p>
     <table class="table table-striped table-bordered">
       <thead>
@@ -410,7 +417,8 @@
       </tbody>
     </table>
 
-    <h3>Species Codes</h3>
+
+    <h3 id="species">Species Codes</h3>
     <p>Species codes are only required if your data is biological.
       Complete the following metadata for <b>each</b> species in your data.
       If the list of species is excessively long, you may include a list
@@ -449,7 +457,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p>For each line, only the species code is required.  If the 2nd or 3rd column is not included for a given line, the default values will be used.  The csv file does not need a header.  Values do not have to be enclosed in quotes (any quotes found will be removed).  Do not use any character other than a comma to separate values.  </p>
       <p>The file must be called <i>species_codes.csv</i> and included in the zip file with your data. </p>
 
-      <h2>Adding Data</h2>
+      <h2 id="add-data">Adding Data</h2>
       <p>Once all of the required metadata listed above has been entered, you can continue to adding data to your dataset record.  Ensure that Visibility is set to Public and click “Next: Add Data” at the bottom of the page.  This will take you to the Add Data screen. </p>
       <p>Most of the metadata in this section is extracted automatically when you upload your data package. The only fields you need to complete before uploading data are the following:</p>
 
@@ -466,9 +474,17 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
     </h2>
     <div class="module-content">
       <p>
-        CKAN Organizations are used to create, manage and publish collections
-        of datasets. Users can have different roles within an Organization,
-        depending on their level of authorisation to create, edit and publish.
+        Use this sidebar to navigate the documentation.  Each section may
+        contain one or more sub-sections.
+        <a href="#issues">Known Issues</a>
+        <a href="#intro">Introduction</a>
+        <a href="#overview">Metadata Overview</a>
+        <a href="#modules">Metadata Modules</a>
+        <a href="#basic">Basic Information</a>
+        <a href="#general">General Metadata</a>
+        <a href="#science">Science Metadata</a>
+        <a href="#species">Species Codes</a>
+        <a href="#add-data">Adding Data</a>
       </p>
     </div>
   </div>
