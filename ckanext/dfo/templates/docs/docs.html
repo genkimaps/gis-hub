@@ -458,4 +458,18 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
   </article>
 {% endblock %}
 
-{% block secondary %}{% endblock %}
+{% block secondary %}
+  <div class="module module-narrow module-shallow">
+    <h2 class="module-heading">
+      <i class="fa fa-info-circle"></i>
+      {{ _('Documentation Index') }}
+    </h2>
+    <div class="module-content">
+      <p>
+        CKAN Organizations are used to create, manage and publish collections
+        of datasets. Users can have different roles within an Organization,
+        depending on their level of authorisation to create, edit and publish.
+      </p>
+    </div>
+  </div>
+{% endblock %}
