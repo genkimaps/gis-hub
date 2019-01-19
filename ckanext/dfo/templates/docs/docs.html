@@ -96,7 +96,7 @@
         information are required: data creator (included in the Basic Information
         section) and program manager. </p>
 
-      <table class="table table-striped">
+      <table class="table table-striped table-bordered">
         <thead>
           <tr>
             <th scope="col" style="width:25%">Field</th>
@@ -163,9 +163,296 @@
             automatically by the GIS Hub from the metadata you entered,
             but it can be edited manually.</td>
         </tr>
+        <tr>
+          <td>Start Date</td>
+          <td>Indicate the earliest date represented in this dataset.</td>
+        </tr>
+        <tr>
+          <td>End Date</td>
+          <td>Indicate the latest date represented in this dataset.
+            (Note: this field is no longer optional.  If data collection
+            is ongoing, do not leave this blank; choose Ongoing under the
+            Status section.)   If this is a model or derived data
+            (as opposed to data collected in the field), enter the
+            last date that the model used to generate this data was updated.
+            In this case, end date can be the same as start date. </td>
+        </tr>
+        <tr>
+          <td>Data Creator</td>
+          <td>The Principal Analyst. The lead person responsible for creating
+            the data. Provide the Name, Role, Department, Address, Phone, email. </td>
+        </tr>
+        <tr>
+          <td>Co-Creators <br>
+            <i>(optional)</i>
+          </td>
+          <td>Provide the names of any additional co-creators (secondary authors)
+            for this dataset.</td>
+        </tr>
+        <tr>
+          <td>Program Manager</td>
+          <td>The DFO Program Head responsible for the data (must be a permanent
+            DFO employee or section head?). Provide the Name, Role, Department,
+            Address, Phone, email. </td>
+        </tr>
+      </tbody>
+    </table>
 
-        </tbody>
-      </table>
+    <h3>General Metadata</h3>
+    <p>This section describes general-purpose metadata required for
+      all spatial data. </p>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="width:25%">Field</th>
+          <th scope="col" style="width:75%">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Topic Category</td>
+          <td>Main theme of the data. Choose the best match from the list. </td>
+        </tr>
+        <tr>
+          <td>Date Completed</td>
+          <td>The date on which the dataset was substantially complete
+            in its current form. </td>
+        </tr>
+        <tr>
+          <td>Date Published</td>
+          <td>Date of publication of dataset. Default: today's date.
+            This refers to publication of the data on this portal,
+            not necessarily the date of publication of the associated
+            academic research (academic references are described elsewhere). </td>
+        </tr>
+        <tr>
+          <td>Status</td>
+          <td>Development phase of the dataset.  Choose the
+            best match from the list.  </td>
+        </tr>
+        <tr>
+          <td>Update Frequency</td>
+          <td>Revision cycle of the data.  Choose the
+            best match from the list.  </td>
+        </tr>
+        <tr>
+          <td>Dataset Level</td>
+          <td>Use Dataset if this is a standalone data product.  Series is
+            individual regions in a series of datasets covering a larger area,
+            or some other subset of a larger data package.  </td>
+        </tr>
+        <tr>
+          <td>Keywords</td>
+          <td>At a minimum, one keyword must be supplied from the Government
+            of Canada Core Subject Thesaurus.  Refer to <a href="http://canada.multites.net/cst/index.htm">
+              http://canada.multites.net/cst/index.htm</a>.
+            You are most likely to find useful keywords in the
+            “nature and environment” and “science and technology” categories.</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+      <h3>Science Metadata</h3>
+    <p>This section is required for all scientific data. </p>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="width:25%">Field</th>
+          <th scope="col" style="width:75%">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Science Keywords</td>
+          <td>Enter additional comma-separated keywords not included in the
+            general-purpose Government of Canada Core Subject Thesaurus.
+            These keywords may include domain-specific vocabulary appropriate
+            for scientific users.  The format of keywords should be:
+            <ul>
+              <li>General terms: lowercase</li>
+              <li>Place names: Camel Case</li>
+              <li>Acronyms:  ALL CAPS</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td>Theme</td>
+          <td>Choose the best match from the list. </td>
+        </tr>
+        <tr>
+          <td>Methods</td>
+          <td>The methods field documents scientific methods used in the
+            collection or derivation of this dataset.  It includes
+            information on items such as tools, instrument calibration
+            and software. It can also include a complete description
+            of the lineage of the data.  It may refer to sections of
+            an associated academic citation or other published resource.
+            <br><br>
+
+            Understanding the pedigree of the data is critical. Ideally, this will
+            link the data set, through its methods, all the way back to the
+            source data set(s), for which the data collection methods are known.
+            <br><br>
+
+            Relevant raster methods include: any interpolation or extrapolation,
+            and any masking or numeric manipulation of the source data.</td>
+        </tr>
+        <tr>
+          <td>Data Sources</td>
+          <td>List of source data inputs used to produce this dataset.
+            For each input, provide a link to the source data where possible
+            (to another dataset on the GIS Hub, or an external link).
+            Include the date that the input was extracted, if known.
+            If the source data changes over time, indicate the date on
+            which the data was retrieved. Where possible, provide a
+            citation for each input.
+            <br><br>
+            Example input:
+            <br>
+            Originator: Canadian Hydrographic Service, Fisheries and Oceans Canada (DFO)
+            <br>
+                  Publication_Date: 2015
+            <br>
+                  Title: Geodatabase of Bathymetric point data for entire BC coast
+            <br>
+                  Other_Citation_Details: Geodatabase: GEOBASE_Entire_Coast.gdb
+            <br>
+            (link to dataset if available)
+          </td>
+        </tr>
+        <tr>
+          <td>Scripts</td>
+          <td>Link to script(s) used to process the data, for example on the
+            GCCode GitLab site. Alternatively, include the scripts or queries
+            in a Scripts folder inside in the zip file that you will upload.
+            Document the purpose of each script, and anything required to run
+            the script again.
+            <br><br>
+
+            If no scripts were used to create the data, use this field to
+            indicate how it was created, for example “manually created
+            using analysis tools in ArcGIS.”</td>
+        </tr>
+        <tr>
+          <td>Spatial Data Quality</td>
+          <td>A measure of the quality of the spatial data representing some real-world entity.  Describe the spatial data quality with reference to the data processing steps.  Was location data captured with survey-grade GPS, consumer GPS, paper charts, ship’s log?  Was data digitized from a scanned and georeferenced paper map? Is this dataset the result of intentional degradation of the input data to preserve privacy (e.g. 3 boat rule) and therefore has a known spatial resolution? Were multiple datasets captured at different spatial resolutions used in this analysis? Were point data extrapolated to polygons, or polygons/lines converted to centroids?</td>
+        </tr>
+        <tr>
+          <td>Positional Accuracy</td>
+          <td>May include horizontal and vertical. Express in metric units where possible.</td>
+        </tr>
+        <tr>
+          <td>Attribute Accuracy</td>
+          <td>Describe in general the degree to which attribute values reflect real-world conditions.  For details on specific attributes, see the Attributes Metadata section.</td>
+        </tr>
+        <tr>
+          <td>Logical Consistency</td>
+          <td>Report on fidelity of relationships in the data set, the validity of its relationships to other data sets, and the degree to which the entities represent the real-world objects or concepts they are intended to capture.</td>
+        </tr>
+        <tr>
+          <td>Completeness</td>
+          <td>Report on the completeness of the dataset relative to its areal coverage, and the overall completeness of attributes.</td>
+        </tr>
+        <tr>
+          <td>Absence Data</td>
+          <td>Does the dataset include recorded (observed) absence of specific features, and if so, for which attributes?</td>
+        </tr>
+        <tr>
+          <td>Uncertainties</td>
+          <td>Describe uncertainties in measurement and methodology. Include any known biases. For example, was data collection opportunistic, or part of the survey design? In there any known bias from individual observers? </td>
+        </tr>
+        <tr>
+          <td>Use Restrictions</td>
+          <td>Restrictions on appropriate use of the resource.  Examples:  Not suitable for navigation.  Do not use for fisheries assessment.</td>
+        </tr>
+        <tr>
+          <td>Change History</td>
+          <td>A description of changes made to the data since its release.   Create an entry for each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed.</td>
+        </tr>
+        <tr>
+          <td>Change Date</td>
+          <td>Date on which the change was made to the data.  Default: today’s date.</td>
+        </tr>
+        <tr>
+          <td>Temporal Coverage <br>
+          (optional)
+          </td>
+          <td>If the temporal coverage of the dataset is more complex than a simple start and end date, describe it here.  You may describe temporal coverage as a single point in time, multiple points in time, and one or more range of dates.  Seasonality can also be described here.  For derived datasets, please specify the temporal coverage of all input data here. Specific start and end dates are preferable, but year ranges are acceptable if the exact dates are uncertain or not applicable.</td>
+        </tr>
+        <tr>
+          <td>References</td>
+          <td>Academic references that are closely associated with the data.  Create one entry for each reference.  Indicate whether the reference IS the place where this data was published (e.g. as a map).   </td>
+        </tr>
+        <tr>
+          <td>Collaboration</td>
+          <td>Describe collaboration with academia, other government agencies, and external contributors. If produced internally by DFO, enter 'No collaboration outside of DFO.'  Indicate collaboration with organizations rather than individuals. </td>
+        </tr>
+        <tr>
+          <td>Other Information <br>
+          (optional)</td>
+          <td>Relevant information that does not fit in any other category.</td>
+        </tr>
+        <tr>
+          <td>Confidentiality</td>
+          <td><p>Level of confidentiality or sensitivity of the dataset.  For a description of the categories, refer to: https://www.tpsgc-pwgsc.gc.ca/esc-src/protection-safeguarding/niveaux-levels-eng.html.  </p>
+
+<p>Not Protected means that no harm would occur if the data were released to the public.  However, choosing this option does not imply that your data will be made public on this website (all datasets published on this site are restricted, at minimum, to registered users).</p>
+
+<p>Protected A applies to data that could harm individuals or corporations if released, such as fishing events and bathymetry.  Note that fishing data received 'in confidence' should be Protected A, not Confidential.  </p>
+
+<p>Confidential applies to data that could harm the national interest if released.  At this time, Confidential should be used only for abalone data. </p>
+
+<p>Data classified as Protected B, Secret, or any higher classification cannot be uploaded on this system.  For these security classification, you may still create a dataset record using this system, but do not upload the actual data.</p>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <h3>Species Codes</h3>
+    <p>Species codes are only required if your data is biological.
+      Complete the following metadata for <b>each</b> species in your data.
+      If the list of species is excessively long, you may include a list
+      of species codes in a csv (see below). </p>
+
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="width:25%">Field</th>
+          <th scope="col" style="width:75%">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Species Code</td>
+          <td>A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. </td>
+        </tr>
+        <tr>
+          <td>Age Data</td>
+          <td>Does the sample include age data?</td>
+        </tr>
+        <tr>
+          <td>Observation Type</td>
+          <td>Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?
+Choose from: Targeted observation, incidental observation, inferred.</td>
+        </tr>
+      </tbody>
+    </table>
+
+      <h3>Including a species codes file</h3>
+      <p>In many cases, it will be more convenient to include a file with a list of species codes, instead of filling out this form manually.  The format of the file is one line per species code. </p>
+      <p>First column: species code <br>
+      2nd column: Observation type:  targeted / incidental / inferred  Default: targeted <br>
+      3rd column: Age data:  yes / no   Default: no
+      </p>
+      <p>For each line, only the species code is required.  If the 2nd or 3rd column is not included for a given line, the default values will be used.  The csv file does not need a header.  Values do not have to be enclosed in quotes (any quotes found will be removed).  Do not use any character other than a comma to separate values.  </p>
+      <p>The file must be called <i>species_codes.csv</i> and included in the zip file with your data. </p>
+
+      <h2>Adding Data</h2>
+      <p>Once all of the required metadata listed above has been entered, you can continue to adding data to your dataset record.  Ensure that Visibility is set to Public and click “Next: Add Data” at the bottom of the page.  This will take you to the Add Data screen. </p>
+      <p>Most of the metadata in this section is extracted automatically when you upload your data package. The only fields you need to complete before uploading data are the following:</p>
+
 
     </div>
   </article>
