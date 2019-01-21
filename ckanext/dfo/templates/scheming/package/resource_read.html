@@ -5,7 +5,10 @@
 {%- endblock -%}
 
 {% block resource_fields %}
-{%- for group in schema.resource_fields|groupby('display_group') -%}
+{# Filter what is displayed for an upload resource #}
+{%- set upload_res_groups = ['General', 'Upload Data'] -%}
+{#  {%- for group in schema.resource_fields|groupby('display_group')  #}
+{%- for group in schema.resource_fields|groupby('display_group') if not res.url_type or (res.url_type == 'upload' and group.grouper in upload_res_groups) -%}
     {%- set group_fields = h.non_empty_fields(group.list|list, res, exclude_fields) -%}
     {% if group_fields %}
         <div class="additional-info">
