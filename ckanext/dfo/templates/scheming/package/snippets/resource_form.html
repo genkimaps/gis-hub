@@ -13,10 +13,11 @@
         <h3 class="page-heading">
             {{ _(group.grouper) }}
         </h3>
-        <p>{{ data.url_type }}</p>
+
         {%- for field in group.list -%}
+            {#  <p>{{ data.url_type }}</p>
             <p>{{ group.list }}</p>
-            <p>{{ field }}</p>
+            <p>{{ field }}</p>  #}
             {%- if field.form_snippet is not none -%}
                 {%- if field.field_name not in data %}
                     {# Set the field default value before rendering but only if
