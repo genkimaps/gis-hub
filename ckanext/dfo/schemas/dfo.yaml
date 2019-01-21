@@ -795,7 +795,7 @@ resource_fields:
   display_group: Spatial
   help_text: "Spatial type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the spatial type was detected incorrectly. "
   default: vector
-  validators: require_when_published
+#  validators: require_when_published
   choices:
     - label: Vector
       value: vector
@@ -817,7 +817,7 @@ resource_fields:
   display_group: Spatial
   help_text: "Geometry type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the geometry type was detected incorrectly. "
   default: point
-  validators: require_when_published
+#  validators: require_when_published
   choices:
     - label: Point
       value: point
