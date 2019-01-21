@@ -770,7 +770,7 @@ resource_fields:
   label: Data Format
   help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly. "
   display_group: Spatial
-  validators: require_when_published
+#  validators: require_when_published
   form_snippet: select.html
   display_snippet: select.html
   default: File Geodatabase
