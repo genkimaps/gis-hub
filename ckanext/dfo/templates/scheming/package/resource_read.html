@@ -5,7 +5,12 @@
 {%- endblock -%}
 
 {% block resource_fields %}
-{# Filter what is displayed for an upload resource #}
+{# Customize what is displayed for an upload resource #}
+{%- if res.url_type == 'upload' -%}
+<p>This resource is the uploaded data placeholder for the dataset "{{ pkg.title }}."  To download the data, click the
+    Download button at the top-right. To replace the uploaded file, click Manage, then remove the existing file
+    under the Upload Data section, and upload a new version of the file. </p>
+{%- endif -%}
 {%- set upload_res_groups = ['General', 'Upload Data'] -%}
 {#  {%- for group in schema.resource_fields|groupby('display_group')  #}
 {%- for group in schema.resource_fields|groupby('display_group') if not res.url_type or (res.url_type == 'upload' and group.grouper in upload_res_groups) -%}
