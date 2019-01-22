@@ -11,10 +11,14 @@
     {%- set schema = h.scheming_get_dataset_schema(dataset_type) -%}
     {# Customize which fields are shown for resources.  For upload resources,
         show only General and Upload Data sections.  For all other resources
-        (layers, files within zips) show all except Upload Data.  #}
+        (layers, files within zips) show all except Upload Data.
+
+        Doesn't work immediately, we probably need a hidden form field
+        with the url (which is a globally required field)
+        (not data.url_type and group.grouper != 'Upload Data')  #}
     {%- set upload_res_groups = ['General', 'Upload Data'] -%}
     {#  {%- for group in schema.resource_fields|groupby('display_group')  #}
-    {%- for group in schema.resource_fields|groupby('display_group') if (not data.url_type and group.grouper != 'Upload Data') or (data.url_type == 'upload' and group.grouper in upload_res_groups) -%}
+    {%- for group in schema.resource_fields|groupby('display_group') if not data.url_type or (data.url_type == 'upload' and group.grouper in upload_res_groups) -%}
         <h3 class="page-heading">
             {{ _(group.grouper) }}
         </h3>
