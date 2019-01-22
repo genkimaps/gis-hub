@@ -27,6 +27,13 @@
     line-height: 0;
 }
 
+.standout-panel-ok {
+    background-color: #fafff9;
+    border: 1px solid #567750;
+    border-radius: 5px;
+    padding: 10px;
+}
+
 
 .additional-info .dataset-label {
     font-weight: bold;
