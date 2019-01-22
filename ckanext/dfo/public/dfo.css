@@ -89,6 +89,11 @@
   background-position: -544px -62px;
 }
 
+.format-label[data-format=tif],
+.format-label[data-format*=tif] {
+  background-position: -576px -62px;
+}
+
 /* Use our own icon file */
 .format-label {
   background: url(../../../base/images/sprite-gis-icons.png) no-repeat 0 0;
