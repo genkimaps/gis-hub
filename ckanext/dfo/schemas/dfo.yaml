@@ -708,19 +708,45 @@ resource_fields:
   display_snippet: text.html
   validators: require_when_published
 
+
+# Layer/File Info
+
 - field_name: layer_name
   label: Layer Name
   help_text: "Layer name is detected by the GIS Hub after data upload.  You do not need to complete this field manually. "
-  display_group: Spatial
+  display_group: Layer/File Info
   form_snippet: text.html
-  #validators: require_when_published
+  # validators: require_when_published
 
 - field_name: layer_description
   label: Layer Description
   help_text: "Describe what this layer/table/document represents, in the context of the entire dataset.  If there is more than one layer in your uploaded data, complete this field only after the data has been uploaded and a metadata entry has been created for each layer. "
+  display_group: Layer/File Info
   form_snippet: textarea.html
   display_snippet: text.html
   # validators: require_when_published
+
+- field_name: data_format
+  label: Data Format
+  help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly. "
+  display_group: Layer/File Info
+#  validators: require_when_published
+  form_snippet: select.html
+  display_snippet: select.html
+  default: File Geodatabase
+  choices:
+    - label: File Geodatabase
+      value: File Geodatabase
+    - label: Shapefile
+      value: Shapefile
+    - label: GeoTiff
+      value: GeoTiff
+    - label: GeoJson
+      value: GeoJson
+    - label: Google Earth (KML/KMZ)
+      value: Google Earth
+    - label: Other (Document, non-spatial, etc.)
+      value: Other
 
 # Projection
 # Spatial metadata fields that are both annoying for users to enter manually and cannot have a default should be
@@ -765,28 +791,6 @@ resource_fields:
   display_group: Spatial
   display_snippet: dataset_map.html
   form_snippet: null
-
-- field_name: data_format
-  label: Data Format
-  help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly. "
-  display_group: Spatial
-#  validators: require_when_published
-  form_snippet: select.html
-  display_snippet: select.html
-  default: File Geodatabase
-  choices:
-    - label: File Geodatabase
-      value: File Geodatabase
-    - label: Shapefile
-      value: Shapefile
-    - label: GeoTiff
-      value: GeoTiff
-    - label: GeoJson
-      value: GeoJson
-    - label: Google Earth (KML/KMZ)
-      value: Google Earth
-    - label: Other (Document, non-spatial, etc.)
-      value: Other
 
 - field_name: spatial_type
   label: Spatial Type
@@ -930,6 +934,34 @@ resource_fields:
 
 # Upload
 
+- field_name: restricted
+  label: "Access Restrictions"
+  help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be added by typing names into the Allowed Users field below. "
+  display_snippet: null
+  display_group: Upload Data
+  subfields:
+  - field_name: level
+    label: Level
+    preset: select
+    form_include_blank_choice: False
+    validators: require_when_published
+    choices:
+    - value: registered
+      label: All Registered Users
+    - value: any_organization
+      label: Any Organization Members
+    - value: same_organization
+      label: Same Organization Members
+    - value: only_allowed_users
+      label: Allowed Users/Groups Only
+  - field_name: allowed_users
+    label: Allowed Users
+    preset: tag_string_autocomplete
+    form_attrs:
+        data-module: autocomplete
+        data-module-tags: ""
+        data-module-source: "/api/2/util/user/autocomplete?q=?"
+
 - field_name: disclaimer
   label: Download Disclaimer
   help_text: A disclaimer that is displayed to authorized users before allowing data download.
@@ -954,30 +986,3 @@ resource_fields:
   upload_field: upload
   upload_clear: clear_upload
   display_group: Upload Data
-
-- field_name: restricted
-  label: "Access Restrictions"
-  help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be added by typing names into the Allowed Users field below. "
-  display_snippet: null
-  subfields:
-  - field_name: level
-    label: Level
-    preset: select
-    form_include_blank_choice: False
-    validators: require_when_published
-    choices:
-    - value: registered
-      label: All Registered Users
-    - value: any_organization
-      label: Any Organization Members
-    - value: same_organization
-      label: Same Organization Members
-    - value: only_allowed_users
-      label: Allowed Users/Groups Only
-  - field_name: allowed_users
-    label: Allowed Users
-    preset: tag_string_autocomplete
-    form_attrs:
-        data-module: autocomplete
-        data-module-tags: ""
-        data-module-source: "/api/2/util/user/autocomplete?q=?"
