@@ -462,6 +462,238 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p>Once all of the required metadata listed above has been entered, you can continue to adding data to your dataset record.  Ensure that Visibility is set to Public and click “Next: Add Data” at the bottom of the page.  This will take you to the Add Data screen. </p>
       <p>Most of the metadata in this section is extracted automatically when you upload your data package. The only fields you need to complete before uploading data are the following:</p>
 
+      <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="width:25%">Field</th>
+          <th scope="col" style="width:75%">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Title</td>
+          <td>If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  For layers/files inside your data upload, this field will be populated automatically with the layer/file name (please do not change it).  </td>
+        </tr>
+        <tr>
+          <td>Download Disclaimer <br> <i>(optional)</i></td>
+          <td>A disclaimer that is displayed to authorized users before allowing data download. Can consist of text from Caveats, Use Restrictions, user-defined text, and/or links to external documents with full terms and conditions.  You may also choose to use the boilerplate disclaimer, which is shown by default.</td>
+        </tr>
+        <tr>
+          <td>Download Disclaimer (External Link) <br> <i>(optional)</i></td>
+          <td>Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource.</td>
+        </tr>
+        <tr>
+          <td>Access Restrictions</td>
+          <td>Access restrictions determine who can view all of the metadata content and download the data. Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner. You may choose to allow other metadata fields and data download to be available to any of the following:
+            <ul>
+              <li>All Registered Users: anyone who is registered on the GIS Hub will have access. </li>
+              <li>Any Organization Members: restrict access to users who are in an organization on the GIS Hub. </li>
+              <li>Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access. </li>
+              <li>Allowed Users/Groups Only: allow access only for specific users or groups. If you choose this option, individual users can be added by typing names into the Allowed Users field below.</li>
+            </ul>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+      <p>All other fields on this form can be left <b>blank</b> or with their default values. The GIS hub will extract metadata from your uploaded file and automatically populate this section.  For each attribute field, the  name and type will be detected automatically, but you will need to provide a description, units, and coded values manually, after the data has been uploaded and processed (see below). </p>
+      <p>
+        To upload a file, choose Upload near the bottom of the form.  At the bottom of the form, click the Finish button and wait for your upload to complete (avoid using the Save and Add Another button).  After it is complete, you will be redirected to the dataset summary page, showing the metadata associated with the dataset and a list of detected spatial data layers/tables (listed at the top under Data and Resources).  You need to <b>refresh the page once</b> to show all of the extracted layers.  If your dataset is large, you may need to wait several minutes before metadata entries for all layers are shown. </p>
+
+      <p>ADD RESOURCE LIST SCREENSHOT</p>
+      <p>The first item under Data and Resources after your data upload is complete is the data download placeholder.  On the right, it has a green Download ZIP button.  Below this, one entry is created for each supported file found in the uploaded zip.  These entries refer to data contained within the zip file, so they do not have their own download links (previously, each one had a download link, which was confusing).  Each of these has a Details button, where you can view and edit the metadata that is detected automatically.  From the Details view, click Manage to edit metadata for each item.  At minimum, you must complete a description for each field in the attributes (if the item has an attribute table), and complete the Layer Description field.  The title field is set to the layer name or file name—do not change it. </p>
+
+      <p>Instead of uploading a file, you may alternatively use the Link button to provide a URL, if the data is stored on an external website.  If you are linking to data on an external website, geospatial metadata will not be automatically detected, so you will need to populate this section yourself. </p>
+
+      <p>Files other than geospatial data will also be detected and added to the list of Data and Resources.  The supported non-spatial file types are listed below.  For items of these types, only the “Layer Description” field needs to be completed.  Other fields relevant to spatial data should be left blank for non-spatial file types (blank fields are not shown when viewing metadata entries).  </p>
+
+      <h3 id="filetypes">Supported File Types</h3>
+      <p>The following file types are supported in the GIS Hub, and have relevant metadata automatically detected. </p>
+
+      <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="width:35%">File Type</th>
+          <th scope="col" style="width:65%">Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ESRI File Geodatabase (.gdb)</td>
+          <td>Preferred format for vector data, and standalone tables that are part of a spatial dataset.  File geodatabase rasters, and layers in a feature dataset, are not supported.  </td>
+        </tr>
+      <tr>
+          <td>Shapefile (.shp)</td>
+          <td>Shapefile is a commonly-used distribution format.  However, it has problems with projections not being consistently defined, and limitations in the size and structure of attribute tables.  File geodatabases are preferred. </td>
+        </tr>
+      <tr>
+          <td>Geotiff (.tif, .tiff, .geotiff)</td>
+          <td>Preferred format for raster data.  </td>
+        </tr>
+      <tr>
+          <td>Google Earth (.kml, .kmz)</td>
+          <td>You may wish to include a copy of your data in kml for the convenience of non-GIS users.  However, this should not be used as the primary data distribution format. </td>
+        </tr>
+      <tr>
+          <td>GeoJSON (.json, .geojson)</td>
+          <td>A convenient interchange format for small files, but should not be used as the primary data distribution format</td>
+        </tr>
+      <tr>
+          <td>ESRI Layer file (.lyr)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td>.zip</td>
+          <td>You may add zip files containing supplementary data or documentation inside the main zip file that you upload.  </td>
+        </tr>
+
+      <tr>
+          <td>Word Document (.doc, .docx)</td>
+          <td></td>
+        </tr>
+      <tr>
+          <td>Portable Document Format (.pdf)</td>
+          <td></td>
+        </tr>
+      <tr>
+          <td>Text file (.txt, .csv)</td>
+          <td>Can be used for text content, but preferably not for tabular data</td>
+        </tr>
+      <tr>
+          <td>Excel (.xls, .xlsx)</td>
+          <td></td>
+        </tr>
+
+
+      </tbody>
+    </table>
+
+      <h3>Attribute Metadata</h3>
+      <p>Attribute field names and types are detected automatically from the uploaded data (if the upload contains geospatial data with an attribute table in a recognized format).  Additional information on each attribute must be entered manually.   To manually enter attribute metadata, wait until the metadata extraction is complete for all layers/tables in the uploaded data.   Each layer/table has its own set of attributes.  In the list of Data and Resources, click Details, then click Manage.  Scroll down until you see the section Attributes. </p>
+      <p>Each attribute must have, at minimum, a description. Some attributes that are common to all spatial datasets will be pre-filled with a description.  For raster data, if the raster includes an attribute table, complete this table using the attributes from the raster (raster attributes are not extracted automatically).  If the raster does not include an attribute table, use the Layer Description to indicate what the raster values represent. </p>
+      <p>For <b>each</b> field in the attribute table, complete the following metadata. </p>
+
+      <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="width:25%">Field</th>
+          <th scope="col" style="width:75%">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Field Name</td>
+          <td>Field name in the attribute table (automatically filled when data is uploaded)</td>
+        </tr>
+        <tr>
+          <td>Field Type</td>
+          <td>Field type in the attribute table (automatically filled when data is uploaded). Text, Date, Integer, Double, Boolean.</td>
+        </tr>
+        <tr>
+          <td>Field Description</td>
+          <td>The description should indicate what the value represents, how was it measured, and whether it is generalized.</td>
+        </tr>
+        <tr>
+          <td>Units <br><i>(Optional)</i> </td>
+          <td>If the attribute is quantitative, indicate the measured units and an estimate of the accuracy.</td>
+        </tr>
+        <tr>
+          <td>Coded Values <br><i>(Optional)</i> </td>
+          <td>If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link or reference to a document or website describing the coded values.)</td>
+        </tr>
+
+    </tbody>
+    </table>
+
+      <h2 id="data-prep">Data Preparation</h2>
+      <h3 id="spatial-val">Spatial Validation</h3>
+      <p>This section describes steps to validate your spatial data before publishing.  A Data Quality Report toolbox for ArcGIS has been developed to help with this process.  Instructions for installing and using the toolbox are on the Spatial Datasets drive at \\dcbcpbsna01a\GIS_Tools\QualityReportTool.zip. </p>
+
+      <h4>Projection</h4>
+      <p>Ensure that the projection (spatial reference) is valid. Every dataset should have a projection from the <a href="http://spatialreference.org/ref/epsg/">EPSG code list</a>.  On the west coast of Canada, commonly-used projections are: </p>
+
+      <ul>
+        <li>BC Albers equal area (EPSG:3005)</li>
+        <li>UTM zone 10N (EPSG:3157)</li>
+        <li>Latitude-longitude WGS 84 (unprojected) (EPSG:4326)</li>
+      </ul>
+
+      <p>Avoid using custom projections (not in the EPSG code list) if possible. The only reasonable exception to this would be data collected on a custom grid, where documentation refers to specific coordinates on this grid.  In this case, every effort should be made to link the custom grid to a standard projection, and provide a copy of the data in a standard projection. </p>
+
+      <p>Perform a visual check to ensure that the features are at the expected location.  An excellent way to do this is to add a basemap layer with satellite imagery in ArcGIS. Avoid comparing against other vector layers, since they may all contain the same spatial offset!  This is particularly important if the data were digitized from paper charts or aerial photographs. </p>
+
+      <h4>Feature Geometry</h4>
+
+      <p>For vector layers, all feature geometries must be clean. In ArcGIS, run the <a href="http://desktop.arcgis.com/en/arcmap/latest/tools/data-management-toolbox/repair-geometry.htm">repair geometry tool</a> on all data.  The Quality Report toolbox described above includes the Repair Geometry function. </p>
+
+      <p>Geometries should have a reasonable number of vertices per feature, appropriate for the scale at which the data are intended to be used.  Do not simplify features whose boundaries must exactly line up with other features (e.g. the shoreline of PFMAs): doing so may introduce slivers and gaps in future spatial analyses.  Check for sliver polygons (polygons with a very small area), gaps (use Erase analysis on a background polygon) and overlaps (intersect the data with itself). Take appropriate steps to resolve. If resolution of these problems is not feasible, clearly document the existence of these issues in the metadata (spatial data quality section).</p>
+
+      <h4>Geometry Types</h4>
+
+      <p>For vector data, feature classes must be point, polyline, or polygon features. Avoid the following:</p>
+      <ul>
+        <li>Complex or custom geometry types, unless absolutely necessary.  </li>
+        <li>Feature class annotations</li>
+        <li>Feature class representations</li>
+        <li>Point symbols exploded to polygons (may happen when data is converted from a CAD format</li>
+        <li>A feature class should only include Z geometry if the data really are 2.5 or 3-dimensional. Similarly, M geometry is only applicable if the data is has a time dimension (in other words, features change over time, instead of having a unique feature per instance of time).  Otherwise, use only XY geometry.</li>
+      </ul>
+
+      <h3 id="attrib-val">Attribute Validation</h3>
+
+      <p>This section describes required validation for values in the attribute table. </p>
+      <h4>Null and 0 Values</h4>
+      <p>Null values in the attribute table are reasonable as long as they are justifiable and documented.  As a rule, Null values are not acceptable if they are there simply because that column in the attribute table has not yet been populated.  A null value indicating the absence or inapplicability of something is perfectly ok, as long as it is documented.  For example, if a Null value in a field means “no reading” or “no observation for this field on this record” or “not applicable for this record” it should be clearly documented in the metadata for that field.  In addition, Null in any given field should only represent one condition, and must never be used to group different conditions.  For a quantitative field, it is preferable to use Null to represent “no data,” rather than an arbitrary number such as -99.  If an instrument or measurement has a minimum detection limit, say 0.001, and you need to represent “below detection limit” in addition to “no data,” it is preferable to use Null for no data, and an arbitrary number for “below detection” or other edge cases. Again, all of these conditions must be documented in metadata. </p>
+
+      <p>A value of 0 in a quantitative field should indicate that the <b>measured</b> value was 0: be careful of number fields which are populated by default with all zeros at the time of creation (which happens automatically in some GIS software).  If 0 is meaningless in the field, all zeros should be replaced with Nulls, or some other value that has meaning. For qualitative fields, ensure that the difference between “observed absence” and “not observed” is clear.  “Observed absence” should have a defined text code, while “not observed” should be represented with Null. </p>
+
+      <h4>Appropriate Field Types</h4>
+      <p>Do not use a text field to represent a quantitative attribute.  Instead, use the appropriate numeric field type: double or integer.  It is better to use double instead of float, and integer instead of short integer (float and short integer data types impose an arbitrary and invisible restriction on the range of values that can be stored in a field, which can cause problems for future users of the data or scripts processing the data). </p>
+
+      <p>Conversely, do not use numeric fields to represent qualitative attributes.  Qualitative attributes should be stored in text fields, optionally restricted by a lookup of allowed values in the field.  If a qualitative attribute is stored in a related table by a foreign key, the foreign key id column must be integer: never store foreign key ids as text values.  Avoid the use of codes that start with leading zeros (e.g. 0001, 0002 stored as text values). </p>
+
+      <h4>Field Names</h4>
+
+      <p>User-created field names should be standardized to a lowest common denominator format to maximize compatibility with various software tools:</p>
+
+      <ul>
+        <li>All lower case (in ArcGIS, Field_name is distinct from field_name)</li>
+        <li>Words separated by underscore (species_code, not speciescode or species-code)</li>
+        <li>Starts with a letter</li>
+        <li>Not more than 24 characters</li>
+        <li>Each field name should be unique in the first eight characters, in the event that something truncates the table’s field names at some point.  Avoid creating tables with fields such as “species_code_observed” and “species_code_inferred” which might be truncated to “species_” and “specie_1”.  </li>
+        <li>Ensure that <a href="http://desktop.arcgis.com/en/arcmap/latest/manage-data/tables/field-properties-aliases-and-table-display-options.htm#GUID-29965C23-024B-40AF-81F6-AC27CC052CAC">attribute aliases</a> are identical to attribute names</li>
+      </ul>
+
+      <p>The geometry column is usually named Shape or SHAPE if the data is coming from ArcGIS, geom or the_geom if coming from an open-source GIS program such as QGIS.  For the object ID field, ensure that it does not have a number appended, which may happen when tables are joined and exported. For example, if the object ID field is something like OID_1 or ObjectID_1, export the data to a new feature class, which should reset the object ID field name.  Typical object ID field names are OID, FID, ObjectID. </p>
+
+      <h4>Field Relevance</h4>
+      <p>Remove any fields in the attribute table that do not inform the data. This includes stray fields created by ArcGIS joins and other processes.</p>
+
+      <h3 id="data-packaging">Data Format and Packaging</h3>
+      <h4>Formats</h4>
+      <p>ESRI File Geodatabase is the preferred format for vector spatial data.  Avoid using feature datasets within a file geodatabase: they add an extra layer of complexity and reduce the number of third-party tools that can read the data. </p>
+
+      <p>Although the shapefile format supports up to 24 characters in field names, some software that generates shapefiles truncates the field names to 8 or 10 characters.  Shapefiles have additional limitations that may cause problems.  If you use shapefiles in programs such as R, the final output can be converted to a File Geodatabase before publishing.</p>
+
+      <p>When publishing layers in a File Geodatabase, create a new file geodatabase and copy only the layers that you want to publish. For a shapefile, include all of the related files (.shp, .shx, .dbf, and so on). </p>
+
+      <p>Geotiff is the preferred format for raster spatial data.  File Geodatabase rasters are not supported at this time.  If you need to publish a dataset that includes both raster and vector layers, you can keep the vector layers in a file GDB and export the Geotiffs to the filesystem, next to the .gdb folder. </p>
+
+      <p>Do not use personal geodatabases.  This legacy format, which still comes up on occasion, has serious problems with poor coordinate precision and size limitations.</p>
+
+      <h4>Layer Names</h4>
+      <p>Feature class and table naming conventions within a file geodatabase are the same as field naming conventions. Geotiff filenames should also follow these conventions where possible. </p>
+
+      <h4>Packaging your data</h4>
+      <p>All data should be submitted in a folder containing the file geodatabase or shapefiles, and/or geotiff files. You may put the data inside nested folders if it makes sense to do so.  The metadata extractor will traverse the entire folder tree and find all recognized files.  However, the structure of the folder tree inside your uploaded zip file will not be shown on the GIS Hub.  Optionally, you may include ArcGIS .mxd or .lyr files pointing to data in the file geodatabase (be sure to save the mxd file with relative paths).  Prior to uploading, zip the .gdb folder or shapefile, along with any .mxd or .lyr files you wish to include with the data. </p>
+
+      <p>Relevant documents, academic publications, or scripts related to the data can be included in the zip file along with the spatial data.  Ideally, they should be in a separate folder from the spatial data, or contained in a nested zip file.  </p>
+
+
+
+
 
     </div>
   </article>
