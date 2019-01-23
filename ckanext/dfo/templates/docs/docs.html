@@ -502,6 +502,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
         To upload a file, choose Upload near the bottom of the form.  At the bottom of the form, click the Finish button and wait for your upload to complete (avoid using the Save and Add Another button).  After it is complete, you will be redirected to the dataset summary page, showing the metadata associated with the dataset and a list of detected spatial data layers/tables (listed at the top under Data and Resources).  You need to <b>refresh the page once</b> to show all of the extracted layers.  If your dataset is large, you may need to wait several minutes before metadata entries for all layers are shown. </p>
 
       <p>ADD RESOURCE LIST SCREENSHOT</p>
+      <img src="/base/images/docs/resources-note.png">
       <p>The first item under Data and Resources after your data upload is complete is the data download placeholder.  On the right, it has a green Download ZIP button.  Below this, one entry is created for each supported file found in the uploaded zip.  These entries refer to data contained within the zip file, so they do not have their own download links (previously, each one had a download link, which was confusing).  Each of these has a Details button, where you can view and edit the metadata that is detected automatically.  From the Details view, click Manage to edit metadata for each item.  At minimum, you must complete a description for each field in the attributes (if the item has an attribute table), and complete the Layer Description field.  The title field is set to the layer name or file name—do not change it. </p>
 
       <p>Instead of uploading a file, you may alternatively use the Link button to provide a URL, if the data is stored on an external website.  If you are linking to data on an external website, geospatial metadata will not be automatically detected, so you will need to populate this section yourself. </p>
@@ -569,7 +570,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       </tbody>
     </table>
 
-      <h3>Attribute Metadata</h3>
+      <h3 id="attrib-meta">Attribute Metadata</h3>
       <p>Attribute field names and types are detected automatically from the uploaded data (if the upload contains geospatial data with an attribute table in a recognized format).  Additional information on each attribute must be entered manually.   To manually enter attribute metadata, wait until the metadata extraction is complete for all layers/tables in the uploaded data.   Each layer/table has its own set of attributes.  In the list of Data and Resources, click Details, then click Manage.  Scroll down until you see the section Attributes. </p>
       <p>Each attribute must have, at minimum, a description. Some attributes that are common to all spatial datasets will be pre-filled with a description.  For raster data, if the raster includes an attribute table, complete this table using the attributes from the raster (raster attributes are not extracted automatically).  If the raster does not include an attribute table, use the Layer Description to indicate what the raster values represent. </p>
       <p>For <b>each</b> field in the attribute table, complete the following metadata. </p>
@@ -671,7 +672,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <h4>Field Relevance</h4>
       <p>Remove any fields in the attribute table that do not inform the data. This includes stray fields created by ArcGIS joins and other processes.</p>
 
-      <h3 id="data-packaging">Data Format and Packaging</h3>
+      <h3 id="data-packaging">Data Packaging</h3>
       <h4>Formats</h4>
       <p>ESRI File Geodatabase is the preferred format for vector spatial data.  Avoid using feature datasets within a file geodatabase: they add an extra layer of complexity and reduce the number of third-party tools that can read the data. </p>
 
@@ -690,10 +691,6 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p>All data should be submitted in a folder containing the file geodatabase or shapefiles, and/or geotiff files. You may put the data inside nested folders if it makes sense to do so.  The metadata extractor will traverse the entire folder tree and find all recognized files.  However, the structure of the folder tree inside your uploaded zip file will not be shown on the GIS Hub.  Optionally, you may include ArcGIS .mxd or .lyr files pointing to data in the file geodatabase (be sure to save the mxd file with relative paths).  Prior to uploading, zip the .gdb folder or shapefile, along with any .mxd or .lyr files you wish to include with the data. </p>
 
       <p>Relevant documents, academic publications, or scripts related to the data can be included in the zip file along with the spatial data.  Ideally, they should be in a separate folder from the spatial data, or contained in a nested zip file.  </p>
-
-
-
-
 
     </div>
   </article>
@@ -719,6 +716,12 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p><a href="#science">Science Metadata</a></p>
       <p><a href="#species">Species Codes</a></p>
       <p><a href="#add-data">Adding Data</a></p>
+      <p><a href="#filetypes">Supported File Types</a></p>
+      <p><a href="#attrib-meta">Attribute Metadata</a></p>
+      <p><a href="#data-prep">Data Preparation</a></p>
+      <p><a href="#spatial-val">Spatial Validation</a></p>
+      <p><a href="#attrib-val">Attribute Validation</a></p>
+      <p><a href="#data-packaging">Data Packaging</a></p>
 
     </div>
   </div>
