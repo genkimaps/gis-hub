@@ -704,7 +704,7 @@ resource_fields:
 # Changed to title
 - field_name: title
   label: Title
-  help_text: "If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  If this is a layer/file inside your data upload, this field is populated automatically."
+  help_text: "If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  Ensure that the title is NOT the same as any of the layers in your upload.  If this is a layer/file inside your data upload, this field is populated automatically."
   display_snippet: text.html
   validators: require_when_published
 
