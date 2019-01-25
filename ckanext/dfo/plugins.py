@@ -9,6 +9,7 @@ from ckan.lib import base
 from ckan.common import request
 from ckanext.scheming import helpers as scheming_helpers
 from ckantoolkit import get_validator
+from ckan.common import _
 
 
 def non_empty_fields(field_list, pkg_dict, exclude):
