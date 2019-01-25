@@ -65,7 +65,6 @@
         We are working on a solution for better detection of spatial references. 
       </p>
 
-
       <h2 id="intro">Introduction</h2>
       <p>The GIS Hub system is live and ready for users to publish data.
         This documentation page contains guidelines for preparing
@@ -88,9 +87,11 @@
         default list of datasets</a> shows all datasets that are visible to you, along with filters and 
         search tools to help you find relevant data. </p>
 
-        <div style="width:image width px; font-size:80%; text-align:center;">
+        {# <div style="width:image width px; font-style: italic; text-align:center;"> #}
+      <div class="docs-caption">
+        {# style="padding-bottom:0.2em;" #}
         <img src="/base/images/docs/datasets.png" alt="GIS Hub datasets view" 
-        width="width" height="height" style="padding-bottom:0.5em;"/>
+        width="width" height="height" class="docs-img"/>
         List of datasets on the GIS Hub
       </div>
 
@@ -115,14 +116,6 @@
         to write and edit the metadata, then copy and paste the relevant parts to the forms 
         on the GIS Hub when you are ready to publish your data. 
       </p>
-
-      <h3 id="new-dataset">Creating New Datasets</h3>
-      <p>To create a new dataset, click the Add Dataset button near the top of the 
-        <a href="https://www.gis-hub.ca/dataset">dataset page</a>.  Follow the guidance 
-        below on completing the metadata fields.  
-        <br><br>Don't see the 
-        Add Dataset button?  This means that you are either not logged in, or you 
-        have a read-only account.  </p>
 
       <h2 id="modules">The Metadata Standard</h2>
       <p>The metadata standard is divided into modules that group related metadata fields 
@@ -544,15 +537,23 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
 
       <p>All other fields on this form can be left <b>blank</b> or with their default values. The GIS hub will extract metadata from your uploaded file and automatically populate this section.  For each attribute field, the  name and type will be detected automatically, but you will need to provide a description, units, and coded values manually, after the data has been uploaded and processed (see below). </p>
       <p>
-        To upload a file, choose Upload near the bottom of the form.  At the bottom of the form, click the Finish button and wait for your upload to complete (avoid using the Save and Add Another button).  After it is complete, you will be redirected to the dataset summary page, showing the metadata associated with the dataset and a list of detected spatial data layers/tables (listed at the top under Data and Resources).  You need to <b>refresh the page once</b> to show all of the extracted layers.  If your dataset is large, you may need to wait several minutes before metadata entries for all layers are shown. </p>
+        To upload a file, choose Upload near the bottom of the form.  At the bottom of the form, click the Finish button and wait for your upload to complete.  After it is complete, you will be redirected to the dataset summary page, showing the metadata associated with the dataset and a list of detected spatial data layers/tables (listed at the top under Data and Resources).  You need to <b>refresh the page once</b> to show all of the extracted layers.  If your dataset is large, you may need to wait several minutes before metadata entries for all layers are shown. </p>
 
-      <p>ADD RESOURCE LIST SCREENSHOT</p>
-      <img src="/base/images/docs/resources-note.png">
+      <div class="docs-caption">
+        <img src="/base/images/docs/resources-note.png" alt="Data and resources with layers added" 
+        width="width" height="height" class="docs-img"/>
+        Data and resources list showing the data download placeholder and one entry for 
+        each layer that was auto-detected in the uploaded data. 
+      </div>
+      
       <p>The first item under Data and Resources after your data upload is complete is the data download placeholder.  On the right, it has a green Download ZIP button.  Below this, one entry is created for each supported file found in the uploaded zip.  These entries refer to data contained within the zip file, so they do not have their own download links (previously, each one had a download link, which was confusing).  Each of these has a Details button, where you can view and edit the metadata that is detected automatically.  From the Details view, click Manage to edit metadata for each item.  At minimum, you must complete a description for each field in the attributes (if the item has an attribute table), and complete the Layer Description field.  The title field is set to the layer name or file name—do not change it. </p>
 
       <p>Instead of uploading a file, you may alternatively use the Link button to provide a URL, if the data is stored on an external website.  If you are linking to data on an external website, geospatial metadata will not be automatically detected, so you will need to populate this section yourself. </p>
 
-      <p>Files other than geospatial data will also be detected and added to the list of Data and Resources.  The supported non-spatial file types are listed below.  For items of these types, only the “Layer Description” field needs to be completed.  Other fields relevant to spatial data should be left blank for non-spatial file types (blank fields are not shown when viewing metadata entries).  </p>
+      <p>Files other than geospatial data will also be detected and added to the list of Data and Resources, 
+        if they are supported file types (see below).  For items of these types, only the “Layer Description” 
+        field needs to be completed.  Other fields relevant to spatial data should be left blank for 
+        non-spatial file types (blank fields are shown only when editing metadata, not when viewing).  </p>
 
       <h3 id="filetypes">Supported File Types</h3>
       <p>The following file types are supported in the GIS Hub, and have relevant metadata automatically detected. </p>
@@ -737,6 +738,37 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
 
       <p>Relevant documents, academic publications, or scripts related to the data can be included in the zip file along with the spatial data.  Ideally, they should be in a separate folder from the spatial data, or contained in a nested zip file.  </p>
 
+      <h2 id="new-dataset">Creating and Editing Datasets</h3>
+      <p>To create a new dataset, click the Add Dataset button near the top of the 
+        <a href="https://www.gis-hub.ca/dataset">dataset page</a>.  Follow the guidance 
+        below on completing the metadata fields.  
+        <br><br>Don't see the 
+        Add Dataset button?  This means that you are either not logged in, or you 
+        have a read-only account.  </p>
+      
+      <h2 id="replace-data">Replacing Data</h3>
+      <p>You have created a new dataset and uploaded a data file. 
+        Your layers have been detected and added to the Data and Resources view.  Now you have a new version of the data, and you would like to replace the data download package.  
+      </p>
+      <p>To replace data: 
+        <ol>
+          <li>click the Details button next to the 
+              data package (must have a green Download button) that you want to replace. </li>
+          <li>On the next screen, click 
+              Manage near the top-right.  </li>
+          <li>Scroll down to the File field, and click the Remove button on the right. 
+            <div class="docs-caption">
+              <img src="/base/images/docs/resource-replace.png" alt="Replacing a resource's uploaded data" 
+              width="width" height="height" class="docs-img"/>
+              List of datasets on the GIS Hub
+            </div>
+            Click Upload and choose a new file, then Update Resource 
+            at the bottom of the screen. 
+          </li>
+        </ol>
+         
+      </p>
+
     </div>
   </article>
 {% endblock %}
@@ -754,8 +786,9 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       </p>
       <p><a href="#issues">Known Issues</a></p>
       <p><a href="#intro">Introduction</a></p>
+      <p><a href="#datasets-intro">Datasets on the GIS Hub</a></p>
       <p><a href="#overview">Metadata Overview</a></p>
-      <p><a href="#modules">Metadata Modules</a></p>
+      <p><a href="#modules">The Metadata Standard</a></p>
       <p><a href="#basic">Basic Information</a></p>
       <p><a href="#general">General Metadata</a></p>
       <p><a href="#science">Science Metadata</a></p>
@@ -767,6 +800,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p><a href="#spatial-val">Spatial Validation</a></p>
       <p><a href="#attrib-val">Attribute Validation</a></p>
       <p><a href="#data-packaging">Data Packaging</a></p>
+      <p><a href="#new-dataset">Creating and Editing Datasets</a></p>
 
     </div>
   </div>

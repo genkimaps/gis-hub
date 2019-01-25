@@ -1,3 +1,13 @@
+.docs-caption {
+    width:image width px; 
+    font-style: italic; 
+    text-align: center;
+}
+
+.docs-img {
+    padding-bottom: 0.2em;
+}
+
 .additional-info {
     border: none;
 }
