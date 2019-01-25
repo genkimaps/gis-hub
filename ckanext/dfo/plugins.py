@@ -130,7 +130,8 @@ class DFOPlugin(p.SingletonPlugin):
             'non_empty_fields': non_empty_fields,
             'scheming_field_required': self.field_required_helper,
             'now': datetime.now,
-            'utcnow': datetime.utcnow
+            'utcnow': datetime.utcnow,
+            'resource_display_name': self.resource_display_name
         }
 
     def before_map(self, map):
@@ -193,6 +194,19 @@ class DFOPlugin(p.SingletonPlugin):
         # Our custom DFO validator to only require a field on publishing.
         if 'require_when_published' in validators:
             return True
+    
+    @staticmethod
+    def resource_display_name(resource_dict):
+        # Use title then name
+        title = resource_dict.get('title')
+        if not title:
+            name = resource_dict.get('name')
+            if name:
+                title = name
+        if not title:
+            _("Unnamed resource")
+        else:
+            return _(title)
 
 
 def get_thumbnail(package_id):
