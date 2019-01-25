@@ -510,7 +510,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <tbody>
         <tr>
           <td>Title</td>
-          <td>If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  For layers/files inside your data upload, this field will be populated automatically with the layer/file name (please do not change it).  </td>
+          <td>If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  <b>Ensure that the title of the data package is NOT the same as any of the layers in your upload</b>.  If this is a layer/file inside your data upload, this field is populated automatically.  </td>
         </tr>
         <tr>
           <td>Download Disclaimer <br> <i>(optional)</i></td>
@@ -746,14 +746,19 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
         Add Dataset button?  This means that you are either not logged in, or you 
         have a read-only account.  </p>
       
-      <h2 id="replace-data">Replacing Data</h3>
-      <p>You have created a new dataset and uploaded a data file. 
-        Your layers have been detected and added to the Data and Resources view.  Now you have a new version of the data, and you would like to replace the data download package.  
+      <h3 id="replace-data">Replacing Data</h3>
+      <p>You have created a dataset and uploaded a data file. 
+        Your layers have been detected and added to the Data and Resources view.  Now you have a new version of the data, and you would like to replace the data package.  
       </p>
-      <p>To replace data: 
+      <p>To replace the data: 
         <ol>
           <li>click the Details button next to the 
-              data package (must have a green Download button) that you want to replace. </li>
+              data package (must have a green Download button) that you want to replace. 
+              <br>
+              <b>Note: only do this for items with a green Download button!</b>  
+              <br>
+              Adding a file upload to items without the Download button will not work.
+            </li>
           <li>On the next screen, click 
               Manage near the top-right.  </li>
           <li>Scroll down to the File field, and click the Remove button on the right. 
@@ -765,7 +770,24 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
             at the bottom of the screen. 
           </li>
         </ol>
-         
+      </p>
+
+      <h4 id="data-matching">Automated Layer Matching</h3>
+      <p>When you upload a new version of a dataset, the 
+        GIS Hub automatically unzips the file and matches the layers and 
+        files that it detects with those that are already on the list of 
+        Data and Resources.  User-entered metadata including Attribute field descriptions and layer descriptions will be transferred to the metadata for the new layers, <i>if there is a match</i>.  Importantly, this matching is done using the <i>most specific 
+        file/layer identifier</i>:
+        <ul>
+          <li>For a layer within a geodatabase, matching is done with the layer name</li>
+          <li>For shapefiles, geotiffs, and non-spatial files, matching is done with the filename</li>
+          <li>In both cases, the matching is not case-sensitive</li>
+        </ul>
+        <p>This means that you must ensure that your <b>layer/file names 
+          are the same</b> when uploading a new version of your data.  Attribute field names are matched using the same process, so if you rename a field, the existing metadata will not be transferred. 
+        </p>
+        <p>If some layer/file names have been changed, you may end up with orphan layers.  These can be removed (after copying 
+          relevant metadata to the correct layer) by clicking Manage at top-right, then clicking the Delete button at the bottom of the screen. </p>
       </p>
 
     </div>
@@ -801,6 +823,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p><a href="#data-packaging">Data Packaging</a></p>
       <p><a href="#new-dataset">Creating and Editing Datasets</a></p>
       <p><a href="#replace-data">Replacing Data</a></p>
+      <p><a href="#data-matching">Automated Layer Matching</a></p>
 
     </div>
   </div>
