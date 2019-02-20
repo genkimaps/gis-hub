@@ -205,7 +205,7 @@ class DFOPlugin(p.SingletonPlugin):
             if name:
                 title = name
         if not title:
-            _("Unnamed resource")
+            return _("Unnamed resource")
         else:
             return _(title)
 
