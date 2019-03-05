@@ -596,6 +596,7 @@ dataset_fields:
   help_text: "A list of species names / species codes.  If your data does not contain any species codes, disregard this section and leave the fields blank in the section below.  For each species in your data, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred.  If you have a large number of species codes, you may include a file named species_codes.csv.  For a detailed description of the format of this file, refer to the GIS Hub publishing guide document. "
   repeatable: true
   form_blanks: 1
+  display_snippet: table.html
   display_group: Science
   subfields:
 
@@ -609,6 +610,8 @@ dataset_fields:
       label: species_name
     form_attrs:
       data-module: autocomplete
+    display_snippet_options:
+      row_header: True
     display_group: Science
 
   - field_name: age_data
@@ -879,6 +882,7 @@ resource_fields:
   help_text: "You must clearly document all attributes for all spatial layers and standalone tables in your uploaded data.  Some attribute information (field name and type) will be populated automatically after you upload spatial data.  If you have not yet uploaded data, or you are replacing the existing data, leave these fields blank for now.  After your data has been uploaded and field names and types have been extracted, you will still have to edit this section later to add, at minimum, a description for each field.  The field description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)  Note: raster attributes cannot be detected automatically.  You must add any raster attributes manually using this form. "
   form_blanks: 1
   repeatable: true
+  display_snippet: table.html
   display_group: Attributes
   subfields:
 
@@ -887,6 +891,8 @@ resource_fields:
 #    help_text: The name of the field in the attribute table
     form_snippet: text.html
     display_snippet: text.html
+    display_snippet_options:
+      row_header: True
     display_group: Attributes
 
   - field_name: column_type

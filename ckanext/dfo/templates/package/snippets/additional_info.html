@@ -25,51 +25,18 @@
                 <dt class="dataset-label">
                     {{- h.scheming_language_text(field.label) -}}
                 </dt>
-
-                {% if field.field_name == "species_codes" %}
-                    {% set field_data = h.scheming_composite_load(pkg_dict[field.field_name]) %}
-                    {# Display species_codes as a table
-                    <p>{{ field_data }}</p>
-                    <p>{{ field.subfields }}</p> #}
-                    {# Close dl tag and write table header #}
-                    </dl>
-                    <table class="table">
-                        <thead>
-                        <tr>
-                            <th scope="col" style="width:50%">Code</th>
-                            <th scope="col" style="width:30%">Observation Type</th>
-                            <th scope="col" style="width:20%">Age Data</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        {% for f in field_data %}
-                        <tr>
-                            <th scope="row">{{ f.sp_code }}</th>
-                            <td>{{ f.obs_type }}</td>
-                            <td>{{ f.age_data }}</td>
-                        </tr>
-                        {% endfor %}
-
-                        </tbody>
-
-                    </table>
-                    <dl>
-                {% else %}
-
-                    {# Add another class if composite #}
-                    {%- if field.subfields -%}
-                        <dd class="dataset-details composite-holder">
-                    {%- else -%}
-                        <dd class="dataset-details">
-                    {%- endif -%}
-                        {%- snippet 'scheming/snippets/display_field.html',
-                                field=field,
-                                data=pkg_dict,
-                                schema=schema
-                        -%}
-                    </dd>
-                {% endif %}
+                {# Add another class if composite #}
+                {%- if field.subfields -%}
+                    <dd class="dataset-details composite-holder">
+                {%- else -%}
+                    <dd class="dataset-details">
+                {%- endif -%}
+                    {%- snippet 'scheming/snippets/display_field.html',
+                            field=field,
+                            data=pkg_dict,
+                            schema=schema
+                    -%}
+                </dd>
             {% endfor %}
         </dl>
     </div>
