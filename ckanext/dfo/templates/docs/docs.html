@@ -32,16 +32,6 @@
       </p>
 
       <p>
-        <b>Problem:</b> The Download ZIP button shows a disclaimer,
-        but when you click Accept, nothing happens.
-        <br>
-        <b>Workaround:</b> under Data and Resources, identify the
-        data package you wish to download.  Click the Details button
-        to the right of the Download Zip button, then click Download
-        near the top-right.
-      </p>
-
-      <p>
         <b>Problem:</b> Non-science keywords are not restricted to
         the list of keywords from the Government of Canada
         <a href="http://canada.multites.net/cst/index.htm" target="_blank">Core
@@ -87,10 +77,8 @@
         default list of datasets</a> shows all datasets that are visible to you, along with filters and 
         search tools to help you find relevant data. </p>
 
-        {# <div style="width:image width px; font-style: italic; text-align:center;"> #}
       <div class="docs-caption">
-        {# style="padding-bottom:0.2em;" #}
-        <img src="/base/images/docs/datasets.png" alt="GIS Hub datasets view" 
+        <img src="/base/images/docs/datasets.png" alt="GIS Hub datasets view"
         width="width" height="height" class="docs-img"/>
         List of datasets on the GIS Hub
       </div>
@@ -738,7 +726,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
 
       <p>Relevant documents, academic publications, or scripts related to the data can be included in the zip file along with the spatial data.  Ideally, they should be in a separate folder from the spatial data, or contained in a nested zip file.  </p>
 
-      <h2 id="new-dataset">Creating and Editing Datasets</h3>
+      <h2 id="new-dataset">Creating and Editing Datasets</h2>
       <p>To create a new dataset, click the Add Dataset button near the top of the 
         <a href="https://www.gis-hub.ca/dataset">dataset page</a>.  Follow the guidance 
         below on completing the metadata fields.  
@@ -750,45 +738,62 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p>You have created a dataset and uploaded a data file. 
         Your layers have been detected and added to the Data and Resources view.  Now you have a new version of the data, and you would like to replace the data package.  
       </p>
-      <p>To replace the data: 
-        <ol>
-          <li>click the Details button next to the 
-              data package (must have a green Download button) that you want to replace. 
-              <br>
-              <b>Note: only do this for items with a green Download button!</b>  
-              <br>
-              Adding a file upload to items without the Download button will not work.
-            </li>
-          <li>On the next screen, click 
-              Manage near the top-right.  </li>
-          <li>Scroll down to the File field, and click the Remove button on the right. 
-            <div class="docs-caption">
-              <img src="/base/images/docs/resource-replace.png" alt="Replacing a resource's uploaded data" title="Replacing a resource's uploaded data" 
-              width="width" height="height" class="docs-img"/>
-            </div>
-            Click Upload and choose a new file, then Update Resource 
-            at the bottom of the screen. 
+      <p>To replace the data: </p>
+      <ol>
+        <li>click the Details button next to the
+            data package (must have a green Download button) that you want to replace.
+            <br>
+            <b>Note: only do this for items with a green Download button!</b>
+            <br>
+            Adding a file upload to items without the Download button will not work.
           </li>
-        </ol>
-      </p>
+        <li>On the next screen, click
+            Manage near the top-right.  </li>
+        <li>Scroll down to the File field, and click the Remove button on the right.
+          For versioning to work, <b>ensure that the uploaded file name matches the existing file name.</b>
+          <div class="docs-caption">
+            <img src="/base/images/docs/resource-replace.png" alt="Replacing a resource's uploaded data" title="Replacing a resource's uploaded data"
+            width="width" height="height" class="docs-img"/>
+          </div>
+          Click Upload and choose a new file, then Update Resource
+          at the bottom of the screen.
+        </li>
+      </ol>
 
-      <h4 id="data-matching">Automated Layer Matching</h3>
+      <h4 id="data-matching">Automated Layer Matching</h4>
       <p>When you upload a new version of a dataset, the 
         GIS Hub automatically unzips the file and matches the layers and 
         files that it detects with those that are already on the list of 
-        Data and Resources.  User-entered metadata including Attribute field descriptions and layer descriptions will be transferred to the metadata for the new layers, <i>if there is a match</i>.  Importantly, this matching is done using the <i>most specific 
+        Data and Resources.  User-entered metadata including Attribute field
+        descriptions and layer descriptions will be transferred to the
+        metadata for the new layers, <i>if there is a match</i>.
+        Importantly, this matching is done using the <i>most specific
         file/layer identifier</i>:
-        <ul>
-          <li>For a layer within a geodatabase, matching is done with the layer name</li>
-          <li>For shapefiles, geotiffs, and non-spatial files, matching is done with the filename</li>
-          <li>In both cases, the matching is not case-sensitive</li>
-        </ul>
-        <p>This means that you must ensure that your <b>layer/file names 
-          are the same</b> when uploading a new version of your data.  Attribute field names are matched using the same process, so if you rename a field, the existing metadata will not be transferred. 
-        </p>
-        <p>If some layer/file names have been changed, you may end up with orphan layers.  These can be removed (after copying 
-          relevant metadata to the correct layer) by clicking Manage at top-right, then clicking the Delete button at the bottom of the screen. </p>
       </p>
+      <ul>
+        <li>For a layer within a geodatabase, matching is done with the layer name</li>
+        <li>For shapefiles, geotiffs, and non-spatial files, matching is done with the filename</li>
+        <li>In both cases, the matching is not case-sensitive</li>
+      </ul>
+      <p>This means that you must ensure that your <b>layer/file names
+        are the same</b> when uploading a new version of your data.  Attribute field names are matched using the same process, so if you rename a field, the existing metadata will not be transferred.
+      </p>
+      <p>If some layer/file names have been changed, you may end up with orphan layers.  These can be removed (after copying
+        relevant metadata to the correct layer) by clicking Manage at top-right, then clicking the Delete button at the bottom of the screen. </p>
+
+      <h3 id="versioning">Versioning</h3>
+      <p>The cloud storage for the GIS Hub supports file-level versioning, which means
+        that when you upload a new version of your dataset, the previous version will be kept.
+        Please make note of the following caveats: </p>
+      <ul>
+        <li>Versioning works only for the uploaded zip file as a whole.  Versions of individual
+          layers or files within the zip file are not tracked</li>
+        <li>There is no user interface to access previous versions of files on the GIS Hub.
+          You'll need to contact an admin to retrieve a previous version of a file for you.</li>
+        <li>For versioning to work, the name of the new uploaded zip file must match the
+          name of the previous file.  So don't replace <i>my_data.zip</i> with <i>my_data_v2.zip</i>. </li>
+        <li>Versioning is for data (your uploaded zip file), which is updated atomically, but not for metadata. </li>
+      </ul>
 
     </div>
   </article>
