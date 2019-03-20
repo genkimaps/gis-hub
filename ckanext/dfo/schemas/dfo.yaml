@@ -593,7 +593,7 @@ dataset_fields:
 - field_name: sp_code_list
   label: Species Code List
 #  repeatable: true
-  form_snippet: None
+  form_snippet: null
   display_snippet: text.html
   display_group: Science
 
