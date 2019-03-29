@@ -722,7 +722,7 @@ resource_fields:
 # Map preview
 - field_name: map_preview_link
   label: Map Preview
-  display_snippet: text.html
+  display_snippet: link.html
   form_snippet: null
 
 
