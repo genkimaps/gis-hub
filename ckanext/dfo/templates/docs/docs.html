@@ -29,6 +29,10 @@
         after 29V not being saved, but as long as the species codes are
         saved in the csv file, the list of codes can be refreshed
         when this bug is fixed.
+        <br>
+        <b>Note: </b> An additional field called "Species Code List" has been
+        added to the metadata schema.  All species codes will appear in this field.
+        This field will be removed once the bug described above is fixed.
       </p>
 
       <p>
@@ -402,7 +406,7 @@
         </tr>
         <tr>
           <td>Change History</td>
-          <td>A description of changes made to the data since its release.   Create an entry for each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed.</td>
+          <td>A description of changes made to the data since its release.   Create an entry for each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed.  Do not include trivial changes that have no effect on the content or structure of the data.  For example, a format conversion from Shapefile to File Geodatabase is insignificant in terms of the content of the data, and should not be included here. </td>
         </tr>
         <tr>
           <td>Change Date</td>
@@ -477,7 +481,8 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
 
       <h3>Including a species codes file</h3>
       <p>In many cases, it will be more convenient to include a file with a list of species codes, instead of filling out this form manually.  The format of the file is one line per species code. </p>
-      <p>First column: species code <br>
+      <p>First column: species code.  Ensure that the code includes any leading zeros, for example <b>004 instead of 4</b>.
+        <br>
       2nd column: Observation type:  targeted / incidental / inferred  Default: targeted <br>
       3rd column: Age data:  yes / no   Default: no
       </p>
