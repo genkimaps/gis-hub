@@ -2,3 +2,4 @@
 __temp__
 *.egg-info
 **/*.pyc
+**/.DS_Store
