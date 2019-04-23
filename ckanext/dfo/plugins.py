@@ -139,7 +139,8 @@ class DFOPlugin(p.SingletonPlugin):
             'scheming_field_required': self.field_required_helper,
             'now': datetime.now,
             'utcnow': datetime.utcnow,
-            'resource_display_name': self.resource_display_name
+            'resource_display_name': self.resource_display_name,
+            'logged_in': logged_in
         }
 
     def before_map(self, map):
