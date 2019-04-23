@@ -12,6 +12,13 @@ from ckantoolkit import get_validator
 from ckan.common import _
 
 
+# Custom helper function to detect if user is logged in or not.
+def logged_in():
+    if not g.user:
+        return False
+    return True
+
+
 def non_empty_fields(field_list, pkg_dict, exclude):
     r = []
     for field in field_list:
