@@ -6,7 +6,7 @@ import ckan.plugins as p
 import ckan.plugins.toolkit as toolkit
 import ckan.lib.helpers as h
 from ckan.lib import base
-from ckan.common import request
+from ckan.common import request, g
 from ckanext.scheming import helpers as scheming_helpers
 from ckantoolkit import get_validator
 from ckan.common import _
