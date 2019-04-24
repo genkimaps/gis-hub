@@ -73,14 +73,13 @@
                 {% endif %}
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" class="close"
+                <button type="button" class="btn btn-default" class="close"
                         data-dismiss="modal">
                     {{ _('I do not accept') }}
                 </button>
-                <a href="{{ res.url }}" class="btn btn-primary" target="_blank"
-                   class="close" data-dismiss="modal">
-                    {{ _('Accept') }}
-                </a>
+                <button type="button" class="btn btn-primary start-download" data-download="{{ res.url }}">
+                  {{ _('Accept') }}
+                </button>
             </div>
         </div>
     {%- endif -%}

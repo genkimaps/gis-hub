@@ -4,3 +4,8 @@
   {{ super() }}
   <link rel="stylesheet" href="/dfo.css" />
 {% endblock %}
+
+{% block body_extras %}
+    {{ super() }}
+    {% resource 'dfo/dfo.js' %}
+{% endblock %}
