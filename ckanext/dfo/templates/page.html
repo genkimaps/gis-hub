@@ -6,7 +6,7 @@
     contents of that page which contains the login form, override
     is_logged_in only for the login page
 #}
-{% if request.path == "/user/login" %}
+{% if request.path == "/user/login" or request.path == "user/reset" %}
     {% set is_logged_in = True %}
 {% endif %}
 
