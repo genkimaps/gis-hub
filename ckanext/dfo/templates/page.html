@@ -5,8 +5,11 @@
 {# To display page contents only for the login page (we need to show the
     contents of that page which contains the login form, override
     is_logged_in only for the login page
-#}
-{% if request.path == "/user/login" or request.path == "user/reset" %}
+
+{% if request.path == "/user/login" or request.path == "/user/reset" %}
+Allow any user path (login, password reset etc) #}
+
+{% if "/user/" in request.path %}
     {% set is_logged_in = True %}
 {% endif %}
 
