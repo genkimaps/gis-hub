@@ -7,7 +7,7 @@
     is_logged_in only for the login page
 #}
 {% if request.path == "/user/login" %}
-    {% is_logged_in = True %}
+    {% set is_logged_in = True %}
 {% endif %}
 
 {% block primary %}
