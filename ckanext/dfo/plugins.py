@@ -13,10 +13,10 @@ from ckan.common import _
 
 
 # Custom helper function to detect if user is logged in or not.
-def logged_in():
-    if not g.user:
-        return False
-    return True
+# def logged_in():
+#     if not g.user:
+#         return False
+#     return True
 
 
 def non_empty_fields(field_list, pkg_dict, exclude):
@@ -139,8 +139,8 @@ class DFOPlugin(p.SingletonPlugin):
             'scheming_field_required': self.field_required_helper,
             'now': datetime.now,
             'utcnow': datetime.utcnow,
-            'resource_display_name': self.resource_display_name,
-            'logged_in': logged_in
+            'resource_display_name': self.resource_display_name
+            # 'logged_in': logged_in
         }
 
     def before_map(self, map):
