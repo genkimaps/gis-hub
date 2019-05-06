@@ -1,0 +1,26 @@
+{% extends "page.html" %}
+{% set homepage_style = ( g.homepage_style or '1' ) %}
+
+{% block subtitle %}{{ _("Welcome") }}{% endblock %}
+
+{% block maintag %}{% endblock %}
+{% block toolbar %}{% endblock %}
+
+{% set is_logged_in = true if c.userobj else false %}
+
+{% block content %}
+  <div class="homepage layout-{{ homepage_style }}">
+    <div class="container">
+      {{ self.flash() }}
+    </div>
+    {% if is_logged_in %}
+      {% block primary_content %}
+        {% snippet "home/layout{0}.html".format(homepage_style) %}
+      {% endblock %}
+    {% else %}
+        {% block nologin %}
+            Please login to continue.
+        {% endblock %}
+    {% endif %}
+  </div>
+{% endblock %}
