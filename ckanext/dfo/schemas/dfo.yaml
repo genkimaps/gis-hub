@@ -874,8 +874,8 @@ resource_fields:
       value: none
 
 - field_name: bbox
-  label: Bounding Box (WGS84 latitude-longitude, decimal degrees)
-  help_text: "Bounding Box is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
+  label: Bounding Box
+  help_text: "Bounding Box in WGS84 latitude-longitude, decimal degrees is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
   display_group: Spatial
   form_snippet: textarea.html
   display_snippet: text.html
