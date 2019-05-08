@@ -738,8 +738,9 @@ resource_fields:
 # Map preview
 - field_name: map_preview_link
   label: Map Preview
+  help_text: "Link to a web map preview of this layer.  You do not need to complete this field manually.  If the link opens but nothing is displayed, it means that a map preview for this layer has not yet been generated.  If the layer is complex and contains many objects, it may take a long time to render.  You may zoom in on an area of interest to improve rendering time. "
   display_snippet: link.html
-  form_snippet: null
+  form_snippet: text.html
 
 
 # Layer/File Info
@@ -780,6 +781,13 @@ resource_fields:
       value: Google Earth
     - label: Other (Document, non-spatial, etc.)
       value: Other
+
+- field_name: filepath
+  label: File Location
+  help_text: "Location of this file in the zip archive.  You do not need to complete this field manually."
+  display_group: Layer/File Info
+  form_snippet: text.html
+  display_snippet: text.html
 
 # Projection
 # Spatial metadata fields that are both annoying for users to enter manually and cannot have a default should be
