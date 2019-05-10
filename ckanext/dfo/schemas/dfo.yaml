@@ -86,8 +86,8 @@ dataset_fields:
 
 - field_name: citation
   label: Cite this data as
-  help_text: "Citation format to be used when this dataset is referenced in another publication."
-  default: "A citation will be automatically generated from your metadata. You may edit this later if needed."
+  help_text: "Citation format to be used when this dataset is referenced in another publication.  A citation will be automatically generated from your metadata. You may edit this later if needed."
+  default: "A citation will be automatically generated from your metadata. "
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Basic Information
@@ -609,7 +609,8 @@ dataset_fields:
 - field_name: sp_code_list
   label: Species Code List
 #  repeatable: true
-  form_snippet: null
+  help_text: "This field is auto-generated if a list of species codes has been included in the upload. This is a temporary field which is used to display species codes until the bug with the other Species Codes field is fixed.  Please do not manually edit this field. "
+  form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
 
