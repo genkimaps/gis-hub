@@ -2,11 +2,6 @@ scheming_version: 1
 dataset_type: dataset
 
 display_group_default: General
-#display_group_order:
-#  - Basic Information
-#  - Contact Information
-#  - General
-#  - Science
 
 display_groups:
   - label: Basic Information
@@ -67,12 +62,12 @@ dataset_fields:
   display_snippet: text.html
 
 - field_name: owner_org
-  label: "Publisher - Organization Name"
+  label: "Data Publisher (Organization)"
   help_text: "The organization (GoC Department or Agency) primarily responsible for publishing the dataset."
   validators: require_when_published owner_org_validator unicode
   form_snippet: organization.html
   display_group: Basic Information
-  display_snippet: null
+  display_snippet: text.html
 
 # This field is no longer used. But we cannot remove it from the schema,
 # or it causes CKAN to crash
