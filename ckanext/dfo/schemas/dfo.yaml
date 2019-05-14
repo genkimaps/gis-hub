@@ -67,7 +67,8 @@ dataset_fields:
   validators: require_when_published owner_org_validator unicode
   form_snippet: organization.html
   display_group: Basic Information
-  display_snippet: text.html
+  display_snippet: null
+  # Do not use text.html because it shows only the guid of the owner_org, like: 430db324-f471-4ffe-a76b-17ed40991cd4
 
 # This field is no longer used. But we cannot remove it from the schema,
 # or it causes CKAN to crash
