@@ -12,7 +12,6 @@
         authoritative than any existing version of the GIS Hub publishing guide. </p>
       {% endblock %}
 
-
         <h2 id="issues">Known Issues</h2>
       <p>This section summarizes known issues on the GIS Hub
         that affect the end-user experience, and where available,
@@ -246,6 +245,10 @@
         </tr>
       </thead>
       <tbody>
+        <tr>
+          <td>Quality Control</td>
+          <td>Status of quality control for this dataset.  By default, it is set to Check Required.  Change to the appropriate status when quality control is complete or if problems found. </td>
+        </tr>
         <tr>
           <td>Topic Category</td>
           <td>Main theme of the data. Choose the best match from the list. </td>
@@ -548,6 +551,60 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
         field needs to be completed.  Other fields relevant to spatial data should be left blank for 
         non-spatial file types (blank fields are shown only when editing metadata, not when viewing).  </p>
 
+      <h3 id="autometa">Auto-generated Metadata</h3>
+      <p>As mentioned above, the GIS hub will auto-generate some metadata after you upload a file.  The following metadata fields on the Resource page are automatically filled and you only need to edit them if the automated system made a mistake.  These fields should be left blank when uploading a new dataset.  As a reminder, especially if your uploaded file is large or contains many layers, it may take a few minutes to update the metadata.  Please wait 1-2 minutes and refresh the page. </p>
+      <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" style="width:25%">Field</th>
+          <th scope="col" style="width:75%">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Map Preview</td>
+          <td>A Web Map Services (WMS) tile layer with vector features rendered using a default symbology will be generated from uploaded layers (vector only).  The link in this field allows a preview of the tile layer in a web browser, no knowledge of GIS or GIS software is required.  If the link opens but nothing is displayed, it means that a map preview for this layer has not yet been generated.  If the layer is complex and contains many objects, it may take a long time to render.  You may zoom in on an area of interest to improve rendering time. </td>
+        </tr>
+        <tr>
+          <td>Layer Name</td>
+          <td>Layer, table, or file name as detected by the GIS Hub after data upload. </td>
+        </tr>
+        <tr>
+          <td>Data Format</td>
+          <td>Data format, detected by the GIS Hub after data upload.  Only a subset of all possible formats are supported.  Note that if your layer has the wrong file extension, it may not be detected correctly or at all. </td>
+        </tr>
+        <tr>
+          <td>File Location</td>
+          <td>Location of this layer, table, or file in the zip archive.  If the file is nested in a subfolder within the zip file, the path of the subfolder(s) will be shown here. </td>
+        </tr>
+        <tr>
+          <td>Projection Name</td>
+          <td>The name of the projection of the data. Note that the naming convention may be different, depending on the software used to create the file.  For example, ArcGIS uses the name "BC_Albers_Equal_Area," while other software may call it "NAD83 / BC Albers."</td>
+        </tr>
+        <tr>
+          <td>Projection Code</td>
+          <td>The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/.  On occasion, this code may not be detected for a given dataset.  Please manually update this field if it shows "unknown" after uploading data. </td>
+        </tr>
+        <tr>
+          <td>Spatial Type</td>
+          <td>The type of data represented.  One of Vector, Raster, Table, TIN, Video, None</td>
+        </tr>
+      <tr>
+          <td>Geometry Type</td>
+          <td>For vector layers only.  Usually point, line, or polygon. </td>
+        </tr>
+      <tr>
+          <td>Bounding Box</td>
+          <td>Bounding Box in WGS84 latitude-longitude, decimal degrees for each layer. </td>
+        </tr>
+      <tr>
+          <td>Locale</td>
+          <td>Location of the spatial data with respect to DFO's regions and bioregions.</td>
+        </tr>
+
+      </tbody>
+    </table>
+
       <h3 id="filetypes">Supported File Types</h3>
       <p>The following file types are supported in the GIS Hub, and have relevant metadata automatically detected. </p>
 
@@ -825,6 +882,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p><a href="#science">Science Metadata</a></p>
       <p><a href="#species">Species Codes</a></p>
       <p><a href="#add-data">Adding Data</a></p>
+      <p><a href="#autometa">Auto-generated Metadata</a></p>
       <p><a href="#filetypes">Supported File Types</a></p>
       <p><a href="#attrib-meta">Attribute Metadata</a></p>
       <p><a href="#data-prep">Data Preparation</a></p>
@@ -834,6 +892,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p><a href="#new-dataset">Creating and Editing Datasets</a></p>
       <p><a href="#replace-data">Replacing Data</a></p>
       <p><a href="#data-matching">Automated Layer Matching</a></p>
+      <p><a href="#versioning">Versioning</a></p>
 
     </div>
   </div>
