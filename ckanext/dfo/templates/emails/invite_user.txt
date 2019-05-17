@@ -2,18 +2,17 @@ The GIS Hub is the central place to find key spatial datasets for MSEA staff and
 
 A key part of the GIS Hub is metadata.  We have designed a metadata standard that is both flexible and comprehensive, and meets the needs of DFO Science.  The metadata form on the GIS Hub makes the process of writing your metadata simple and standardized. If you have already been writing metadata, this step will not be much more than copying and pasting.  Note that incomplete metadata can be saved as a draft, and you can come back to complete it later.  When all required metadata is complete, you may publish the dataset.
 
-The system is only accessible to registered users.  Before you can access any of the site content, you must activate your account using the login information below.
+The system is only accessible to registered users.  Before you can access any of the site content, you must activate your account and set a new password using this link:
 
+{{ reset_link }}
+
+To access the GIS Hub:
 GIS Hub:  {{ site_url }}
 
 Your account on the GIS Hub:
 Username: {{ user_name }}
 
 You have been added to the {{ group_type }} {{ group_title }} with the following role: {{ role_name }}.
-
-To accept this invitation, please set a new password by clicking the link below.
-
-{{ reset_link }}
 
 The latest version of documentation on the data preparation guidelines and metadata standard can always be found at https://www.gis-hub.ca/docs.  Please read this page carefully, and contact the site administrator in case of any questions.
 
