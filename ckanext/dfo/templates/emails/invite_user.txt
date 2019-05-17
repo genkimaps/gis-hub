@@ -1,12 +1,8 @@
-The GIS Hub is the central place to find key spatial datasets for MSEA staff and other users in DFO Pacific Science.  It is designed to allow users to search, preview, download, and find detailed information (metadata) about the datasets.
-
-We need your help to make sure that the rollout of this system goes as smoothly as possible.  In addition to registering using the link below, please explore the system and upload your own data, once it is ready to publish.
+The GIS Hub is the central place to find key spatial datasets for MSEA staff and other users in the DFO Pacific Region.  It is designed to allow users to search, preview, download, and find detailed information (metadata) about the datasets.
 
 A key part of the GIS Hub is metadata.  We have designed a metadata standard that is both flexible and comprehensive, and meets the needs of DFO Science.  The metadata form on the GIS Hub makes the process of writing your metadata simple and standardized. If you have already been writing metadata, this step will not be much more than copying and pasting.  Note that incomplete metadata can be saved as a draft, and you can come back to complete it later.  When all required metadata is complete, you may publish the dataset.
 
-You can find documentation on the data preparation guidelines and metadata standard on the Spatial Datasets drive at:  \\dcbcpbsna01a\Spatial_Datasets\Documents\GIS_Hub_Docs
-
-You can access the GIS Hub using the login information below.
+The system is only accessible to registered users.  Before you can access any of the site content, you must activate your account using the login information below.
 
 GIS Hub:  {{ site_url }}
 
@@ -19,11 +15,11 @@ To accept this invitation, please set a new password by clicking the link below.
 
 {{ reset_link }}
 
+The latest version of documentation on the data preparation guidelines and metadata standard can always be found at https://www.gis-hub.ca/docs.  Please read this page carefully, and contact the site administrator in case of any questions.
+
 Once again, thank you for your participation and contribution to the success of this tool.
 
 
 Michael Peterman
-MSDI Science Lead
-Marine Spatial Ecology and Analysis Section
-Fisheries and Oceans Canada
-Michael.Peterman@dfo-mpo.gc.ca / 604-787-2168
+GIS Hub Administrator
+mpetermangis@gmail.com / 778-806-0360
