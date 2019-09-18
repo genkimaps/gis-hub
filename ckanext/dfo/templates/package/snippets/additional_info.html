@@ -24,6 +24,7 @@
             >>{{ disp_info.label }},label<<
             >>{{ group.grouper }},grouper<<
             {%- if disp_info.label==group.grouper -%}
+                have match
                 {%- set group_desc = disp_info.description -%}
             {%- endif -%}
         {%- endfor -%}
