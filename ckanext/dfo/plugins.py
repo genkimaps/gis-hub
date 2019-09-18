@@ -12,13 +12,6 @@ from ckantoolkit import get_validator
 from ckan.common import _
 
 
-# Custom helper function to detect if user is logged in or not.
-# def logged_in():
-#     if not g.user:
-#         return False
-#     return True
-
-
 def non_empty_fields(field_list, pkg_dict, exclude):
     r = []
     for field in field_list:
@@ -140,7 +133,6 @@ class DFOPlugin(p.SingletonPlugin):
             'now': datetime.now,
             'utcnow': datetime.utcnow,
             'resource_display_name': self.resource_display_name
-            # 'logged_in': logged_in
         }
 
     def before_map(self, map):
@@ -230,6 +222,7 @@ def get_thumbnail(package_id):
 class DocsController(base.BaseController):
     def docs(self):
         return p.toolkit.render('docs/docs.html')
+
 
 class AdvancedSearch(base.BaseController):
     @staticmethod

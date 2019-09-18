@@ -1,20 +1,8 @@
 {% ckan_extends %}
 
-{#  {% set is_logged_in = h.logged_in() %}  #}
-
 {% set is_logged_in = true if c.userobj else false %}
 
-{# To display page contents only for the login page (we need to show the
-    contents of that page which contains the login form, override
-    is_logged_in only for the login page
-
-{% if request.path == "/user/login" or request.path == "/user/reset" %}
-Allow any user path (login, password reset etc)
-
-Dont create a method called logged_in(), this interferes
-with logged_in in /templates/packages/resource_edit_base.html
-#}
-
+{#  Allow any user path (login, password reset etc)  #}
 {% if "/user/" in request.path %}
     {% set is_logged_in = True %}
 {% endif %}
