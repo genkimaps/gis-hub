@@ -16,14 +16,15 @@
 #}
 
 {%- for group in schema.dataset_fields|groupby('display_group') -%}
-    {%- for disp_info in schema.display_groups -%}
-        {%- if disp_info.label==group.grouper -%}
-            {%- set group_desc = disp_info.description -%}
-        {%- endif -%}
-    {%- endfor -%}
+
 {%- set group_fields = h.non_empty_fields(group.list|list, pkg_dict, exclude_fields) -%}
 {% if group_fields %}
     <div class="additional-info">
+        {%- for disp_info in schema.display_groups -%}
+            {%- if disp_info.label==group.grouper -%}
+                {%- set group_desc = disp_info.description -%}
+            {%- endif -%}
+        {%- endfor -%}
         {{ group_desc }}
         {{ schema.display_groups }}
         <h3 class="dataset-group-label">{{ group.grouper }}</h3>
