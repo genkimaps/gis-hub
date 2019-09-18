@@ -21,8 +21,8 @@
 {% if group_fields %}
     <div class="additional-info">
         {%- for disp_info in schema.display_groups -%}
-            {{ disp_info.label }}
-            {{ group.grouper }}
+            >>{{ disp_info.label }},label<<
+            >>{{ group.grouper }},grouper<<
             {%- if disp_info.label==group.grouper -%}
                 {%- set group_desc = disp_info.description -%}
             {%- endif -%}
