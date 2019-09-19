@@ -5,13 +5,13 @@ display_group_default: General
 
 display_groups:
   - label: Basic Information
-    description: "This is the Basic Info section. "
+    description: "This section contains basic information about the dataset, suitable for a minimal metadata entry. "
   - label: General
-    description: "This is the General section. "
+    description: "General metadata compatible with the Canada Open Data metadata standard. "
   - label: Contact Information
-    description: "This is the Contact Information section. "
+    description: "This section contains contact information for the data creator and program manager. "
   - label: Science
-    description: "This is the Science section -- should be collapsed by default. "
+    description: "This section contains metadata specific to the Science branch at DFO. "
     collapse_by_default: true
 
 about:

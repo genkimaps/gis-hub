@@ -1,5 +1,5 @@
 .docs-caption {
-    width:image width px; 
+    width: image width px;
     font-style: italic; 
     text-align: center;
 }
@@ -19,6 +19,11 @@
 .additional-info .dataset-label,
 .additional-info .dataset-details {
     vertical-align: middle;
+}
+
+.dataset-group-desc {
+    font-style: italic;
+    color: #869fb7;
 }
 
 /* Keep user-entered line breaks
