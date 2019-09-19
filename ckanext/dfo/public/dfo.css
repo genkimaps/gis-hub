@@ -26,6 +26,11 @@
     color: #869fb7;
 }
 
+.section-collapse {
+    color: #447cb1;
+    cursor: pointer;
+}
+
 /* Keep user-entered line breaks
    https://github.com/tk-technologies/ckanext-dfo/issues/40
    Nope, causes composite-repeating fields to have massive whitespace  */
