@@ -21,7 +21,10 @@
 {% if group_fields %}
     <div class="additional-info">
 
-        <h3 class="dataset-group-label">{{ group.grouper }}</h3>
+        <h3 class="dataset-group-label">
+            {{ group.grouper }}
+            <div class="float-right"><i class="far fa-plus-square"></i>/div>
+        </h3>
         {%- for disp_info in schema.display_groups -%}
             {%- if disp_info.label==group.grouper -%}
                 <div class="dataset-group-desc">{{ disp_info.description }}</div>
