@@ -45,7 +45,6 @@
 {# Display map if exists #}
 {% if res.spatial %}
     
-    {# {% snippet "package/snippets/resource_map.html", extent=res.spatial %} #}
     {#  https://docs.ckan.org/en/2.8/theming/javascript.html
         Use Fanstatic to include our custom JavaScript module.
         A script tag for the module will be inserted in the right place at the
@@ -66,14 +65,16 @@
     <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
     integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
     crossorigin=""></script>
-
-    <div class="dataset-label">Layer Extent Map</div>
-
-    <div id="mapid" 
-        data-module="dfo_extent_map" 
-        data-module-convexhull="{{ res.spatial }}"
-        style="height: 600px;">
+    
+    <div class="additional-info">
+        <div class="dataset-label">Layer Extent Map</div>
+        <div id="mapid" 
+            data-module="dfo_extent_map" 
+            data-module-convexhull="{{ res.spatial }}"
+            style="height: 600px;">
+        </div>
     </div>
 
 {% endif %}
+
 {% endblock %}
