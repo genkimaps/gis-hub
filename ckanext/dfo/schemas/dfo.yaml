@@ -827,7 +827,8 @@ resource_fields:
 - field_name: spatial
   label: Spatial Extent Preview
   display_group: Spatial
-  display_snippet: dataset_map.html
+  # display_snippet: dataset_map.html
+  display_snippet: null
   form_snippet: null
 
 - field_name: spatial_type
