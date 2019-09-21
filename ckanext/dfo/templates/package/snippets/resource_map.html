@@ -13,7 +13,7 @@ crossorigin=""></script>
 
 <script>
     // This data is passed from Flask, use ckan's h.dump_json filter
-    var convexhull = {{ extent }}
+    var convexhull = {{ extent | tojson }}
     console.log(convexhull)
 
     var mymap = L.map('mapid').setView([45.2, -109.6], 8);
