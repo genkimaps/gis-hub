@@ -16,14 +16,16 @@ def non_empty_fields(field_list, pkg_dict, exclude):
     r = []
     print(field_list)
     for field in field_list:
+
+        field_name = field.get('field_name')
         
-        if field.get('field_name') in exclude:
+        if not field_name or field_name in exclude:
             continue
 
         if field.get('display_snippet', False) is None:
             continue
 
-        if pkg_dict.get(field['field_name']):
+        if pkg_dict.get(field_name):
             r.append(field)
     return r
 
