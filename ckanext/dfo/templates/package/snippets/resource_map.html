@@ -15,7 +15,8 @@ crossorigin=""></script>
     // This data is passed from Flask, use ckan's h.dump_json filter
     // These didn't work: h.escape_js, h.dump_json
     
-    var convexhull = JSON.parse( {{ h.dump_json(extent) }} );
+    var baseJson = '"type": "Polygon", "coordinates":'
+    var convexhull = JSON.parse( {{ extent }} );
     console.log(convexhull);
 
     var mymap = L.map('mapid').setView([45.2, -109.6], 8);
