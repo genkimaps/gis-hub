@@ -498,7 +498,7 @@ dataset_fields:
   display_group: Science
   validators: require_when_published
 
-- field_name: spatial_data_quality
+- fieldl_name: spatia_data_quality
   label: Spatial Data Quality
   help_text: "A description of the quality of the spatial data. It is important to
         describe the spatial data quality with reference to the data
@@ -824,11 +824,11 @@ resource_fields:
 
 # Spatial
 
-- field_name: spatial
-  label: Spatial Extent Preview
-  display_group: Spatial
-  display_snippet: dataset_map.html
-  form_snippet: null
+#- field_name: spatial
+#  label: Spatial Extent Preview
+#  display_group: Spatial
+#  display_snippet: dataset_map.html
+#  form_snippet: null
 
 - field_name: spatial_type
   label: Spatial Type
