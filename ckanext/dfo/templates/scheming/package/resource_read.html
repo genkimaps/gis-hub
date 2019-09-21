@@ -43,6 +43,11 @@
 {% endfor %}
 
 {# Display map if exists - disabled until dataset_map component is ready
+    If done in yml, it's looking for this snippet
+    scheming/display_snippets/dataset_map.html
+    
+#}
+
 {% if res.spatial %}
     
     {% snippet "package/snippets/resource_map.html", extent=res.spatial %}
@@ -50,12 +55,7 @@
         {{ super() }}
         {% resource 'dfo/resource_map.js' %}
     {% endblock %}
-    
+
 {% endif %}
-
-If done in yml, it's looking for this snippet
-scheming/display_snippets/dataset_map.html
-
-#}
 
 {% endblock %}
