@@ -51,10 +51,10 @@
 {% if res.spatial %}
     
     {% snippet "package/snippets/resource_map.html", extent=res.spatial %}
-    {% block body_extras %}
+    {# {% block body_extras %}
         {{ super() }}
         {% resource 'dfo/resource_map.js' %}
-    {% endblock %}
+    {% endblock %} #}
 
 {% endif %}
 
