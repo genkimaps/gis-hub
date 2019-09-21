@@ -44,13 +44,12 @@
 
 {# Display map if exists - disabled until dataset_map component is ready
     If done in yml, it's looking for this snippet
-    scheming/display_snippets/dataset_map.html
-    
+    scheming/display_snippets/dataset_map.html    
 #}
 
 {% if res.spatial %}
     
-    {% snippet "package/snippets/resource_map.html", extent=res.spatial %}
+    {# {% snippet "package/snippets/resource_map.html", extent=res.spatial %} #}
     {#  https://docs.ckan.org/en/2.8/theming/javascript.html
         Use Fanstatic to include our custom JavaScript module.
         A script tag for the module will be inserted in the right place at the
