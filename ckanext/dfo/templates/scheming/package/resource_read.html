@@ -42,8 +42,10 @@
     {% endif %}
 {% endfor %}
 
-{# Display map if exists #}
+{# Display map if exists - disabled until dataset_map component is ready
 {% if res.spatial %}
     {% snippet "spatial/snippets/dataset_map.html", extent=res.spatial %}
 {% endif %}
+#}
+
 {% endblock %}
