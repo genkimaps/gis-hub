@@ -15,6 +15,7 @@ from ckan.common import _
 def non_empty_fields(field_list, pkg_dict, exclude):
     r = []
     for field in field_list:
+        print(field)
         if field['field_name'] in exclude:
             continue
 
