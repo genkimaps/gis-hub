@@ -44,6 +44,34 @@
 
 {# Display map if exists #}
 {% if res.spatial %}
-    {% snippet "spatial/snippets/dataset_map.html", extent=res.spatial %}
+    
+    {# {% snippet "package/snippets/resource_map.html", extent=res.spatial %} #}
+    {#  https://docs.ckan.org/en/2.8/theming/javascript.html
+        Use Fanstatic to include our custom JavaScript module.
+        A script tag for the module will be inserted in the right place at the
+        bottom of the page. #}
+    {% resource 'dfo/resource_map.js' %}
+
+    {# Apply our JavaScript module to an HTML element. The data-module attribute,
+        which can be applied to any HTML element, tells CKAN to initialize an
+        instance of the named JavaScript module for the element.
+        The initialize() method of our module will be called with this HTML
+        element as its this.el object. #}
+    <!-- Leaflet css -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin=""/>
+
+    <!-- Leaflet JS, after css -->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+    crossorigin=""></script>
+
+    <div id="mapid" 
+        data-module="dfo_extent_map" 
+        data-module-convexhull="{{ res.spatial }}"
+        style="height: 600px;">
+    </div>
+
 {% endif %}
 {% endblock %}
