@@ -57,7 +57,7 @@ dataset_fields:
 - preset: dataset_slug
   field_name: name
   label: Dataset ID
-  help_text: "Enter an ID that uniquely identifies this dataset. The ID should contain only lowercase letters, numbers and hyphens, and it will be used as part of the URL for this dataset. For example, if your dataset is Sponge Reefs, enter something like sponge-reefs. ."
+  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens and be a maximum of 20 characters. For example, if your dataset is Sponge Reefs, set an easy-to-remember URL such as sponge-reefs. This will form part of the complete URL for the dataset."
   display_group: Basic Information
   display_snippet: text.html
 
