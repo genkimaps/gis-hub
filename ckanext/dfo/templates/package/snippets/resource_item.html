@@ -16,22 +16,31 @@
         <div class="resource-item-actions pull-right">
             <ul class="inline">
                 {% if authorized %}
+
+                {% if res.url_type == 'upload' %}
+                    {# Show Download button only for url_type=upload #}
+                    <li>
+                        {%- if res.disclaimer or res.disclaimer_url -%}
+                            <button class="btn btn-success" data-toggle="modal"
+                                    data-target="#r_{{ res.id }}">
+                                {{ _('Download') }} {{ h.get_translated(res, 'format') }}
+                            </button>
+                        {%- else -%}
+                            <a href="{{ res.url }}" class="btn btn-success"
+                               target="_blank">
+                                {{ _('Download') }} {{ h.get_translated(res, 'format') }}
+                            </a>
+                        {%- endif -%}
+                    </li>
+                {% endif %}
+                {# Show Details button for all items, including data contents
+                    (layers, tables, documents) in the uploaded file #}
+
                 <li>
                     <a href="{{ url }}" class="btn">{{ _('Details') }}</a>
                 </li>
-                <li>
-                    {%- if res.disclaimer or res.disclaimer_url -%}
-                        <button class="btn btn-success" data-toggle="modal"
-                                data-target="#r_{{ res.id }}">
-                            {{ _('Download') }} {{ h.get_translated(res, 'format') }}
-                        </button>
-                    {%- else -%}
-                        <a href="{{ res.url }}" class="btn btn-success"
-                           target="_blank">
-                            {{ _('Download') }} {{ h.get_translated(res, 'format') }}
-                        </a>
-                    {%- endif -%}
-                </li>
+
+
                 {% else %}
                     <div class="dropdown btn-group">
                         <a href="{{ h.url_for('restricted_request_access', package_id=pkg.name, resource_id=res.id) }}" class="btn">
@@ -64,14 +73,13 @@
                 {% endif %}
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" class="close"
+                <button type="button" class="btn btn-default" class="close"
                         data-dismiss="modal">
                     {{ _('I do not accept') }}
                 </button>
-                <a href="{{ res.url }}" class="btn btn-primary" target="_blank"
-                   class="close" data-dismiss="modal">
-                    {{ _('Accept') }}
-                </a>
+                <button type="button" class="btn btn-primary start-download" data-download="{{ res.url }}">
+                  {{ _('Accept') }}
+                </button>
             </div>
         </div>
     {%- endif -%}

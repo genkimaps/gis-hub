@@ -2,21 +2,16 @@ scheming_version: 1
 dataset_type: dataset
 
 display_group_default: General
-#display_group_order:
-#  - Basic Information
-#  - Contact Information
-#  - General
-#  - Science
 
 display_groups:
   - label: Basic Information
-    description: "This is the Basic Info section. "
+    description: "This section contains basic information about the dataset, suitable for a minimal metadata entry. "
   - label: General
-    description: "This is the General section. "
+    description: "General metadata compatible with the Canada Open Data metadata standard. "
   - label: Contact Information
-    description: "This is the Contact Information section. "
+    description: "This section contains contact information for the data creator and program manager. "
   - label: Science
-    description: "This is the Science section -- should be collapsed by default. "
+    description: "This section contains metadata specific to the Science branch at DFO. "
     collapse_by_default: true
 
 about:
@@ -62,17 +57,18 @@ dataset_fields:
 - preset: dataset_slug
   field_name: name
   label: Dataset ID
-  help_text: "Enter a unique ID for this dataset. The ID should contain only lowercase letters and hyphens. For example, if your dataset is Sponge Reefs, set a URL such as sponge-reefs."
+  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens and be a maximum of 20 characters. For example, if your dataset is Sponge Reefs, set an easy-to-remember URL such as sponge-reefs. This will form part of the complete URL for the dataset."
   display_group: Basic Information
   display_snippet: text.html
 
 - field_name: owner_org
-  label: "Publisher - Organization Name"
+  label: "Data Publisher (Organization)"
   help_text: "The organization (GoC Department or Agency) primarily responsible for publishing the dataset."
   validators: require_when_published owner_org_validator unicode
   form_snippet: organization.html
   display_group: Basic Information
   display_snippet: null
+  # Do not use text.html because it shows only the guid of the owner_org, like: 430db324-f471-4ffe-a76b-17ed40991cd4
 
 # This field is no longer used. But we cannot remove it from the schema,
 # or it causes CKAN to crash
@@ -86,8 +82,8 @@ dataset_fields:
 
 - field_name: citation
   label: Cite this data as
-  help_text: "Citation format to be used when this dataset is referenced in another publication."
-  default: "A citation will be automatically generated from your metadata. You may edit this later if needed."
+  help_text: "Citation format to be used when this dataset is referenced in another publication.  A citation will be automatically generated from your metadata. You may edit this later if needed."
+  default: "A citation will be automatically generated from your metadata. "
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Basic Information
@@ -113,6 +109,22 @@ dataset_fields:
   form_snippet: null
   display_snippet: null
   default: "Placeholder for French summary"
+
+- field_name: quality_control
+  label: Quality Control
+  help_text: "Indicates the status of quality control on the dataset and its metadata."
+  default: Check Required
+  display_snippet: select.html
+  form_snippet: select.html
+  validators: require_when_published
+  choices:
+  - label: Completed
+    value: Completed
+  - label: Check Required
+    value: Check Required
+  - label: Problems Identified
+    value: Problems Identified
+
 
 # Contacts
 
@@ -589,13 +601,22 @@ dataset_fields:
   display_snippet: text.html
   display_group: Science
 
+# Placeholder for species codes until bug in sp code lookup is resolved
+- field_name: sp_code_list
+  label: Species Code List
+#  repeatable: true
+  help_text: "This field is auto-generated if a list of species codes has been included in the upload. This is a temporary field which is used to display species codes until the bug with the other Species Codes field is fixed.  Please do not manually edit this field. "
+  form_snippet: textarea.html
+  display_snippet: text.html
+  display_group: Science
 
-  # Composite repeating field for species codes
+# Composite repeating field for species codes
 - field_name: species_codes
   label: Species Codes
   help_text: "A list of species names / species codes.  If your data does not contain any species codes, disregard this section and leave the fields blank in the section below.  For each species in your data, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred.  If you have a large number of species codes, you may include a file named species_codes.csv.  For a detailed description of the format of this file, refer to the GIS Hub publishing guide document. "
   repeatable: true
   form_blanks: 1
+  display_snippet: table.html
   display_group: Science
   subfields:
 
@@ -609,6 +630,8 @@ dataset_fields:
       label: species_name
     form_attrs:
       data-module: autocomplete
+    display_snippet_options:
+      row_header: True
     display_group: Science
 
   - field_name: age_data
@@ -704,25 +727,64 @@ resource_fields:
 # Changed to title
 - field_name: title
   label: Title
-  help_text: "Title of the uploaded data package. "
-#  help_text: "Name of the uploaded data package.  This is populated automatically from your uploaded data. DO NOT EDIT. "
-#  default: "Placeholder - DO NOT EDIT"
+  help_text: "If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  Ensure that the title of the data package is NOT the same as any of the layers in your upload.  If this is a layer/file inside your data upload, this field is populated automatically."
   display_snippet: text.html
   validators: require_when_published
+
+
+# Map preview
+- field_name: map_preview_link
+  label: Map Preview
+  help_text: "Link to a web map preview of this layer.  You do not need to complete this field manually.  If the link opens but nothing is displayed, it means that a map preview for this layer has not yet been generated.  If the layer is complex and contains many objects, it may take a long time to render.  You may zoom in on an area of interest to improve rendering time. "
+  display_snippet: link.html
+  form_snippet: text.html
+
+
+# Layer/File Info
 
 - field_name: layer_name
   label: Layer Name
   help_text: "Layer name is detected by the GIS Hub after data upload.  You do not need to complete this field manually. "
-  display_group: Spatial
+  display_group: Layer/File Info
   form_snippet: text.html
-  #validators: require_when_published
+  # validators: require_when_published
 
 - field_name: layer_description
   label: Layer Description
   help_text: "Describe what this layer/table/document represents, in the context of the entire dataset.  If there is more than one layer in your uploaded data, complete this field only after the data has been uploaded and a metadata entry has been created for each layer. "
+  display_group: Layer/File Info
   form_snippet: textarea.html
   display_snippet: text.html
   # validators: require_when_published
+
+- field_name: data_format
+  label: Data Format
+  help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly. "
+  display_group: Layer/File Info
+#  validators: require_when_published
+  form_snippet: select.html
+  display_snippet: select.html
+  default: File Geodatabase
+  choices:
+    - label: File Geodatabase
+      value: File Geodatabase
+    - label: Shapefile
+      value: Shapefile
+    - label: GeoTiff
+      value: GeoTiff
+    - label: GeoJson
+      value: GeoJson
+    - label: Google Earth (KML/KMZ)
+      value: Google Earth
+    - label: Other (Document, non-spatial, etc.)
+      value: Other
+
+- field_name: filepath
+  label: File Location
+  help_text: "Location of this file in the zip archive.  You do not need to complete this field manually."
+  display_group: Layer/File Info
+  form_snippet: text.html
+  display_snippet: text.html
 
 # Projection
 # Spatial metadata fields that are both annoying for users to enter manually and cannot have a default should be
@@ -733,16 +795,16 @@ resource_fields:
   display_group: Projection
   help_text: "The name of the projection of the data. Example: BC_Albers_Equal_Area.  This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
   form_snippet: text.html
-  default: "Detected by the GIS Hub after data upload."
-  #validators: require_when_published
+  # default: "Detected by the GIS Hub after data upload."
+  # validators: require_when_published
 
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
   help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/.   This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
   form_snippet: text.html
-  default: "Detected by the GIS Hub after data upload."
-  #validators: require_when_published
+  # default: "Detected by the GIS Hub after data upload."
+  # validators: require_when_published
 
 - field_name: projection_codespace
   label: Codespace
@@ -750,7 +812,7 @@ resource_fields:
   display_group: Projection
   form_snippet: null
   display_snippet: null
-  #validators: require_when_published
+  # validators: require_when_published
 
 - field_name: codespace_version
   label: Codespace Version
@@ -765,28 +827,9 @@ resource_fields:
 - field_name: spatial
   label: Spatial Extent Preview
   display_group: Spatial
-  display_snippet: dataset_map.html
+  # display_snippet: dataset_map.html
+  display_snippet: null
   form_snippet: null
-
-- field_name: data_format
-  label: Data Format
-  help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly.  Indicate the format of the spatial data inside the zip file. Note that there may be other non-spatial components included with a dataset (e.g. PDF report, R script). Do not enter zip as the format."
-  display_group: Spatial
-  validators: require_when_published
-  form_snippet: select.html
-  display_snippet: select.html
-  default: File Geodatabase
-  choices:
-    - label: File Geodatabase
-      value: File Geodatabase
-    - label: Shapefile
-      value: Shapefile
-    - label: GeoTiff
-      value: GeoTiff
-    - label: GeoJson
-      value: GeoJson
-    - label: Other (Document, non-spatial, etc.)
-      value: Other
 
 - field_name: spatial_type
   label: Spatial Type
@@ -795,7 +838,7 @@ resource_fields:
   display_group: Spatial
   help_text: "Spatial type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the spatial type was detected incorrectly. "
   default: vector
-  validators: require_when_published
+#  validators: require_when_published
   choices:
     - label: Vector
       value: vector
@@ -817,7 +860,7 @@ resource_fields:
   display_group: Spatial
   help_text: "Geometry type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the geometry type was detected incorrectly. "
   default: point
-  validators: require_when_published
+#  validators: require_when_published
   choices:
     - label: Point
       value: point
@@ -831,24 +874,26 @@ resource_fields:
       value: geometry
     - label: Coverage
       value: coverage
+    - label: Mixed
+      value: mixed
     - label: None
       value: none
 
 - field_name: bbox
-  label: Bounding Box (lat-lon)
-  help_text: "Bounding Box is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
+  label: Bounding Box
+  help_text: "Bounding Box in WGS84 latitude-longitude, decimal degrees is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
   display_group: Spatial
   form_snippet: textarea.html
   display_snippet: text.html
-  default: "Detected by the GIS Hub after data upload."
-  #validators: require_when_published
+  default: "Generated by the GIS Hub after data upload."
+  # validators: require_when_published
 
 - field_name: locale
   label: Locale
-  help_text: "Location of the spatial data in DFO's regions and bioregions.  This is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
+  help_text: "Location of the spatial data in DFO's regions and bioregions, calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
   form_snippet: textarea.html
   display_snippet: text.html
-  default: "Detected by the GIS Hub after data upload."
+  default: "Generated by the GIS Hub after data upload."
   display_group: Spatial
 
 - field_name: uuid
@@ -869,8 +914,9 @@ resource_fields:
 - field_name: attribute
   label: Attributes
   help_text: "You must clearly document all attributes for all spatial layers and standalone tables in your uploaded data.  Some attribute information (field name and type) will be populated automatically after you upload spatial data.  If you have not yet uploaded data, or you are replacing the existing data, leave these fields blank for now.  After your data has been uploaded and field names and types have been extracted, you will still have to edit this section later to add, at minimum, a description for each field.  The field description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)  Note: raster attributes cannot be detected automatically.  You must add any raster attributes manually using this form. "
-  form_blanks: 0
+  form_blanks: 1
   repeatable: true
+  display_snippet: table.html
   display_group: Attributes
   subfields:
 
@@ -879,6 +925,8 @@ resource_fields:
 #    help_text: The name of the field in the attribute table
     form_snippet: text.html
     display_snippet: text.html
+    display_snippet_options:
+      row_header: True
     display_group: Attributes
 
   - field_name: column_type
@@ -924,34 +972,13 @@ resource_fields:
     display_group: Attributes
 
 
-# Other
-
-- field_name: disclaimer
-  label: Download Disclaimer
-  help_text: A disclaimer that is displayed to authorized users before allowing data download.
-  default: "This data is intended for scientific research only. Fisheries and Oceans Canada (DFO) is not responsible for damages resulting from any omissions or errors that may be contained in these data and expressly disclaims any warranty of fitness for any particular purpose. DFO shall not be liable for any losses, financial or otherwise, due to the use of these data. The user assumes the entire risk as to the suitability, results and performance of the data for their proposed use."
-  form_snippet: textarea.html
-  display_snippet: null
-
-- field_name: disclaimer_url
-  label: Download Disclaimer (Remote)
-  help_text: "Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
-  form_snippet: text.html
-  display_snippet: null
-
-- field_name: url
-  label: Download URL
-  upload_label: "File Upload"
-  help_text: "Prepare your data for uploading. ESRI File Geodatabases and Shapefiles are supported, but need to be uploaded as a zip file. For a shapefile, include all components (.shp, .dbf, .shx and so on) in the zip file. For a file geodatabase, create a new geodatabase and copy only the feature classes/tables that you want to publish. Zip the entire file geodatabase folder (.gdb).  You may also include documents and scripts in separate folders inside the zip file.  If you are not uploading a file with your data, you may instead provide the URL to the data download on another website, outside of the GIS Hub.  This is used, for example, when you are creating a metadata record that points to a dataset hosted on the BC Geographic Data Warehouse."
-  validators: not_empty unicode remove_whitespace
-  form_snippet: upload.html
-  upload_field: upload
-  upload_clear: clear_upload
+# Upload
 
 - field_name: restricted
   label: "Access Restrictions"
   help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be added by typing names into the Allowed Users field below. "
   display_snippet: null
+  display_group: Upload Data
   subfields:
   - field_name: level
     label: Level
@@ -974,3 +1001,28 @@ resource_fields:
         data-module: autocomplete
         data-module-tags: ""
         data-module-source: "/api/2/util/user/autocomplete?q=?"
+
+- field_name: disclaimer
+  label: Download Disclaimer
+  help_text: A disclaimer that is displayed to authorized users before allowing data download.
+  default: "This data is intended for scientific research only. Fisheries and Oceans Canada (DFO) is not responsible for damages resulting from any omissions or errors that may be contained in these data and expressly disclaims any warranty of fitness for any particular purpose. DFO shall not be liable for any losses, financial or otherwise, due to the use of these data. The user assumes the entire risk as to the suitability, results and performance of the data for their proposed use."
+  form_snippet: textarea.html
+  display_snippet: null
+  display_group: Upload Data
+
+- field_name: disclaimer_url
+  label: Download Disclaimer (External Link)
+  help_text: "Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be accepted before downloading this resource."
+  form_snippet: text.html
+  display_snippet: null
+  display_group: Upload Data
+
+- field_name: url
+  label: Download URL
+  upload_label: "File Upload"
+  help_text: "Prepare your data for uploading. ESRI File Geodatabases and Shapefiles are supported, but need to be uploaded as a zip file. For a shapefile, include all components (.shp, .dbf, .shx and so on) in the zip file. For a file geodatabase, create a new geodatabase and copy only the feature classes/tables that you want to publish. Zip the entire file geodatabase folder (.gdb).  You may also include documents and scripts in separate folders inside the zip file.  If you are not uploading a file with your data, you may instead provide the URL to the data download on another website, outside of the GIS Hub.  This is used, for example, when you are creating a metadata record that points to a dataset hosted on the BC Geographic Data Warehouse."
+  validators: not_empty unicode remove_whitespace
+  form_snippet: upload.html
+  upload_field: upload
+  upload_clear: clear_upload
+  display_group: Upload Data

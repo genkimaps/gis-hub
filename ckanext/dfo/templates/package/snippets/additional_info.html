@@ -16,26 +16,45 @@
 #}
 
 {%- for group in schema.dataset_fields|groupby('display_group') -%}
-{%- set group_fields = h.non_empty_fields(group.list|list, pkg_dict, exclude_fields) -%}
-{% if group_fields %}
-    <div class="additional-info">
-        <h3 class="dataset-group-label">{{ group.grouper }}</h3>
-        <dl>
-            {% for field in group_fields %}
-                <dt class="dataset-label">
-                    {{ h.scheming_language_text(field.label) }}
-                </dt>
-                <dd class="dataset-details">
-                    {%- snippet 'scheming/snippets/display_field.html',
-                            field=field,
-                            data=pkg_dict,
-                            schema=schema
-                    -%}
-                </dd>
-            {% endfor %}
-        </dl>
-    </div>
-{% endif %}
+
+    {%- set group_fields = h.non_empty_fields(group.list|list, pkg_dict, exclude_fields) -%}
+    {% if group_fields %}
+        <div class="additional-info">
+
+            <h3 class="dataset-group-label">
+                {{ group.grouper }}
+                <i class="fa fa-minus-square pull-right section-collapse"
+                    title="Expand/collapse this section"></i>
+            </h3>
+            <div class="section-data">
+                {%- for disp_info in schema.display_groups -%}
+                    {%- if disp_info.label==group.grouper -%}
+                        <div class="dataset-group-desc">{{ disp_info.description }}</div>
+                    {%- endif -%}
+                {%- endfor -%}
+
+                <dl>
+                    {% for field in group_fields %}
+                        <dt class="dataset-label">
+                            {{- h.scheming_language_text(field.label) -}}
+                        </dt>
+                        {# Add another class if composite #}
+                        {%- if field.subfields -%}
+                            <dd class="dataset-details composite-holder">
+                        {%- else -%}
+                            <dd class="dataset-details">
+                        {%- endif -%}
+                            {%- snippet 'scheming/snippets/display_field.html',
+                                    field=field,
+                                    data=pkg_dict,
+                                    schema=schema
+                            -%}
+                        </dd>
+                    {% endfor %}
+                </dl>
+            </div>
+        </div>
+    {% endif %}
 {%- endfor -%}
 
 {% if org %}

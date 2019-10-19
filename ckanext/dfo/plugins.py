@@ -6,9 +6,10 @@ import ckan.plugins as p
 import ckan.plugins.toolkit as toolkit
 import ckan.lib.helpers as h
 from ckan.lib import base
-from ckan.common import request
+from ckan.common import request, g
 from ckanext.scheming import helpers as scheming_helpers
 from ckantoolkit import get_validator
+from ckan.common import _
 
 
 def non_empty_fields(field_list, pkg_dict, exclude):
@@ -130,7 +131,8 @@ class DFOPlugin(p.SingletonPlugin):
             'non_empty_fields': non_empty_fields,
             'scheming_field_required': self.field_required_helper,
             'now': datetime.now,
-            'utcnow': datetime.utcnow
+            'utcnow': datetime.utcnow,
+            'resource_display_name': self.resource_display_name
         }
 
     def before_map(self, map):
@@ -138,6 +140,11 @@ class DFOPlugin(p.SingletonPlugin):
             '/advanced_search',
             controller='ckanext.dfo.plugins:AdvancedSearch',
             action='search'
+        )
+        map.connect(
+            '/docs',
+            controller='ckanext.dfo.plugins:DocsController',
+            action='docs'
         )
         return map
 
@@ -188,6 +195,19 @@ class DFOPlugin(p.SingletonPlugin):
         # Our custom DFO validator to only require a field on publishing.
         if 'require_when_published' in validators:
             return True
+    
+    @staticmethod
+    def resource_display_name(resource_dict):
+        # Use title then name
+        title = resource_dict.get('title')
+        if not title:
+            name = resource_dict.get('name')
+            if name:
+                title = name
+        if not title:
+            return _("Unnamed resource")
+        else:
+            return _(title)
 
 
 def get_thumbnail(package_id):
@@ -197,6 +217,11 @@ def get_thumbnail(package_id):
         name = resource.get('name')
         if name and name.lower() == 'thumbnail':
             return resource['url']
+
+
+class DocsController(base.BaseController):
+    def docs(self):
+        return p.toolkit.render('docs/docs.html')
 
 
 class AdvancedSearch(base.BaseController):
