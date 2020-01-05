@@ -624,7 +624,8 @@ dataset_fields:
     label: Species Code
     preset: select
     choices_helper: scheming_datastore_choices
-    datastore_choices_resource: species-code-autocomplete
+    datastore_choices_limit: 10000
+    datastore_choices_resource: cdc22563-dc61-4abc-9b6d-a863382e4b6c
     datastore_choices_columns:
       value: code
       label: species_name
