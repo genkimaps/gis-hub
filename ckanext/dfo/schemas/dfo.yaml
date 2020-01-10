@@ -25,8 +25,18 @@ dataset_fields:
 
 - field_name: title
   label: Title
-  help_text: "Title of the dataset. Titles should be concise (no more than headline-length)."
+  preset: title
+  help_text: "Title of the dataset. Titles should be concise (no more than headline-length). The URL for the dataset is a unique identifier created from the title you enter when creating the dataset. Click the Edit button to change it manually. The URL should contain only lowercase letters and hyphens and be a maximum of 20 characters."
   # validators: require_when_published
+  display_group: Basic Information
+  display_snippet: text.html
+
+# If the name field is removed from the schema, it should be autoslugged from the title
+# But this does not happen, we get an error "The form contains invalid entries:  name: Missing value"
+- field_name: name
+  preset: dataset_slug
+  label: Dataset ID
+  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens and be a maximum of 20 characters. For example, if your dataset is Sponge Reefs, set an easy-to-remember URL such as sponge-reefs. This will form part of the complete URL for the dataset."
   display_group: Basic Information
   display_snippet: text.html
 
@@ -49,15 +59,6 @@ dataset_fields:
   label: Maintainer Email
   help_text: "Email address of the person responsible for the dataset.  Notifications about access requests and other updates will be send to this email."
   validators: not_empty
-  display_group: Basic Information
-  display_snippet: text.html
-
-# If the name field is removed from the schema, it should be autoslugged from the title
-# But this does not happen, we get an error "The form contains invalid entries:  name: Missing value"
-- preset: dataset_slug
-  field_name: name
-  label: Dataset ID
-  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens and be a maximum of 20 characters. For example, if your dataset is Sponge Reefs, set an easy-to-remember URL such as sponge-reefs. This will form part of the complete URL for the dataset."
   display_group: Basic Information
   display_snippet: text.html
 
