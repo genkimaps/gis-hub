@@ -10,7 +10,6 @@ $(document).ready(function() {
 
     $('.section-collapse').click(function() {
         $(this).toggleClass('fa-plus-square fa-minus-square');
-        // .fadeToggle();
         $(this).closest('.additional-info').find('.section-data').toggle(200);
     });
 });
