@@ -411,7 +411,7 @@ dataset_fields:
   preset: weather_autocomplete
   label: Weather
   help_text: "TEST: weather conditions."
-#  validators: require_when_published tag_string_convert
+  validators: require_when_published tag_string_convert
   display_group: Science
 
 - field_name: theme
