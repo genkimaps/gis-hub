@@ -2,11 +2,13 @@
 
 {# Hide social media links, replace with the Follow button #}
 {% block package_social %}
-    {% if not hide_follow_button %}
+{% if not hide_follow_button %}
+    <div class="module-content">
         <div class="follow_button">
             {{ h.follow_button('dataset', pkg.id) }}
         </div>
-    {% endif %}
+    </div>
+{% endif %}
 {% endblock %}
 
 {# Hide license #}
