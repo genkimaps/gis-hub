@@ -4,9 +4,9 @@
     Followers count, and Follow button #}
 {% block package_social %}
     <div class="module-content">
-        {% block heading %}
+        {#  {% block heading %}
             <h1 class="heading">{{ h.dataset_display_name(pkg) }}</h1>
-        {% endblock %}
+        {% endblock %}  #}
         {% block ds_follow_nums %}
             {% set num_followers = h.follow_count('dataset', pkg.id) %}
             <div class="nums">
