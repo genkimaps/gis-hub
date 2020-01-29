@@ -168,7 +168,9 @@ class DFOPlugin(p.SingletonPlugin):
         logger.info('Check GOC theme keywords: %s' % value)
         logger.info(context)
         result = get_action('datastore_search')(context, {
-            'resource_id': goc_themes_id})
+            'resource_id': goc_themes_id,
+            # Default limit is only 100 items
+            'limit': 5000})
 
         goc_themes = []
         records = result.get('records')
