@@ -9,6 +9,7 @@ from ckan.lib import base
 from ckan.common import request, g
 from ckanext.scheming import helpers as scheming_helpers
 from ckantoolkit import get_validator
+from ckan.plugins.toolkit import Invalid
 from ckan.common import _
 
 
@@ -153,8 +154,16 @@ class DFOPlugin(p.SingletonPlugin):
 
     def get_validators(self):
         return {
-            'require_when_published': self.required_validator
+            'require_when_published': self.required_validator,
+            'weather_only': self.weather_keyword
         }
+
+    @staticmethod
+    def weather_keyword(value):
+        if not value.lower() in ['cloudy', 'sunny']:
+            raise Invalid('Not a weather keyword: %s' % value)
+        return value
+
 
     @staticmethod
     def required_validator(key, flattened_data, errors, context):
