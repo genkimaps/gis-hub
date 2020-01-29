@@ -164,6 +164,8 @@ class DFOPlugin(p.SingletonPlugin):
 
     @staticmethod
     def goc_themes_validator(value, context):
+        # Use resource id for GoC themes:
+        # https://www.gis-hub.ca/dataset/goc-themes/resource/88f5c7a2-7b25-4ce8-a0c6-081236f5da76
         goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
         logger.info('Check GOC theme keywords: %s' % value)
         logger.info(context)
