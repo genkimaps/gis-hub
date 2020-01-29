@@ -160,8 +160,10 @@ class DFOPlugin(p.SingletonPlugin):
 
     @staticmethod
     def weather_keyword(value):
-        if not value.lower() in ['cloudy', 'sunny']:
-            raise Invalid('Not a weather keyword: %s' % value)
+        keywords = value.split(',')
+        for kw in keywords:
+            if not kw.lower().strip() in ['cloudy', 'sunny']:
+                raise Invalid('Not a weather keyword: %s' % value)
         return value
 
 
