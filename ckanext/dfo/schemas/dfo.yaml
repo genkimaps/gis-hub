@@ -379,17 +379,17 @@ dataset_fields:
 #  preset: select
   label: Keywords
   help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated. Note: The format of keywords has changed.  All keywords should be lowercase. "
-  validators: require_when_published tag_string_convert
+  validators: require_when_published tag_string_convert goc_themes_only
 # TODO: limit keywords to those in the goc-themes resource. This is not working.
-  choices_helper: scheming_datastore_choices
-  datastore_choices_resource: 88f5c7a2-7b25-4ce8-a0c6-081236f5da76
-  datastore_choices_columns:
-    value: theme
-    label: theme
-  classes: ["control-full"]
-  form_attrs:
-    data-module: autocomplete
-    data-module-tags: false
+#  choices_helper: scheming_datastore_choices
+#  datastore_choices_resource: 88f5c7a2-7b25-4ce8-a0c6-081236f5da76
+#  datastore_choices_columns:
+#    value: theme
+#    label: theme
+#  classes: ["control-full"]
+#  form_attrs:
+#    data-module: autocomplete
+#    data-module-tags: false
 
 # Science
 # Update docs and help to show keywords are lowercase

@@ -10,7 +10,11 @@ from ckan.common import request, g
 from ckanext.scheming import helpers as scheming_helpers
 from ckantoolkit import get_validator
 from ckan.plugins.toolkit import Invalid
+from ckan.logic import get_action
 from ckan.common import _
+
+import logging
+logger = logging.getLogger(__name__)
 
 
 def non_empty_fields(field_list, pkg_dict, exclude):
@@ -155,15 +159,26 @@ class DFOPlugin(p.SingletonPlugin):
     def get_validators(self):
         return {
             'require_when_published': self.required_validator,
-            'weather_only': self.weather_keyword
+            'goc_themes_only': self.goc_themes_validator
         }
 
     @staticmethod
-    def weather_keyword(value):
+    def goc_themes_validator(value, context):
+        goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
+        logger.info('Check GOC theme keywords: %s' % value)
+        logger.info(context)
+        result = get_action('datastore_search')(context, {
+            'resource_id': goc_themes_id})
+
+        goc_themes = []
+        records = result.get('records')
+        for record in records:
+            goc_themes.append(record.get('theme').lower())
+        logger.info(goc_themes)
         keywords = value.split(',')
         for kw in keywords:
-            if not kw.lower().strip() in ['cloudy', 'sunny']:
-                raise Invalid('Not a weather keyword: %s' % value)
+            if not kw.lower().strip() in goc_themes:
+                raise Invalid('Not a valid GoC theme: %s' % kw)
         return value
 
 
