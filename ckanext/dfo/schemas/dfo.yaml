@@ -397,8 +397,9 @@ dataset_fields:
   preset: tag_string_autocomplete
   label: Science Keywords
   help_text: "Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. These keywords may include domain-specific vocabulary appropriate for scientific users.  Note: The format of keywords has changed.  All keywords should be lowercase, including acronyms.  Acronyms should be in singalar form (no trailing s)."
-  validators: require_when_published tag_string_convert weather_only
+  validators: require_when_published tag_string_convert
   display_group: Science
+  # weather_only
 
 #- field_name: weather_keywords
 #  preset: weather_autocomplete
