@@ -230,6 +230,8 @@ dataset_fields:
     value: geoscientificInformation
   - label: "Climatology, Meteorology, and Atmosphere"
     value: climatologyMeteorologyAtmosphere
+  - label: Documentation or References
+    value: reference
   - label: Economy
     value: economy
   - label: Elevation
@@ -374,22 +376,12 @@ dataset_fields:
   - label: Series
     value: Series
 
+# TODO: connect autocomplete to keywords in goc-themes.
 - field_name: keywords
   preset: tag_string_autocomplete
-#  preset: select
   label: Keywords
   help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated. Note: The format of keywords has changed.  All keywords should be lowercase. "
   validators: require_when_published tag_string_convert goc_themes_only
-# TODO: limit keywords to those in the goc-themes resource. This is not working.
-#  choices_helper: scheming_datastore_choices
-#  datastore_choices_resource: 88f5c7a2-7b25-4ce8-a0c6-081236f5da76
-#  datastore_choices_columns:
-#    value: theme
-#    label: theme
-#  classes: ["control-full"]
-#  form_attrs:
-#    data-module: autocomplete
-#    data-module-tags: false
 
 # Science
 # Update docs and help to show keywords are lowercase
@@ -399,14 +391,6 @@ dataset_fields:
   help_text: "Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. These keywords may include domain-specific vocabulary appropriate for scientific users.  Note: The format of keywords has changed.  All keywords should be lowercase, including acronyms.  Acronyms should be in singalar form (no trailing s)."
   validators: require_when_published tag_string_convert
   display_group: Science
-  # weather_only
-
-#- field_name: weather_keywords
-#  preset: weather_autocomplete
-#  label: Weather
-#  help_text: "TEST: weather conditions."
-#  validators: require_when_published tag_string_convert
-#  display_group: Science
 
 - field_name: theme
   label: Theme
@@ -662,7 +646,6 @@ dataset_fields:
       value: Inferred
 
 # Composite Repeating Field for references
-
 - field_name: references
   label: References
   help_text: "Academic references that are closely associated with the data. Add as many entries as you need.  Example: Gregr, E. J., J. Lessard, and J. Harper. 2013. A spatial framework for representing nearshore ecosystems. Progress In Oceanography 115:189-201."
@@ -724,8 +707,7 @@ dataset_fields:
   display_snippet: null
 
 
-# Extras
-
+# Resource (layer/file-level) metadata fields
 resource_fields:
 # Changed to title
 - field_name: title
@@ -733,7 +715,6 @@ resource_fields:
   help_text: "If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  Ensure that the title of the data package is NOT the same as any of the layers in your upload.  If this is a layer/file inside your data upload, this field is populated automatically."
   display_snippet: text.html
   validators: require_when_published
-
 
 # Map preview
 - field_name: map_preview_link
@@ -750,7 +731,6 @@ resource_fields:
   help_text: "Layer name is detected by the GIS Hub after data upload.  You do not need to complete this field manually. "
   display_group: Layer/File Info
   form_snippet: text.html
-  # validators: require_when_published
 
 - field_name: layer_description
   label: Layer Description
@@ -758,13 +738,11 @@ resource_fields:
   display_group: Layer/File Info
   form_snippet: textarea.html
   display_snippet: text.html
-  # validators: require_when_published
 
 - field_name: data_format
   label: Data Format
   help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly. "
   display_group: Layer/File Info
-#  validators: require_when_published
   form_snippet: select.html
   display_snippet: select.html
   default: File Geodatabase
@@ -798,16 +776,12 @@ resource_fields:
   display_group: Projection
   help_text: "The name of the projection of the data. Example: BC_Albers_Equal_Area.  This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
   form_snippet: text.html
-  # default: "Detected by the GIS Hub after data upload."
-  # validators: require_when_published
 
 - field_name: projection_code
   label: Projection Code
   display_group: Projection
   help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/.   This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
   form_snippet: text.html
-  # default: "Detected by the GIS Hub after data upload."
-  # validators: require_when_published
 
 - field_name: projection_codespace
   label: Codespace
@@ -815,7 +789,6 @@ resource_fields:
   display_group: Projection
   form_snippet: null
   display_snippet: null
-  # validators: require_when_published
 
 - field_name: codespace_version
   label: Codespace Version
@@ -823,14 +796,12 @@ resource_fields:
   display_group: Projection
   form_snippet: null
   display_snippet: null
-  #validators: require_when_published
 
 # Spatial
 
 - field_name: spatial
   label: Spatial Extent Preview
   display_group: Spatial
-  # display_snippet: dataset_map.html
   display_snippet: null
   form_snippet: null
 
@@ -841,7 +812,6 @@ resource_fields:
   display_group: Spatial
   help_text: "Spatial type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the spatial type was detected incorrectly. "
   default: vector
-#  validators: require_when_published
   choices:
     - label: Vector
       value: vector
@@ -863,7 +833,6 @@ resource_fields:
   display_group: Spatial
   help_text: "Geometry type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the geometry type was detected incorrectly. "
   default: point
-#  validators: require_when_published
   choices:
     - label: Point
       value: point
@@ -889,7 +858,6 @@ resource_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   default: "Generated by the GIS Hub after data upload."
-  # validators: require_when_published
 
 - field_name: locale
   label: Locale
@@ -920,23 +888,22 @@ resource_fields:
   form_blanks: 1
   repeatable: true
   display_snippet: table.html
-  display_group: Attributes
+  display_group: Table Attributes
   subfields:
 
   - field_name: column_name
     label: Field Name
-#    help_text: The name of the field in the attribute table
     form_snippet: text.html
     display_snippet: text.html
     display_snippet_options:
       row_header: True
-    display_group: Attributes
+    display_group: Table Attributes
 
   - field_name: column_type
     label: Field Type
     form_snippet: select.html
     display_snippet: select.html
-    display_group: Attributes
+    display_group: Table Attributes
     choices:
       - label: Text
         value: Text
@@ -955,24 +922,24 @@ resource_fields:
 
   - field_name: description
     label: Field Description
-    #help_text: "Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable)."
+    # help_text: "Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable)."
     form_snippet: text.html
     display_snippet: text.html
-    display_group: Attributes
+    display_group: Table Attributes
 
   - field_name: units
     label: Units
-    #help_text: If relevant, indicate the units.
+    # help_text: If relevant, indicate the units.
     form_snippet: text.html
     display_snippet: text.html
-    display_group: Attributes
+    display_group: Table Attributes
 
   - field_name: coded_values
     label: Coded Values
-    #help_text: "If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. If the list of coded values is excessively long, do not try to paste it in this box; instead include a link to a document or website describing the coded values."
+    # help_text: "If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. If the list of coded values is excessively long, do not try to paste it in this box; instead include a link to a document or website describing the coded values."
     form_snippet: text.html
     display_snippet: text.html
-    display_group: Attributes
+    display_group: Table Attributes
 
 
 # Upload
@@ -1029,3 +996,19 @@ resource_fields:
   upload_field: upload
   upload_clear: clear_upload
   display_group: Upload Data
+
+# This field need not be shown to the user if we do all logic behind the scenes in CKAN
+#- field_name: resource_type
+#  label: Resource Type
+#  help_text: "This field detemines the type of resource and how it is displayed on the list of resources for this dataset. If uploading a file, you must select Upload here in addition to using the widget above to choose a file.  If this is a link to another resource, dataset, or an external site, select Link.  If this resource is a layer/file that was detected in your uploaded data, the type will be set to Layer or File, and you do not need to set it manually."
+#  preset: select
+#  required: True
+#  choices:
+#  - value: Upload
+#    label: Upload
+#  - value: Link
+#    label: Link
+#  - value: Layer or File
+#    label: Layer or File
+#  default: Upload
+#  display_group: Upload Data
