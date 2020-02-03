@@ -124,27 +124,27 @@ class DFOPlugin(p.SingletonPlugin):
         return pkg_dict
 
     # The next 2 are used by both package and resource
-    def after_create(self, context, data):
+    def after_create(self, context, data_dict):
         logger.info('after_create from resource or dataset')
-        self.ensure_resource_type(context, data)
-        return
+        self.ensure_resource_type(context, data_dict)
+        return data_dict
 
-    def after_update(self, context, data):
+    def after_update(self, context, data_dict):
         # We need to treat this as if it were after_create, if resource type is already set,
         # or if it's a dataset, nothing will happen, it will simply return.
         logger.info('after_create from resource or dataset')
-        self.ensure_resource_type(context, data)
-        return
+        self.ensure_resource_type(context, data_dict)
+        return data_dict
 
     # we only take action if it's a resource--check for resource_type
-    def ensure_resource_type(self, context, data):
-        if data.get('package_id'):
+    def ensure_resource_type(self, context, data_dict):
+        if data_dict.get('package_id'):
             # This is a resource
-            resource = data
+            resource = data_dict
             logger.info('after_create for resource: %s' % resource.get('id'))
         else:
             logger.info('after_create for dataset or another object')
-            return
+            return data_dict
 
         res_id = resource.get('id')
         res_name = resource.get('name')
@@ -154,7 +154,7 @@ class DFOPlugin(p.SingletonPlugin):
         # Check if resource_type is not already set
         if res_type:
             logger.info('Resource: %s, type already set: %s' % (res_name, res_type))
-            return
+            return data_dict
 
         # Resource type is not already set. This will be either Upload or Link
         # If url type is upload, it's an upload resource
@@ -167,6 +167,7 @@ class DFOPlugin(p.SingletonPlugin):
 
         # To update resource_type, run the resource_patch action
         result = get_action('resource_patch')(context, patch)
+        return data_dict
 
     def after_search(self, search_results, search_params):
         return search_results
