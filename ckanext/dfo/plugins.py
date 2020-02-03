@@ -136,39 +136,6 @@ class DFOPlugin(p.SingletonPlugin):
         self.ensure_resource_type(context, data_dict)
         return data_dict
 
-    # we only take action if it's a resource--check for resource_type
-    def ensure_resource_type(self, context, data_dict):
-        if data_dict.get('package_id'):
-            # This is a resource
-            resource = data_dict
-            logger.info('after_create for resource: %s' % resource.get('id'))
-        else:
-            logger.info('after_create for dataset or another object')
-            return data_dict
-
-        res_id = resource.get('id')
-        res_name = resource.get('name')
-        res_type = resource.get('resource_type')
-        logger.info('Resource: %s %s created' % (res_name, res_id))
-        # Try to
-        # Check if resource_type is not already set
-        if res_type:
-            logger.info('Resource: %s, type already set: %s' % (res_name, res_type))
-            return data_dict
-
-        # Resource type is not already set. This will be either Upload or Link
-        # If url type is upload, it's an upload resource
-        patch = {'id': res_id}
-        if resource.get('url_type') == 'upload':
-            patch['resource_type'] = 'Upload'
-        # Otherwise it's a link
-        else:
-            patch['resource_type'] = 'Link'
-
-        # To update resource_type, run the resource_patch action
-        result = get_action('resource_patch')(context, patch)
-        return data_dict
-
     def after_search(self, search_results, search_params):
         return search_results
 
@@ -209,6 +176,40 @@ class DFOPlugin(p.SingletonPlugin):
             'require_when_published': self.required_validator,
             'goc_themes_only': self.goc_themes_validator
         }
+
+    @staticmethod
+    def ensure_resource_type(context, data_dict):
+        # we only take action if it's a resource--check for resource_type
+        if data_dict.get('package_id'):
+            # This is a resource
+            resource = data_dict
+            logger.info('after_create for resource: %s' % resource.get('id'))
+        else:
+            logger.info('after_create for dataset or another object')
+            return data_dict
+
+        res_id = resource.get('id')
+        res_name = resource.get('name')
+        res_type = resource.get('resource_type')
+        logger.info('Resource: %s %s created' % (res_name, res_id))
+        # Try to
+        # Check if resource_type is not already set
+        if res_type:
+            logger.info('Resource: %s, type already set: %s' % (res_name, res_type))
+            return data_dict
+
+        # Resource type is not already set. This will be either Upload or Link
+        # If url type is upload, it's an upload resource
+        patch = {'id': res_id}
+        if resource.get('url_type') == 'upload':
+            patch['resource_type'] = 'Upload'
+        # Otherwise it's a link
+        else:
+            patch['resource_type'] = 'Link'
+
+        # To update resource_type, run the resource_patch action
+        result = get_action('resource_patch')(context, patch)
+        return data_dict
 
     @staticmethod
     def goc_themes_validator(value, context):
