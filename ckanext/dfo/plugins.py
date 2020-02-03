@@ -127,7 +127,7 @@ class DFOPlugin(p.SingletonPlugin):
     def after_create(self, context, data_dict):
         logger.info('after_create from resource or dataset')
         self.ensure_resource_type(context, data_dict)
-        return data_dictx
+        return data_dict
 
     def after_update(self, context, data_dict):
         # We need to treat this as if it were after_create, if resource type is already set,
