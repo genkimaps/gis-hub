@@ -127,7 +127,7 @@ class DFOPlugin(p.SingletonPlugin):
     def after_create(self, context, data_dict):
         logger.info('after_create from resource or dataset')
         self.ensure_resource_type(context, data_dict)
-        return data_dict
+        return data_dictx
 
     def after_update(self, context, data_dict):
         # We need to treat this as if it were after_create, if resource type is already set,
@@ -154,6 +154,21 @@ class DFOPlugin(p.SingletonPlugin):
             'utcnow': datetime.utcnow,
             'resource_display_name': self.resource_display_name
         }
+
+    # Additional methods only in IResourceController
+    def before_create(self, context, resource):
+        logger.info('Going to create resource/package: %s' % resource)
+
+    def before_update(self, context, current, resource):
+        pass
+
+    def before_show(self, resource):
+        pass
+
+    def before_delete(self, context, resource, resources):
+        pass
+
+    # END of additional methods only in IResourceController
 
     def before_map(self, map):
         map.connect(
