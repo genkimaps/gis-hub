@@ -12,16 +12,17 @@ screen_fmt = logging.Formatter(
 def setup_logger(name, level=logging.INFO):
     logger = logging.getLogger(name)
     logger.setLevel(level)
-    sh = logging.StreamHandler()
-    sh.setFormatter(screen_fmt)
-    sh.setLevel(level)
+    # sh = logging.StreamHandler()
+    # sh.setFormatter(screen_fmt)
+    # sh.setLevel(level)
+    # Only use file handler, don't fill up main CKAN log
     fh, log_file = get_file_logger()
     fh.setLevel(level)
     fh.setFormatter(screen_fmt)
-    if not logger.handlers:
-        logger.addHandler(sh)
-        logger.addHandler(fh)
-        logger.info('%s: Logging to %s' % (name, log_file))
+    # if not logger.handlers:
+    # logger.addHandler(sh)
+    logger.addHandler(fh)
+    logger.info('%s: Logging to %s' % (name, log_file))
     return logger
 
 
