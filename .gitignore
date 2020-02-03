@@ -1,3 +1,6 @@
+**/logs/*
+!**/logs/.gitkeep
+
 .idea
 __temp__
 *.egg-info

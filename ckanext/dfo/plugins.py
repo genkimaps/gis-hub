@@ -12,10 +12,11 @@ from ckantoolkit import get_validator
 from ckan.plugins.toolkit import Invalid
 from ckan.logic import get_action
 from ckan.common import _
+import dfo_plugin_settings
 
 import logging
-logger = logging.getLogger(__name__)
-
+# logger = logging.getLogger(__name__)
+logger = dfo_plugin_settings.setup_logger(__name__)
 
 def non_empty_fields(field_list, pkg_dict, exclude):
     r = []
@@ -38,6 +39,7 @@ class DFOPlugin(p.SingletonPlugin):
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes)
     p.implements(p.IValidators)
+    p.implements(p.IResourceController)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates')
@@ -85,6 +87,12 @@ class DFOPlugin(p.SingletonPlugin):
 
         return data_dict
 
+    # We don't use all of these methods, but must have them anyway
+    # Listed in the same order as in the CKAN docs for IPackageController
+    # https://docs.ckan.org/en/2.8/extensions/plugin-interfaces.html#ckan.plugins.interfaces.IPackageController
+
+    # These are all called *twice* once each for Pylons and Flask, super annoying
+    # Next 6 are only for IPackageController
     def read(self, entity):
         pass
 
@@ -115,11 +123,50 @@ class DFOPlugin(p.SingletonPlugin):
     def before_view(self, pkg_dict):
         return pkg_dict
 
-    def after_create(self, context, data_dict):
-        return data_dict
+    # The next 2 are used by both package and resource
+    def after_create(self, context, data):
+        logger.info('after_create from resource or dataset')
+        self.ensure_resource_type(context, data)
+        return
 
-    def after_update(self, context, data_dict):
-        return data_dict
+    def after_update(self, context, data):
+        # We need to treat this as if it were after_create, if resource type is already set,
+        # or if it's a dataset, nothing will happen, it will simply return.
+        logger.info('after_create from resource or dataset')
+        self.ensure_resource_type(context, data)
+        return
+
+    # we only take action if it's a resource--check for resource_type
+    def ensure_resource_type(self, context, data):
+        if data.get('package_id'):
+            # This is a resource
+            resource = data
+            logger.info('after_create for resource: %s' % resource.get('id'))
+        else:
+            logger.info('after_create for dataset or another object')
+            return
+
+        res_id = resource.get('id')
+        res_name = resource.get('name')
+        res_type = resource.get('resource_type')
+        logger.info('Resource: %s %s created' % (res_name, res_id))
+        # Try to
+        # Check if resource_type is not already set
+        if res_type:
+            logger.info('Resource: %s, type already set: %s' % (res_name, res_type))
+            return
+
+        # Resource type is not already set. This will be either Upload or Link
+        # If url type is upload, it's an upload resource
+        patch = {'id': res_id}
+        if resource.get('url_type') == 'upload':
+            patch['resource_type'] = 'Upload'
+        # Otherwise it's a link
+        else:
+            patch['resource_type'] = 'Link'
+
+        # To update resource_type, run the resource_patch action
+        result = get_action('resource_patch')(context, patch)
 
     def after_search(self, search_results, search_params):
         return search_results
