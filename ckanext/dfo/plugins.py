@@ -232,7 +232,7 @@ class DFOPlugin(p.SingletonPlugin):
         # https://www.gis-hub.ca/dataset/goc-themes/resource/88f5c7a2-7b25-4ce8-a0c6-081236f5da76
         goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
         logger.info('Check GOC theme keywords: %s' % value)
-        logger.info(context)
+        # logger.info(context)
         result = get_action('datastore_search')(context, {
             'resource_id': goc_themes_id,
             # Default limit is only 100 items
@@ -242,7 +242,7 @@ class DFOPlugin(p.SingletonPlugin):
         records = result.get('records')
         for record in records:
             goc_themes.append(record.get('theme').lower())
-        logger.info(goc_themes)
+        # logger.info(goc_themes)
         keywords = value.split(',')
         for kw in keywords:
             if not kw.lower().strip() in goc_themes:
