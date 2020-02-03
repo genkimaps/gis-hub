@@ -1,5 +1,6 @@
 import os
 import logging
+from logging.handlers import TimedRotatingFileHandler
 
 plugin_root = os.path.dirname(os.path.realpath(__file__))
 log_folder = os.path.join(plugin_root, 'logs')
