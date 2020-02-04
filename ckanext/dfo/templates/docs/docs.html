@@ -507,7 +507,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p>The file must be called <i>species_codes.csv</i> and included in the zip file with your data. </p>
 
       <h2 id="add-data">Adding Data</h2>
-      <p>Once all of the required metadata listed above has been entered, you can continue to adding data to your dataset record.  Ensure that Visibility is set to Public and click “Next: Add Data” at the bottom of the page.  This will take you to the Add Data screen. </p>
+      <p>Once all of the required metadata listed above has been entered, you can continue to adding data to your dataset record.  Data that is uploaded to a dataset will be downloadable by all users who have access.  Ensure that Visibility is set to Public and click “Next: Add Data” at the bottom of the page.  This will take you to the Add Data screen. </p>
       <p>Most of the metadata in this section is extracted automatically when you upload your data package. The only fields you need to complete before uploading data are the following:</p>
 
       <table class="table table-striped table-bordered">
@@ -715,6 +715,38 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
 
     </tbody>
     </table>
+      <h2 id="linking">Links to External Data</h2>
+      <h3>Adding links in a dataset</h3>
+      <p>
+        As described above, a dataset contains the data download placeholder,
+        along with a resource for each recognized layer or file in the
+        uploaded data package. The GIS Hub also supports adding links to external
+        data. In fact, the link can be any URL. This is intended to allow, for example,
+        links to a downloadable dataset that is hosted on another server, outside the
+        GIS Hub.  It can also be used to create internal links to other datasets on the
+        GIS Hub (for example, if there is documentation common to many datasets.
+
+      </p>
+      <p>
+        To create a link, click the Manage button at the top-right of a dataset's page.
+        If you do not see the Manage button, you do not have edit rights on this dataset.
+        In the next page click the Resources tab, then Add New Resource.  Since you are
+        creating a link rather than uploading data, you can leave all of the fields blank
+        except Title. Scroll to the bottom, and under the Upload Data category, you will see
+        an pair of buttons: Upload and Link.  Click Link, and paste the URL of the external
+        data.  Note that the GIS Hub will not download data from external sites, and unlike files
+        uploaded directly to the GIS Hub, any geospatial data in an external link will not
+        be indexed on the dataset page.  Links are clearly shown with a Go to Link button, to
+        distinguish them from other resources.
+      </p>
+      <img src="/base/images/docs/resource-link.png" alt="Display of link in a dataset's resources" title="Display of link in a dataset's resources"
+            width="width" height="height" class="docs-img"/>
+      <p>
+        To edit or remove a link, click the Details button on the right, then click Manage.
+        It is preferable to link to the landing page from where a downloadable file can be
+        retrieved (in order to provide context), rather thank linking directly to the
+        download file itself.
+      </p>
 
       <h2 id="data-prep">Data Preparation</h2>
       <h3 id="spatial-val">Spatial Validation</h3>
@@ -898,6 +930,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p><a href="#autometa">Auto-generated Metadata</a></p>
       <p><a href="#filetypes">Supported File Types</a></p>
       <p><a href="#attrib-meta">Attribute Metadata</a></p>
+      <p><a href="#linking">Links to External Data</a></p>
       <p><a href="#data-prep">Data Preparation</a></p>
       <p><a href="#spatial-val">Spatial Validation</a></p>
       <p><a href="#attrib-val">Attribute Validation</a></p>
