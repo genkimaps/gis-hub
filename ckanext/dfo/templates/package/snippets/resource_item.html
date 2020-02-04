@@ -33,6 +33,15 @@
                         {%- endif -%}
                     </li>
                 {% endif %}
+                {% if res.resource_type == 'Link' %}
+                    {# Show Go to Link button #}
+                    <li>
+                        <a href="{{ res.url }}" class="btn btn-primary"
+                           target="_blank">
+                            {{ _('Go to Link') }}
+                        </a>
+                    </li>
+                {% endif %}
                 {# Show Details button for all items, including data contents
                     (layers, tables, documents) in the uploaded file #}
 

@@ -1,7 +1,6 @@
 {% if resources %}
 <section id="dataset-resources" class="resources">
   <h3>{{ _('Data and Resources') }}</h3>
-    {# TODO: make resource list collapsible #}
   <div class="resource-list-dfo">
       {% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
       {% for resource in resources %}
