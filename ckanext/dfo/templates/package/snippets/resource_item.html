@@ -11,11 +11,12 @@
             {{ h.get_translated(res, 'format') }}
         </span>
         <div class="title pull-left">
-            {{ h.resource_display_name(res) | truncate(50) }}
+            {{ h.resource_display_name(res) | truncate(80) }}
         </div>
         <div class="resource-item-actions pull-right">
             <ul class="inline">
                 {% if authorized %}
+                {{ res }}
 
                 {% if res.url_type == 'upload' %}
                     {# Show Download button only for url_type=upload #}

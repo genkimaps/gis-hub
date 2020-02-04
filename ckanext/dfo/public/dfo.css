@@ -85,6 +85,13 @@
   background-position: -416px -62px;
 }
 
+/* Add a fake 'link' format, even though it does not exist as an extension,
+    to support resource_type=Link. Use the small DATA icon at bottom-left */
+.format-label[data-format=link],
+.format-label[data-format*=link] {
+  background-position: 0px -62px;
+}
+
 /* kml and geojson are handled in ckanext-geoview with gis icons file and css:
    https://www.gis-hub.ca/img/gis-resources-sprite-icons.png
    https://www.gis-hub.ca/fanstatic/ckanext-geoview/:version:2018-04-10T12:37:05/css/geo-resource-styles.css

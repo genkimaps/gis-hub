@@ -221,6 +221,13 @@ class DFOPlugin(p.SingletonPlugin):
         # Otherwise it's a link
         else:
             patch['resource_type'] = 'Link'
+            # Also set format to link if URL does not end with .html
+            res_url = resource.get('url')
+            try:
+                if len(res_url) > 0 and not res_url.endswith('.html'):
+                    patch['format'] = 'link'
+            except:
+                pass
 
         # To update resource_type, run the resource_patch action
         result = get_action('resource_patch')(context, patch)
@@ -232,7 +239,6 @@ class DFOPlugin(p.SingletonPlugin):
         # https://www.gis-hub.ca/dataset/goc-themes/resource/88f5c7a2-7b25-4ce8-a0c6-081236f5da76
         goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
         logger.info('Check GOC theme keywords: %s' % value)
-        # logger.info(context)
         result = get_action('datastore_search')(context, {
             'resource_id': goc_themes_id,
             # Default limit is only 100 items
