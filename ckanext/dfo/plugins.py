@@ -17,6 +17,8 @@ import dfo_plugin_settings
 import logging
 # logger = logging.getLogger(__name__)
 logger = dfo_plugin_settings.setup_logger(__name__)
+logger.info('This is the logger for ckanext-dfo')
+
 
 def non_empty_fields(field_list, pkg_dict, exclude):
     r = []
