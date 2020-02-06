@@ -145,7 +145,7 @@ def lowerise_and_dedup(kw_str):
             if kw_cleaned not in kw_list:
                 kw_list.append(kw_cleaned)
         kw_clean_str = ','.join(kw_list)
-        logger.info('Validated keywords: %s' % kw_clean_str)
+        logger.debug('Validated keywords: %s' % kw_clean_str)
         return kw_clean_str
     except (TypeError, AttributeError):
         logger.warning(format_exc())
