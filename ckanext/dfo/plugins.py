@@ -35,19 +35,11 @@ def non_empty_fields(field_list, pkg_dict, exclude):
 
 
 def ensure_resource_type(context, resource):
-    # if data_dict.get('package_id'):
-    #     # This is a resource
-    #     resource = data_dict
-    #     logger.info('after_create for resource: %s' % resource.get('id'))
-    # else:
-    #     logger.info('after_create for dataset or another object')
-    #     return data_dict
 
     res_id = resource.get('id')
     res_name = resource.get('name')
     res_type = resource.get('resource_type')
     logger.info('Resource: %s %s created' % (res_name, res_id))
-    # Try to
     # Check if resource_type is not already set
     if res_type:
         logger.info('Resource: %s, type already set: %s' % (res_name, res_type))
@@ -91,6 +83,7 @@ def object_updated_or_created(context, data_dict):
     # If any other object type, just return it
     return data_dict
 
+
 def detect_object_type(data_dict):
     """
     Check if a data_dict is a resource, package, or other
@@ -103,6 +96,7 @@ def detect_object_type(data_dict):
         return 'resource', data_dict
     else:
         return 'other', data_dict
+
 
 def kw_case_dups(context, dataset):
     """
@@ -130,9 +124,10 @@ def kw_case_dups(context, dataset):
         # Patch the dataset
         logger.info('%s: cleaned keywords: %s %s' % (dataset.get('name'), clean_kw, clean_sci_kw))
         result = get_action('package_patch')(context, patch)
-    # dataset['keywords'] =
-    # dataset['science_keywords'] = lowerise_and_dedup(dataset.get('science_keywords'))
+    else:
+        logger.info('%s: Keywords OK.' % dataset.get('name'))
     return dataset
+
 
 def lowerise_and_dedup(kw_str):
     """
@@ -251,12 +246,12 @@ class DFOPlugin(p.SingletonPlugin):
 
     # The next 2 are used by both package and resource
     def after_create(self, context, data_dict):
-        logger.info('after_create from resource or dataset')
+        logger.debug('after_create from resource or dataset')
         return object_updated_or_created(context, data_dict)
 
     def after_update(self, context, data_dict):
         # We need to treat this as if it were after_create.
-        logger.info('after_update from resource or dataset')
+        logger.debug('after_update from resource or dataset')
         # self.ensure_resource_type(context, data_dict)
         # return data_dict
         return object_updated_or_created(context, data_dict)
@@ -282,7 +277,7 @@ class DFOPlugin(p.SingletonPlugin):
 
     # Additional methods only in IResourceController
     def before_create(self, context, resource):
-        logger.info('Going to create resource/package: %s' % resource)
+        logger.debug('Going to create resource/package: %s' % resource)
 
     def before_update(self, context, current, resource):
         pass
