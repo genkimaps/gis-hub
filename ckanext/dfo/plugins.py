@@ -201,13 +201,13 @@ class DFOPlugin(p.SingletonPlugin):
         """
         obj_name = data_dict.get('name')
         logger.info('%s: after_create/update from resource or dataset' % obj_name)
-        obj_type, data_dict = self.detect_object_type(data_dict)
+        obj_type, data_dict = detect_object_type(data_dict)
         if obj_type == 'resource':
             # set resource type only if it's a resource
-            return self.ensure_resource_type(context, data_dict)
+            return ensure_resource_type(context, data_dict)
         elif obj_type == 'dataset':
             # check keyword case and duplicates
-            return self.kw_case_dups(context, data_dict)
+            return kw_case_dups(context, data_dict)
         # If any other object type, just return it
         return data_dict
 
@@ -237,8 +237,8 @@ class DFOPlugin(p.SingletonPlugin):
         """
         orig_kw = dataset.get('keywords')
         orig_sci_kw = dataset.get('science_keywords')
-        clean_kw = self.lowerise_and_dedup(dataset.get('keywords'))
-        clean_sci_kw = self.lowerise_and_dedup(dataset.get('science_keywords'))
+        clean_kw = lowerise_and_dedup(dataset.get('keywords'))
+        clean_sci_kw = lowerise_and_dedup(dataset.get('science_keywords'))
         # Patch keywords if needed
         patch = {'id': dataset.get('id')}
         fix_keywords = False
