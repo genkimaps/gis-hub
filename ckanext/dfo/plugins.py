@@ -126,15 +126,14 @@ class DFOPlugin(p.SingletonPlugin):
     # The next 2 are used by both package and resource
     def after_create(self, context, data_dict):
         logger.info('after_create from resource or dataset')
-        self.ensure_resource_type(context, data_dict)
-        return data_dict
+        return self.object_updated_or_created(context, data_dict)
 
     def after_update(self, context, data_dict):
-        # We need to treat this as if it were after_create, if resource type is already set,
-        # or if it's a dataset, nothing will happen, it will simply return.
-        logger.info('after_create from resource or dataset')
-        self.ensure_resource_type(context, data_dict)
-        return data_dict
+        # We need to treat this as if it were after_create.
+        logger.info('after_update from resource or dataset')
+        # self.ensure_resource_type(context, data_dict)
+        # return data_dict
+        return self.object_updated_or_created(context, data_dict)
 
     def after_search(self, search_results, search_params):
         return search_results
@@ -193,15 +192,100 @@ class DFOPlugin(p.SingletonPlugin):
         }
 
     @staticmethod
-    def ensure_resource_type(context, data_dict):
-        # we only take action if it's a resource--check for resource_type
+    def object_updated_or_created(context, data_dict):
+        """ This is called whenever an object is updated or created. We only
+            care about resources and packages; other types are immediately
+            returned.
+        """
+        obj_name = data_dict.get('name')
+        logger.info('%s: after_create/update from resource or dataset' % obj_name)
+        obj_type, data_dict = self.detect_object_type(data_dict)
+        if obj_type == 'resource':
+            # set resource type only if it's a resource
+            return self.ensure_resource_type(context, data_dict)
+        elif obj_type == 'dataset':
+            # check keyword case and duplicates
+            return self.kw_case_dups(context, data_dict)
+        # If any other object type, just return it
+        return data_dict
+
+    @staticmethod
+    def detect_object_type(data_dict):
+        """
+        Check if a data_dict is a resource, package, or other
+        :param data_dict:
+        :return: object type, data_dict
+        """
+        if data_dict.get('type') == 'dataset':
+            return 'dataset', data_dict
         if data_dict.get('package_id'):
-            # This is a resource
-            resource = data_dict
-            logger.info('after_create for resource: %s' % resource.get('id'))
+            return 'resource', data_dict
         else:
-            logger.info('after_create for dataset or another object')
-            return data_dict
+            return 'other', data_dict
+
+    @staticmethod
+    def kw_case_dups(context, dataset):
+        """
+        Check a dataset for keywords--science and goc. We don't validate GoC
+        keywords here; that happens downstream. We only make everything lowercase and
+        remove duplicates in this function. Patch the package with updated keywords,
+        only if changed.
+        :param dataset:
+        :return: clean dataset with lowerised, no duplicates in keywords and science
+        """
+        orig_kw = dataset.get('keywords')
+        orig_sci_kw = dataset.get('science_keywords')
+        clean_kw = self.lowerise_and_dedup(dataset.get('keywords'))
+        clean_sci_kw = self.lowerise_and_dedup(dataset.get('science_keywords'))
+        # Patch keywords if needed
+        patch = {'id': dataset.get('id')}
+        fix_keywords = False
+        if orig_kw != clean_kw:
+            fix_keywords = True
+            patch['keywords'] = clean_kw
+        if orig_sci_kw != clean_sci_kw:
+            fix_keywords = True
+            patch['science_keywords'] = clean_sci_kw
+        if fix_keywords:
+            # Patch the dataset
+            logger.info('%s: cleaned keywords: %s %s' % (dataset.get('name'), clean_kw, clean_sci_kw))
+            result = get_action('package_patch')(context, patch)
+        # dataset['keywords'] =
+        # dataset['science_keywords'] = lowerise_and_dedup(dataset.get('science_keywords'))
+        return dataset
+
+    @staticmethod
+    def lowerise_and_dedup(kw_str):
+        """
+        Lowerise comma-separated keywords and de-duplicate.
+        :param kw_str: comma-separated keyword string
+        :return: validated keyword string
+        """
+        try:
+            if not kw_str or len(kw_str) == 0:
+                return kw_str
+            keywords = kw_str.split(',')
+            kw_list = []
+            for kw in keywords:
+                kw_cleaned = kw.strip().lower()
+                if kw_cleaned not in kw_list:
+                    kw_list.append(kw_cleaned)
+            kw_clean_str = kw_clean.join(',')
+            logger.info('Validated keywords: %s' % kw_clean_str)
+            return kw_clean_str
+        except (TypeError, AttributeError):
+            logger.warning('Bad value in keyword string: %s' % kw_str)
+            return kw_str
+
+    @staticmethod
+    def ensure_resource_type(context, resource):
+        # if data_dict.get('package_id'):
+        #     # This is a resource
+        #     resource = data_dict
+        #     logger.info('after_create for resource: %s' % resource.get('id'))
+        # else:
+        #     logger.info('after_create for dataset or another object')
+        #     return data_dict
 
         res_id = resource.get('id')
         res_name = resource.get('name')
@@ -211,7 +295,7 @@ class DFOPlugin(p.SingletonPlugin):
         # Check if resource_type is not already set
         if res_type:
             logger.info('Resource: %s, type already set: %s' % (res_name, res_type))
-            return data_dict
+            return resource
 
         # Resource type is not already set. This will be either Upload or Link
         # If url type is upload, it's an upload resource
@@ -231,7 +315,7 @@ class DFOPlugin(p.SingletonPlugin):
 
         # To update resource_type, run the resource_patch action
         result = get_action('resource_patch')(context, patch)
-        return data_dict
+        return resource
 
     @staticmethod
     def goc_themes_validator(value, context):
@@ -248,7 +332,6 @@ class DFOPlugin(p.SingletonPlugin):
         records = result.get('records')
         for record in records:
             goc_themes.append(record.get('theme').lower())
-        # logger.info(goc_themes)
         keywords = value.split(',')
         for kw in keywords:
             if not kw.lower().strip() in goc_themes:
