@@ -201,7 +201,7 @@ class DFOPlugin(p.SingletonPlugin):
         """
         obj_name = data_dict.get('name')
         logger.info('%s: after_create/update from resource or dataset' % obj_name)
-        obj_type, data_dict = detect_object_type(data_dict)
+        obj_type, data_dict = DFOPlugin.detect_object_type(data_dict)
         if obj_type == 'resource':
             # set resource type only if it's a resource
             return DFOPlugin.ensure_resource_type(context, data_dict)
