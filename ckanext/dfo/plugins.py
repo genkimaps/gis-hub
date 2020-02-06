@@ -272,7 +272,7 @@ class DFOPlugin(p.SingletonPlugin):
                 kw_cleaned = kw.strip().lower()
                 if kw_cleaned not in kw_list:
                     kw_list.append(kw_cleaned)
-            kw_clean_str = kw_clean.join(',')
+            kw_clean_str = kw_list.join(',')
             logger.info('Validated keywords: %s' % kw_clean_str)
             return kw_clean_str
         except (TypeError, AttributeError):
