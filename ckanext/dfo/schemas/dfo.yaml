@@ -999,18 +999,9 @@ resource_fields:
   upload_clear: clear_upload
   display_group: Upload Data
 
-# This field need not be shown to the user if we do all logic behind the scenes in CKAN
-#- field_name: resource_type
-#  label: Resource Type
-#  help_text: "This field detemines the type of resource and how it is displayed on the list of resources for this dataset. If uploading a file, you must select Upload here in addition to using the widget above to choose a file.  If this is a link to another resource, dataset, or an external site, select Link.  If this resource is a layer/file that was detected in your uploaded data, the type will be set to Layer or File, and you do not need to set it manually."
-#  preset: select
-#  required: True
-#  choices:
-#  - value: Upload
-#    label: Upload
-#  - value: Link
-#    label: Link
-#  - value: Layer or File
-#    label: Layer or File
-#  default: Upload
-#  display_group: Upload Data
+- field_name: change_description_resource
+  label: Description of Change
+  help_text: "Describe what you have changed in the uploaded file or in the metadata on this page."
+  display_group: Upload Data
+  form_snippet: textarea.html
+  display_snippet: null

@@ -42,6 +42,19 @@ def save_change_history(context, data_dict, type):
     # Get existing change history from dataset
     change_history = ds_metadata.get('change_history')
     logger.info('change_history: %s' % change_history)
+    # Add current change history
+    if not change_desc:
+        logger.warning('No current change history')
+        return
+
+    new_history_entry = {'change_date': datetime.now().strftime('%Y-%m-%d'),
+                         'change_description': change_desc}
+    change_history.append(new_history_entry)
+    # Patch dataset with the new change history
+    patch['change_history'] = change_history
+    result = get_action('package_patch')(context, patch)
+    updated_change_history = result.get('change_history')
+    logger.info('Updated: %s' % updated_change_history)
 
 
 def get_resource_name_id(resource):
