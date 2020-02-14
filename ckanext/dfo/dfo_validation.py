@@ -11,8 +11,37 @@ logger = dfo_plugin_settings.setup_logger(__name__)
 """ Begin RESOURCE validation """
 def validate_resource(context, resource):
     """ Filter chain to validate a resource """
-    resource = ensure_resource_type(context, resource)
+    ensure_resource_type(context, resource)
+    save_change_history(context, resource, 'resource')
     return resource
+
+
+def save_change_history(context, data_dict, type):
+    """ Saves change history to the DATASET-LEVEL change_history field """
+    if type=='resource':
+        # Get the parent package id and the package metadata
+        dataset_id = data_dict.get('package_id')
+        ds_metadata = get_action('package_show')(context, {'id': dataset_id})
+        title = get_resource_name_id(data_dict)
+        if not ds_metadata:
+            logger.error('Cannot get metadata for parent dataset: %s' % dataset_id)
+
+    else:
+        dataset_id = data_dict.get('id')
+        title = data_dict.get('title')
+        ds_metadata = data_dict
+    patch = {'id': dataset_id}
+
+    logger.info('Update change history for %s %s' % (title, type))
+    # Get change description from the appropriate field
+    change_desc = data_dict.get('change_description_%s' % type)
+    # Ignore if internal update
+    if change_desc == 'internal update from hub-geo-api':
+        logger.info('internal change from API')
+        return
+    # Get existing change history from dataset
+    change_history = ds_metadata.get('change_history')
+    logger.info('change_history: %s' % change_history)
 
 
 def get_resource_name_id(resource):
@@ -30,13 +59,6 @@ def get_resource_name_id(resource):
 def ensure_resource_type(context, resource):
 
     res_id = resource.get('id')
-    # res_name = resource.get('name')
-    # res_title = resource.get('title')
-    # res_name_or_id = res_name
-    # if not res_name_or_id:
-    #     res_name_or_id = res_title
-    #     if not res_name_or_id:
-    #         res_name_or_id = res_id
     res_name_or_id = get_resource_name_id(resource)
     res_type = resource.get('resource_type')
     logger.info('Resource: %s %s created' % (res_name_or_id, res_id))
@@ -63,7 +85,7 @@ def ensure_resource_type(context, resource):
 
     # To update resource_type, run the resource_patch action
     result = get_action('resource_patch')(context, patch)
-    return resource
+    # return resource
 
 
 """ Begin DATASET validation """
@@ -80,7 +102,9 @@ def kw_case_dups(context, dataset):
     remove duplicates in this function. Patch the package with updated keywords,
     only if changed.
     :param dataset:
-    :return: clean dataset with lowerised, no duplicates in keywords and science
+    :return: Note that we do NOT return the clean dataset with lowerised,
+    no duplicates in keywords and science. Instead we return the original
+    dataset object that was passed.
     """
     orig_kw = dataset.get('keywords')
     orig_sci_kw = dataset.get('science_keywords')
@@ -99,8 +123,8 @@ def kw_case_dups(context, dataset):
         # Patch the dataset
         logger.info('%s: cleaned keywords: %s %s' % (dataset.get('name'), clean_kw, clean_sci_kw))
         result = get_action('package_patch')(context, patch)
-        logger.info(result)
-        logger.info(dataset)
+        # logger.info(result)
+        # logger.info(dataset)
     else:
         logger.info('%s: Keywords OK.' % dataset.get('name'))
     return dataset
