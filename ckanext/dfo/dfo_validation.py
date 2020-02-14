@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 import dfo_plugin_settings
+import json
 from traceback import format_exc
 from ckan.logic import get_action
 
@@ -42,6 +43,13 @@ def save_change_history(context, data_dict, type):
     # Get existing change history from dataset
     change_history = ds_metadata.get('change_history')
     logger.info('change_history: %s' % change_history)
+    # Convery change_history to dict
+    try:
+        change_history = json.loads(change_history)
+    except:
+        logger.error(format_exc())
+        return
+
     # Add current change history
     if not change_desc:
         logger.warning('No current change history')
@@ -50,8 +58,10 @@ def save_change_history(context, data_dict, type):
     new_history_entry = {'change_date': datetime.now().strftime('%Y-%m-%d'),
                          'change_description': change_desc}
     change_history.append(new_history_entry)
+    # put change history back to string for API
+    change_history_str = json.dumps(change_history)
     # Patch dataset with the new change history
-    patch['change_history'] = change_history
+    patch['change_history'] = change_history_str
     result = get_action('package_patch')(context, patch)
     updated_change_history = result.get('change_history')
     logger.info('Updated: %s' % updated_change_history)
