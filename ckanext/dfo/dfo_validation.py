@@ -8,21 +8,41 @@ from ckan.logic import get_action
 logger = dfo_plugin_settings.setup_logger(__name__)
 
 
+""" Begin RESOURCE validation """
 def validate_resource(context, resource):
     """ Filter chain to validate a resource """
     resource = ensure_resource_type(context, resource)
     return resource
 
 
+def get_resource_name_id(resource):
+    res_id = resource.get('id')
+    res_name = resource.get('name')
+    res_title = resource.get('title')
+    res_name_or_id = res_name
+    if not res_name_or_id:
+        res_name_or_id = res_title
+        if not res_name_or_id:
+            res_name_or_id = res_id
+    return res_name_or_id
+
+
 def ensure_resource_type(context, resource):
 
     res_id = resource.get('id')
-    res_name = resource.get('name')
+    # res_name = resource.get('name')
+    # res_title = resource.get('title')
+    # res_name_or_id = res_name
+    # if not res_name_or_id:
+    #     res_name_or_id = res_title
+    #     if not res_name_or_id:
+    #         res_name_or_id = res_id
+    res_name_or_id = get_resource_name_id(resource)
     res_type = resource.get('resource_type')
-    logger.info('Resource: %s %s created' % (res_name, res_id))
+    logger.info('Resource: %s %s created' % (res_name_or_id, res_id))
     # Check if resource_type is not already set
     if res_type:
-        logger.info('Resource: %s, type already set: %s' % (res_name, res_type))
+        logger.info('Resource: %s, type already set: %s' % (res_name_or_id, res_type))
         return resource
 
     # Resource type is not already set. This will be either Upload or Link
@@ -46,6 +66,7 @@ def ensure_resource_type(context, resource):
     return resource
 
 
+""" Begin DATASET validation """
 def validate_dataset(context, dataset):
     """ Filter chain to validate a dataset """
     dataset = kw_case_dups(context, dataset)
