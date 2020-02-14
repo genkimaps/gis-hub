@@ -566,6 +566,13 @@ dataset_fields:
   repeatable: true
   form_blanks: 1
   subfields:
+  - field_name: change_date
+    label: Date of Change
+    form_snippet: date.html
+    display_snippet: date.html
+    default: "{{ h.now().strftime('%Y-%m-%d') }}"
+    display_group: Science
+
   - field_name: change_description
     label: Description of Change
     default: "Initial creation of dataset record"
@@ -574,12 +581,6 @@ dataset_fields:
     display_group: Science
     validators: require_when_published
 
-  - field_name: change_date
-    label: Date of Change
-    form_snippet: date.html
-    display_snippet: date.html
-    default: "{{ h.now().strftime('%Y-%m-%d') }}"
-    display_group: Science
 
 - field_name: temporal_coverage
   label: Temporal Coverage
