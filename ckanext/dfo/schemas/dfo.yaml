@@ -897,8 +897,8 @@ resource_fields:
     label: Field Name
     form_snippet: text.html
     display_snippet: text.html
-    display_snippet_options:
-      row_header: True
+#    display_snippet_options:
+#      row_header: True
     display_group: Table Attributes
 
   - field_name: column_type
