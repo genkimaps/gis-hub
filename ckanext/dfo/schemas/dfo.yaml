@@ -479,7 +479,7 @@ dataset_fields:
         purpose of each script, and anything required to run the script again.
         If no scripts were used to create the data, indicate how it was created
         (e.g. manually created using analysis tools in ArcGIS)."
-  form_snippet: textarea.html
+  form_snippet: markdown.html
   display_snippet: text.html
   display_group: Science
   validators: require_when_published
@@ -562,6 +562,7 @@ dataset_fields:
   label: Change History
   help_text: "A description of changes made to the data since its release. For each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed."
   display_group: Science
+  display_snippet: table.html
   repeatable: true
   form_blanks: 1
   subfields:
