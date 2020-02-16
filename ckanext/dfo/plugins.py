@@ -158,9 +158,9 @@ class DFOPlugin(p.SingletonPlugin):
             :param pkg_dict: dataset dict
             :return: modified dataset dict
         """
-        logger.info('after_show triggered')
-        return dfo_validation.set_dataset_display(data_dict)
-        # return data_dict
+        # logger.info('after_show triggered')
+        # return dfo_validation.set_dataset_display(data_dict)
+        return data_dict
 
     def update_facet_titles(self, facet_titles):
         return facet_titles

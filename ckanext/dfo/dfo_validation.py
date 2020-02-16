@@ -63,26 +63,26 @@ def save_change_history(context, data_dict, type):
         logger.error(format_exc())
         return
 
-    # TODO: remove empty change history entries
-
+    # TODO: remove empty change history entries?
     # Add current change history
     if not change_desc:
-        logger.warning('No current change history')
+        logger.warning('No current change description')
         return
 
     new_history_entry = {'change_date': datetime.now().strftime('%Y-%m-%d'),
                          'change_description': change_desc}
-    # Check if this entry already exists in change history
 
+    # Check if this entry already exists in change history
     change_history.append(new_history_entry)
     # put change history back to string for API
     change_history_str = json.dumps(change_history)
 
     # Patch dataset with the new change history
     patch['change_history'] = change_history_str
+    # DON'T DO THIS, we are only using the change_description field at resource level.
     # Ensure that the change_description field is set to the internal
     # placeholder value, to avoid an infinite loop of updates
-    patch[change_desc_field] = CHANGE_DESC_PLACEHOLDER
+    # patch[change_desc_field] = CHANGE_DESC_PLACEHOLDER
     logger.info('Patch change history: %s' % patch)
     result = get_action('package_patch')(context, patch)
     updated_change_history = result.get('change_history')
@@ -98,7 +98,7 @@ def set_resource_display(resource):
     # Set change_description to empty string, will force user to enter data
     resource['change_description_resource'] = ''
     res_name_or_id = get_resource_name_id(resource)
-    logger.debug('Resource %s: form will have empty change_description' % res_name_or_id)
+    logger.info('Resource %s: form will have empty change_description' % res_name_or_id)
     return resource
 
 
