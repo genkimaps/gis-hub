@@ -8,6 +8,8 @@ from ckan.logic import get_action
 
 logger = dfo_plugin_settings.setup_logger(__name__)
 
+CHANGE_DESC_PLACEHOLDER = 'internal update from hub-geo-api'
+
 
 """ Begin RESOURCE validation """
 def validate_resource(context, resource):
@@ -38,9 +40,10 @@ def save_change_history(context, data_dict, type):
 
     logger.info('Update change history for %s %s' % (title, type))
     # Get change description from the appropriate field
-    change_desc = data_dict.get('change_description_%s' % type)
+    change_desc_field = 'change_description_%s' % type
+    change_desc = data_dict.get(change_desc_field)
     # Ignore if internal update
-    if change_desc == 'internal update from hub-geo-api':
+    if change_desc == CHANGE_DESC_PLACEHOLDER:
         logger.info('internal change from API')
         return
     # Get existing change history from dataset
@@ -75,6 +78,8 @@ def save_change_history(context, data_dict, type):
     patch['change_history'] = change_history_str
     # Ensure that the change_description field is set to the internal
     # placeholder value, to avoid an infinite loop of updates
+    patch[change_desc_field] = CHANGE_DESC_PLACEHOLDER
+    logger.info('Patch change history: %s' % patch)
     result = get_action('package_patch')(context, patch)
     updated_change_history = result.get('change_history')
     logger.info('Updated: %s' % updated_change_history)
