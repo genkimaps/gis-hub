@@ -199,7 +199,13 @@ class DFOPlugin(p.SingletonPlugin):
         pass
 
     def before_show(self, resource):
-        pass
+        """
+        Modify the resource dict before showing in the web browser
+        For RESOURCE only, not dataset (package)
+        :param resource:
+        :return: updated resource
+        """
+        return dfo_validation.set_resource_display(resource)
 
     def before_delete(self, context, resource, resources):
         pass

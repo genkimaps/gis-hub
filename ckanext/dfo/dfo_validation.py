@@ -18,7 +18,10 @@ def validate_resource(context, resource):
 
 
 def save_change_history(context, data_dict, type):
-    """ Saves change history to the DATASET-LEVEL change_history field """
+    """ Saves change history to the DATASET-LEVEL change_history field,
+        regardless of whether the change originated from a resource or
+        from the dataset.
+    """
     if type=='resource':
         # Get the parent package id and the package metadata
         dataset_id = data_dict.get('package_id')
@@ -37,7 +40,7 @@ def save_change_history(context, data_dict, type):
     # Get change description from the appropriate field
     change_desc = data_dict.get('change_description_%s' % type)
     # Ignore if internal update
-    if change_desc == 'internal update from hub-geo-api':
+    if change_desc == 'Please describe what has changed.':
         logger.info('internal change from API')
         return
     # Get existing change history from dataset
@@ -45,10 +48,15 @@ def save_change_history(context, data_dict, type):
     logger.info('change_history: %s' % change_history)
     # Convery change_history to dict
     try:
+        if not change_history:
+            # Use empty list
+            change_history = '[]'
         change_history = json.loads(change_history)
     except:
         logger.error(format_exc())
         return
+
+    # TODO: remove empty change history entries
 
     # Add current change history
     if not change_desc:
@@ -65,6 +73,18 @@ def save_change_history(context, data_dict, type):
     result = get_action('package_patch')(context, patch)
     updated_change_history = result.get('change_history')
     logger.info('Updated: %s' % updated_change_history)
+
+
+def set_resource_display(resource):
+    """
+    Modify a resource dict before it is displayed to user
+    :param resource:
+    :return: updated resource
+    """
+    # Set change_description to empty string, will force user to enter data
+    resource['change_description'] = ''
+    logger.info('Resource display will have empty change_description')
+    return resource
 
 
 def get_resource_name_id(resource):
