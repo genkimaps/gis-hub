@@ -220,8 +220,8 @@ class DFOPlugin(p.SingletonPlugin):
         """
         title = dfo_validation.get_name_or_id(resource)
         logger.info('%s: before_show triggered' % title)
-        return dfo_validation.set_resource_display(resource)
-        # return resource
+        # return dfo_validation.set_resource_display(resource)
+        return resource
 
     def before_delete(self, context, resource, resources):
         pass
