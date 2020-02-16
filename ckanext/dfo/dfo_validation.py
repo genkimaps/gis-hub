@@ -84,7 +84,7 @@ def set_resource_display(resource):
     # Set change_description to empty string, will force user to enter data
     resource['change_description_resource'] = ''
     res_name_or_id = get_resource_name_id(resource)
-    logger.info('Resource %s: form will have empty change_description' % res_name_or_id)
+    logger.debug('Resource %s: form will have empty change_description' % res_name_or_id)
     return resource
 
 
@@ -136,6 +136,7 @@ def ensure_resource_type(context, resource):
 def validate_dataset(context, dataset):
     """ Filter chain to validate a dataset """
     dataset = kw_case_dups(context, dataset)
+    save_change_history(context, dataset, 'dataset')
     return dataset
 
 
@@ -149,7 +150,7 @@ def set_dataset_display(dataset):
     """
     title = dataset.get('title')
     dataset['change_description_dataset'] = ''
-    logger.info('Dataset: %s: form will have empty change_description' % title)
+    logger.debug('Dataset: %s: form will have empty change_description' % title)
     return dataset
 
 
