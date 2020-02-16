@@ -119,7 +119,7 @@ def ensure_resource_type(context, resource):
     res_id = resource.get('id')
     res_name_or_id = get_resource_name_id(resource)
     res_type = resource.get('resource_type')
-    logger.info('Resource: %s %s created' % (res_name_or_id, res_id))
+    logger.info('Resource: %s %s checking resource type' % (res_name_or_id, res_id))
     # Check if resource_type is not already set
     if res_type:
         logger.info('Resource: %s, type already set: %s' % (res_name_or_id, res_type))
@@ -143,7 +143,6 @@ def ensure_resource_type(context, resource):
 
     # To update resource_type, run the resource_patch action
     result = get_action('resource_patch')(context, patch)
-    # return resource
 
 
 """ Begin DATASET validation """

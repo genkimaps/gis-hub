@@ -216,7 +216,8 @@ class DFOPlugin(p.SingletonPlugin):
         :param resource:
         :return: updated resource
         """
-        return dfo_validation.set_resource_display(resource)
+        # return dfo_validation.set_resource_display(resource)
+        return resource
 
     def before_delete(self, context, resource, resources):
         pass
