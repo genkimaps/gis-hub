@@ -158,7 +158,14 @@ class DFOPlugin(p.SingletonPlugin):
         return facet_titles
 
     def before_view(self, pkg_dict):
-        return pkg_dict
+        """
+        Modify the dataset (package) dict before showing in the web browser
+        For DATASET only, not resource
+        :param pkg_dict: dataset dict
+        :return: modified dataset dict
+        """
+        return dfo_validation.set_dataset_display(pkg_dict)
+        # return pkg_dict
 
     # The next 2 are used by both package and resource
     def after_create(self, context, data_dict):
