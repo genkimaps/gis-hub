@@ -153,13 +153,14 @@ class DFOPlugin(p.SingletonPlugin):
 
     def after_show(self, context, data_dict):
         """
-            Modify the dataset (package) dict before showing in the web browser
+            Modify the dataset (package) dict after everything else, but just
+            prior to sending it to the template for display in the web browser
             For DATASET only, not resource
             :param pkg_dict: dataset dict
             :return: modified dataset dict
         """
         title = dfo_validation.get_name_or_id(data_dict)
-        logger.info('%s: after_show triggered' % title)
+        logger.debug('%s: after_show triggered' % title)
         # return dfo_validation.set_dataset_display(data_dict)
         return data_dict
 
@@ -217,8 +218,10 @@ class DFOPlugin(p.SingletonPlugin):
         :param resource:
         :return: updated resource
         """
-        # return dfo_validation.set_resource_display(resource)
-        return resource
+        title = dfo_validation.get_name_or_id(resource)
+        logger.info('%s: before_show triggered' % title)
+        return dfo_validation.set_resource_display(resource)
+        # return resource
 
     def before_delete(self, context, resource, resources):
         pass
