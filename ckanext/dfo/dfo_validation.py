@@ -28,7 +28,7 @@ def save_change_history(context, data_dict, type):
         # Get the parent package id and the package metadata
         dataset_id = data_dict.get('package_id')
         ds_metadata = get_action('package_show')(context, {'id': dataset_id})
-        title = get_resource_name_id(data_dict)
+        title = get_name_or_id(data_dict)
         if not ds_metadata:
             logger.error('Cannot get metadata for parent dataset: %s' % dataset_id)
 
@@ -49,7 +49,7 @@ def save_change_history(context, data_dict, type):
         return
     # Get existing change history from dataset
     change_history = ds_metadata.get('change_history')
-    logger.info('change_history: %s' % change_history)
+    logger.debug('change_history: %s' % change_history)
     if not change_history or change_history == '[]':
         logger.error('Change history is EMPTY but should not be!')
         return
@@ -83,7 +83,7 @@ def save_change_history(context, data_dict, type):
     # Ensure that the change_description field is set to the internal
     # placeholder value, to avoid an infinite loop of updates
     # patch[change_desc_field] = CHANGE_DESC_PLACEHOLDER
-    logger.info('Patch change history: %s' % change_history_str)
+    logger.debug('Patch change history: %s' % change_history_str)
     result = get_action('package_patch')(context, patch)
     updated_change_history = result.get('change_history')
     logger.info('Updated: %s' % updated_change_history)
@@ -97,27 +97,27 @@ def set_resource_display(resource):
     """
     # Set change_description to empty string, will force user to enter data
     resource['change_description_resource'] = ''
-    res_name_or_id = get_resource_name_id(resource)
+    res_name_or_id = get_name_or_id(resource)
     logger.info('Resource %s: form will have empty change_description' % res_name_or_id)
     return resource
 
 
-def get_resource_name_id(resource):
-    res_id = resource.get('id')
-    res_name = resource.get('name')
-    res_title = resource.get('title')
-    res_name_or_id = res_name
-    if not res_name_or_id:
-        res_name_or_id = res_title
-        if not res_name_or_id:
-            res_name_or_id = res_id
-    return res_name_or_id
+def get_name_or_id(data_dict):
+    id = data_dict.get('id')
+    name = data_dict.get('name')
+    title = data_dict.get('title')
+    name_or_id = name
+    if not name_or_id:
+        name_or_id = title
+        if not name_or_id:
+            name_or_id = id
+    return name_or_id
 
 
 def ensure_resource_type(context, resource):
 
     res_id = resource.get('id')
-    res_name_or_id = get_resource_name_id(resource)
+    res_name_or_id = get_name_or_id(resource)
     res_type = resource.get('resource_type')
     logger.info('Resource: %s %s checking resource type' % (res_name_or_id, res_id))
     # Check if resource_type is not already set

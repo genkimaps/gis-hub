@@ -158,7 +158,8 @@ class DFOPlugin(p.SingletonPlugin):
             :param pkg_dict: dataset dict
             :return: modified dataset dict
         """
-        # logger.info('after_show triggered')
+        title = dfo_validation.get_name_or_id(data_dict)
+        logger.info('%s: after_show triggered' % title)
         # return dfo_validation.set_dataset_display(data_dict)
         return data_dict
 
