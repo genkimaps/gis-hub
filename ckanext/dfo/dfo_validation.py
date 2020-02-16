@@ -40,7 +40,7 @@ def save_change_history(context, data_dict, type):
     # Get change description from the appropriate field
     change_desc = data_dict.get('change_description_%s' % type)
     # Ignore if internal update
-    if change_desc == 'Please describe what has changed.':
+    if change_desc == 'internal update from hub-geo-api':
         logger.info('internal change from API')
         return
     # Get existing change history from dataset
