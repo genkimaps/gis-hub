@@ -160,7 +160,7 @@ def set_dataset_display(dataset):
     """
     title = dataset.get('title')
     dataset['change_description_dataset'] = ''
-    logger.debug('Dataset: %s: form will have empty change_description' % title)
+    logger.info('Dataset: %s: form will have empty change_description' % title)
     return dataset
 
 

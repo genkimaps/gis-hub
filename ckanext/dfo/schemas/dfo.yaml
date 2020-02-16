@@ -564,7 +564,8 @@ dataset_fields:
   display_group: Science
   display_snippet: table.html
   repeatable: true
-  form_blanks: 1
+#  form_blanks: 1
+  form_snippet: null
   subfields:
   - field_name: change_date
     label: Date of Change
