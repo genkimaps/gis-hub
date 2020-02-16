@@ -163,6 +163,9 @@ def set_dataset_display(dataset):
     :return: modified dataset dict
     """
     title = dataset.get('title')
+    change_history = dataset.get('change_history')
+    logger.info('change_history: %s' % change_history)
+    logger.info('Last change description: %s' % dataset.get('change_description_dataset'))
     dataset['change_description_dataset'] = ''
     logger.info('Dataset: %s: form will have empty change_description' % title)
     return dataset
