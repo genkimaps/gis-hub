@@ -152,7 +152,15 @@ class DFOPlugin(p.SingletonPlugin):
         return data_dict
 
     def after_show(self, context, data_dict):
-        return data_dict
+        """
+            Modify the dataset (package) dict before showing in the web browser
+            For DATASET only, not resource
+            :param pkg_dict: dataset dict
+            :return: modified dataset dict
+        """
+        logger.info('after_show triggered')
+        return dfo_validation.set_dataset_display(data_dict)
+        # return data_dict
 
     def update_facet_titles(self, facet_titles):
         return facet_titles
@@ -164,6 +172,7 @@ class DFOPlugin(p.SingletonPlugin):
         :param pkg_dict: dataset dict
         :return: modified dataset dict
         """
+        logger.info('before_view triggered')
         return dfo_validation.set_dataset_display(pkg_dict)
         # return pkg_dict
 
