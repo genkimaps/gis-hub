@@ -167,14 +167,11 @@ class DFOPlugin(p.SingletonPlugin):
 
     def before_view(self, pkg_dict):
         """
-        Modify the dataset (package) dict before showing in the web browser
-        For DATASET only, not resource
-        :param pkg_dict: dataset dict
-        :return: modified dataset dict
+            I thought I could use this to Modify the dataset (package) dict before
+            showing in the web browser, but it does not seem to return anything.
+            Use after_show() instead, very confusing.
         """
-        logger.info('before_view triggered')
-        return dfo_validation.set_dataset_display(pkg_dict)
-        # return pkg_dict
+        return pkg_dict
 
     # The next 2 are used by both package and resource
     def after_create(self, context, data_dict):
@@ -184,8 +181,6 @@ class DFOPlugin(p.SingletonPlugin):
     def after_update(self, context, data_dict):
         # We need to treat this as if it were after_create.
         logger.debug('after_update from resource or dataset')
-        # self.ensure_resource_type(context, data_dict)
-        # return data_dict
         return object_updated_or_created(context, data_dict)
 
     def after_search(self, search_results, search_params):

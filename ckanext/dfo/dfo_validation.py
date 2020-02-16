@@ -43,13 +43,17 @@ def save_change_history(context, data_dict, type):
     change_desc_field = 'change_description_%s' % type
     change_desc = data_dict.get(change_desc_field)
     # Ignore if internal update
+    logger.info('%s: %s' % (change_desc_field, change_desc))
     if change_desc == CHANGE_DESC_PLACEHOLDER:
         logger.info('internal change from API')
         return
     # Get existing change history from dataset
     change_history = ds_metadata.get('change_history')
     logger.info('change_history: %s' % change_history)
-    # Convery change_history to dict
+    if not change_history or change_history == '[]':
+        logger.error('Change history is EMPTY but should not be!')
+        return
+    # Convert change_history to dict
     try:
         if not change_history:
             # Use empty list
