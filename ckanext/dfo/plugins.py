@@ -219,7 +219,7 @@ class DFOPlugin(p.SingletonPlugin):
         :return: updated resource
         """
         title = dfo_validation.get_name_or_id(resource)
-        logger.info('%s: before_show triggered' % title)
+        logger.debug('%s: before_show triggered' % title)
         # return dfo_validation.set_resource_display(resource)
         return resource
 
