@@ -34,26 +34,25 @@
         added to the metadata schema.  All species codes will appear in this field.
         This field will be removed once the bug described above is fixed.
         <br>
-        <b>Note: </b> The bug with codes past 29V has been fixed. However, because of
-        this, performance of the species code dropdown is very slow, since it has to
+        <b>Note: </b> The bug with codes past 29V has been fixed. However, performance
+          of the species code dropdown is now very slow, since it has to
         load all entries in the menu.  Because of this, it is usually more efficient to
         include a species codes file and not bother with trying to enter the information
         manually using the web interface.
       </p>
 
       <p>
-        <b>Problem:</b> Non-science keywords are not restricted to
+        <b>Problem:</b> The autocomplete for non-science keywords is not restricted to
         the list of keywords from the Government of Canada
         <a href="http://canada.multites.net/cst/index.htm" target="_blank">Core
-        Subject Thesaurus</a>.
-        The autocomplete displays only previously-entered keywords,
-        instead of the list from the GoC Thesaurus.  Additionally,
-        it does not prevent you from entering a keyword that does
-        not exist in the GoC Thesaurus.
+        Subject Thesaurus</a>.  The autocomplete displays past entries from both the
+          Science Keywords field and the non-science Keywords field.  Please be careful
+          when entering values in this field, and do not rely solely on the autocomplete.
+          Validation now ensures that keywords entered in this field are from the GoC themes.
+          Although the autocomplete is not restricted, the metadata form now refuses to save
+          keywords that are not on the list, and provides an informative error message.
         <br>
-        <b>Workaround:</b> Please be careful when entering keywords.
-        Look up the keywords on the thesaurus website first. Note:
-        The format of keywords has changed.  All keywords should be lowercase.
+        Note: The format of keywords has changed.  All keywords should be lowercase.
       </p>
 
       <p>
@@ -62,7 +61,7 @@
         <br>
         <b>Workaround:</b> After uploading you data, the GIS Hub will attempt to 
         populate these fields automatically.  If it fails to do so, you may see 
-        "unknown" or something else.  This field can be edited to have the right value. 
+        "unknown" or something else.  This field can be edited to have the correct value.
         We are working on a solution for better detection of spatial references. 
       </p>
 
@@ -541,6 +540,12 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
             </ul>
 
           </td>
+        </tr>
+        <tr>
+            <td>Description of Change
+            <td>
+                Use this field to describe what you have changed either in the metadata on this page, or in the uploaded file.  It is particularly important to record your change if you are uploading a new version of data, but nothing else has changed.  Describe what has changed in the attached file, and why it was changed.  If you are uploading data to this dataset for the first time, enter something like "Initial upload of data."  The description in this field will be appended to the change history on the dataset page.  This field is automatically populated with the last change description (which may include automatic internal updates).  Please update this text to describe what has changed in this iteration.
+            </td>
         </tr>
       </tbody>
     </table>
