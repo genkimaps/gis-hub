@@ -11,29 +11,32 @@ $(function() {
         // https://github.com/harvesthq/chosen/issues/1081#issuecomment-15088027
         search_contains: true,
         ajax: {
-//            url: 'http://localhost:5000/api/3/action/tag_autocomplete?',
-            url: 'https://gis-hub.ca/api/3/action/tag_autocomplete?',
+            url: 'https://www.gis-hub.ca/api/3/action/tag_autocomplete?',
             delay: 250,
-            type: "POST",
+            type: "GET",
             // Use json data
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             data: function (params) {
                 var querydata = {
-                    vocabulary_id: 'weather',
-                    query: params.term
+                    query: params.term,
+                    vocabulary_id: 'weather'
                     // Removed from URL: vocabulary_id=weather
                 }
-                console.log(querydata)
-                return JSON.stringify(querydata)
+                param_str = $.param(querydata)
+                console.log(param_str)
+                // Try to stringify for URL-encoded format
+                url_params = url + param_str
+                console.log(url_params)
+                return url_params
+//                return JSON.stringify(query)
 
             },
             processResults: function (data) {
                 console.log('Result: ')
                 console.log(data)
-                var res = data.result.map(function (vocab) {
-                    console.log(vocab)
-                    return {id: vocab, text: vocab};
+                var res = data.items.map(function (item) {
+                    return {id: item.id, text: item.name};
                 });
                 return {
                     results: res
