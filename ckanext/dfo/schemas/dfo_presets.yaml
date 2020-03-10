@@ -66,3 +66,23 @@ presets:
         en: Rights Holder
         fr: Rights Holder
       value: rightsHolder
+
+# The following preset does not work on my development machine, for some reason the conf file only loads
+# the first preset file, which is the one in ckanext-scheming.
+
+# Test this with a custom field like the following:
+#- field_name: test_weather
+#  preset: weatherv2_ac
+#  label: Weather Autocomp
+#  help_text: "Enter comma-separated WEATHER keywords."
+#  form_placeholder: "e.g. sunny, cloudy"
+#  validators: tag_string_convert
+
+- preset_name: weather_autocomplete
+  values:
+#    form_snippet: weather.html
+    validators: ignore_missing tag_string_convert
+    classes: ["control-full"]
+    form_attrs:
+      data-module: autocomplete
+      data-module-source: "/api/3/action/dfo_weather_ac?q=?"

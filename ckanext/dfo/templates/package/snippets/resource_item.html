@@ -2,7 +2,9 @@
 {% set url = h.url_for(controller='package', action=url_action, id=pkg.name, resource_id=res.id) %}
 
 {% set authorized = h.check_access('resource_show',{'id':res.id, 'resource':res }) %}
-{% set user_id = h.restricted_get_user_id() %}
+{# Disable in branch autocomp-test, we don't have ckanext-restricted installed here.
+    {% set user_id = h.restricted_get_user_id() %}
+#}
 
 <div class="resource-item-dfo" data-id="{{ res.id }}">
     <div class="resource-item-dfo-preview">

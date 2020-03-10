@@ -1,0 +1,28 @@
+[{
+  "preset_name": "weather_autocomplete",
+  "values": {
+    "form_snippet": "weather.html",
+    "validators": "ignore_missing tag_string_convert",
+    "classes": ["control-full"],
+    "form_attrs": {
+      "data-module": "weather_autocomp_js",
+      "data-module-tags": ""
+
+    }
+  }
+},
+
+{
+  "preset_name": "weatherv2_ac",
+  "values": {
+    "validators": "ignore_missing tag_string_convert",
+    "classes": [
+      "control-full"
+    ],
+    "form_attrs": {
+      "data-module": "autocomplete",
+      "data-module-tags": "",
+      "data-module-source": "/api/2/util/weatherv2/autocomplete?q=?"
+    }
+  }
+}]
