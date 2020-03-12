@@ -399,11 +399,11 @@ def tag_autocomplete(ver=API_REST_DEFAULT_VERSION):
     return _finish_ok(resultSet)
 
 
+# def goc_theme_autocomplete(ver=API_REST_DEFAULT_VERSION):
+#     return vocabulary_autocomplete('goc_themes')
+
+
 def goc_theme_autocomplete(ver=API_REST_DEFAULT_VERSION):
-    return vocabulary_autocomplete('goc_themes')
-
-
-def vocabulary_autocomplete(vocabulary_id):
     """ Generic internal function for querying a vocabulary """
     q = request.args.get(u'q', u'')
     limit = request.args.get(u'limit', 10)
@@ -412,7 +412,7 @@ def vocabulary_autocomplete(vocabulary_id):
         context = {u'model': model, u'session': model.Session,
                    u'user': g.user, u'auth_user_obj': g.userobj}
 
-        data_dict = {u'q': q, u'limit': limit, u'vocabulary_id': vocabulary_id}
+        data_dict = {u'q': q, u'limit': limit, u'vocabulary_id': 'goc_themes'}
 
         # Use the vocabulary autocomplete in the DFO extension
         tag_names = get_action(u'dfo_vocabulary_ac')(context, data_dict)
