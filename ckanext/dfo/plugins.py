@@ -12,6 +12,10 @@ from ckantoolkit import get_validator
 from ckan.plugins.toolkit import Invalid
 from ckan.logic import get_action
 from ckan.common import _
+from ckan.logic import side_effect_free
+from ckan.logic import check_access
+from ckan.logic.action.get import _tag_search
+from traceback import format_exc
 import dfo_plugin_settings
 import dfo_validation
 
@@ -69,6 +73,29 @@ def detect_object_type(data_dict):
         return 'other', data_dict
 
 
+@side_effect_free
+def vocabulary_ac(context, data_dict):
+    """
+    @side_effect_free enables GET requests (otherwise requires POST)
+    Experimental: add a vocabulary autocomplete endpoint to
+    CKAN as a registered action. Try to use this in a custom preset with CKAN's
+    built-in autocomplete module, but with this endpoint instead of the generic
+    CKAN keyword endpoint.
+
+    :param context: CKAN context object
+    :param data_dict: dict with query parameters
+    :return: a ResultSet in the format required by the select2 plugin. Needs to be
+    structured exactly like this:
+    https://www.gis-hub.ca/api/2/util/tag/autocomplete?incomplete=ocea
+    """
+
+    check_access('tag_autocomplete', context, data_dict)
+    # vocabulary_id was already set upstream in data_dict
+    # data_dict['vocabulary_id'] = 'weather'
+    tag_names, count = _tag_search(context, data_dict)
+    return tag_names
+
+
 class DFOPlugin(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
@@ -77,12 +104,15 @@ class DFOPlugin(p.SingletonPlugin):
     p.implements(p.IRoutes)
     p.implements(p.IValidators)
     p.implements(p.IResourceController)
+    p.implements(p.IActions)
 
+    #IConfigurer
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates')
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('fanstatic', 'dfo')
 
+    #IFacets
     def dataset_facets(self, facets_dict, package_type):
         if package_type in ('dataset', None):
             facets_dict.pop('license_id', None)
@@ -102,6 +132,7 @@ class DFOPlugin(p.SingletonPlugin):
                             package_type):
         return self.dataset_facets(facets_dict, package_type)
 
+    # IPackageController
     def before_index(self, data_dict):
         data_dict['extras_science_keywords'] = data_dict.get(
             'extras_science_keywords',
@@ -194,6 +225,7 @@ class DFOPlugin(p.SingletonPlugin):
     def before_search(self, search_params):
         return search_params
 
+    # ITemplateHelpers
     def get_helpers(self):
         return {
             'get_thumbnail': get_thumbnail,
@@ -225,9 +257,9 @@ class DFOPlugin(p.SingletonPlugin):
 
     def before_delete(self, context, resource, resources):
         pass
-
     # END of additional methods only in IResourceController
 
+    # IRoutes
     def before_map(self, map):
         map.connect(
             '/advanced_search',
@@ -244,11 +276,17 @@ class DFOPlugin(p.SingletonPlugin):
     def after_map(self, map):
         return map
 
+    # IValidators
     def get_validators(self):
         return {
             'require_when_published': self.required_validator,
             'goc_themes_only': self.goc_themes_validator
         }
+
+    # IActions
+    @side_effect_free
+    def get_actions(self):
+        return {'dfo_vocabulary_ac': vocabulary_ac}
 
     @staticmethod
     def goc_themes_validator(value, context):
