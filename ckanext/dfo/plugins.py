@@ -13,6 +13,8 @@ from ckan.plugins.toolkit import Invalid
 from ckan.logic import get_action
 from ckan.common import _
 from ckan.logic import side_effect_free
+from ckan.logic import check_access
+from ckan.logic.action.get import _tag_search
 import dfo_plugin_settings
 from traceback import format_exc
 
@@ -153,10 +155,12 @@ def lowerise_and_dedup(kw_str):
         logger.warning('Bad value in keyword string: %s' % kw_str)
         return kw_str
 
+
 @side_effect_free
-def weather_ac(context, data_dict):
+def vocabulary_ac(context, data_dict):
     """
-    Experimental: add the demo weather vocabulary autocomplete endpoint to
+    @side_effect_free enables GET requests (otherwise requires POST)
+    Experimental: add a vocabulary autocomplete endpoint to
     CKAN as a registered action. Try to use this in a custom preset with CKAN's
     built-in autocomplete module, but with this endpoint instead of the generic
     CKAN keyword endpoint.
@@ -167,21 +171,12 @@ def weather_ac(context, data_dict):
     structured exactly like this:
     https://www.gis-hub.ca/api/2/util/tag/autocomplete?incomplete=ocea
     """
-    from ckan.logic import check_access
-    from ckan.logic.action.get import _tag_search
-    check_access('tag_autocomplete', context, data_dict)
-    # Add weather vocabulary to data_dict before search
-    data_dict['vocabulary_id'] = 'weather'
-    tag_names, count = _tag_search(context, data_dict)
-    # resultSet = {
-    #     u'ResultSet': {
-    #         u'Result': [{u'Name': tag.name} for tag in tag_names]
-    #     }
-    # }
-    # return api._finish_ok(resultSet)
-    # return resultSet
-    return tag_names
 
+    check_access('tag_autocomplete', context, data_dict)
+    # vocabulary_id was already set upstream in data_dict
+    # data_dict['vocabulary_id'] = 'weather'
+    tag_names, count = _tag_search(context, data_dict)
+    return tag_names
 
 
 class DFOPlugin(p.SingletonPlugin):
@@ -352,7 +347,7 @@ class DFOPlugin(p.SingletonPlugin):
     # IActions
     @side_effect_free
     def get_actions(self):
-        return {'dfo_weather_ac': weather_ac}
+        return {'dfo_vocabulary_ac': vocabulary_ac}
 
     @staticmethod
     def goc_themes_validator(value, context):

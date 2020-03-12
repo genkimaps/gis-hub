@@ -399,7 +399,12 @@ def tag_autocomplete(ver=API_REST_DEFAULT_VERSION):
     return _finish_ok(resultSet)
 
 
-def weather_autocomplete(ver=API_REST_DEFAULT_VERSION):
+def goc_theme_autocomplete(ver=API_REST_DEFAULT_VERSION):
+    return vocabulary_autocomplete('goc_themes')
+
+
+def vocabulary_autocomplete(vocabulary_id):
+    """ Generic internal function for querying a vocabulary """
     q = request.args.get(u'q', u'')
     limit = request.args.get(u'limit', 10)
     tag_names = []
@@ -407,9 +412,10 @@ def weather_autocomplete(ver=API_REST_DEFAULT_VERSION):
         context = {u'model': model, u'session': model.Session,
                    u'user': g.user, u'auth_user_obj': g.userobj}
 
-        data_dict = {u'q': q, u'limit': limit}
+        data_dict = {u'q': q, u'limit': limit, u'vocabulary_id': vocabulary_id}
 
-        tag_names = get_action(u'dfo_weather_ac')(context, data_dict)
+        # Use the vocabulary autocomplete in the DFO extension
+        tag_names = get_action(u'dfo_vocabulary_ac')(context, data_dict)
 
     resultSet = {
         u'ResultSet': {
@@ -528,7 +534,7 @@ util_rules = [
     (u'/util/resource/format_autocomplete', format_autocomplete),
     (u'/util/snippet/<snippet_path>', snippet),
     (u'/i18n/<lang>', i18n_js_translations),
-    (u'/util/weatherv2/autocomplete', weather_autocomplete)
+    (u'/util/vocabulary/goc_theme/autocomplete', goc_theme_autocomplete)
 ]
 
 version_rule = u'/<int(min=1, max=2):ver>'

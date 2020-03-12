@@ -378,7 +378,7 @@ dataset_fields:
 
 # TODO: connect autocomplete to keywords in goc-themes.
 - field_name: keywords
-  preset: tag_string_autocomplete
+  preset: goc_theme_autocomplete
   label: Keywords
   help_text: "At a minimum, one keyword must be supplied from the Government of Canada Core Subject Thesaurus at http://canada.multites.net/cst/index.htm. You are most likely to find useful keywords in the 'nature and environment' and 'science and technology' categories. Keywords must be comma-separated. Note: The format of keywords has changed.  All keywords should be lowercase. "
   validators: require_when_published tag_string_convert goc_themes_only

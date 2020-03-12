@@ -78,11 +78,11 @@ presets:
 #  form_placeholder: "e.g. sunny, cloudy"
 #  validators: tag_string_convert
 
-- preset_name: weather_autocomplete
+- preset_name: goc_theme_autocomplete
   values:
 #    form_snippet: weather.html
     validators: ignore_missing tag_string_convert
     classes: ["control-full"]
     form_attrs:
       data-module: autocomplete
-      data-module-source: "/api/3/action/dfo_weather_ac?q=?"
+      data-module-source: "/api/2/util/vocabulary/goc_theme/autocomplete?q=?"
