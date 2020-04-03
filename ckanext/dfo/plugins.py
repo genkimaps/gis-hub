@@ -14,6 +14,7 @@ from ckan.logic import get_action
 from ckan.common import _
 import dfo_plugin_settings
 import dfo_validation
+import dfo_keywords
 
 
 logger = dfo_plugin_settings.setup_logger(__name__)
@@ -254,17 +255,20 @@ class DFOPlugin(p.SingletonPlugin):
     def goc_themes_validator(value, context):
         # Use resource id for GoC themes:
         # https://www.gis-hub.ca/dataset/goc-themes/resource/88f5c7a2-7b25-4ce8-a0c6-081236f5da76
-        goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
-        logger.info('Check GOC theme keywords: %s' % value)
-        result = get_action('datastore_search')(context, {
-            'resource_id': goc_themes_id,
-            # Default limit is only 100 items
-            'limit': 5000})
-
-        goc_themes = []
-        records = result.get('records')
-        for record in records:
-            goc_themes.append(record.get('theme').lower())
+        # goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
+        logger.info('Checking GOC theme keywords: %s' % value)
+        # result = get_action('datastore_search')(context, {
+        #     'resource_id': goc_themes_id,
+        #     # Default limit is only 100 items
+        #     'limit': 5000})
+        # 
+        # goc_themes = []
+        # records = result.get('records')
+        # for record in records:
+        #     goc_themes.append(record.get('theme').lower())
+        
+        goc_themes = dfo_keywords.goc_theme_list(context)
+        
         keywords = value.split(',')
         for kw in keywords:
             if not kw.lower().strip() in goc_themes:
