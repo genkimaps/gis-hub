@@ -70,6 +70,32 @@ def detect_object_type(data_dict):
         return 'other', data_dict
 
 
+@side_effect_free
+def find_matching_goc_theme(context, data_dict):
+    # Query datastore for matching terms
+    print(data_dict)
+    term = data_dict.get('q')
+
+    term_like = " '%s%%' " % term
+    sql_p1 = 'SELECT * FROM "%s" WHERE "theme" ILIKE ' % dfo_plugin_settings.goc_themes_id
+    sql_ilike = sql_p1 + term_like
+    print(sql_ilike)
+    search_qry = {
+        'resource_id': dfo_plugin_settings.goc_themes_id,
+        # Default limit is only 100 items
+        'limit': 5000,
+        'sql': sql_ilike
+
+    }
+    result = get_action('datastore_search_sql')(context, search_qry)
+
+    goc_themes = []
+    records = result.get('records')
+    for record in records:
+        goc_themes.append(record.get('theme').lower())
+    return goc_themes
+
+
 class DFOPlugin(p.SingletonPlugin):
     p.implements(p.IConfigurer)
     p.implements(p.IFacets)
@@ -257,7 +283,7 @@ class DFOPlugin(p.SingletonPlugin):
     # Implement function in IActions for custom autocomplete
     @side_effect_free
     def get_actions(self):
-        return {'ac_goc_themes': dfo_keywords.find_matching_goc_theme}
+        return {'ac_goc_themes': find_matching_goc_theme}
 
     @staticmethod
     def goc_themes_validator(value, context):
