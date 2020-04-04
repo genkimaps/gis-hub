@@ -10,7 +10,6 @@ from ckan.common import request, g
 from ckanext.scheming import helpers as scheming_helpers
 from ckantoolkit import get_validator
 from ckan.plugins.toolkit import Invalid
-from ckan.logic import side_effect_free, get_action
 from ckan.common import _
 import dfo_plugin_settings
 import dfo_validation
@@ -81,12 +80,21 @@ class DFOPlugin(p.SingletonPlugin):
     
     # Added for custom autocomplete
     p.implements(p.IActions)
+    
+    # Implement function in IActions for custom autocomplete
+    # DO NOT USE @side_effect_free here! Causes CKAN 2.7.x to crash on startup, 
+    # when loading plugins (but does not crash CKAN 2.8)
+    # @side_effect_free
+    def get_actions(self):
+        return {'ac_goc_themes': dfo_keywords.find_matching_goc_theme}
 
+    # IConfigurer
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates')
         p.toolkit.add_public_directory(config, 'public')
         p.toolkit.add_resource('fanstatic', 'dfo')
 
+    # IFacets
     def dataset_facets(self, facets_dict, package_type):
         if package_type in ('dataset', None):
             facets_dict.pop('license_id', None)
@@ -179,7 +187,7 @@ class DFOPlugin(p.SingletonPlugin):
         """
         return pkg_dict
 
-    # The next 2 are used by both package and resource
+    # The next two are used by both package and resource
     def after_create(self, context, data_dict):
         logger.debug('after_create from resource or dataset')
         return object_updated_or_created(context, data_dict)
@@ -198,6 +206,7 @@ class DFOPlugin(p.SingletonPlugin):
     def before_search(self, search_params):
         return search_params
 
+    # ITemplateHelpers
     def get_helpers(self):
         return {
             'get_thumbnail': get_thumbnail,
@@ -232,6 +241,7 @@ class DFOPlugin(p.SingletonPlugin):
 
     # END of additional methods only in IResourceController
 
+    # IRoutes
     def before_map(self, map):
         map.connect(
             '/advanced_search',
@@ -248,35 +258,17 @@ class DFOPlugin(p.SingletonPlugin):
     def after_map(self, map):
         return map
 
+    # IValidators
     def get_validators(self):
         return {
             'require_when_published': self.required_validator,
             'goc_themes_only': self.goc_themes_validator
         }
-    
-    # Implement function in IActions for custom autocomplete
-    # DO NOT USE @side_effect_free here! Causes CKAN 2.7.x to crash on startup, 
-    # when loading plugins (but not in CKAN 2.8)
-    # @side_effect_free
-    def get_actions(self):
-        return {'ac_goc_themes': dfo_keywords.find_matching_goc_theme}
 
     @staticmethod
     def goc_themes_validator(value, context):
-        # Use resource id for GoC themes:
-        # https://www.gis-hub.ca/dataset/goc-themes/resource/88f5c7a2-7b25-4ce8-a0c6-081236f5da76
-        # goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
+        # Validate keywords against a list of GOC themes
         logger.info('Validating "%s" against GOC themes' % value)
-        # result = get_action('datastore_search')(context, {
-        #     'resource_id': goc_themes_id,
-        #     # Default limit is only 100 items
-        #     'limit': 5000})
-        # 
-        # goc_themes = []
-        # records = result.get('records')
-        # for record in records:
-        #     goc_themes.append(record.get('theme').lower())
-        
         goc_themes = dfo_keywords.goc_theme_list(context)
         
         keywords = value.split(',')

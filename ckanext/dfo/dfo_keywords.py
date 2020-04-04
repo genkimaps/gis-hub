@@ -4,8 +4,6 @@ Logic for getting DFO-specific keywords
 
 import dfo_plugin_settings as settings
 from ckan.logic import side_effect_free, get_action
-import ckan.logic as logic
-import ckan.model as model
 
 logger = settings.setup_logger(__name__)
 
@@ -28,13 +26,13 @@ get_actions(). Very confusing.
 @side_effect_free
 def find_matching_goc_theme(context, data_dict):
     # Query datastore for matching terms
-    print(data_dict)
+    logger.debug(data_dict)
     term = data_dict.get('q')
 
     term_like = " '%s%%' " % term
     sql_p1 = 'SELECT * FROM "%s" WHERE "theme" ILIKE ' % settings.goc_themes_id
     sql_ilike = sql_p1 + term_like
-    print(sql_ilike)
+    logger.info(sql_ilike)
     search_qry = {
         'resource_id': settings.goc_themes_id,
         # Default limit is only 100 items

@@ -1,6 +1,6 @@
 console.log("Autocomplete for custom CKAN endpoints--JS loaded");
 
-// Docs for older version of Select2
+// Docs for older Select2 bundled with CKAN, version 3.5.3
 // http://select2.github.io/select2/
 
 var ac_url = '/api/3/action/ac_goc_themes'
@@ -22,21 +22,22 @@ var ajax_1line = {
     },
 
     // ajax function fetches results from a CKAN API url, using the characters
-    // typed in the input box (>= the minimumInputLength).
+    // typed in the input box (when input is >= the minimumInputLength).
     ajax: {
         url: ac_url,
         dataType: 'json',
         data: function (term, page) {
-            console.log(term);
+            console.debug(term);
             return {
                 q: term, // search term
             };
         },
         results: function (data) {
             var ac = []
-            // CKAN API v3 returns results in a property called 'result'
-            // Not resultS !!
-            console.log(data.result)
+            // CKAN API v3 returns results in a property called 'result' NOT resultS !!
+            // Select2 requires that results are in an array of objects with
+            // propeties 'id' and 'text'.  https://select2.org/data-sources/formats
+            console.debug(data.result)
             data.result.forEach(function(match){
                 ac.push({id: match, text: match})
             });

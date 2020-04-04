@@ -8,7 +8,7 @@ presets:
 # Add validators: tag_string_convert in the field definition, or in this preset.
 - preset_name: ac_goc_themes
   values:
-    # Add goc themes validator when this is working?
+    # Done: Add goc themes validator when this is confirmed working
     validators: ignore_missing tag_string_convert goc_themes_only
     form_snippet: ac_goc_themes.html
     form_attrs:
