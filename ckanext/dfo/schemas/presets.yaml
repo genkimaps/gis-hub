@@ -9,7 +9,7 @@ presets:
 - preset_name: ac_goc_themes
   values:
     # Add goc themes validator when this is working?
-    validators: ignore_missing
+    validators: ignore_missing tag_string_convert goc_themes_only
     form_snippet: ac_goc_themes.html
     form_attrs:
       class: form-control
