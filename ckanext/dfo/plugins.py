@@ -281,9 +281,11 @@ class DFOPlugin(p.SingletonPlugin):
         }
     
     # Implement function in IActions for custom autocomplete
-    @side_effect_free
+    # DO NOT USE @side_effect_free here! Causes CKAN 2.7.x to crash on startup, 
+    # when loading plugins (but not in CKAN 2.8)
+    # @side_effect_free
     def get_actions(self):
-        return {'ac_goc_themes': find_matching_goc_theme}
+        return {'ac_goc_themes': dfo_keywords.find_matching_goc_theme}
 
     @staticmethod
     def goc_themes_validator(value, context):
