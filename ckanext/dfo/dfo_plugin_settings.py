@@ -8,6 +8,8 @@ log_folder = os.path.join(plugin_root, 'logs')
 screen_fmt = logging.Formatter(
     '%(asctime)s:%(levelname)s:%(module)s(%(lineno)d) - %(message)s')
 
+goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
+
 
 def setup_logger(name, level=logging.INFO):
     logger = logging.getLogger(name)

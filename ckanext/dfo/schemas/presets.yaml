@@ -1,6 +1,18 @@
+# TODO: check if roles defined in this file are actually being used?
 scheming_presets_version: 1
-
+about: Field presets for custom autocomplete endpoints and roles
+about_url: https://github.com/genkimaps/gis-hub
 presets:
+
+# To make these GoC keywords appear as tags (after turning off alphanum tag validation):
+# Add validators: tag_string_convert in the field definition, or in this preset.
+- preset_name: ac_goc_themes
+  values:
+    # Add goc themes validator when this is working?
+    validators: ignore_missing
+    form_snippet: ac_goc_themes.html
+    form_attrs:
+      class: form-control
 
 - preset_name: role
   values:

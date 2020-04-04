@@ -1,0 +1,17 @@
+{
+  "scheming_presets_version": 1,
+  "about": "Field presets for custom autocomplete endpoints",
+  "about_url": "https://github.com/",
+  "presets": [
+    {
+      "preset_name": "ac_goc_themes",
+      "values": {
+        "validators": "ignore_missing",
+        "form_snippet": "ac_goc_themes.html",
+        "form_attrs": {
+          "class": "form-control"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+---
+
+# To make these GoC keywords appear as tags (after turning off alphanum tag validation):
+# Add validators: tag_string_convert in the field definition, or in this preset.
+scheming_presets_version: 1
+about: Field presets for custom autocomplete endpoints
+about_url: https://github.com/genkimaps/gis-hub
+presets:
+- preset_name: ac_goc_themes
+  values:
+    # Add goc themes validator when this is working?
+    validators: ignore_missing
+    form_snippet: ac_goc_themes.html
+    form_attrs:
+      class: form-control

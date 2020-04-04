@@ -2,41 +2,66 @@
 Logic for getting DFO-specific keywords
 """
 
-import dfo_plugin_settings
-from ckan.logic import get_action
+import dfo_plugin_settings as settings
+from ckan.logic import side_effect_free, get_action
 import ckan.logic as logic
 import ckan.model as model
 
-logger = dfo_plugin_settings.setup_logger(__name__)
+logger = settings.setup_logger(__name__)
 
-# Create a dummy Pylons context object
-# From /ckan/lib/cli.py line 135
-# Does not work, we get: 
-# sqlalchemy.exc.UnboundExecutionError: Could not locate a bind configured on mapper Mapper|User|user, SQL expression or this Session
-# site_user = logic.get_action('get_site_user')({
-#     'model': model,
-#     'ignore_auth': True},
-#     {}
-# )
-# context = {
-#     'model': model,
-#     'session': model.Session,
-#     'ignore_auth': True,
-#     'user': site_user['name'],
-# }
+"""
+from /ckan/plugins/interfaces.py:
+
+By decorating a function with the `ckan.logic.side_effect_free`
+decorator, the associated action will be made available by a GET
+request (as well as the usual POST request) through the action API.
+
+This is super confusing. The @side_effect_free is not supposed to be used 
+in the get_actions() function (which implements plugins.IActions) rather
+it needs to be attached to *the function itself* which is referenced by 
+get_actions(). Very confusing. 
+"""
+
+# Turn off tag name validation:
+# In base ckan, /ckan/logic/validators.py, comment this line (460):
+# tag_name_validator(tag, context)
+@side_effect_free
+def find_matching_goc_theme(context, data_dict):
+    # Query datastore for matching terms
+    print(data_dict)
+    term = data_dict.get('q')
+
+    term_like = " '%s%%' " % term
+    sql_p1 = 'SELECT * FROM "%s" WHERE "theme" ILIKE ' % settings.goc_themes_id
+    sql_ilike = sql_p1 + term_like
+    print(sql_ilike)
+    search_qry = {
+        'resource_id': settings.goc_themes_id,
+        # Default limit is only 100 items
+        'limit': 5000,
+        'sql': sql_ilike
+
+    }
+    result = get_action('datastore_search_sql')(context, search_qry)
+
+    goc_themes = []
+    records = result.get('records')
+    for record in records:
+        goc_themes.append(record.get('theme').lower())
+    return goc_themes
 
 
 def goc_theme_list(context):
     """
-    Gets all GoC themes from datastore in lowercase
+    Gets the complete list of GoC themes from datastore in lowercase
     :param context:
     :return:
     """
     # Use resource id for GoC themes:
     # https://www.gis-hub.ca/dataset/goc-themes/resource/88f5c7a2-7b25-4ce8-a0c6-081236f5da76
-    goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
+
     result = get_action('datastore_search')(context, {
-        'resource_id': goc_themes_id,
+        'resource_id': settings.goc_themes_id,
         # Default limit is only 100 items
         'limit': 5000})
 

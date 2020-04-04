@@ -10,7 +10,7 @@ from ckan.common import request, g
 from ckanext.scheming import helpers as scheming_helpers
 from ckantoolkit import get_validator
 from ckan.plugins.toolkit import Invalid
-from ckan.logic import get_action
+from ckan.logic import side_effect_free, get_action
 from ckan.common import _
 import dfo_plugin_settings
 import dfo_validation
@@ -78,6 +78,9 @@ class DFOPlugin(p.SingletonPlugin):
     p.implements(p.IRoutes)
     p.implements(p.IValidators)
     p.implements(p.IResourceController)
+    
+    # Added for custom autocomplete
+    p.implements(p.IActions)
 
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates')
@@ -250,13 +253,18 @@ class DFOPlugin(p.SingletonPlugin):
             'require_when_published': self.required_validator,
             'goc_themes_only': self.goc_themes_validator
         }
+    
+    # Implement function in IActions for custom autocomplete
+    @side_effect_free
+    def get_actions(self):
+        return {'ac_goc_themes': dfo_keywords.find_matching_goc_theme}
 
     @staticmethod
     def goc_themes_validator(value, context):
         # Use resource id for GoC themes:
         # https://www.gis-hub.ca/dataset/goc-themes/resource/88f5c7a2-7b25-4ce8-a0c6-081236f5da76
         # goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
-        logger.info('Checking GOC theme keywords: %s' % value)
+        logger.info('Validating "%s" against GOC themes' % value)
         # result = get_action('datastore_search')(context, {
         #     'resource_id': goc_themes_id,
         #     # Default limit is only 100 items
