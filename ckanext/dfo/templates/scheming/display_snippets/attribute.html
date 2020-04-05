@@ -4,7 +4,7 @@
     <tr>
     {% for subfield in field.subfields %}
       {% if subfield.display_snippet %}
-      <th nowrap class="{% if subfield.field_name == 'description' %}w60{% else %}w10{% endif %}">{{ subfield.label }}</th>
+      <th class="{% if subfield.field_name == 'description' %}w40{% else %}w15{% endif %}">{{ subfield.label }}</th>
       {% endif %}
     {% endfor %}
     </tr>
@@ -15,7 +15,7 @@
       {% for subfield in field.subfields %}
         {% set options = subfield.display_snippet_options|default({}) %}
         {% if group[subfield.field_name] %}
-        <td class="{% if group[subfield.field_name] == 'description' %}w60{% else %}w10{% endif %}">
+        <td class="{% if group[subfield.field_name] == 'description' %}w40{% else %}w15{% endif %}">
           {%- snippet 'scheming/snippets/display_field.html',
             field=subfield,
             data=group,
