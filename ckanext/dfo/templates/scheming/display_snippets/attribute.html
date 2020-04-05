@@ -1,0 +1,36 @@
+{{ data }}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+    {% for subfield in field.subfields %}
+      {% if subfield.display_snippet %}
+      <th nowrap>{{ subfield.label }}</th>
+      {% endif %}
+    {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for group in data %}
+    <tr>
+      {% for subfield in field.subfields %}
+        {% set options = subfield.display_snippet_options|default({}) %}
+        {% if group[subfield.field_name] %}
+        <td>
+          {%- snippet 'scheming/snippets/display_field.html',
+            field=subfield,
+            data=group,
+            errors=errors,
+            entity_type=entity_type,
+            object_type=object_type
+          -%}
+        </td>
+        {% else %}
+        <td></td>
+        {% endif %}
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+

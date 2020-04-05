@@ -897,7 +897,7 @@ resource_fields:
   help_text: "You must clearly document all attributes for all spatial layers and standalone tables in your uploaded data.  Some attribute information (field name and type) will be populated automatically after you upload spatial data.  If you have not yet uploaded data, or you are replacing the existing data, leave these fields blank for now.  After your data has been uploaded and field names and types have been extracted, you will still have to edit this section later to add, at minimum, a description for each field.  The field description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)  Note: raster attributes cannot be detected automatically.  You must add any raster attributes manually using this form. "
   form_blanks: 1
   repeatable: true
-  display_snippet: table.html
+  display_snippet: attribute.html
   display_group: Table Attributes
   subfields:
 
