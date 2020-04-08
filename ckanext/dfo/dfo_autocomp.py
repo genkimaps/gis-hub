@@ -89,6 +89,10 @@ SELECT * FROM "cdc22563-dc61-4abc-9b6d-a863382e4b6c" WHERE "species_name" ~* 'le
 
 A full URL-quoted example:
 https://www.gis-hub.ca/api/action/datastore_search_sql?sql=SELECT%20*%20FROM%20%22cdc22563-dc61-4abc-9b6d-a863382e4b6c%22%20WHERE%20%22species_name%22%20~*%20%27fish%27
+
+In plugins.py, this method is registered as an action: ac_species_code
+Example URL: https://www.gis-hub.ca/api/action/ac_species_code?q=lepidoch
+This can now be used as an API endpoint for Select2.js in our HTML template. 
 """
 @side_effect_free
 def search_species_code(context, data_dict):
