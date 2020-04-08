@@ -481,7 +481,8 @@ dataset_fields:
         If no scripts were used to create the data, indicate how it was created
         (e.g. manually created using analysis tools in ArcGIS)."
   form_snippet: markdown.html
-  display_snippet: text.html
+  # Added a markdown.html display_snippet
+  display_snippet: markdown.html
   display_group: Science
   validators: require_when_published
 
