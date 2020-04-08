@@ -1,5 +1,7 @@
 """
-Logic for getting DFO-specific keywords
+Logic for custom DFO-specific autocomplete, including:
+- keywords (GoC themes from the Thesaurus)
+- species codes
 """
 
 import dfo_plugin_settings as settings
@@ -24,7 +26,7 @@ get_actions(). Very confusing.
 # In base ckan, /ckan/logic/validators.py, comment this line (460):
 # tag_name_validator(tag, context)
 @side_effect_free
-def find_matching_goc_theme(context, data_dict):
+def search_goc_theme(context, data_dict):
     # Query datastore for matching terms
     logger.debug(data_dict)
     term = data_dict.get('q')
@@ -68,3 +70,47 @@ def goc_theme_list(context):
     for record in records:
         goc_themes.append(record.get('theme').lower())
     return goc_themes
+
+
+"""
+Species code autocomplete to match both code and name (latin or common name)
+Code, latin name, and common name are concatenated in field 'species_name'
+Unlike goc-themes autocomp, we will return both code and display name.
+Also want the match to be anywhere in the string, not just at the start, also 
+not necessarily at a word break, e.g. we want to match:
+fish > hagfish
+03A > match at start of string, not just in the middle
+so need to use regex ~* 'term' instead of ILIKE '%term%'
+
+The resource ID for the table of species codes: cdc22563-dc61-4abc-9b6d-a863382e4b6c
+SELECT * FROM "cdc22563-dc61-4abc-9b6d-a863382e4b6c" WHERE "species_name" ~* '037'
+SELECT * FROM "cdc22563-dc61-4abc-9b6d-a863382e4b6c" WHERE "species_name" ~* 'shark'
+SELECT * FROM "cdc22563-dc61-4abc-9b6d-a863382e4b6c" WHERE "species_name" ~* 'lepidoch'
+
+A full URL-quoted example:
+https://www.gis-hub.ca/api/action/datastore_search_sql?sql=SELECT%20*%20FROM%20%22cdc22563-dc61-4abc-9b6d-a863382e4b6c%22%20WHERE%20%22species_name%22%20~*%20%27fish%27
+"""
+@side_effect_free
+def search_species_code(context, data_dict):
+    # Query datastore for matching terms
+    logger.debug(data_dict)
+    term = data_dict.get('q')
+    sql = 'SELECT * FROM "%s" WHERE "species_name"  ~* \'%s\'' % (settings.species_codes_id, term)
+    logger.info(sql)
+    search_qry = {
+        'resource_id': settings.species_codes_id,
+        # Default limit is only 100 items
+        'limit': 5000,
+        'sql': sql
+
+    }
+    result = get_action('datastore_search_sql')(context, search_qry)
+
+    sp_codes = []
+    records = result.get('records')
+    for record in records:
+        match = {'code': record.get('code'),
+                 'species_name': record.get('species_name')
+                 }
+        sp_codes.append(match)
+    return sp_codes

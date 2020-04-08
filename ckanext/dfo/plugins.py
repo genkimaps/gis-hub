@@ -13,7 +13,7 @@ from ckan.plugins.toolkit import Invalid
 from ckan.common import _
 import dfo_plugin_settings
 import dfo_validation
-import dfo_keywords
+import dfo_autocomp
 
 
 logger = dfo_plugin_settings.setup_logger(__name__)
@@ -86,7 +86,8 @@ class DFOPlugin(p.SingletonPlugin):
     # when loading plugins (but does not crash CKAN 2.8)
     # @side_effect_free
     def get_actions(self):
-        return {'ac_goc_themes': dfo_keywords.find_matching_goc_theme}
+        return {'ac_goc_themes': dfo_autocomp.search_goc_theme,
+                'ac_species_code': dfo_autocomp.search_species_code}
 
     # IConfigurer
     def update_config(self, config):
@@ -269,7 +270,7 @@ class DFOPlugin(p.SingletonPlugin):
     def goc_themes_validator(value, context):
         # Validate keywords against a list of GOC themes
         logger.info('Validating "%s" against GOC themes' % value)
-        goc_themes = dfo_keywords.goc_theme_list(context)
+        goc_themes = dfo_autocomp.goc_theme_list(context)
         
         keywords = value.split(',')
         for kw in keywords:
