@@ -43,8 +43,8 @@ dataset_fields:
 - field_name: notes
   label: Summary
   help_text: "Brief narrative summary of the dataset's contents."
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: markdown.html
+  display_snippet: markdown.html
   display_group: Basic Information
   validators: require_when_published
   default: "Please describe the following: \n
@@ -447,8 +447,8 @@ dataset_fields:
         complete description of the lineage of the data.  It may refer to
         sections of an associated academic citation or other published
         resource.
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: markdown.html
+  display_snippet: markdown.html
   display_group: Science
   validators: require_when_published
 
@@ -467,8 +467,8 @@ dataset_fields:
   subfields:
   - field_name: input_description
     label: Source
-    form_snippet: textarea.html
-    display_snippet: text.html
+    form_snippet: markdown.html
+    display_snippet: markdown.html
     display_group: Science
     validators: require_when_published
 
@@ -496,8 +496,8 @@ dataset_fields:
         (e.g. 3 boat rule)?  Were multiple datasets captured at different
         spatial resolutions used in this analysis?  Were point data extrapolated
         to polygons, or polygons/lines converted to centroids?"
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: markdown.html
+  display_snippet: markdown.html
   display_group: Science
   validators: require_when_published
 
@@ -505,8 +505,8 @@ dataset_fields:
   label: Positional Accuracy
   help_text: "Quantitative estimate of horizontal/vertical accuracy. Express
         in metric units where possible."
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: markdown.html
+  display_snippet: markdown.html
   display_group: Science
   validators: require_when_published
 
@@ -514,16 +514,16 @@ dataset_fields:
   label: Attribute Accuracy
   help_text: General description of the degree to which attribute values reflect
         real-world conditions.
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: markdown.html
+  display_snippet: markdown.html
   display_group: Science
   validators: require_when_published
 
 - field_name: logical_consistency
   label: Logical Consistency
   help_text: Report on fidelity of relationships in the data set, the validity of its relationships to other data sets, and the degree to which the entities represent the real-world objects or concepts they are intended to capture.
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: markdown.html
+  display_snippet: markdown.html
   display_group: Science
   validators: require_when_published
 
@@ -546,8 +546,8 @@ dataset_fields:
 - field_name: uncertainties
   label: Uncertainties
   help_text: "Describe uncertainties in measurement and methodology. Include any known biases. For example, was data collection opportunistic, or part of the survey design? In there any known bias from individual observers?"
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: markdown.html
+  display_snippet: markdown.html
   display_group: Science
   validators: require_when_published
 
@@ -587,8 +587,8 @@ dataset_fields:
 - field_name: temporal_coverage
   label: Temporal Coverage
   help_text: "If the temporal coverage of the dataset is more complex than a simple start and end date, describe it here.  You may describe temporal coverage as a single point in time, multiple points in time, and one or more range of dates.  Seasonality can also be described here.  For derived datasets, please specify the temporal coverage of all input data here. Specific start and end dates are preferable, but year ranges are acceptable if the exact dates are uncertain or not applicable."
-  form_snippet: textarea.html
-  display_snippet: text.html
+  form_snippet: markdown.html
+  display_snippet: markdown.html
   display_group: Science
 
 # Placeholder for species codes until bug in sp code lookup is resolved
