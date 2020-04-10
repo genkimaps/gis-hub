@@ -1,4 +1,4 @@
-# TODO: check if roles defined in this file are actually being used?
+
 scheming_presets_version: 1
 about: Field presets for custom autocomplete endpoints and roles
 about_url: https://github.com/genkimaps/gis-hub
@@ -14,6 +14,16 @@ presets:
     form_attrs:
       class: form-control
 
+
+- preset_name: ac_sp_codes
+  values:
+    validators: ignore_missing
+    form_snippet: ac_sp_codes.html
+    form_attrs:
+      class: form-control
+
+
+# TODO: check if roles defined in this file are actually being used?
 - preset_name: role
   values:
     label:

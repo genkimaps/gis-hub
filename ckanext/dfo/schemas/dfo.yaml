@@ -612,17 +612,18 @@ dataset_fields:
 
   - field_name: sp_code
     label: Species Code
-    preset: select
-    choices_helper: scheming_datastore_choices
-    datastore_choices_limit: 10000
-    datastore_choices_resource: cdc22563-dc61-4abc-9b6d-a863382e4b6c
-    datastore_choices_columns:
-      value: code
-      label: species_name
-    form_attrs:
-      data-module: autocomplete
-    display_snippet_options:
-      row_header: True
+    preset: ac_sp_codes
+#    preset: select
+#    choices_helper: scheming_datastore_choices
+#    datastore_choices_limit: 10000
+#    datastore_choices_resource: cdc22563-dc61-4abc-9b6d-a863382e4b6c
+#    datastore_choices_columns:
+#      value: code
+#      label: species_name
+#    form_attrs:
+#      data-module: autocomplete
+#    display_snippet_options:
+#      row_header: True
     display_group: Science
 
   - field_name: age_data
