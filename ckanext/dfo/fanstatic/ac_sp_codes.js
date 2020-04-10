@@ -46,8 +46,8 @@ var ajax_1line = {
     }
 }
 
-console.log(field_name)
-//var field_name = 'sp_code'
+//console.log(field_name)
+var field_name = 'species_codes-0-sp_code'
 $(document).ready(function() {
     console.log('Activate Select2 ajax on '+field_name);
     $('#field-'+field_name).select2(ajax_1line);
