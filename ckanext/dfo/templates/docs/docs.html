@@ -42,20 +42,6 @@
       </p>
 
       <p>
-        <b>Problem:</b> The autocomplete for non-science keywords is not restricted to
-        the list of keywords from the Government of Canada
-        <a href="http://canada.multites.net/cst/index.htm" target="_blank">Core
-        Subject Thesaurus</a>.  The autocomplete displays past entries from both the
-          Science Keywords field and the non-science Keywords field.  Please be careful
-          when entering values in this field, and do not rely solely on the autocomplete.
-          Validation now ensures that keywords entered in this field are from the GoC themes.
-          Although the autocomplete is not restricted, the metadata form now refuses to save
-          keywords that are not on the list, and provides an informative error message.
-        <br>
-        Note: The format of keywords has changed.  All keywords should be lowercase.
-      </p>
-
-      <p>
         <b>Problem:</b> Projections and/or projection codes are sometimes not 
         detected correctly.
         <br>
@@ -296,18 +282,31 @@
             or some other subset of a larger data package.  </td>
         </tr>
         <tr>
-          <td>Keywords</td>
+          <td>Keywords (GoC Thesaurus)</td>
           <td>At a minimum, one keyword must be supplied from the Government
             of Canada Core Subject Thesaurus.  Refer to <a href="http://canada.multites.net/cst/index.htm">
               http://canada.multites.net/cst/index.htm</a>.
             You are most likely to find useful keywords in the
             “nature and environment” and “science and technology” categories.
-            Note: The format of keywords has changed.  All keywords should be lowercase.</td>
+            All keywords should be lowercase.
+            <p>
+            This longstanding issue is now resolved: <del><b>Issue:</b> The autocomplete for
+              non-science keywords is not restricted to the list of keywords from the
+              Government of Canada Thesaurus. Autocomplete also shows Science keywords.</del>
+            </p>
+            This field now has the following features:
+            <ul>
+              <li>the autocomplete only shows entries from the GoC Thesaurus</li>
+              <li>it is not possible to enter a keyword that isn't in the GoC Thesaurus</li>
+              <li>there is a link to the GoC Thesaurus website below the text box</li>
+              <li>keywords can include punctuation, other than commas (try "children's books")</li>
+            </ul>
+
+          </td>
         </tr>
 
       </tbody>
     </table>
-
 
     <h3 id="science">Science Metadata</h3>
     <p>This section is required for all scientific data. </p>
@@ -374,12 +373,13 @@
           </td>
         </tr>
         <tr>
-          <td>Scripts</td>
+          <td>Scripts or Software Routines</td>
           <td>Link to script(s) used to process the data, for example on the
             GCCode GitLab site. Alternatively, include the scripts or queries
             in a Scripts folder inside in the zip file that you will upload.
             Document the purpose of each script, and anything required to run
-            the script again.
+            the script again. This field is now displayed using Markdown formatting,
+            so links pasted here will be clickable.
             <br><br>
 
             If no scripts were used to create the data, use this field to
