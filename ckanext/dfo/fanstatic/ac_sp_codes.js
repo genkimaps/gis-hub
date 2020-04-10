@@ -39,7 +39,7 @@ var ajax_spcodes = {
             // propeties 'id' and 'text'.  https://select2.org/data-sources/formats
             console.debug(data.result)
             data.result.forEach(function(match){
-                ac.push({id: match, text: match})
+                ac.push({id: match.code, text: match.species_name})
             });
             return { results: ac };
         }
