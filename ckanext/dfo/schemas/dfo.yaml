@@ -142,6 +142,7 @@ dataset_fields:
   - field_name: creator_email
     label: Email
     make_searchable: True
+    display_snippet: email.html
     validators: require_when_published email_validator
 
   - field_name: creator_position
@@ -182,6 +183,7 @@ dataset_fields:
     label: Email
     display_group: Contact Information
     make_searchable: True
+    display_snippet: email.html
     validators: require_when_published email_validator
 
   - field_name: manager_position
