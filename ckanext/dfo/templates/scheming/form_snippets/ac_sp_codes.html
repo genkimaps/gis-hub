@@ -1,5 +1,5 @@
 <script>
-    var field_name = 'field-' + {{ h.dump_json( field.field_name ) }}
+    var field_name = {{ h.dump_json( field.field_name ) }}
     console.log('Activate sp codes autocomp for ' + field_name)
 </script>
 

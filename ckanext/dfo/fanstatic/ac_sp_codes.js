@@ -1,4 +1,4 @@
-console.log("Autocomplete for custom CKAN endpoints--JS loaded");
+console.log("Autocomplete JS for custom Species Code CKAN endpoint");
 
 // Docs for older Select2 bundled with CKAN, version 3.5.3
 // http://select2.github.io/select2/
