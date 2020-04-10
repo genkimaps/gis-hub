@@ -3,8 +3,8 @@ console.log("Autocomplete JS for custom GoC Theme CKAN endpoints");
 // Docs for older Select2 bundled with CKAN, version 3.5.3
 // http://select2.github.io/select2/
 
-var ac_url = '/api/3/action/ac_goc_themes'
-var ajax_1line = {
+var ac_url_goctheme = '/api/3/action/ac_goc_themes'
+var ajax_goctheme = {
     multiple: true,
     placeholder: "Enter 3 or more letters",
     minimumInputLength: 3,
@@ -24,7 +24,7 @@ var ajax_1line = {
     // ajax function fetches results from a CKAN API url, using the characters
     // typed in the input box (when input is >= the minimumInputLength).
     ajax: {
-        url: ac_url,
+        url: ac_url_goctheme,
         dataType: 'json',
         data: function (term, page) {
             console.debug(term);
@@ -46,8 +46,8 @@ var ajax_1line = {
     }
 }
 
-var field_name = 'keywords'
+var field_name_goctheme = 'keywords'
 $(document).ready(function() {
-    console.log('Activate Select2 ajax on '+field_name);
-    $('#field-'+field_name).select2(ajax_1line);
+    console.log('Activate Select2 ajax on '+field_name_goctheme);
+    $('#field-'+field_name_goctheme).select2(ajax_goctheme);
 });
