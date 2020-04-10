@@ -622,8 +622,8 @@ dataset_fields:
 #      label: species_name
 #    form_attrs:
 #      data-module: autocomplete
-#    display_snippet_options:
-#      row_header: True
+    display_snippet_options:
+      row_header: True
     display_group: Science
 
   - field_name: age_data
