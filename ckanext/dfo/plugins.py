@@ -14,6 +14,7 @@ from ckan.common import _
 import dfo_plugin_settings
 import dfo_validation
 import dfo_autocomp
+import subprocess
 
 
 logger = dfo_plugin_settings.setup_logger(__name__)
@@ -36,20 +37,31 @@ def non_empty_fields(field_list, pkg_dict, exclude):
 
 
 def object_updated_or_created(context, data_dict):
-    """ This is called whenever an object is updated or created. We only
+    """ This is called AFTER an object is updated or created. We only
         care about resources and packages; other types are immediately
         returned.
     """
-    obj_name = data_dict.get('title')
-    logger.info('%s: after_create/update from resource or dataset' % obj_name)
+    obj_title = data_dict.get('title')
+    logger.info('%s: after_create/update from resource or dataset' % obj_title)
     obj_type, data_dict = detect_object_type(data_dict)
     if obj_type == 'resource':
+        # TODO: If resource, we only have the package id, have to get dataset name before running backup
         # set resource type only if it's a resource
         # return ensure_resource_type(context, data_dict)
         return dfo_validation.validate_resource(context, data_dict)
     elif obj_type == 'dataset':
-        # check keyword case and duplicates
-        # return kw_case_dups(context, data_dict)
+        ds_name = data_dict.get('name')
+        logger.info('Backup to cloud command:')
+        # TODO: trigger external call to hub-geo-api to upload metadata to S3?
+        # Use external call because hub-geo-api is Python3, can't mix with py2 CKAN.
+        cmd = [dfo_plugin_settings.hubapi_venv,
+               dfo_plugin_settings.hubapi_backup_script,
+               ds_name]
+        logger.info(cmd)
+
+        subprocess.Popen(cmd)
+        logger.info('Backup command was started without waiting')
+        # check keyword case, duplicates, other validation
         return dfo_validation.validate_dataset(context, data_dict)
     # If any other object type, just return it
     return data_dict
