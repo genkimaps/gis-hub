@@ -11,7 +11,8 @@ screen_fmt = logging.Formatter(
 goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
 species_codes_id = 'cdc22563-dc61-4abc-9b6d-a863382e4b6c'
 
-hubapi_venv = os.environ.get('HUBAPI_VENV_CKAN')
+# hubapi_venv = os.environ.get('HUBAPI_VENV_CKAN')
+hubapi_venv = '/home/dfo/.virtualenvs/hubapi/bin/python3'
 hubapi_backup_script = '/home/dfo/hub-geo-api/backups.py'
 
 def setup_logger(name, level=logging.INFO):

@@ -15,7 +15,7 @@ import dfo_plugin_settings
 import dfo_validation
 import dfo_autocomp
 import subprocess
-
+import traceback
 
 logger = dfo_plugin_settings.setup_logger(__name__)
 logger.info('This is the logger for ckanext-dfo')
@@ -59,7 +59,10 @@ def object_updated_or_created(context, data_dict):
                ds_name]
         logger.info(cmd)
 
-        subprocess.Popen(cmd)
+        try:
+            subprocess.Popen(cmd)
+        except:
+            logger.error(traceback.format_exc())
         logger.info('Backup command was started without waiting')
         # check keyword case, duplicates, other validation
         return dfo_validation.validate_dataset(context, data_dict)
