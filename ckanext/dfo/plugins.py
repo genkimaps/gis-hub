@@ -48,9 +48,12 @@ def object_updated_or_created(context, data_dict):
         # TODO: If resource, we only have the package id, have to get dataset name before running backup
         # set resource type only if it's a resource
         # return ensure_resource_type(context, data_dict)
+        logger.info('Resource was updated: %s ' % obj_title)
         return dfo_validation.validate_resource(context, data_dict)
     elif obj_type == 'dataset':
         ds_name = data_dict.get('name')
+        logger.info('Dataset was updated: %s ' % ds_name)
+        logger.warning('TODO: check if dataset has changed')
         logger.info('Backup to cloud command:')
         # Trigger external call to hub-geo-api to upload metadata to S3?
         # Use external call because hub-geo-api is Python3, can't mix with py2 CKAN.
@@ -61,8 +64,8 @@ def object_updated_or_created(context, data_dict):
         logger.info(cmd)
 
         try:
-            # TODO: botocore.exceptions.NoCredentialsError: Unable to locate credentials
-            # TODO: put this ALL under user dfo.
+            # botocore.exceptions.NoCredentialsError: Unable to locate credentials
+            # Need to run as user dfo with --login to get enviro vars
             subprocess.Popen(cmd)
             logger.info('Backup command was started without waiting')
         except:

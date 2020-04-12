@@ -45,7 +45,7 @@ def save_change_history(context, data_dict, type):
     # Ignore if internal update
     logger.info('%s: %s' % (change_desc_field, change_desc))
     if change_desc == CHANGE_DESC_PLACEHOLDER:
-        logger.info('internal change from API')
+        logger.info('Internal change from API. <<< THIS CHANGE DESCRIPTION WILL BE IGNORED ')
         return
     # Get existing change history from dataset
     change_history = ds_metadata.get('change_history')
