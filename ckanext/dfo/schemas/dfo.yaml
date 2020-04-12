@@ -722,6 +722,7 @@ dataset_fields:
 
 # Resource (layer/file-level) metadata fields
 resource_fields:
+
 # Changed to title
 - field_name: title
   label: Title
@@ -798,14 +799,19 @@ resource_fields:
   label: Codespace
   default: "http://www.epsg-registry.org"
   display_group: Projection
-  form_snippet: null
+  form_snippet: hidden.html
   display_snippet: null
 
 - field_name: codespace_version
   label: Codespace Version
   default: "9.2.2"
   display_group: Projection
-  form_snippet: null
+  form_snippet: hidden.html
+  display_snippet: null
+
+- field_name: projection_wkt
+  display_group: Projection
+  form_snippet: hidden.html
   display_snippet: null
 
 # Spatial
@@ -951,6 +957,10 @@ resource_fields:
     form_snippet: text.html
     display_snippet: text.html
     display_group: Table Attributes
+
+- field_name: attr_data
+  display_snippet: null
+  form_snippet: hidden.html
 
 
 # Upload
