@@ -814,7 +814,7 @@ resource_fields:
   label: Spatial Extent Preview
   display_group: Spatial
   display_snippet: null
-#  form_snippet: null
+  form_snippet: hidden.html
 
 - field_name: spatial_type
   label: Spatial Type
