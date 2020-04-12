@@ -729,16 +729,14 @@ resource_fields:
   display_snippet: text.html
   validators: require_when_published
 
-# Map preview
+# Map preview link
 - field_name: map_preview_link
   label: Map Preview
   help_text: "Link to a web map preview of this layer.  You do not need to complete this field manually.  If the link opens but nothing is displayed, it means that a map preview for this layer has not yet been generated.  If the layer is complex and contains many objects, it may take a long time to render.  You may zoom in on an area of interest to improve rendering time. "
   display_snippet: link.html
   form_snippet: text.html
 
-
 # Layer/File Info
-
 - field_name: layer_name
   label: Layer Name
   help_text: "Layer name is detected by the GIS Hub after data upload.  You do not need to complete this field manually. "
@@ -816,7 +814,7 @@ resource_fields:
   label: Spatial Extent Preview
   display_group: Spatial
   display_snippet: null
-  form_snippet: null
+#  form_snippet: null
 
 - field_name: spatial_type
   label: Spatial Type

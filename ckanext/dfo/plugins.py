@@ -52,18 +52,22 @@ def object_updated_or_created(context, data_dict):
     elif obj_type == 'dataset':
         ds_name = data_dict.get('name')
         logger.info('Backup to cloud command:')
-        # TODO: trigger external call to hub-geo-api to upload metadata to S3?
+        # Trigger external call to hub-geo-api to upload metadata to S3?
         # Use external call because hub-geo-api is Python3, can't mix with py2 CKAN.
-        cmd = [dfo_plugin_settings.hubapi_venv,
+        cmd = ['sudo', '-u', 'dfo', '--login',
+               dfo_plugin_settings.hubapi_venv,
                dfo_plugin_settings.hubapi_backup_script,
                ds_name]
         logger.info(cmd)
 
         try:
+            # TODO: botocore.exceptions.NoCredentialsError: Unable to locate credentials
+            # TODO: put this ALL under user dfo.
             subprocess.Popen(cmd)
+            logger.info('Backup command was started without waiting')
         except:
             logger.error(traceback.format_exc())
-        logger.info('Backup command was started without waiting')
+            logger.info('Backup command failed')
         # check keyword case, duplicates, other validation
         return dfo_validation.validate_dataset(context, data_dict)
     # If any other object type, just return it
