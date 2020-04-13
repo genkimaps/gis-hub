@@ -13,7 +13,7 @@ function load_sp_data(sp_data_str){
         console.log(tbl_row)
         $('#ac_js_table').append(tbl_row)
     })
-})
+}
 
 
 }
