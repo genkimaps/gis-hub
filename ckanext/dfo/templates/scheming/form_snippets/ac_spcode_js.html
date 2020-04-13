@@ -1,5 +1,6 @@
+
 <script>
-    var sp_data_str = {{ h.dump_json( data.get(field.field_name, '')) }}
+    var sp_data_str = JSON.parse({{ h.dump_json( data.get(field.field_name, '')) }})
 </script>
 
 

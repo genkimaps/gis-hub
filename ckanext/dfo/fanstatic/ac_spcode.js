@@ -2,7 +2,7 @@ var field_name = 'species_codes_js'
 
 
 function load_sp_data(){
-    console.log(sp_data_js)
+    console.log(sp_data_str)
     var sp_data = JSON.parse(sp_data_str)
     sp_data.forEach(function(value){
         var tbl_row = `<tr>
@@ -20,5 +20,7 @@ function load_sp_data(){
 
 $(document).ready(function() {
     console.log('Activate species codes composite field on '+field_name)
+    // Get value from the text field itself
+//    $('#field-species_codes_js').val()
     load_sp_data()
 })
