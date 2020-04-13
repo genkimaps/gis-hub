@@ -1,13 +1,15 @@
 
 //var sp_code_str
 function load_sp_data(sp_data_str){
-    console.log(sp_data_str)
+    console.log('Load codes: ' +sp_data_str)
     var sp_data = JSON.parse(sp_data_str)
-    sp_data.forEach(function(value){
+    console.log(sp_data)
+    sp_data.forEach(function(item){
+        console.log(item)
         var tbl_row = '<tr>'
-              + '<td>' +sp_data.sp_code+ '</td>'
-              + '<td>' +sp_data.age_data+ '</td>'
-              + '<td>' +sp_data.obs_type+ '</td>'
+              + '<td>' +item.sp_code+ '</td>'
+              + '<td>' +item.age_data+ '</td>'
+              + '<td>' +item.obs_type+ '</td>'
               + '</tr>';
         console.log(tbl_row)
         $('#ac_js_table').append(tbl_row)
