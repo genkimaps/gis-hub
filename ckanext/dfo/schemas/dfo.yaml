@@ -602,6 +602,12 @@ dataset_fields:
   display_snippet: text.html
   display_group: Science
 
+# Temp field for JS species code autocomplete module
+- field_name: species_codes_js
+  label: Species Codes (internal)
+  form_snippet: ac_spcode_js.html
+  display_snippet: text.html
+
 # Composite repeating field for species codes
 - field_name: species_codes
   label: Species Codes
