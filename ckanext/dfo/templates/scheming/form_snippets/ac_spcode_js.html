@@ -1,9 +1,21 @@
 <script>
-    var sp_data_js = {{ h.dump_json( data.get(field.field_name, '')) }}
+    var sp_data_str = {{ h.dump_json( data.get(field.field_name, '')) }}
 </script>
 
 
 {% resource 'dfo/ac_spcode.js' %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Species Code</th>
+      <th>Age Data</th>
+      <th>Observation Type</th>
+    </tr>
+  </thead>
+  <tbody id="ac_js_table">
+  </tbody>
+</table>
 
 <div class="form-group control-full">
 
