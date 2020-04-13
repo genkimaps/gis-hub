@@ -607,6 +607,7 @@ dataset_fields:
   label: Species Codes (internal)
   form_snippet: ac_spcode_js.html
   display_snippet: text.html
+  display_group: Science
 
 # Composite repeating field for species codes
 - field_name: species_codes
