@@ -633,10 +633,10 @@ dataset_fields:
     form_snippet: select.html
     display_group: Science
     choices:
-    - label: Yes
-      value: Yes
-    - label: No
-      value: No
+    - label: True
+      value: True
+    - label: False
+      value: False
 
   - field_name: obs_type
     label: Observation Type

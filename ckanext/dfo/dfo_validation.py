@@ -122,7 +122,7 @@ def ensure_resource_type(context, resource):
     logger.info('Resource: %s %s checking resource type' % (res_name_or_id, res_id))
     # Check if resource_type is not already set
     if res_type:
-        logger.info('Resource: %s, type already set: %s' % (res_name_or_id, res_type))
+        logger.info('Resource: %s, resource_type already set: %s' % (res_name_or_id, res_type))
         return resource
 
     # Resource type is not already set. This will be either Upload or Link
