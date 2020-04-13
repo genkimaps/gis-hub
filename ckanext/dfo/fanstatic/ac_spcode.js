@@ -1,4 +1,3 @@
-var field_name = 'species_codes_js'
 
 //var sp_code_str
 function load_sp_data(sp_data_str){
@@ -16,10 +15,8 @@ function load_sp_data(sp_data_str){
 }
 
 
-}
-
 $(document).ready(function() {
-    console.log('Activate species codes composite field on '+field_name)
+    console.log('Activate species codes composite field on species_codes_js')
     // Get value from the text field itself
     var sp_data_str = $('#field-species_codes_js').val()
 
