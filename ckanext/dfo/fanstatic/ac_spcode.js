@@ -12,15 +12,15 @@ function load_sp_data(sp_data_str){
         //     <option value="${item.sp_code}" selected>${item.sp_code}</option>
         //     </select>`
         // Hidden input field for Select2 dropdown
-        var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code">`
+        var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code" style="width: 250px;">`
 
-        var selectAgeData = `<select id="age_data${i}" class="age_data form-control">
+        var selectAgeData = `<select id="age_data${i}" class="age_data form-control" style="width: 100px;">
             <option value="" selected></option>
             <option value="True">True</option>
             <option value="False">False</option>
             </select>`
         
-        var selectObsType = `<select id="obs_type${i}" class="obs_type form-control">
+        var selectObsType = `<select id="obs_type${i}" class="obs_type form-control" style="width: 150px;">
             <option value="" selected></option>
             <option value="Targeted">Targeted observation</option>
             <option value="Incidental">Incidental observation</option>
