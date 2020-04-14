@@ -38,10 +38,12 @@ function load_sp_data(sp_data_str){
         // Activate select2 on the sp code field
         $('#sp_code'+i).select2(ajax_spcodes)
         // Attach the select2 change detect event handler
-        $('#sp_code'+i).on('select2:select', function (e) {
+        // https://stackoverflow.com/a/18615267
+        $('#sp_code'+i).on('select2-selecting', function (e) {
             var data = e.params.data;
             console.log('Select2 changed: ')
             console.log(data)
+            speciesTableChanged()
         });
         // Set values in row
         console.log('Set age_data '+item.age_data)
