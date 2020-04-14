@@ -32,7 +32,15 @@ function load_sp_data(sp_data_str){
         $('#sp_code'+i).find('.age_data').val(item.age_data)
         console.log('Set obs_type '+item.obs_type)
         $('#sp_code'+i).find('.obs_type').val(item.obs_type)
+        // Bind the change detect event
+        $('#sp_code'+i).find('.obs_type.age_data').on('change', function(){
+            speciesTableChanged()
+        })
     })
+}
+
+function speciesTableChanged (){
+    console.log('Change in ac_js_table')
 }
 
 
@@ -48,6 +56,6 @@ $(document).ready(function() {
     load_sp_data(sp_data_str)
     // Activate change detection on table 
     $('#ac_js_table tr').on('.age_data.obs_type', 'change', function() {
-        console.log('Change in ac_js_table')
+        speciesTableChanged()
     })
 })
