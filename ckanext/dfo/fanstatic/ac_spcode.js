@@ -12,7 +12,7 @@ function load_sp_data(sp_data_str){
         //     <option value="${item.sp_code}" selected>${item.sp_code}</option>
         //     </select>`
         // Hidden input field for Select2 dropdown
-        var selectSpCode = `<input type="text" id="sp_code${i}">`
+        var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code">`
 
         var selectAgeData = `<select id="age_data${i}" class="age_data form-control">
             <option value="" selected></option>
@@ -72,10 +72,12 @@ function speciesTableChanged (){
         // To get the species code and name from the select2 dropdown:
         // $('#sp_code0').select2('data')  returns an object like: 
         // {id: "629", text: "629 - EUBALAENA JAPONICA (NORTH PACIFIC RIGHT WHALE)"}
-        var code = $(this).find('.sp_code').val()
+        var sp_data = $(this).find('.sp_code').select2('data')
+        console.log('Select2 has: '+sp_data)
+        // var code = sp_data.id
         var age = $(this).find('.age_data').val()
         var obs = $(this).find('.obs_type').val()
-        var sp = {sp_code: code, age_data: age, obs_type: obs}
+        var sp = {sp_code: sp_data.id, age_data: age, obs_type: obs}
         sp_list.push(sp)
 
     })
