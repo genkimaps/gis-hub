@@ -27,22 +27,20 @@ function load_sp_data(sp_data_str){
             <option value="Inferred">Inferred</option>
             </select>`
 
-        console.log(item)
         var tbl_row = `<tr id="species${i}">`
               + '<td class="w60">' +selectSpCode+ '</td>'
               + '<td class="w15">' +selectAgeData+ '</td>'
               + '<td class="w15">' +selectObsType+ '</td>'
               + '</tr>';
-        console.log(tbl_row)
         $('#ac_js_table').append(tbl_row)
         // Activate select2 on the sp code field
         $('#sp_code'+i).select2(ajax_spcodes)
         // Attach the select2 change detect event handler
         // https://stackoverflow.com/a/18615267
         $('#sp_code'+i).on('select2-selecting', function (e) {
-            var data = e.params.data;
+            // var data = e.params.data;
             console.log('Select2 changed: ')
-            console.log(data)
+            // console.log(data)
             speciesTableChanged()
         });
         // Set values in row
