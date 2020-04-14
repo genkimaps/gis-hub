@@ -11,6 +11,10 @@ function load_sp_data(sp_data_str){
     /* Append each row using templates. Once loaded, set values using jQuery. */
     sp_data.forEach(function(item, i){
 
+        var selectSpCode = `<select id="sp_code${i}" class="sp_code form-control">
+            <option value="" selected>${item.sp_code}</option>
+            </select>`
+
         var selectAgeData = `<select id="age_data${i}" class="age_data form-control">
             <option value="" selected></option>
             <option value="True">True</option>
@@ -26,7 +30,7 @@ function load_sp_data(sp_data_str){
 
         console.log(item)
         var tbl_row = `<tr id="species${i}">`
-              + '<td>' +item.sp_code+ '</td>'
+              + '<td>' +selectSpCode+ '</td>'
               + '<td>' +selectAgeData+ '</td>'
               + '<td>' +selectObsType+ '</td>'
               + '</tr>';
@@ -54,6 +58,19 @@ function load_sp_data(sp_data_str){
 
 function speciesTableChanged (){
     console.log('Change in ac_js_table')
+    // Collect all the species code data, to string
+    var sp_list = []
+    $('#ac_js_table tr').each(function(i){
+        var code = $(this).find('.sp_code').val()
+        var age = $(this).find('.age_data').val()
+        var obs = $(this).find('.obs_type').val()
+        var sp = {sp_code: code, age_data: age, obs_type: obs}
+        sp_list.push(sp)
+
+    })
+    var sp_string = JSON.stringify(sp_list)
+    console.log(sp_string)
+    $('#field-species_codes_js').val(sp_string)
 }
 
 
