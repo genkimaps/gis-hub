@@ -28,9 +28,9 @@ function load_sp_data(sp_data_str){
             </select>`
 
         var tbl_row = `<tr id="species${i}">`
-              + '<td class="w60">' +selectSpCode+ '</td>'
-              + '<td class="w15">' +selectAgeData+ '</td>'
-              + '<td class="w15">' +selectObsType+ '</td>'
+              + '<td>' +selectSpCode+ '</td>'
+              + '<td>' +selectAgeData+ '</td>'
+              + '<td>' +selectObsType+ '</td>'
               + '</tr>';
         $('#ac_js_table').append(tbl_row)
         // Activate select2 on the sp code field
@@ -74,7 +74,7 @@ function speciesTableChanged (){
         // $('#sp_code0').select2('data')  returns an object like: 
         // {id: "629", text: "629 - EUBALAENA JAPONICA (NORTH PACIFIC RIGHT WHALE)"}
         var sp_data = $(this).find('.sp_code').select2('data')
-        console.log('Select2 has: '+sp_data)
+        console.log('Select2 has: '+JSON.stringify(sp_data))
         // var code = sp_data.id
         var age = $(this).find('.age_data').val()
         var obs = $(this).find('.obs_type').val()
