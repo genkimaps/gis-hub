@@ -37,7 +37,8 @@ function load_sp_data(sp_data_str){
         $('#sp_code'+i).select2(ajax_spcodes)
         // Attach the select2 change detect event handler
         // https://stackoverflow.com/a/18615267
-        $('#sp_code'+i).on('select2-selecting', function (e) {
+        // $('#sp_code'+i).on('select2-selecting', function (e) {
+        $('#sp_code'+i).on('change', function (e) {
             // var data = e.params.data;
             console.log('Select2 changed: ')
             // console.log(data)
