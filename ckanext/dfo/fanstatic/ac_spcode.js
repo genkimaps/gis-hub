@@ -29,14 +29,20 @@ function load_sp_data(sp_data_str){
 
         console.log(item)
         var tbl_row = `<tr id="species${i}">`
-              + '<td>' +selectSpCode+ '</td>'
-              + '<td>' +selectAgeData+ '</td>'
-              + '<td>' +selectObsType+ '</td>'
+              + '<td class="w60">' +selectSpCode+ '</td>'
+              + '<td class="w15">' +selectAgeData+ '</td>'
+              + '<td class="w15">' +selectObsType+ '</td>'
               + '</tr>';
         console.log(tbl_row)
         $('#ac_js_table').append(tbl_row)
         // Activate select2 on the sp code field
         $('#sp_code'+i).select2(ajax_spcodes)
+        // Attach the select2 change detect event handler
+        $('#sp_code'+i).on('select2:select', function (e) {
+            var data = e.params.data;
+            console.log('Select2 changed: ')
+            console.log(data)
+        });
         // Set values in row
         console.log('Set age_data '+item.age_data)
         $('#sp_code'+i).val(item.sp_code)
@@ -52,9 +58,9 @@ function load_sp_data(sp_data_str){
         $('#obs_type'+i).on('change', function(){
             speciesTableChanged()
         })
-        $('#species'+i).find('.obs_type.age_data').on('change', function(){
-            speciesTableChanged()
-        })
+        // $('#species'+i).find('.obs_type.age_data').on('change', function(){
+        //     speciesTableChanged()
+        // })
     })
 }
 
@@ -63,6 +69,9 @@ function speciesTableChanged (){
     // Collect all the species code data, to string
     var sp_list = []
     $('#ac_js_table tr').each(function(i){
+        // To get the species code and name from the select2 dropdown:
+        // $('#sp_code0').select2('data')  returns an object like: 
+        // {id: "629", text: "629 - EUBALAENA JAPONICA (NORTH PACIFIC RIGHT WHALE)"}
         var code = $(this).find('.sp_code').val()
         var age = $(this).find('.age_data').val()
         var obs = $(this).find('.obs_type').val()
