@@ -36,6 +36,8 @@ function load_sp_data(sp_data_str){
 }
 
 
+
+
 $(document).ready(function() {
     console.log('Activate species codes composite field on species_codes_js')
     // Get value from the text field itself
@@ -44,4 +46,8 @@ $(document).ready(function() {
     var sp_data_str = "[{\"sp_code\": \"01C\", \"age_data\": \"False\", \"obs_type\": \"Inferred\"}]";
 
     load_sp_data(sp_data_str)
+    // Activate change detection on table 
+    $('#ac_js_table tr').on('.age_data.obs_type', 'change', function() {
+        console.log('Change in ac_js_table')
+    })
 })
