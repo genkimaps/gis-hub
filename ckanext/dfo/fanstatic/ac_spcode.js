@@ -107,6 +107,7 @@ console.log("Autocomplete JS for custom Species Code CKAN endpoint");
 // Docs for older Select2 bundled with CKAN, version 3.5.3
 // http://select2.github.io/select2/
 
+var initVal
 var ajax_spcodes = {
     placeholder: "Species code, latin name, common name",
     minimumInputLength: 1,
@@ -117,7 +118,8 @@ var ajax_spcodes = {
      See initSelection in the Documentation section: http://select2.github.io/select2
      Here we use the form of initSelection() for single select elements. */
     initSelection : function (element, callback) {
-        console.log('Element str: ' +JSON.stringify(element))
+        initVal = element
+        console.log('Element str: ' + element.val())
         var data = {id: element.val(), text: element.val()};
         // var data = [];
         // $(element.val().split(",")).each(function () {
