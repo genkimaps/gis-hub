@@ -25,9 +25,9 @@ function load_sp_data(sp_data){
             <option value="Inferred">Inferred</option>
             </select>`
         
-        var removeSpeciesBtn = `<a href="#" class="btn btn-danger remove-species">
+        var removeSpeciesBtn = `<div class="btn btn-danger remove-species">
             <i class="fa fa-minus" aria-hidden="true"></i>
-            </a>`
+            </div>`
 
         var tbl_row = `<tr id="species${i}">`
               + '<td>' +selectSpCode+ '</td>'
