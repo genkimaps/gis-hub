@@ -12,7 +12,7 @@ function load_sp_data(sp_data_str){
         //     <option value="${item.sp_code}" selected>${item.sp_code}</option>
         //     </select>`
         // Hidden input field for Select2 dropdown
-        var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code" style="width: 250px;">`
+        var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code" style="width: 280px;">`
 
         var selectAgeData = `<select id="age_data${i}" class="age_data form-control" style="width: 100px;">
             <option value="" selected></option>
@@ -119,6 +119,7 @@ var ajax_spcodes = {
     // The hidden input tag has an id like id="field-my_field_name"
     // See initSelection in the Documentation section: http://select2.github.io/select2
     initSelection : function (element, callback) {
+        console.log(element)
         var data = [];
         $(element.val().split(",")).each(function () {
             data.push({id: this, text: this});
