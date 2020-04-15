@@ -1,9 +1,7 @@
 
 
-function load_sp_data(sp_data_str){
-    console.log('Load codes: ' +sp_data_str)
-    var sp_data = JSON.parse(sp_data_str)
-    console.log(sp_data)
+function load_sp_data(sp_data){
+    
     /* Append each row using templates. Once loaded, set values using jQuery. */
     sp_data.forEach(function(item, i){
 
@@ -26,6 +24,10 @@ function load_sp_data(sp_data_str){
             <option value="Incidental">Incidental observation</option>
             <option value="Inferred">Inferred</option>
             </select>`
+        
+        var removeSpeciesBtn = `<a href="#" class="btn btn-danger remove-species">
+            <i class="fa fa-minus" aria-hidden="true"></i>
+            </a>`
 
         var tbl_row = `<tr id="species${i}">`
               + '<td>' +selectSpCode+ '</td>'
@@ -61,9 +63,13 @@ function load_sp_data(sp_data_str){
             console.log('Species data has changed')
             speciesTableChanged()
         })
-        $('#obs_type'+i).on('change', function(){
-            speciesTableChanged()
-        })
+        // $('#obs_type'+i).on('change', function(){
+        //     speciesTableChanged()
+        // })
+    })
+    // Bind all remove species buttons to parent <tr>
+    $('.remove-species').on('click', function(){
+        $(this).parent('tr').remove()
     })
 }
 
@@ -98,7 +104,17 @@ $(document).ready(function() {
     // var sp_data_str = $('#field-species_codes_js').val()
     var sp_data_str = "[{\"sp_code\": \"01C\", \"age_data\": \"False\", \"obs_type\": \"Inferred\"}]";
 
-    load_sp_data(sp_data_str)
+    console.log('Load codes: ' +sp_data_str)
+    var sp_data = JSON.parse(sp_data_str)
+    console.log(sp_data)
+
+    load_sp_data(sp_data)
+})
+
+// Add blank species row on click
+$('#add-species').on('click', function() {
+    var sp_blank = [{sp_data: '', age_data: '', obs_type: ''}]
+    load_sp_data(sp_blank)
 })
 
 
@@ -153,9 +169,5 @@ var ajax_spcodes = {
     }
 }
 
-// var field_name_spcodes = 'species_codes-0-sp_code'
-// $(document).ready(function() {
-//     console.log('Activate Select2 ajax on '+field_name_spcodes);
-//     $('#field-'+field_name_spcodes).select2(ajax_spcodes);
-// });
+
 
