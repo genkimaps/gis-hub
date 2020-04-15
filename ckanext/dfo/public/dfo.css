@@ -278,4 +278,5 @@ table.table-fit tbody td, table.table-fit tfoot td {
 /* Table for species codes */
 .spcode-table {
     table-layout: auto;
+    margin-bottom: 0px;
 }
