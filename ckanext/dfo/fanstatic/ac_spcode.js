@@ -27,7 +27,7 @@ function load_sp_data(sp_data){
             <option value="Inferred">Inferred</option>
             </select>`
         
-        var removeSpeciesBtn = `<div class="btn btn-danger remove-species">
+        var removeSpeciesBtn = `<div class="btn btn-danger" id="remove-species${i}>
             <i class="fa fa-minus" aria-hidden="true"></i>
             </div>`
 
@@ -65,14 +65,20 @@ function load_sp_data(sp_data){
             console.log('Species data has changed')
             speciesTableChanged()
         })
+
+        // Bind remove species button to parent <tr>
+        $(`#remove-species${i}`).on('click', function(){
+            console.log('remove')
+            $(`#species${i}`).remove()
+            // bbb = $(this)
+            // 
+            // $(this).parent('tr').remove()
+        })
         // $('#obs_type'+i).on('change', function(){
         //     speciesTableChanged()
         // })
     })
-    // Bind all remove species buttons to parent <tr>
-    $('.remove-species').on('click', function(){
-        $(this).parent('tr').remove()
-    })
+    
 }
 
 function speciesTableChanged (){
