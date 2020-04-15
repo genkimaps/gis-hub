@@ -119,7 +119,7 @@ var ajax_spcodes = {
      Here we use the form of initSelection() for single select elements. */
     initSelection : function (element, callback) {
         initVal = element
-        console.log('Element str: ' + element.val())
+        console.log('Initial value: ' + element.val())
         var data = {id: element.val(), text: element.val()};
         // var data = [];
         // $(element.val().split(",")).each(function () {

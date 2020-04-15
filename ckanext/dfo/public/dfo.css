@@ -274,3 +274,8 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .w60 {
     width: 60% !important;
 }
+
+/* Table for species codes */
+.spcode-table {
+    table-layout: auto;
+}
