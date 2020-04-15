@@ -27,7 +27,7 @@ function load_sp_data(sp_data){
             <option value="Inferred">Inferred</option>
             </select>`
         
-        var removeSpeciesBtn = `<div class="btn btn-danger" id="remove-species${i}>
+        var removeSpeciesBtn = `<div class="btn btn-danger" id="remove-species${i}">
             <i class="fa fa-minus" aria-hidden="true"></i>
             </div>`
 
