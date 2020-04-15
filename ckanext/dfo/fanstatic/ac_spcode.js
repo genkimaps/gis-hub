@@ -4,7 +4,8 @@ function load_sp_data(sp_data){
     
     /* Append each row using templates. Once loaded, set values using jQuery. */
 
-    // TODO: add to existing Id (row count)
+    // TODO: get the LAST row id in the table (don't use the length, items may have been remove in middle)
+    // add this value to existing Id (row count)
     var spRowCount = $('#ac_js_table tr').length
     console.log(`Species table has ${spRowCount} rows`)
     sp_data.forEach(function(item, i){
