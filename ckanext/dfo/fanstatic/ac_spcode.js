@@ -117,7 +117,7 @@ var ajax_spcodes = {
      See initSelection in the Documentation section: http://select2.github.io/select2
      Here we use the form of initSelection() for single select elements. */
     initSelection : function (element, callback) {
-        console.log('Element: ' +JSON.stringify(element))
+        console.log('Element str: ' +JSON.stringify(element))
         var data = {id: element.val(), text: element.val()};
         // var data = [];
         // $(element.val().split(",")).each(function () {
