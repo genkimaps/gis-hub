@@ -95,7 +95,7 @@ function speciesTableChanged (){
     })
     var sp_string = JSON.stringify(sp_list)
     console.log('Changed data: ' +sp_string)
-    $('#field-species_codes_js').val(sp_string)
+    $('#field-species_codes').val(sp_string)
 }
 
 
