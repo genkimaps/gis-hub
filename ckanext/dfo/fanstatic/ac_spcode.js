@@ -62,13 +62,13 @@ function load_sp_data(sp_data){
         /* Bind the change detect events. Although select2 has its own event handlers, 
            we can also use the generic jQuery .on('change') for select2  */
         $(`#sp_code${i}, #age_data${i}, #obs_type${i}`).on('change', function(){
-            console.log('Species data has changed')
+            // console.log('Species data has changed')
             speciesTableChanged()
         })
 
         // Bind remove species button to parent <tr>
         $(`#remove-species${i}`).on('click', function(){
-            console.log('remove')
+            // console.log('remove')
             $(`#species${i}`).remove()
             speciesTableChanged()
         })
@@ -94,23 +94,20 @@ function speciesTableChanged (){
 
     })
     var sp_string = JSON.stringify(sp_list)
-    console.log(sp_string)
+    console.log('Changed data: ' +sp_string)
     $('#field-species_codes_js').val(sp_string)
 }
 
 
 $(document).ready(function() {
-    console.log('Page loaded.')
-    console.log('Activate species codes composite field on species_codes_js')
+    console.log('Page loaded. Activate species codes field.')
     // Get value from the text field itself
     // Enable this later once field is active, for now only test
-    // var sp_data_str = $('#field-species_codes_js').val()
-    var sp_data_str = "[{\"sp_code\": \"01C\", \"age_data\": \"False\", \"obs_type\": \"Inferred\"}]";
+    var sp_data_str = $('#field-species_codes').val()
+    // var sp_data_str = "[{\"sp_code\": \"01C\", \"age_data\": \"False\", \"obs_type\": \"Inferred\"}]";
 
     console.log('Load codes: ' +sp_data_str)
     var sp_data = JSON.parse(sp_data_str)
-    // console.log(sp_data)
-
     load_sp_data(sp_data)
 })
 
@@ -138,12 +135,8 @@ var ajax_spcodes = {
      Here we use the form of initSelection() for single select elements. */
     initSelection : function (element, callback) {
         initVal = element
-        console.log('Initial value: ' + element.val())
+        console.debug('Initial value: ' + element.val())
         var data = {id: element.val(), text: element.val()};
-        // var data = [];
-        // $(element.val().split(",")).each(function () {
-        //     data.push({id: this, text: this});
-        // });
         callback(data);
     },
 
