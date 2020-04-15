@@ -70,13 +70,8 @@ function load_sp_data(sp_data){
         $(`#remove-species${i}`).on('click', function(){
             console.log('remove')
             $(`#species${i}`).remove()
-            // bbb = $(this)
-            // 
-            // $(this).parent('tr').remove()
+            speciesTableChanged()
         })
-        // $('#obs_type'+i).on('change', function(){
-        //     speciesTableChanged()
-        // })
     })
     
 }
