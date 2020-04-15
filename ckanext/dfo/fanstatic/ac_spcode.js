@@ -111,13 +111,13 @@ var ajax_spcodes = {
     placeholder: "Species code, latin name, common name",
     minimumInputLength: 1,
 
-    // initSelection populates the select box using the values in the linked element,
-    // which is the hidden input tag containing the comma-separated list of values.
-    // The hidden input tag has an id like id="field-my_field_name"
-    // See initSelection in the Documentation section: http://select2.github.io/select2
-    // Use the version for single select elements
+    /* initSelection populates the select box using the values in the linked element,
+     which is the hidden input tag containing the comma-separated list of values.
+     The hidden input tag has an id like id="field-my_field_name"
+     See initSelection in the Documentation section: http://select2.github.io/select2
+     Here we use the form of initSelection() for single select elements. */
     initSelection : function (element, callback) {
-        console.log('Element: ' +element)
+        console.log('Element: ' +JSON.stringify(element))
         var data = {id: element.val(), text: element.val()};
         // var data = [];
         // $(element.val().split(",")).each(function () {

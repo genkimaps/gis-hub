@@ -608,6 +608,7 @@ dataset_fields:
   form_snippet: ac_spcode_js.html
   display_snippet: text.html
   display_group: Science
+  help_text: "A list of species names / species codes.  This is a temporary field for testing."
 
 # Composite repeating field for species codes
 - field_name: species_codes
