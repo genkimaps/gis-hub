@@ -3,12 +3,10 @@
 function load_sp_data(sp_data){
     
     /* Append each row using templates. Once loaded, set values using jQuery. */
+
+    // TODO: add to existing Id (row count)
     sp_data.forEach(function(item, i){
 
-        // var selectSpCode = `<select id="sp_code${i}" class="sp_code form-control">
-        //     <option value="" selected></option>
-        //     <option value="${item.sp_code}" selected>${item.sp_code}</option>
-        //     </select>`
         // Hidden input field for Select2 dropdown
         var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code" style="width: 280px;">`
 
@@ -32,7 +30,7 @@ function load_sp_data(sp_data){
         var tbl_row = `<tr id="species${i}">`
               + '<td>' +selectSpCode+ '</td>'
               + '<td>' +selectAgeData+ '</td>'
-              + '<td>' +selectObsType+ '</td>'
+              + '<td>' +selectObsType+removeSpeciesBtn+ '</td>'
               + '</tr>';
         $('#ac_js_table').append(tbl_row)
 
