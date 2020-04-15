@@ -20,14 +20,14 @@ function load_sp_data(sp_data){
             <option value="False">False</option>
             </select>`
         
-        var selectObsType = `<select id="obs_type${i}" class="obs_type form-control" style="width: 150px;">
+        var selectObsType = `<select id="obs_type${i}" class="obs_type form-control" style="width: 180px;">
             <option value="" selected></option>
             <option value="Targeted">Targeted observation</option>
             <option value="Incidental">Incidental observation</option>
             <option value="Inferred">Inferred</option>
             </select>`
         
-        var removeSpeciesBtn = `<div class="btn btn-danger" id="remove-species${i}">
+        var removeSpeciesBtn = `<div class="btn btn-danger" id="remove-species${i}" style="margin-left: 10px;">
             <i class="fa fa-minus" aria-hidden="true"></i>
             </div>`
 
@@ -109,7 +109,7 @@ $(document).ready(function() {
 
     console.log('Load codes: ' +sp_data_str)
     var sp_data = JSON.parse(sp_data_str)
-    console.log(sp_data)
+    // console.log(sp_data)
 
     load_sp_data(sp_data)
 })
