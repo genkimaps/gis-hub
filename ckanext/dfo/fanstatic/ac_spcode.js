@@ -5,7 +5,11 @@ function load_sp_data(sp_data){
     /* Append each row using templates. Once loaded, set values using jQuery. */
 
     // TODO: add to existing Id (row count)
+    var spRowCount = $('#ac_js_table tr').length
+    console.log(`Species table has ${spRowCount} rows`)
     sp_data.forEach(function(item, i){
+
+        i = i + spRowCount
 
         // Hidden input field for Select2 dropdown
         var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code" style="width: 280px;">`
