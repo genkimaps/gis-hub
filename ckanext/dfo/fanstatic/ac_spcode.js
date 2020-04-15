@@ -33,35 +33,37 @@ function load_sp_data(sp_data_str){
               + '<td>' +selectObsType+ '</td>'
               + '</tr>';
         $('#ac_js_table').append(tbl_row)
+
+        // Set values in row
+        console.log(`Set data: code: ${item.sp_code} age: ${item.age_data} obs: ${item.obs_type}`)
+        /* We must first set the value on the sp_code field, which is linked to the Select2 object
+            When we activate .select2() on this input, it must have a value, or the initSelection() 
+            function inside the select2() activation mechanism will not be called. See docs: 
+            https://select2.github.io/select2/ "This function will only be called when 
+            there is initial input to be processed."
+        */
+        $('#sp_code'+i).val(item.sp_code)
+
         // Activate select2 on the sp code field
         $('#sp_code'+i).select2(ajax_spcodes)
-        // Attach the select2 change detect event handler
-        // https://stackoverflow.com/a/18615267
-        // $('#sp_code'+i).on('select2-selecting', function (e) {
-        $('#sp_code'+i).on('change', function (e) {
-            // var data = e.params.data;
-            console.log('Select2 changed: ')
-            // console.log(data)
-            speciesTableChanged()
-        });
-        // Set values in row
-        console.log('Set age_data '+item.age_data)
-        $('#sp_code'+i).val(item.sp_code)
+        
+        // Attach the select2 change detect event handler, 
+        // $('#sp_code'+i).on('change', function (e) {
+        //     console.log('Select2 for species has changed')
+        //     speciesTableChanged()
+        // });
+        
         $('#age_data'+i).val(item.age_data)
-        // $('#species'+i).find('.age_data').val(item.age_data)
-        console.log('Set obs_type '+item.obs_type)
         $('#obs_type'+i).val(item.obs_type)
-        // $('#species'+i).find('.obs_type').val(item.obs_type)
-        // Bind the change detect event
-        $('#age_data'+i).on('change', function(){
+        /* Bind the change detect events. Although select2 has its own event handlers, 
+           we can also use the generic jQuery .on('change') for select2  */
+        $(`#sp_code${i}, #age_data${i}, #obs_type${i}`).on('change', function(){
+            console.log('Species data has changed')
             speciesTableChanged()
         })
         $('#obs_type'+i).on('change', function(){
             speciesTableChanged()
         })
-        // $('#species'+i).find('.obs_type.age_data').on('change', function(){
-        //     speciesTableChanged()
-        // })
     })
 }
 
@@ -97,11 +99,6 @@ $(document).ready(function() {
     var sp_data_str = "[{\"sp_code\": \"01C\", \"age_data\": \"False\", \"obs_type\": \"Inferred\"}]";
 
     load_sp_data(sp_data_str)
-    // Activate change detection on table 
-    // console.log('Activate change detection on table')
-    // $('#ac_js_table tr').on('.age_data.obs_type', 'change', function() {
-    //     speciesTableChanged()
-    // })
 })
 
 
@@ -122,7 +119,7 @@ var ajax_spcodes = {
     initSelection : function (element, callback) {
         console.log('Element: ' +element)
         var data = {id: element.val(), text: element.val()};
-        var data = [];
+        // var data = [];
         // $(element.val().split(",")).each(function () {
         //     data.push({id: this, text: this});
         // });
