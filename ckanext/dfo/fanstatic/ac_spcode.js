@@ -118,12 +118,14 @@ var ajax_spcodes = {
     // which is the hidden input tag containing the comma-separated list of values.
     // The hidden input tag has an id like id="field-my_field_name"
     // See initSelection in the Documentation section: http://select2.github.io/select2
+    // Use the version for single select elements
     initSelection : function (element, callback) {
-        console.log(element)
+        console.log('Element: ' +element)
+        var data = {id: element.val(), text: element.val()};
         var data = [];
-        $(element.val().split(",")).each(function () {
-            data.push({id: this, text: this});
-        });
+        // $(element.val().split(",")).each(function () {
+        //     data.push({id: this, text: this});
+        // });
         callback(data);
     },
 
