@@ -12,9 +12,9 @@ function load_sp_data(sp_data){
         i = i + spRowCount
 
         // Hidden input field for Select2 dropdown
-        var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code" style="width: 280px;">`
+        var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code" style="width: 300px;">`
 
-        var selectAgeData = `<select id="age_data${i}" class="age_data form-control" style="width: 100px;">
+        var selectAgeData = `<select id="age_data${i}" class="age_data form-control" style="width: 60px;">
             <option value="" selected></option>
             <option value="True">True</option>
             <option value="False">False</option>
