@@ -606,7 +606,7 @@ dataset_fields:
 - field_name: species_codes
   label: Species Codes (internal)
   form_snippet: ac_spcode_js.html
-  display_snippet: text.html
+  display_snippet: species.html
   display_group: Science
   help_text: "A list of species names / species codes.  This is a temporary field for testing."
 
