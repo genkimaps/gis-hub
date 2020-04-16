@@ -1,1 +1,4 @@
-{{ h.dump_json(data[field.field_name]) }}
+{% for item in h.dump_json(data[field.field_name]) %}
+<div>{{ item }}</div>
+{% endfor %}
+
