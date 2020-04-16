@@ -16,6 +16,7 @@ import dfo_validation
 import dfo_autocomp
 import subprocess
 import traceback
+import json
 
 logger = dfo_plugin_settings.setup_logger(__name__)
 logger.info('This is the logger for ckanext-dfo')
@@ -237,7 +238,8 @@ class DFOPlugin(p.SingletonPlugin):
             'scheming_field_required': self.field_required_helper,
             'now': datetime.now,
             'utcnow': datetime.utcnow,
-            'resource_display_name': self.resource_display_name
+            'resource_display_name': self.resource_display_name,
+            'load_json': self.load_json
         }
 
     # Additional methods only in IResourceController
@@ -353,6 +355,10 @@ class DFOPlugin(p.SingletonPlugin):
             return _("Unnamed resource")
         else:
             return _(title)
+
+    @staticmethod
+    def load_json(obj, **kw):
+        return json.loads(obj, **kw)
 
 
 def get_thumbnail(package_id):
