@@ -1,16 +1,17 @@
 
-
+var spRowCount = 0
 function load_sp_data(sp_data){
     
-    /* Append each row using templates. Once loaded, set values using jQuery. */
-
-    // TODO: get the LAST row id in the table (don't use the length, items may have been remove in middle)
-    // add this value to existing Id (row count)
-    var spRowCount = $('#ac_js_table tr').length
-    console.log(`Species table has ${spRowCount} rows`)
+    /*  Append each row using templates. Once loaded, set values using jQuery. 
+        Ensure row count value only goes up, not down.  Initialize to 0, each time 
+        this function is called, the new value for i will always be greater than the 
+        last row in the table.  Add this value to existing Id (row count) 
+    */
+    console.log(`Species table has (up to) ${spRowCount} rows`)
     sp_data.forEach(function(item, i){
 
-        i = i + spRowCount
+        spRowCount++
+        i = spRowCount
 
         // Hidden input field for Select2 dropdown
         var selectSpCode = `<input type="text" id="sp_code${i}" class="sp_code" style="width: 300px;">`
@@ -40,7 +41,7 @@ function load_sp_data(sp_data){
         $('#ac_js_table').append(tbl_row)
 
         // Set values in row
-        console.log(`Set data: code: ${item.sp_code} age: ${item.age_data} obs: ${item.obs_type}`)
+        console.log(`Add data: row: ${i} code: ${item.sp_code} age: ${item.age_data} obs: ${item.obs_type}`)
         /* We must first set the value on the sp_code field, which is linked to the Select2 object
             When we activate .select2() on this input, it must have a value, or the initSelection() 
             function inside the select2() activation mechanism will not be called. See docs: 
@@ -51,13 +52,6 @@ function load_sp_data(sp_data){
 
         // Activate select2 on the sp code field
         $('#sp_code'+i).select2(ajax_spcodes)
-        
-        // Attach the select2 change detect event handler, 
-        // $('#sp_code'+i).on('change', function (e) {
-        //     console.log('Select2 for species has changed')
-        //     speciesTableChanged()
-        // });
-        
         $('#age_data'+i).val(item.age_data)
         $('#obs_type'+i).val(item.obs_type)
         /* Bind the change detect events. Although select2 has its own event handlers, 
@@ -78,7 +72,7 @@ function load_sp_data(sp_data){
 }
 
 function speciesTableChanged (){
-    console.log('Change in ac_js_table')
+    // console.log('Change in ac_js_table')
     // Collect all the species code data, to string
     var sp_list = []
     $('#ac_js_table tr').each(function(i){
@@ -87,25 +81,21 @@ function speciesTableChanged (){
         // {id: "629", text: "629 - EUBALAENA JAPONICA (NORTH PACIFIC RIGHT WHALE)"}
         var sp_data = $(this).find('.sp_code').select2('data')
         console.log('Select2 has: '+JSON.stringify(sp_data))
-        // var code = sp_data.id
         var age = $(this).find('.age_data').val()
         var obs = $(this).find('.obs_type').val()
         var sp = {sp_code: sp_data.id, age_data: age, obs_type: obs}
         sp_list.push(sp)
-
     })
     var sp_string = JSON.stringify(sp_list)
-    console.log('Changed data: ' +sp_string)
+    console.log('Species codes changed: ' +sp_string)
     $('#field-species_codes').val(sp_string)
 }
 
 
 $(document).ready(function() {
-    console.log('Page loaded. Activate species codes field.')
-    // Get value from the text field itself
-    // Enable this later once field is active, for now only test
+    console.log('Page loaded. Activating species codes field.')
+    // Get value from the field data
     var sp_data_str = $('#field-species_codes').val()
-    // var sp_data_str = "[{\"sp_code\": \"01C\", \"age_data\": \"False\", \"obs_type\": \"Inferred\"}]";
 
     console.log('Load codes: ' +sp_data_str)
     var sp_data = JSON.parse(sp_data_str)
@@ -165,6 +155,3 @@ var ajax_spcodes = {
         }
     }
 }
-
-
-

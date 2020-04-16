@@ -1,4 +1,19 @@
-{% for item in h.load_json(data[field.field_name]) %}
-<div>{{ item }}</div>
-{% endfor %}
-
+{% set spdata = h.load_json(data[field.field_name]) %}
+<table class="table table-striped spcode-table">
+  <thead>
+    <tr>
+      <th class="w50">Species Code</th>
+      <th class="w20">Age Data</th>
+      <th class="w30">Obs Type</th>
+    </tr>
+  </thead>
+  <tbody id="spcode_display">
+    {% for sp in spdata %}
+        <tr>
+            <td>{{ sp.sp_code }}</td>
+            <td>{{ sp.age_data }}</td>
+            <td>{{ sp.obs_type }}</td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>

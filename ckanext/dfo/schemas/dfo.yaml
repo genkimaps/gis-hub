@@ -608,7 +608,7 @@ dataset_fields:
   form_snippet: ac_spcode_js.html
   display_snippet: species.html
   display_group: Science
-  help_text: "A list of species names / species codes.  This is a temporary field for testing."
+  help_text: "A list of species names / species codes.  If your data does not contain any species codes, disregard this section and leave the fields blank in the section below.  For each species in your data, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred.  If you have a large number of species codes, you may include a file named species_codes.csv.  For a detailed description of the format of this file, refer to the GIS Hub publishing guide document. "
 
 # Composite repeating field for species codes
 # - field_name: species_codes
