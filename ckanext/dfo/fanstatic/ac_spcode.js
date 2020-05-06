@@ -97,6 +97,12 @@ $(document).ready(function() {
     // Get value from the field data
     var sp_data_str = $('#field-species_codes').val()
 
+    // Load default value if blank
+    if (sp_data_str === ''){
+        console.log('Using template (blank) sp code JSON')
+        sp_data_str = "[{\"sp_code\": \"\", \"age_data\": \"\", \"obs_type\": \"\"}]"
+    }
+
     console.log('Load codes: ' +sp_data_str)
     var sp_data = JSON.parse(sp_data_str)
     load_sp_data(sp_data)
