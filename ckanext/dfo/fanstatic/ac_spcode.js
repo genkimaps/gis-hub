@@ -80,7 +80,7 @@ function speciesTableChanged (){
         // $('#sp_code0').select2('data')  returns an object like: 
         // {id: "629", text: "629 - EUBALAENA JAPONICA (NORTH PACIFIC RIGHT WHALE)"}
         var sp_data = $(this).find('.sp_code').select2('data')
-        console.log('Select2 has: '+JSON.stringify(sp_data))
+        console.debug('Select2 contains: '+JSON.stringify(sp_data))
         var age = $(this).find('.age_data').val()
         var obs = $(this).find('.obs_type').val()
         var sp = {sp_code: sp_data.id, age_data: age, obs_type: obs}
