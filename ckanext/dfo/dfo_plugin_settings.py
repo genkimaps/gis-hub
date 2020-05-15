@@ -9,7 +9,9 @@ screen_fmt = logging.Formatter(
     '%(asctime)s:%(levelname)s:%(module)s(%(lineno)d) - %(message)s')
 
 goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
+# goc_themes_id = 'd7cef65f-41ad-4828-a810-c00766b3c372'
 species_codes_id = 'cdc22563-dc61-4abc-9b6d-a863382e4b6c'
+# species_codes_id = '5669e395-17ef-4c4f-bea5-b8140a39f304'
 
 # hubapi_venv = os.environ.get('HUBAPI_VENV_CKAN')
 hubapi_venv = '/home/dfo/.virtualenvs/hubapi/bin/python3'
