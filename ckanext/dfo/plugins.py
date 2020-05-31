@@ -301,8 +301,12 @@ class DFOPlugin(p.SingletonPlugin):
             # Ignore if entity is in the middle of updating
             res_id = entity.id
 
-            logger.info('Resource id: %s' % res_id)
-            logger.info('Action: %s' % operation)
+            if len(res_id) > 6 \
+                    and entity.url_type == 'upload' and entity.url is not None \
+                    and operation in ['changed', 'new']:
+
+                logger.info('Resource id: %s' % res_id)
+                logger.info('Action: %s' % operation)
 
             # res_data = ckanapi.get_resource(res_id)
             # if res_id is None:
