@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+from ckan import model
 import ckan.plugins as p
 import ckan.plugins.toolkit as toolkit
 import ckan.lib.helpers as h
@@ -100,6 +101,7 @@ class DFOPlugin(p.SingletonPlugin):
     p.implements(p.IRoutes)
     p.implements(p.IValidators)
     p.implements(p.IResourceController)
+    p.implements(p.IDomainObjectModification)
     
     # Added for custom autocomplete
     p.implements(p.IActions)
@@ -289,6 +291,27 @@ class DFOPlugin(p.SingletonPlugin):
             'require_when_published': self.required_validator,
             'goc_themes_only': self.goc_themes_validator
         }
+
+    # IDomainObjectModification
+    def notify(self, entity, operation=None):
+
+        logger.info('notify() was called')
+
+        if isinstance(entity, model.Resource):
+            # Ignore if entity is in the middle of updating
+            res_id = entity.id
+
+            logger.info('Resource id: %s' % res_id)
+            logger.info('Action: %s' % operation)
+
+            # res_data = ckanapi.get_resource(res_id)
+            # if res_id is None:
+            #     print('No resource ID!')
+            #     return
+            #
+            # # print('Notification: %s' % entity)
+            # print('id: %s' % res_id)
+            # print('Action: %s' % operation)
 
     @staticmethod
     def goc_themes_validator(value, context):
