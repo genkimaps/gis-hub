@@ -604,7 +604,7 @@ dataset_fields:
 
 # Temp field for JS species code autocomplete module
 - field_name: species_codes
-  label: Species Codes
+  label: Species Data
   form_snippet: ac_spcode_js.html
   display_snippet: species.html
   display_group: Science

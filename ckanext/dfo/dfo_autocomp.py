@@ -106,7 +106,6 @@ def search_species_code(context, data_dict):
         # Default limit is only 100 items
         'limit': 5000,
         'sql': sql
-
     }
     result = get_action('datastore_search_sql')(context, search_qry)
 

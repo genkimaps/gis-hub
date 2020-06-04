@@ -2,7 +2,17 @@
 var spRowCount = 0
 function load_sp_data(sp_data){
     
-    /*  Append each row using templates. Once loaded, set values using jQuery. 
+    /*
+        This function is used when EDITING species codes in the GIS Hub dataset editing interface.
+        It is loaded by ac_spcode_js.html.
+
+        There are two use cases:
+        1. load existing species codes from the dataset's metadata
+        2. load a new blank species code from the template
+        In both cases, the species code (containing data, or blank) is a table row,
+        with a select2() drop-down element in the first column.
+
+        This function append each row using templates. Once loaded, set values using jQuery.
         Ensure row count value only goes up, not down.  Initialize to 0, each time 
         this function is called, the new value for i will always be greater than the 
         last row in the table.  Add this value to existing Id (row count) 
@@ -83,7 +93,7 @@ function speciesTableChanged (){
         console.debug('Select2 contains: '+JSON.stringify(sp_data))
         var age = $(this).find('.age_data').val()
         var obs = $(this).find('.obs_type').val()
-        var sp = {sp_code: sp_data.id, age_data: age, obs_type: obs}
+        var sp = {sp_code: sp_data.id, sp_name: sp_data.text, age_data: age, obs_type: obs}
         sp_list.push(sp)
     })
     var sp_string = JSON.stringify(sp_list)
@@ -100,7 +110,7 @@ $(document).ready(function() {
     // Load default value if blank
     if (sp_data_str === ''){
         console.log('Using template (blank) sp code JSON')
-        sp_data_str = "[{\"sp_code\": \"\", \"age_data\": \"\", \"obs_type\": \"\"}]"
+        sp_data_str = "[{\"sp_code\": \"\", \"sp_name\": \"\", \"age_data\": \"\", \"obs_type\": \"\"}]"
     }
 
     console.log('Load codes: ' +sp_data_str)
@@ -110,7 +120,7 @@ $(document).ready(function() {
 
 // Add blank species row on click
 $('#add-species').on('click', function() {
-    var sp_blank = [{sp_data: '', age_data: '', obs_type: ''}]
+    var sp_blank = [{sp_data: '', sp_name: '', age_data: '', obs_type: ''}]
     load_sp_data(sp_blank)
 })
 
