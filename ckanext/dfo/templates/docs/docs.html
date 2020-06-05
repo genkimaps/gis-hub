@@ -16,30 +16,6 @@
       <p>This section summarizes known issues on the GIS Hub
         that affect the end-user experience, and where available,
         a workaround. </p>
-      <p>
-        <b>Problem:</b> When creating or updating a dataset, in the Species Codes
-        section, clicking the green + button allows adding additional codes.
-        However, the species code drop-down menu only works for the first code.
-        <del>Also, species codes after 29V - NASSARIUS FOSSATUS do not work.</del>
-        <br>
-        <b>Workaround:</b>  Include a file called species_codes.csv, with
-        a list of all your codes, inside the zipped data upload.
-        See the section on Species Codes for a detailed description
-        of the file format. <del>This does not solve the bug with codes
-        after 29V not being saved, but as long as the species codes are
-        saved in the csv file, the list of codes can be refreshed
-        when this bug is fixed.</del>
-        <br>
-        <b>Note: </b> An additional field called "Species Code List" has been
-        added to the metadata schema.  All species codes will appear in this field.
-        This field will be removed once the bug described above is fixed.
-        <br>
-        <b>Note: </b> The bug with codes past 29V has been fixed. However, performance
-          of the species code dropdown is now very slow, since it has to
-        load all entries in the menu.  Because of this, it is usually more efficient to
-        include a species codes file and not bother with trying to enter the information
-        manually using the web interface.
-      </p>
 
       <p>
         <b>Problem:</b> Projections and/or projection codes are sometimes not 
@@ -48,7 +24,11 @@
         <b>Workaround:</b> After uploading you data, the GIS Hub will attempt to 
         populate these fields automatically.  If it fails to do so, you may see 
         "unknown" or something else.  This field can be edited to have the correct value.
-        We are working on a solution for better detection of spatial references. 
+      </p>
+
+      <p>
+        <b>Note: </b>Previous issues with species codes are now resolved.  See the Species Codes
+        section in the document below.
       </p>
 
       <h2 id="intro">Introduction</h2>
@@ -465,11 +445,14 @@
     </table>
 
 
-    <h3 id="species">Species Codes</h3>
+    <h3 id="species">Species Data</h3>
     <p>Species codes are only required if your data is biological.
       Complete the following metadata for <b>each</b> species in your data.
       If the list of species is excessively long, you may include a list
-      of species codes in a csv (see below). </p>
+      of species codes in a csv (see below).  Click the green plus sign
+      to add another species code entry, and use the red buttons at right
+      to remove existing entries.
+    </p>
 
     <table class="table table-striped table-bordered">
       <thead>
@@ -481,7 +464,10 @@
       <tbody>
         <tr>
           <td>Species Code</td>
-          <td>A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. </td>
+          <td>A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available,
+            the list can be updated.  If you are editing existing species data, only the code will be displayed in the
+            dropdown menus.  To show the full species name, click the dropdown menu and re-type the species code, then
+            press Enter. </td>
         </tr>
         <tr>
           <td>Age Data</td>
@@ -496,7 +482,13 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
     </table>
 
       <h3>Including a species codes file</h3>
-      <p>In many cases, it will be more convenient to include a file with a list of species codes, instead of filling out this form manually.  The format of the file is one line per species code. </p>
+      <p>
+        <b>Note: </b>Species data can either be entered manually using the form in the Species Data section,
+        <i>or</i> included in a species codes file, but not both.  If you include a species codes file in your
+        data upload, any existing species data will be overwritten.
+      </p>
+      <p>In many cases, it will be more convenient to include a file with a list of species codes,
+        instead of filling out this form manually.  The format of the file is one line per species code. </p>
       <p>First column: species code.  Ensure that the code includes any leading zeros, for example <b>004 instead of 4</b>.
         <br>
       2nd column: Observation type:  targeted / incidental / inferred  Default: targeted <br>
