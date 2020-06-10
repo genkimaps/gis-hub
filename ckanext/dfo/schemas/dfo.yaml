@@ -57,7 +57,7 @@ dataset_fields:
 
 - field_name: maintainer_email
   label: Maintainer Email
-  help_text: "Email address of the person responsible for the dataset.  Notifications about access requests and other updates will be send to this email."
+  help_text: "Email address of the person responsible for the dataset.  Notifications about access requests and other updates will be sent to this email."
   validators: not_empty
   display_group: Basic Information
   display_snippet: text.html
