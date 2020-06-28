@@ -741,9 +741,12 @@ resource_fields:
 # Map preview link
 - field_name: map_preview_link
   label: Map Preview
-  help_text: "Link to a web map preview of this layer.  You do not need to complete this field manually.  If the link opens but nothing is displayed, it means that a map preview for this layer has not yet been generated.  If the layer is complex and contains many objects, it may take a long time to render.  You may zoom in on an area of interest to improve rendering time. "
-  display_snippet: link.html
-  form_snippet: text.html
+  help_text: "Link to a web map preview of this layer.  You do not need to complete this field manually.
+  A map preview link will be generated if the layer was successfully published to the GIS hub mapserver.
+  If the data is not in a supported format, or it is too complex to display in a web map, this field will
+  not contain a link. "
+  form_snippet: markdown.html
+  display_snippet: markdown.html
 
 # Layer/File Info
 - field_name: layer_name
