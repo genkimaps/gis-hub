@@ -720,20 +720,6 @@ dataset_fields:
   form_snippet: null
   display_snippet: null
 
-# Hidden field for readme_updated flag. This field is set true only immediately before the zip file
-# containing a new readme is uploaded, and is set false as soon as that upload is detected.
-# This is to avoid a duplicate trigger of the hub-geo-api script.
-- field_name: readme_updated
-  form_snippet: null
-  display_snippet: null
-
-#- field_name: change_description_dataset
-#  label: Description of Change
-#  help_text: "Describe what you have changed in the metadata on this page."
-#  display_group: Science
-#  form_snippet: textarea.html
-#  display_snippet: null
-
 
 # Resource (layer/file-level) metadata fields
 resource_fields:
