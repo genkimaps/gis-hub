@@ -15,6 +15,7 @@ species_codes_id = 'cdc22563-dc61-4abc-9b6d-a863382e4b6c'
 hubapi_venv = '/home/dfo/.virtualenvs/hubapi/bin/python3'
 hubapi_backup_script = '/home/dfo/hub-geo-api/backups.py'
 
+
 def setup_logger(name, level=logging.INFO):
     logger = logging.getLogger(name)
     logger.setLevel(level)
