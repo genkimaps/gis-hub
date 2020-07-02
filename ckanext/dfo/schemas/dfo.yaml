@@ -40,21 +40,6 @@ dataset_fields:
   display_group: Basic Information
   display_snippet: text.html
 
-- field_name: quality_control
-  label: Quality Control
-  help_text: "Indicates the status of quality control on the dataset and its metadata."
-  default: Check Required
-  display_snippet: select.html
-  form_snippet: select.html
-  validators: require_when_published
-  choices:
-  - label: Completed
-    value: Completed
-  - label: Check Required
-    value: Check Required
-  - label: Problems Identified
-    value: Problems Identified
-
 - field_name: notes
   label: Summary
   help_text: "Brief narrative summary of the dataset's contents."
@@ -206,6 +191,21 @@ dataset_fields:
     validators: require_when_published
 
 # General
+
+- field_name: quality_control
+  label: Quality Control
+  help_text: "Indicates the status of quality control on the dataset and its metadata."
+  default: Check Required
+  display_snippet: select.html
+  form_snippet: select.html
+  validators: require_when_published
+  choices:
+  - label: Completed
+    value: Completed
+  - label: Check Required
+    value: Check Required
+  - label: Problems Identified
+    value: Problems Identified
 
 - field_name: topic_category
   label: Topic Category
