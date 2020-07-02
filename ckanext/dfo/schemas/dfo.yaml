@@ -40,6 +40,21 @@ dataset_fields:
   display_group: Basic Information
   display_snippet: text.html
 
+- field_name: quality_control
+  label: Quality Control
+  help_text: "Indicates the status of quality control on the dataset and its metadata."
+  default: Check Required
+  display_snippet: select.html
+  form_snippet: select.html
+  validators: require_when_published
+  choices:
+  - label: Completed
+    value: Completed
+  - label: Check Required
+    value: Check Required
+  - label: Problems Identified
+    value: Problems Identified
+
 - field_name: notes
   label: Summary
   help_text: "Brief narrative summary of the dataset's contents."
@@ -110,22 +125,6 @@ dataset_fields:
   form_snippet: null
   display_snippet: null
   default: "Placeholder for French summary"
-
-- field_name: quality_control
-  label: Quality Control
-  help_text: "Indicates the status of quality control on the dataset and its metadata."
-  default: Check Required
-  display_snippet: select.html
-  form_snippet: select.html
-  validators: require_when_published
-  choices:
-  - label: Completed
-    value: Completed
-  - label: Check Required
-    value: Check Required
-  - label: Problems Identified
-    value: Problems Identified
-
 
 # Contacts
 
@@ -391,7 +390,7 @@ dataset_fields:
 - field_name: science_keywords
   preset: tag_string_autocomplete
   label: Science Keywords
-  help_text: "Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. These keywords may include domain-specific vocabulary appropriate for scientific users.  All keywords, including acronyms, should be lowercase. Acronyms should be in singalar form (no trailing s)."
+  help_text: "Enter additional comma-separated scientific keywords not included in the general-purpose Government of Canada Core Subject Thesaurus. These keywords may include domain-specific vocabulary appropriate for scientific users.  All keywords, including acronyms, should be lowercase. Acronyms should be in singular form (no trailing s)."
   validators: require_when_published tag_string_convert
   display_group: Science
 
