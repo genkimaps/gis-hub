@@ -46,6 +46,7 @@ dataset_fields:
   default: Check Required
   display_snippet: select.html
   form_snippet: select.html
+  display_group: Basic Information
   validators: require_when_published
   choices:
   - label: Completed
