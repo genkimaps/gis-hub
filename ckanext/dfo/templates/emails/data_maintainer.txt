@@ -1,0 +1,3 @@
+This is an automated message from the GIS Hub. You are listed as a data maintainer for a dataset and it has been over x days since the metadata has been modified. 
+
+Please confirm with the data creator if there have been any modifications to the data and update as necessary.
