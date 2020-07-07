@@ -26,40 +26,47 @@ def parse_csv(csv_file):
         print(e.args)
 
 
-def read_template(file_name):
+def read_templates(body_file, subject_file):
     """
     Open email template and return Template object made from its contents.
     """
     try:
-        with io.open(file_name, "r", encoding="utf-8") as msg_template:
+        with io.open(body_file, "r", encoding="utf-8") as msg_template:
             msg_template_content = msg_template.read()
-        return Template(msg_template_content)
+        with io.open(subject_file, "r", encoding="utf-8") as subject_template:
+            subject_template_content = subject_template.read()
+        return Template(msg_template_content), Template(subject_template_content)
     except Exception as e:
         print(e.args)
 
 
-def setup_smtp(dataset_records, message_template):
-    # set up the SMTP server
+def setup_smtp(dataset_records, message_template, subject_template):
+    # Set up the SMTP server with mailgun settings.
     server = smtplib.SMTP(host=os.environ.get("CKAN_SMTP_SERVER"))
+
+    # Start connection to server and login with credentials.
     server.starttls()
     server.login(os.environ.get("CKAN_SMTP_USER"), os.environ.get("CKAN_SMTP_PASSWORD"))
 
     # For each record (dataset) in csv, send message.
     for record in dataset_records:
-        msg = MIMEMultipart()  # create a message
+        msg = MIMEMultipart()
 
-        # add in the actual person name to the message template
+        # Add in the actual person name to the message template.
         message = message_template.substitute(PERSON_NAME=record["maintainer_name"])
 
-        # setup the parameters of the message
+        # Add in custom subject with dataset name.
+        subject = subject_template.substitute(DATASET_NAME=record["title"])
+
+        # Setup the parameters of the message.
         msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
         msg["To"] = record["maintainer_email"]
-        msg["Subject"] = "This is TEST"
+        msg["Subject"] = subject
 
-        # add in the message body
+        # Add the message from template to body of email.
         msg.attach(MIMEText(message, "plain"))
 
-        # send the message via the server set up earlier.
+        # Send the message via the server set up earlier.
         server.sendmail(msg["From"], msg["To"], msg.as_string())
         server.quit()
 
