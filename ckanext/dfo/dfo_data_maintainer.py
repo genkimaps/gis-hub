@@ -52,7 +52,7 @@ def setup_smtp(dataset_records, message_template):
         message = message_template.substitute(PERSON_NAME=record["maintainer_name"])
 
         # setup the parameters of the message
-        msg["From"] = "CKAN_SMTP_MAIL_FROM"
+        msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
         msg["To"] = record["maintainer_email"]
         msg["Subject"] = "This is TEST"
 
