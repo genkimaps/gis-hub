@@ -6,6 +6,7 @@ Functions for parsing csv file and emailing users.
 from csv import DictReader
 from string import Template
 import os
+import io
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -30,7 +31,7 @@ def read_template(file_name):
     Open email template and return Template object made from its contents.
     """
     try:
-        with open(file_name, "r", encoding="utf-8") as msg_template:
+        with io.open(file_name, "r", encoding="utf-8") as msg_template:
             msg_template_content = msg_template.read()
         return Template(msg_template_content)
     except Exception as e:
