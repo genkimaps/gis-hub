@@ -28,7 +28,7 @@ def parse_csv(csv_file):
 
 def read_templates(body_file, subject_file):
     """
-    Open email template and return Template object made from its contents.
+    Open email message and subject templates and return Template objects made from their contents.
     """
     try:
         with io.open(body_file, "r", encoding="utf-8") as msg_template:
@@ -41,6 +41,11 @@ def read_templates(body_file, subject_file):
 
 
 def setup_smtp(dataset_records, message_template, subject_template):
+    """
+    Establishes connection with MailGun server. Loops through data in list of dictionaries from
+    SQL database query. For each record, send an email to the data maintainer with details about the
+    dataset they are responsible for.
+    """
     # Set up the SMTP server with mailgun settings.
     server = smtplib.SMTP(host=os.environ.get("CKAN_SMTP_SERVER"))
 
@@ -74,3 +79,19 @@ def setup_smtp(dataset_records, message_template, subject_template):
 
     server.quit()
     del msg
+
+
+def main():
+    # Load data from csv file - results from SQL query to extract dataset maintainer details.
+    maintainer_list = parse_csv("/tmp/maintainer_details.csv")
+
+    # Load template email body and subject.
+    email_template_obj = read_templates("templates/emails/data_maintainer.txt",
+                                        "templates/emails/data_maintainer_subject.txt")
+
+    # Use data from maintainer_list and email_template_obj to send email to list of users.
+    setup_smtp(maintainer_list, email_template_obj[0], email_template_obj[1])
+
+
+if __name__ == "__main__":
+    main()
