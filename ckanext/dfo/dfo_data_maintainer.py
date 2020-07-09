@@ -4,6 +4,7 @@ Functions for parsing csv file and emailing users.
 
 # Import modules.
 from csv import DictReader
+import pandas as pd
 from string import Template
 import os
 import io
@@ -12,16 +13,23 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-def parse_csv(csv_file):
+def parse_csv(csv_path):
     """
     Parse csv of datasets with their associated data maintainers.
     Return a list of python dictionaries with information about dataset.
     """
     try:
-        with open(csv_file, "r") as csv:
-            dict_reader = DictReader(csv)
-            list_of_dicts = list(dict_reader)
-            return list_of_dicts
+        with open(csv_path, "r") as csv_file:
+            # Read data from csv as dataframe.
+            data = pd.read_csv(csv_file)
+            # Filter out records with NA values.
+            data = data.dropna()
+            # Group data and aggregate unique values from other columns into lists.
+            data_grouped = data.groupby(["title", "maintainer_email", "maintainer_name", "url"],
+                                        as_index=False)["name", "days_since_modified"].agg(lambda x: list(x))
+            # Filter out records with NAs.
+            data_dict = data_grouped.to_dict('r')
+            return data_dict
     except Exception as e:
         print(e.args)
 
