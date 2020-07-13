@@ -1,13 +1,20 @@
 Hello ${PERSON_NAME},
 
 This is an automated message from the GIS Hub. You are listed as a data maintainer for the ${DATASET_NAME} dataset.
-According to the system, it has been ${DAYS_SINCE_MODIFIED} days since the metadata has been modified.
+According to the system, it has been at least ${DAYS_SINCE_MODIFIED} days since one or more of the resources in the
+dataset have been modified.
 
-{% for item in ${DAYS_SINCE_MODIFIED} %}
-    {{ item }}
-{% endfor %}
-
-${RESOURCE_NAME}
+<table>
+  <%
+  for item in ${RESOURCE_NAME}:
+    %>
+    <tr>
+      <th>Name</th>
+      <td><%= item %></td>
+    </tr>
+    <%
+  %>
+</table>
 
 The dataset can be found here: ${DATA_URL}. Please confirm with the data creator if there have been any modifications
 to the data and update as necessary. If it does not require any updates, please notify the GIS Hub Administrator at
