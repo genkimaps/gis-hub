@@ -80,13 +80,12 @@ def setup_smtp(dataset_records, message_template, subject_template):
         msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
         msg["To"] = record["maintainer_email"]
         msg["Subject"] = subject
-        msg["Cc"] = ["Cole.Fields@dfo-mpo.gc.ca"]
 
         # Add the message from template to body of email.
         msg.attach(MIMEText(message, "plain"))
 
         # Send the message via the server set up earlier.
-        server.sendmail(msg["From"], msg["To"]+msg["Cc"], msg.as_string())
+        server.sendmail(msg["From"], msg["To"], msg.as_string())
 
     server.quit()
     del msg
