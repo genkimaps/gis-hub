@@ -24,8 +24,8 @@ def parse_csv(csv_path):
             data = pd.read_csv(csv_file)
             # Filter out records with NA values.
             data = data.dropna()
-            # Filter out records where last modified date was over 50 days ago.
-            data = data[data["days_since_modified"] > 50]
+            # Filter out records where last modified date was over 365 days ago.
+            data = data[data["days_since_modified"] > 365]
             # Group data and aggregate unique values from other columns into lists.
             data_grouped = data.groupby(["title", "maintainer_email", "maintainer_name", "url"],
                                         as_index=False)["name", "days_since_modified"].agg(lambda x: list(x))
@@ -80,7 +80,7 @@ def setup_smtp(dataset_records, message_template, subject_template):
         msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
         msg["To"] = record["maintainer_email"]
         msg["Subject"] = subject
-        msg["CC"] = "Cole.Fields@dfo-mpo.gc.ca"
+        msg["Cc"] = "Cole.Fields@dfo-mpo.gc.ca"
 
         # Add the message from template to body of email.
         msg.attach(MIMEText(message, "plain"))
