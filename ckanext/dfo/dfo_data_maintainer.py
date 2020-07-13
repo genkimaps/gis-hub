@@ -68,8 +68,7 @@ def setup_smtp(dataset_records, message_template, subject_template):
         # Add in the actual person name to the message template.
         message = message_template.substitute(PERSON_NAME=record["maintainer_name"],
                                               DATASET_NAME=record["title"],
-                                              DAYS_SINCE_MODIFIED=record["days_since_modified"],
-                                              RESOURCE_NAME=record["name"],
+                                              DAYS_SINCE_MODIFIED_MAX=max(record["days_since_modified"]),
                                               DATA_URL=record["url"])
 
         # Add in custom subject with dataset name.
