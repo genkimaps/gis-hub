@@ -86,7 +86,7 @@ def setup_smtp(dataset_records, message_template, subject_template):
         msg.attach(MIMEText(message, "plain"))
 
         # Send the message via the server set up earlier.
-        server.sendmail(msg["From"], msg["To"], msg.as_string())
+        server.sendmail(msg["From"], (msg["To"]+msg["Cc"]), msg.as_string())
 
     server.quit()
     del msg
