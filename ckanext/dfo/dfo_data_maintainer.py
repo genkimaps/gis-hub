@@ -29,6 +29,8 @@ def parse_csv(csv_path):
                                         as_index=False)["name", "days_since_modified"].agg(lambda x: list(x))
             # Filter out records with NAs.
             data_dict = data_grouped.to_dict('r')
+            # Filter out records where last modified date was over 50 days ago.
+            data_dict = data_dict[data_dict["days_since_modified"] > 50]
             return data_dict
     except Exception as e:
         print(e.args)
@@ -69,7 +71,6 @@ def setup_smtp(dataset_records, message_template, subject_template):
         message = message_template.substitute(PERSON_NAME=record["maintainer_name"],
                                               DATASET_NAME=record["title"],
                                               DAYS_SINCE_MODIFIED_MAX=max(record["days_since_modified"]),
-                                              RESOURCE_NAME=record["name"],
                                               DATA_URL=record["url"])
 
         # Add in custom subject with dataset name.
@@ -82,7 +83,7 @@ def setup_smtp(dataset_records, message_template, subject_template):
         msg["CC"] = "Cole.Fields@dfo-mpo.gc.ca"
 
         # Add the message from template to body of email.
-        msg.attach(MIMEText(message, "html"))
+        msg.attach(MIMEText(message, "plain"))
 
         # Send the message via the server set up earlier.
         server.sendmail(msg["From"], msg["To"], msg.as_string())
