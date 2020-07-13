@@ -24,13 +24,13 @@ def parse_csv(csv_path):
             data = pd.read_csv(csv_file)
             # Filter out records with NA values.
             data = data.dropna()
+            # Filter out records where last modified date was over 50 days ago.
+            data = data[data["days_since_modified"] > 50]
             # Group data and aggregate unique values from other columns into lists.
             data_grouped = data.groupby(["title", "maintainer_email", "maintainer_name", "url"],
                                         as_index=False)["name", "days_since_modified"].agg(lambda x: list(x))
             # Filter out records with NAs.
             data_dict = data_grouped.to_dict('r')
-            # Filter out records where last modified date was over 50 days ago.
-            data_dict = data_dict[data_dict["days_since_modified"] > 50]
             return data_dict
     except Exception as e:
         print(e.args)
