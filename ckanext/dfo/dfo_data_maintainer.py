@@ -69,6 +69,7 @@ def setup_smtp(dataset_records, message_template, subject_template):
         message = message_template.substitute(PERSON_NAME=record["maintainer_name"],
                                               DATASET_NAME=record["title"],
                                               DAYS_SINCE_MODIFIED_MAX=max(record["days_since_modified"]),
+                                              RESOURCE_NAME=record["name"],
                                               DATA_URL=record["url"])
 
         # Add in custom subject with dataset name.
@@ -78,9 +79,10 @@ def setup_smtp(dataset_records, message_template, subject_template):
         msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
         msg["To"] = record["maintainer_email"]
         msg["Subject"] = subject
+        msg["CC"] = "Cole.Fields@dfo-mpo.gc.ca"
 
         # Add the message from template to body of email.
-        msg.attach(MIMEText(message, "plain"))
+        msg.attach(MIMEText(message, "html"))
 
         # Send the message via the server set up earlier.
         server.sendmail(msg["From"], msg["To"], msg.as_string())
