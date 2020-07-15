@@ -27,7 +27,7 @@ def parse_csv(csv_path):
                 # Filter out records with NA values.
                 data = data.dropna()
                 # Filter out records where last modified date was over 365 days ago.
-                data = data[data["days_since_modified"] > 50]
+                data = data[data["days_since_modified"] >= 365]
                 # Group data and aggregate unique values from other columns into lists.
                 data_grouped = data.groupby(["title", "maintainer_email", "maintainer_name", "url"],
                                             as_index=False)["name", "days_since_modified"].agg(lambda x: list(x))
