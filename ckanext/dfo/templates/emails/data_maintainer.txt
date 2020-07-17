@@ -1,5 +1,5 @@
-Hello ${PERSON_NAME}
+Hello ${PERSON_NAME},
 
-This is an automated message from the GIS Hub. You are listed as a data maintainer for a dataset and it has been over x days since the metadata has been modified.
+This is an automated message from the GIS Hub. You are listed as a data maintainer for the ${DATASET_NAME} dataset. According to the system, it has been at least ${DAYS_SINCE_MODIFIED_MAX} days since one or more of the resources in the dataset have been modified.
 
-Please confirm with the data creator if there have been any modifications to the data and update as necessary.
+The dataset can be found here: ${DATA_URL}. Please confirm with the data creator if there have been any modifications to the data and update as necessary. If it does not require any updates, please notify the GIS Hub Administrator at Cole.Fields@dfo-mpo.gc.ca.

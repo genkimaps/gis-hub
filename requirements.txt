@@ -1,0 +1,4 @@
+ckan~=2.7.4
+ckantoolkit~=0.0.4
+pandas~=0.24.2
+setuptools~=20.4
