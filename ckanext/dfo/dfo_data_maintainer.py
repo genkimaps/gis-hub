@@ -31,7 +31,7 @@ def parse_csv(csv_path):
                 # Group data and aggregate unique values from other columns into lists.
                 data_grouped = data.groupby(["title", "maintainer_email", "maintainer_name", "url"],
                                             as_index=False)["name", "days_since_modified"].agg(lambda x: list(x))
-                # Filter out records with NAs.
+                # Convert grouped data to dictionary.
                 data_dict = data_grouped.to_dict('r')
                 return data_dict
     except Exception as e:
