@@ -3,7 +3,6 @@ Functions for parsing csv file and emailing users.
 """
 
 # Import modules.
-from csv import DictReader
 import pandas as pd
 from string import Template
 import os
@@ -28,6 +27,8 @@ def parse_csv(csv_path):
                 data = data.dropna()
                 # Filter out records where last modified date was over 365 days ago.
                 data = data[data["days_since_modified"] >= 365]
+                # Remove records where resource is a document or zip file.
+                data = data[~data["name"].str.contains(".pdf|.docx|.doc|.zip")]
                 # Group data and aggregate unique values from other columns into lists.
                 data_grouped = data.groupby(["title", "maintainer_email", "maintainer_name", "url"],
                                             as_index=False)["name", "days_since_modified"].agg(lambda x: list(x))
