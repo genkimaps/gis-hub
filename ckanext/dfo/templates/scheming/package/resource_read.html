@@ -7,9 +7,9 @@
 
 {% set authorized = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
 
-{# {% if authorized %}
+{% if authorized %}
     <h2>authorized</h2>
-{% endif %} #}
+{% endif %}
 
 {# If user is NOT authorized, override the entire resource page with a message. #}
 
