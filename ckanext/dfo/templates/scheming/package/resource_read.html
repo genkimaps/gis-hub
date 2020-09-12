@@ -16,6 +16,20 @@
     {% endif %}
 {% endblock %}
 
+{% block resource_read_url %}
+    {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+    {% if auth_check %}
+        {{ super() }}
+    {% endif %}
+{% endblock %}
+
+{% block resource_view_content %}
+    {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+    {% if auth_check %}
+        {{ super() }}
+    {% endif %}
+{% endblock %}
+
 
 {% block resource_fields %}
 
@@ -23,12 +37,11 @@
     {% if not auth_check %}
 
         {# If user is NOT authorized, override resource field display with a message. #}
-        <h1 class="page-heading">{{ h.resource_display_name(res) | truncate(50) }}</h1>
-        <p>
+        <h3>
             <i class="fa fa-info-circle"></i>
             Your account is not authorized to view this resource.
             Please contact the data creator or program manager.
-        </p>
+        </h3>
     {% else %}
         {# The user IS authorized, display resource content as usual #}
         {# Customize what is displayed for different resource types #}
