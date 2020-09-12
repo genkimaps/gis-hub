@@ -1,4 +1,6 @@
 {% ckan_extends %}
+{# This extends resource_read.html in scheming/package, NOT resource_read.html
+    in base CKAN. #}
 
 {# Hide license #}
 {%- block resource_license -%}
@@ -6,29 +8,8 @@
 
 
 
-{#  {{ resource }}
-{% set res = resource %}
+{#    {% block resource_inner %}
 
-
-{% set authorized = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
-
-
-{% set authorized = False %}
-
-{% if authorized %}
-    <h2>authorized</h2>
-{% endif %}  #}
-
-
-
-
-
-    {% block resource_inner %}
-        {{ res or 'Nothing' }}
-        {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
-        {% if not auth_check %}
-
-            {# If user is NOT authorized, override the entire resource page with a message. #}
 
 
             <div class="module-content">
@@ -37,95 +18,102 @@
                 {% else %}
                     <h1>NO</h1>
                 {% endif %}  #}
-                <h1 class="page-heading">{{ h.resource_display_name(res) | truncate(50) }}</h1>
-                <p>
-                    <i class="fa fa-info-circle"></i>
-                    Your account is not authorized to view this resource.
-                    Please contact the data creator or program manager.
-                </p>
+
             </div>
-        {% else %}
-            {# The user IS authorized, display resource content as usual #}
-
-            {% block resource_fields %}
-                {# Customize what is displayed for different resource types #}
-
-                {# Use the resource_type field #}
-                {%- if res.resource_type == 'Upload' -%}
-                <div class="standout-panel-ok"><i class="fa fa-medium fa-info-circle"></i>
-                    This resource is the uploaded data placeholder for the dataset "{{ pkg.title }}."  To download the data, click the
-                    Download button at the top-right. To replace the uploaded file, click Manage, then remove the existing file
-                    under the Upload Data section, and upload a new version of the file. </div>
-                {%- endif -%}
-
-                {# Field groups to be displayed for Upload and Link resources #}
-                {%- set upload_res_groups = ['General', 'Upload Data'] -%}
+        {% else %}  #}
 
 
-                {%- for group in schema.resource_fields|groupby('display_group') if res.resource_type == 'Layer or File' or (res.resource_type in ('Upload', 'Link') and group.grouper in upload_res_groups) -%}
-                    {%- set group_fields = h.non_empty_fields(group.list|list, res, exclude_fields) -%}
-                    {% if group_fields %}
-                        <div class="additional-info">
-                            <h3 class="dataset-group-label">{{ group.grouper }}</h3>
-                            <dl>
-                                {% for field in group_fields %}
-                                    <dt class="dataset-label">
-                                        {{ h.scheming_language_text(field.label) }}
-                                    </dt>
-                                    {# Add another class if composite #}
-                                    {%- if field.subfields -%}
-                                        <dd class="dataset-details composite-holder">
-                                    {%- else -%}
-                                        <dd class="dataset-details">
-                                    {%- endif -%}
-                                        {%- snippet 'scheming/snippets/display_field.html',
-                                            field=field,
-                                            data=res,
-                                            entity_type='dataset',
-                                            object_type=dataset_type -%}
-                                    </dd>
-                            {% endfor %}
-                            </dl>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+{% block resource_fields %}
+    {{ res or 'Nothing' }}
+    {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+    {% if not auth_check %}
 
-                {# Display map if exists, only for layer/file #}
-                {% if res.resource_type == 'Layer or File' and res.spatial %}
+        {# If user is NOT authorized, override resource field display with a message. #}
+        <h1 class="page-heading">{{ h.resource_display_name(res) | truncate(50) }}</h1>
+        <p>
+            <i class="fa fa-info-circle"></i>
+            Your account is not authorized to view this resource.
+            Please contact the data creator or program manager.
+        </p>
+    {% else %}
+        {# The user IS authorized, display resource content as usual #}
+        {# Customize what is displayed for different resource types #}
 
-                    {#  https://docs.ckan.org/en/2.8/theming/javascript.html
-                        Use Fanstatic to include our custom JavaScript module.
-                        A script tag for the module will be inserted in the right place at the
-                        bottom of the page. #}
-                    {% resource 'dfo/resource_map.js' %}
+        {# Use the resource_type field #}
+        {%- if res.resource_type == 'Upload' -%}
+        <div class="standout-panel-ok"><i class="fa fa-medium fa-info-circle"></i>
+            This resource is the uploaded data placeholder for the dataset "{{ pkg.title }}."  To download the data, click the
+            Download button at the top-right. To replace the uploaded file, click Manage, then remove the existing file
+            under the Upload Data section, and upload a new version of the file. </div>
+        {%- endif -%}
 
-                    {# Apply our JavaScript module to an HTML element. The data-module attribute,
-                        which can be applied to any HTML element, tells CKAN to initialize an
-                        instance of the named JavaScript module for the element.
-                        The initialize() method of our module will be called with this HTML
-                        element as its this.el object. #}
-                    <!-- Leaflet css -->
-                    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-                    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-                    crossorigin=""/>
+        {# Field groups to be displayed for Upload and Link resources #}
+        {%- set upload_res_groups = ['General', 'Upload Data'] -%}
 
-                    <!-- Leaflet JS, after css -->
-                    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-                    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
-                    crossorigin=""></script>
 
-                    <div class="additional-info">
-                        <div class="dataset-label">Layer Extent Map</div>
-                        <div id="mapid"
-                            data-module="dfo_extent_map"
-                            data-module-convexhull="{{ res.spatial }}"
-                            style="height: 600px;">
-                        </div>
-                    </div>
+        {%- for group in schema.resource_fields|groupby('display_group') if res.resource_type == 'Layer or File' or (res.resource_type in ('Upload', 'Link') and group.grouper in upload_res_groups) -%}
+            {%- set group_fields = h.non_empty_fields(group.list|list, res, exclude_fields) -%}
+            {% if group_fields %}
+                <div class="additional-info">
+                    <h3 class="dataset-group-label">{{ group.grouper }}</h3>
+                    <dl>
+                        {% for field in group_fields %}
+                            <dt class="dataset-label">
+                                {{ h.scheming_language_text(field.label) }}
+                            </dt>
+                            {# Add another class if composite #}
+                            {%- if field.subfields -%}
+                                <dd class="dataset-details composite-holder">
+                            {%- else -%}
+                                <dd class="dataset-details">
+                            {%- endif -%}
+                                {%- snippet 'scheming/snippets/display_field.html',
+                                    field=field,
+                                    data=res,
+                                    entity_type='dataset',
+                                    object_type=dataset_type -%}
+                            </dd>
+                    {% endfor %}
+                    </dl>
+                </div>
+            {% endif %}
+        {% endfor %}
 
-                {% endif %}
+        {# Display map if exists, only for layer/file #}
+        {% if res.resource_type == 'Layer or File' and res.spatial %}
 
-            {% endblock %}
+            {#  https://docs.ckan.org/en/2.8/theming/javascript.html
+                Use Fanstatic to include our custom JavaScript module.
+                A script tag for the module will be inserted in the right place at the
+                bottom of the page. #}
+            {% resource 'dfo/resource_map.js' %}
+
+            {# Apply our JavaScript module to an HTML element. The data-module attribute,
+                which can be applied to any HTML element, tells CKAN to initialize an
+                instance of the named JavaScript module for the element.
+                The initialize() method of our module will be called with this HTML
+                element as its this.el object. #}
+            <!-- Leaflet css -->
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
+            integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+            crossorigin=""/>
+
+            <!-- Leaflet JS, after css -->
+            <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
+            integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+            crossorigin=""></script>
+
+            <div class="additional-info">
+                <div class="dataset-label">Layer Extent Map</div>
+                <div id="mapid"
+                    data-module="dfo_extent_map"
+                    data-module-convexhull="{{ res.spatial }}"
+                    style="height: 600px;">
+                </div>
+            </div>
+
         {% endif %}
-    {% endblock %}
+
+    {% endif %}
+{% endblock %}
 
