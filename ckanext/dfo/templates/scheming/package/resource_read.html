@@ -7,8 +7,18 @@
 {%- endblock -%}
 
 
+{# Override parts of template that unauthorized users should not see #}
+
+{% block resource_actions %}
+    {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+    {% if auth_check %}
+        {{ super() }}
+    {% endif %}
+{% endblock %}
+
+
 {% block resource_fields %}
-    {{ res or 'Nothing' }}
+
     {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
     {% if not auth_check %}
 
