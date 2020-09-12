@@ -25,12 +25,12 @@
     if not res.url_type or
         (res.url_type == 'upload' and group.grouper in upload_res_groups) -%}
 #}
-{{ res }}
+{#  {{ res }}  #}
 {%- for group in schema.resource_fields|groupby('display_group') if res.resource_type == 'Layer or File' or (res.resource_type in ('Upload', 'Link') and group.grouper in upload_res_groups) -%}
     {%- set group_fields = h.non_empty_fields(group.list|list, res, exclude_fields) -%}
     {% if group_fields %}
         <div class="additional-info">
-            <h3 class="dataset-group-label">Group {{ group.grouper }}</h3>
+            <h3 class="dataset-group-label">{{ group.grouper }}</h3>
             <dl>
                 {% for field in group_fields %}
                     <dt class="dataset-label">
