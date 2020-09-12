@@ -7,22 +7,6 @@
 {%- endblock -%}
 
 
-
-{#    {% block resource_inner %}
-
-
-
-            <div class="module-content">
-                {# {% if auth_check %}
-                    <h1>AUTHORIZED</h1>
-                {% else %}
-                    <h1>NO</h1>
-                {% endif %}  #}
-
-            </div>
-        {% else %}  #}
-
-
 {% block resource_fields %}
     {{ res or 'Nothing' }}
     {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
