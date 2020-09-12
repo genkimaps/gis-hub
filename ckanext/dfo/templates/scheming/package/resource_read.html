@@ -7,8 +7,14 @@
 {% block resource_fields %}
 {# Customize what is displayed for an upload resource #}
 
-{# TODO: Use resource_type field #}
-{#  {%- if res.url_type == 'upload' -%}  #}
+{% set authorized = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+
+{% if authorized %}
+    <h2>authorized</h2>
+{% endif %}
+
+
+{# Use resource_type field #}
 {%- if res.resource_type == 'Upload' -%}
 <div class="standout-panel-ok"><i class="fa fa-medium fa-info-circle"></i>
     This resource is the uploaded data placeholder for the dataset "{{ pkg.title }}."  To download the data, click the
@@ -20,11 +26,6 @@
 {%- set upload_res_groups = ['General', 'Upload Data'] -%}
 
 
-{#
-{%- for group in schema.resource_fields|groupby('display_group')
-    if not res.url_type or
-        (res.url_type == 'upload' and group.grouper in upload_res_groups) -%}
-#}
 {%- for group in schema.resource_fields|groupby('display_group') if res.resource_type == 'Layer or File' or (res.resource_type in ('Upload', 'Link') and group.grouper in upload_res_groups) -%}
     {%- set group_fields = h.non_empty_fields(group.list|list, res, exclude_fields) -%}
     {% if group_fields %}
