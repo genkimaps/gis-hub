@@ -4,11 +4,16 @@
 {%- block resource_license -%}
 {%- endblock -%}
 
-{{ resource }}
+{{ res or 'Nothing' }}
+
+{#  {{ resource }}
 {% set res = resource %}
 
 
 {% set authorized = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+#}
+
+{% set authorized = False %}
 
 {% if authorized %}
     <h2>authorized</h2>
