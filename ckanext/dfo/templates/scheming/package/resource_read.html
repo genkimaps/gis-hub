@@ -4,7 +4,7 @@
 {%- block resource_license -%}
 {%- endblock -%}
 
-{{ res or 'Nothing' }}
+
 
 {#  {{ resource }}
 {% set res = resource %}
@@ -24,6 +24,7 @@
 {% if not authorized %}
 
     {% block resource_inner %}
+        {{ res or 'Nothing' }}
         <div class="module-content">
             <h1 class="page-heading">{{ h.resource_display_name(res) | truncate(50) }}</h1>
             <p>
