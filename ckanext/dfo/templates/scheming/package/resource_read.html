@@ -9,26 +9,28 @@
 
 {# Override parts of template that unauthorized users should not see #}
 
-{% block resource_actions %}
-    {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
-    {% if auth_check %}
-        {{ super() }}
-    {% endif %}
-{% endblock %}
+    {% block resource_actions %}
+        {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+        {% if auth_check %}
+            {{ super() }}
+        {% endif %}
+    {% endblock %}
 
-{% block resource_read_url %}
-    {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
-    {% if auth_check %}
-        {{ super() }}
-    {% endif %}
-{% endblock %}
+    {% block resource_read_url %}
+        {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+        {% if auth_check %}
+            {{ super() }}
+        {% endif %}
+    {% endblock %}
 
-{% block resource_view_content %}
-    {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
-    {% if auth_check %}
-        {{ super() }}
-    {% endif %}
-{% endblock %}
+    {% block resource_view_content %}
+        {% set auth_check = h.check_access('resource_show', {'id': res.id, 'resource': res }) %}
+        {% if auth_check %}
+            {{ super() }}
+        {% endif %}
+    {% endblock %}
+
+{# End parts of template hidden from unauthorized users #}
 
 
 {% block resource_fields %}
@@ -123,4 +125,3 @@
 
     {% endif %}
 {% endblock %}
-
