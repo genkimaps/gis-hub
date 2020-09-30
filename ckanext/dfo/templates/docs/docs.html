@@ -24,12 +24,26 @@
         <b>Workaround:</b> After uploading you data, the GIS Hub will attempt to
         populate these fields automatically.  If it fails to do so, you may see
         "unknown" or something else.  This field can be edited to have the correct value.
-        <b>Problem:</b> Markdown formatting may not render completely due to certain characters. For example, the
-        < and > symbols may be cause issues.
         <br>
-        <b>Workaround:</b> If this is the case, replace them with Entity Code (see
-        https://www.whatsmyip.org/html-characters/ for reference). Also see https://www.markdownguide.org/basic-syntax/
-        for Markdown syntax and best practice.
+        <b>Problem:</b> Markdown formatting may not render completely due to certain characters. For example, the
+        < and > symbols may cause issues such as missing text due to escape characters.
+        <br>
+        <b>Workaround:</b> If this is the case, replace them with an
+        <a href="https://www.whatsmyip.org/html-characters/">Entity Code</a>. Also see this
+        <a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax and best practice guide</a>.
+        <br>
+        <b>Problem:</b> Markdown formatting (such as main headers) may cause text to flow outside of the typical page
+        width due to the font size and spacing.
+        <br>
+        <b>Workaround:</b> If this is the case, replace them with a smaller header tag with markdown formatting.
+        <br>
+        <b>Problem:</b> Reorder resources button does not function.
+        <br>
+        <b>Workaround:</b> Currently, there is no workaround for this issue.
+        <br>
+        <b>Problem:</b> Altering the Download Disclaimer or Download Disclaimer (External Link) have no effect.
+        <br>
+        <b>Workaround:</b> Currently, there is no workaround for this issue.
       </p>
 
       <p>
@@ -59,6 +73,16 @@
         default list of datasets</a> shows all datasets that are visible to you, along with filters and
         search tools to help you find relevant data. </p>
 
+      <h4 id="datasets-resources">Datasets & Resources</h4>
+      <p>A <b>dataset</b> is the zip file uploaded to the GIS Hub that contains the files processed and displayed
+      on a dataset's page such as <a href="https://www.gis-hub.ca/dataset/floating-structures">Floating Structures</a>.
+      </p>
+
+      <p>A <b>resource</b> is a single file or layer that is part of the dataset. For example. the
+        <a href="https://www.gis-hub.ca/dataset/floating-structures/resource/b75837fb-ef64-42ee-9fc9-7ad8621f520b">
+          Aquaculture</a> resource is one layer that is part of the Floating Structure's dataset.
+      </p>
+
       <div class="docs-caption">
         <img src="/base/images/docs/datasets.png" alt="GIS Hub datasets view"
         width="width" height="height" class="docs-img"/>
@@ -68,7 +92,14 @@
       <h2 id="overview">Metadata Overview</h2>
       <p>Metadata is a key part of any dataset that is published and shared with others.
       The CKAN software platform provides a default metadata standard with basic metadata
-      fields that are attached to all datasets. </p>
+        fields that are attached to all datasets. </p>
+
+      <p>There are two levels of metadata: <br>1) <b>Dataset Metadata</b> contains the majority of the information such
+        as science, general, and basic metadata)<br>2) <b>Resource Metadata</b> contains information like attributes in
+        the layer and a description for the layer as well as spatial information). The resource metadata page includes a
+        link to the web map preview and it is possible to embed the map preview in the resource page itself. To restrict
+         access to the resource metadata (and the web map preview), set the Access Restrictions appropriately (see
+        <a href="#add-data">Adding Data Section</a>).</br></p>
 
       <p>The Pacific Science metadata working group has extended CKAN's basic
         metadata standard with a comprehensive standard that includes
@@ -167,10 +198,9 @@
           <td>Visibility</td>
           <td>Set to Public when all required metadata fields have been
             entered and the data is ready to be published.  Note that
-            setting Public does not make the dataset visible to all users,
-            nor to Google; it only means that the dataset is published and
-            will appear in search results on the GIS Hub.  Access permissions
-            for datasets (who is allowed to download / view) are set elsewhere.
+            setting Public means that the dataset is published and
+            will appear in search results on the GIS Hub. All users on the GIS Hub will be able to view the metadata.
+            Access permissions for resources (who is allowed to download / view) are set elsewhere.
             <br><br>
             Set this to Private if you do not yet have all the information
             you need to complete the required metadata fields.   When set to
@@ -529,12 +559,12 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
         </tr>
         <tr>
           <td>Access Restrictions</td>
-          <td>Access restrictions determine who can view all of the metadata content and download the data. Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner. You may choose to allow other metadata fields and data download to be available to any of the following:
+          <td>Access restrictions determine who can view resource metadata content and download the data. You may choose to allow resource metadata and data download to be available to any of the following:
             <ul>
-              <li>All Registered Users: anyone who is registered on the GIS Hub will have access. </li>
-              <li>Any Organization Members: restrict access to users who are in an organization on the GIS Hub. </li>
-              <li>Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access. </li>
-              <li>Allowed Users/Groups Only: allow access only for specific users or groups. If you choose this option, individual users can be added by typing names into the Allowed Users field below.</li>
+              <li><b>All Registered Users:</b> anyone who is registered on the GIS Hub will have access. </li>
+              <li><b>Any Organization Members:</b> restrict access to users who are in an organization on the GIS Hub. </li>
+              <li><b>Same Organization Members:</b> restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access. </li>
+              <li><b>Allowed Users/Groups Only:</b> allow access only for specific users or groups. To restrict access to any one of the resources in a dataset, that single resource - as well as the dataset (zip file) - must be set to Allowed Users/Groups Only. Not setting the dataset to this level will allow the user to download the dataset. If you choose this option, individual users can be added by typing names into the Allowed Users field below. Note that the list of allowed users is only applicable if this option. A list of allowed users will not be applied if one of the other levels (such as Same Organization Members) is selected. If a user does not have permission to access a resource, they will see a button to Request Access rather than the usual Details button. A user may have permission to view/access all, some (but not all), or all of a dataset's resources. </li>
             </ul>
 
           </td>
