@@ -1,5 +1,10 @@
 {% ckan_extends %}
 
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="/dfo.css" />
+{% endblock %}
+
 {# Did not work ('docs', _('Documentation'))  #}
 
 {% block header_site_navigation %}

@@ -1,5 +1,10 @@
 {% ckan_extends %}
 
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="/dfo.css" />
+{% endblock %}
+
 {% set is_logged_in = true if c.userobj else false %}
 
 {#  Allow any user path (login, password reset etc)  #}
