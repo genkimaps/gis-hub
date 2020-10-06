@@ -195,6 +195,10 @@ class DFOPlugin(p.SingletonPlugin):
             :param pkg_dict: dataset dict
             :return: modified dataset dict
         """
+        data_dict = logic.get_action("package_show")({}, {
+            'include_tracking': True,
+            'id': data_dict['id']
+        })
         title = dfo_validation.get_name_or_id(data_dict)
         logger.debug('%s: after_show triggered' % title)
         # return dfo_validation.set_dataset_display(data_dict)
@@ -209,10 +213,6 @@ class DFOPlugin(p.SingletonPlugin):
             showing in the web browser, but it does not seem to return anything.
             Use after_show() instead, very confusing.
         """
-        pkg_dict = logic.get_action("package_show")({}, {
-            'include_tracking': True,
-            'id': pkg_dict['id']
-        })
         return pkg_dict
 
     # The next two are used by both package and resource
