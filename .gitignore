@@ -1,5 +1,6 @@
 **/logs/*
 !**/logs/.gitkeep
+**/dfo.gishub.nginx.conf
 
 .idea
 __temp__
