@@ -42,6 +42,7 @@ def object_updated_or_created(context, data_dict):
         care about resources and packages; other types are immediately
         returned.
     """
+    logger.info(data_dict)
     obj_title = data_dict.get('title')
     logger.info('%s: after_create/update from resource or dataset' % obj_title)
     obj_type, data_dict = detect_object_type(data_dict)

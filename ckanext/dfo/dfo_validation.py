@@ -83,7 +83,7 @@ def save_change_history(context, data_dict, type):
     # Ensure that the change_description field is set to the internal
     # placeholder value, to avoid an infinite loop of updates
     # patch[change_desc_field] = CHANGE_DESC_PLACEHOLDER
-    logger.debug('Patch change history: %s' % change_history_str)
+    logger.info('Updating change history: %s' % change_history_str)
     result = get_action('package_patch')(context, patch)
     updated_change_history = result.get('change_history')
     logger.info('Updated: %s' % updated_change_history)
