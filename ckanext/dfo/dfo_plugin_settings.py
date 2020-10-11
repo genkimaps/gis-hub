@@ -1,6 +1,7 @@
 import os
 import logging
 from logging.handlers import TimedRotatingFileHandler
+from logging import FileHandler
 
 plugin_root = os.path.dirname(os.path.realpath(__file__))
 log_folder = os.path.join(plugin_root, 'logs')
@@ -38,10 +39,11 @@ def get_file_logger():
     log_file = os.path.join(log_folder, 'dfoext.log')
 
     # Use rotating file handler, daily at midnight.
-    fh = TimedRotatingFileHandler(
-        log_file,
-        when='midnight',
-        backupCount=30,
-        encoding='utf-8')
+    # fh = TimedRotatingFileHandler(
+    #     log_file,
+    #     when='midnight',
+    #     backupCount=30,
+    #     encoding='utf-8')
+    fh = FileHandler(log_file)
     fh.setFormatter(screen_fmt)
     return fh, log_file
