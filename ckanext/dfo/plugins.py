@@ -42,7 +42,7 @@ def object_updated_or_created(context, data_dict):
         care about resources and packages; other types are immediately
         returned.
     """
-    logger.info(data_dict)
+    # logger.info(data_dict)
     obj_title = data_dict.get('title')
     logger.info('%s: after_create/update from resource or dataset' % obj_title)
     obj_type, data_dict = detect_object_type(data_dict)
@@ -51,10 +51,23 @@ def object_updated_or_created(context, data_dict):
         # set resource type only if it's a resource
         # return ensure_resource_type(context, data_dict)
         logger.info('Resource was updated: %s ' % obj_title)
+        change_desc = data_dict.get('change_description_resource')
+        logger.info('Resource: %s Change desc: %s' % (
+            obj_title, change_desc))
         return dfo_validation.validate_resource(context, data_dict)
     elif obj_type == 'dataset':
         ds_name = data_dict.get('name')
         logger.info('Dataset was updated: %s ' % ds_name)
+
+        # Check resource contents
+        resources = data_dict.get('resources')
+        logger.info('Check contents of %s resource' % len(resources))
+        for res in resources:
+            res_title = res.get('title')
+            change_desc = data_dict.get('change_description_resource')
+            logger.info('Dataset: %s Resource: %s Change desc: %s' % (
+                obj_title, res_title, change_desc))
+
         logger.warning('TODO: check if dataset has changed')
         logger.info('Backup to cloud command:')
         # Trigger external call to hub-geo-api to upload metadata to S3?
@@ -252,6 +265,10 @@ class DFOPlugin(p.SingletonPlugin):
         logger.debug('Going to create resource/package: %s' % resource)
 
     def before_update(self, context, current, resource):
+        logger.info('Going to update resource')
+        res_title = resource.get('title')
+        change_desc = resource.get('change_description_resource')
+        logger.info('%s: Chance desc: %s' % (res_title, change_desc))
         pass
 
     def before_show(self, resource):
