@@ -61,12 +61,18 @@ def object_updated_or_created(context, data_dict):
 
         # Check resource contents
         resources = data_dict.get('resources')
-        logger.info('Check contents of %s resource' % len(resources))
-        for res in resources:
-            res_title = res.get('title')
-            change_desc = data_dict.get('change_description_resource')
-            logger.info('Dataset: %s Resource: %s Change desc: %s' % (
-                obj_title, res_title, change_desc))
+        if not resources:
+            logger.warning('This dataset has no resources')
+        else:
+            if type(resources) is list:
+                logger.info('Checking contents of %s resources' % len(resources))
+                for res in resources:
+                    res_title = res.get('title')
+                    change_desc = data_dict.get('change_description_resource')
+                    logger.info('Dataset: %s Resource: %s Change desc: %s' % (
+                        obj_title, res_title, change_desc))
+            else:
+                logger.warning('Dataset %s: Resources list is in an unexpected format' % ds_name)
 
         logger.warning('TODO: check if dataset has changed')
         logger.info('Backup to cloud command:')
@@ -238,7 +244,7 @@ class DFOPlugin(p.SingletonPlugin):
         # We need to treat this as if it were after_create.
         logger.info('after_update from resource or dataset')
         change_desc = data_dict.get('change_description_resource')
-        logger.info('%s: Chance desc: %s' % (data_dict.get('title'), change_desc))
+        logger.info('%s: Change description: %s' % (data_dict.get('title'), change_desc))
         return object_updated_or_created(context, data_dict)
 
     def after_search(self, search_results, search_params):
@@ -264,13 +270,13 @@ class DFOPlugin(p.SingletonPlugin):
 
     # Additional methods only in IResourceController
     def before_create(self, context, resource):
-        logger.debug('Going to create resource/package: %s' % resource)
+        logger.debug('before_create: Going to create resource/package: %s' % resource)
 
     def before_update(self, context, current, resource):
-        logger.info('Going to update resource')
+        logger.info('before_update: Going to update resource')
         res_title = resource.get('title')
         change_desc = resource.get('change_description_resource')
-        logger.info('%s: Chance desc: %s' % (res_title, change_desc))
+        logger.info('%s: Change description: %s' % (res_title, change_desc))
         pass
 
     def before_show(self, resource):
