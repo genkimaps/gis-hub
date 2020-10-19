@@ -198,8 +198,17 @@ dataset_fields:
 
   - field_name: manager_address
     label: Address
+    display_snippet: select.html
+    form_snippet: select.html
     display_group: Contact Information
     validators: require_when_published
+    choices:
+      - label: 200 - 401 Burrard Street, Vancouver, British Columbia, V6C 3S4, Canada
+        value: 200 - 401 Burrard Street, Vancouver, British Columbia, V6C 3S4, Canada
+      - label: 3190 Hammond Bay Road, Nanaimo, British Columbia, V9T 6N7, Canada
+        value: 3190 Hammond Bay Road, Nanaimo, British Columbia, V9T 6N7, Canada
+      - label: 9860 W Saanich Rd, Sidney, British Columbia, V8L 5T5, Canada
+        value: 9860 W Saanich Rd, Sidney, British Columbia, V8L 5T5, Canada
 
   - field_name: manager_phone
     label: Phone
@@ -543,6 +552,7 @@ dataset_fields:
   form_snippet: textarea.html
   display_snippet: text.html
   display_group: Science
+  default: "No Absence Data"
   validators: require_when_published
 
 - field_name: uncertainties
