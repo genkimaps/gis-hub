@@ -151,6 +151,7 @@ dataset_fields:
 
   - field_name: creator_organization
     label: Organization
+    help_text: "Use semicolon separated values such as 'Government of Canada; Fisheries and Oceans Canada; Fisheries Management; Sustainable Fisheries Framework Unit'"
     validators: require_when_published
 
   - field_name: creator_address
@@ -193,6 +194,7 @@ dataset_fields:
 
   - field_name: manager_organization
     label: Organization
+    help_text: "Use semicolon separated values such as 'Government of Canada; Fisheries and Oceans Canada; Fisheries Management; Sustainable Fisheries Framework Unit'"
     display_group: Contact Information
     validators: require_when_published
 
