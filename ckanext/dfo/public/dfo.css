@@ -102,9 +102,10 @@ body {
   color: rgba(255, 255, 255, 0.6);
 }
 
+/*
 .docs-caption {
     width: image width px;
-    font-style: italic; 
+    font-style: italic;
     text-align: center;
 }
 
@@ -135,14 +136,18 @@ body {
     cursor: pointer;
 }
 
+*/
 /* Keep user-entered line breaks
    https://github.com/tk-technologies/ckanext-dfo/issues/40
-   Nope, causes composite-repeating fields to have massive whitespace  */
+   Nope, causes composite-repeating fields to have massive whitespace  *//*
+
 .dataset-details {
     white-space: pre-line;
 }
 
-/* Override in composite-repeating-list to prevent weird spacing */
+*/
+/* Override in composite-repeating-list to prevent weird spacing *//*
+
 .composite-repeating-list {
     white-space: normal;
 }
@@ -168,7 +173,9 @@ body {
     margin-bottom: 3px;
 }
 
-/* Add icons for additional formats */
+*/
+/* Add icons for additional formats *//*
+
 .format-label {
   width: 32px;
   height: 35px;
@@ -189,13 +196,16 @@ body {
   background-position: -416px -62px;
 }
 
+*/
 /* Add a fake 'link' format, even though it does not exist as an extension,
-    to support resource_type=Link. Use the small DATA icon at bottom-left */
+    to support resource_type=Link. Use the small DATA icon at bottom-left *//*
+
 .format-label[data-format=link],
 .format-label[data-format*=link] {
   background-position: 0px -62px;
 }
 
+*/
 /* kml and geojson are handled in ckanext-geoview with gis icons file and css:
    https://www.gis-hub.ca/img/gis-resources-sprite-icons.png
    https://www.gis-hub.ca/fanstatic/ckanext-geoview/:version:2018-04-10T12:37:05/css/geo-resource-styles.css
@@ -208,7 +218,8 @@ body {
 .format-label[data-format*=geojson] {
   background-position: -480px -62px;
 }
-*/
+*//*
+
 
 .format-label[data-format=mxd],
 .format-label[data-format*=mxd] {
@@ -225,12 +236,16 @@ body {
   background-position: -576px -62px;
 }
 
-/* Use our own icon file */
+*/
+/* Use our own icon file *//*
+
 .format-label {
   background: url(../../../base/images/sprite-gis-icons.png) no-repeat 0 0;
 }
 
-/* Enclose composite fields in a box with background for visual offset */
+*/
+/* Enclose composite fields in a box with background for visual offset *//*
+
 .composite-subfield-group {
     border: 1px solid #c5c5c5;
     border-radius: 5px;
@@ -243,7 +258,9 @@ body {
     margin-bottom: 15px;
 }
 
-/* Adjust spacing in template between text box and help text */
+*/
+/* Adjust spacing in template between text box and help text *//*
+
 select, textarea, input[type="text"], input[type="email"], input[type="url"], input[type="tel"], legend {
     margin-bottom: 5px !important;
 }
@@ -335,7 +352,9 @@ p.composite-header {
 }
 
 #dataset-edit .control-group .btn {
-    /* Fix alignment of +/- buttons with text inputs */
+    */
+/* Fix alignment of +/- buttons with text inputs *//*
+
     margin-bottom: 10px;
     padding-top: unset;
     padding-bottom: unset;
@@ -351,9 +370,11 @@ p.composite-header {
     margin-bottom: 10px;
 }
 
+*/
 /* Make table columns fit the width of content
 https://stackoverflow.com/a/52463416
-*/
+*//*
+
 table.table-fit {
     width: auto !important;
     table-layout: auto !important;
@@ -365,7 +386,9 @@ table.table-fit tbody td, table.table-fit tfoot td {
     width: auto !important;
 }
 
-/* Table settings for attributes */
+*/
+/* Table settings for attributes *//*
+
 .w10 {
     width: 10% !important;
 }
@@ -388,7 +411,9 @@ table.table-fit tbody td, table.table-fit tfoot td {
     width: 60% !important;
 }
 
-/* Table for species codes */
+*/
+/* Table for species codes *//*
+
 .spcode-table {
     table-layout: auto;
     margin-bottom: 0px;
@@ -397,4 +422,4 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .highlight {
     background-color: rgba(237, 138, 0, 1);
 	font-weight: bold;
-}
+}*/
