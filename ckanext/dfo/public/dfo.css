@@ -11,12 +11,12 @@
 }
 /* The text and icons in the user account info. */
 .account-masthead .account ul li a {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgb(255, 255, 255, 0.6);
 }
 /* The user account info text and icons, when the user's pointer is hovering
    over them. */
 .account-masthead .account ul li a:hover {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgb(255, 101, 47, 0.5);
   background-color: black;
 }
 
@@ -31,19 +31,19 @@
 /* The "navigation pills" in the masthead (the links to Datasets,
    Organizations, etc) when the user's pointer hovers over them. */
 .masthead .navigation .nav-pills li a:hover {
-  background-color: rgb(48, 48, 48);
+  background-color: rgb(255, 228, 0, 0.5);
   color: white;
 }
 /* The "active" navigation pill (for example, when you're on the /dataset page
    the "Datasets" link is active). */
 .masthead .navigation .nav-pills li.active a {
-  background-color: rgb(74, 74, 74);
+  background-color: rgb(116, 116, 116);
 }
 /* The "box shadow" effect that appears around the search box when it
    has the keyboard cursor's focus. */
 .masthead input[type="text"]:focus {
-  -webkit-box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
-  box-shadow: inset 0px 0px 2px 0px rgba(0, 0, 0, 0.7);
+  -webkit-box-shadow: inset 0px 0px 2px 0px rgb(20, 167, 108, 0.7);
+  box-shadow: inset 0px 0px 2px 0px rgb(20, 167, 108, 0.7);
 }
 
 
