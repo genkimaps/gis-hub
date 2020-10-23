@@ -16,7 +16,7 @@
 /* The user account info text and icons, when the user's pointer is hovering
    over them. */
 .account-masthead .account ul li a:hover {
-  color: rgb(255, 101, 47);
+  background-color:: rgba(255, 101, 47, 0.5);
   background-color: black;
 }
 
@@ -26,12 +26,12 @@
    ======================================================================== */
 
 .masthead {
-  background-color: #3d3d3d;
+  background-color: rgb(61,61,61);
 }
 /* The "navigation pills" in the masthead (the links to Datasets,
    Organizations, etc) when the user's pointer hovers over them. */
 .masthead .navigation .nav-pills li a:hover {
-  background-color: rgb(255, 228, 0);
+  background-color: rgba(255, 228, 0, 0.5);
   color: white;
 }
 /* The "active" navigation pill (for example, when you're on the /dataset page
