@@ -16,7 +16,7 @@
 /* The user account info text and icons, when the user's pointer is hovering
    over them. */
 .account-masthead .account ul li a:hover {
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(255, 228, 0);
 }
 
 
