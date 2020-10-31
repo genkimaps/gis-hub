@@ -243,8 +243,8 @@ class DFOPlugin(p.SingletonPlugin):
     def after_update(self, context, data_dict):
         # We need to treat this as if it were after_create.
         logger.info('after_update from resource or dataset')
-        change_desc = data_dict.get('change_description_resource')
-        logger.info('%s: Change description: %s' % (data_dict.get('title'), change_desc))
+        disclaimer = data_dict.get('disclaimer')
+        logger.info('%s: Changed: %s' % (data_dict.get('title'), disclaimer))
         return object_updated_or_created(context, data_dict)
 
     def after_search(self, search_results, search_params):
@@ -275,8 +275,8 @@ class DFOPlugin(p.SingletonPlugin):
     def before_update(self, context, current, resource):
         logger.info('before_update: Going to update resource')
         res_title = resource.get('title')
-        change_desc = resource.get('change_description_resource')
-        logger.info('%s: Change description: %s' % (res_title, change_desc))
+        disclaimer = resource.get('disclaimer')
+        logger.info('%s: Changed: %s' % (res_title, disclaimer))
         pass
 
     def before_show(self, resource):
