@@ -51,9 +51,9 @@ def object_updated_or_created(context, data_dict):
         # set resource type only if it's a resource
         # return ensure_resource_type(context, data_dict)
         logger.info('Resource was updated: %s ' % obj_title)
-        change_desc = data_dict.get('change_description_resource')
-        logger.info('Resource: %s Change desc: %s' % (
-            obj_title, change_desc))
+        disclaimer = data_dict.get('disclaimer')
+        logger.info('Resource: %s Changed: %s' % (
+            obj_title, disclaimer))
         return dfo_validation.validate_resource(context, data_dict)
     elif obj_type == 'dataset':
         ds_name = data_dict.get('name')
@@ -68,9 +68,9 @@ def object_updated_or_created(context, data_dict):
                 logger.info('Checking contents of %s resources' % len(resources))
                 for res in resources:
                     res_title = res.get('title')
-                    change_desc = data_dict.get('change_description_resource')
-                    logger.info('Dataset: %s Resource: %s Change desc: %s' % (
-                        obj_title, res_title, change_desc))
+                    disclaimer = data_dict.get('disclaimer')
+                    logger.info('Dataset: %s Resource: %s Changed: %s' % (
+                        obj_title, res_title, disclaimer))
             else:
                 logger.warning('Dataset %s: Resources list is in an unexpected format' % ds_name)
 
