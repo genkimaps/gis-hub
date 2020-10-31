@@ -38,12 +38,12 @@ def save_change_history(context, data_dict, type):
         ds_metadata = data_dict
     patch = {'id': dataset_id}
 
-    logger.info('Update change history for %s %s' % (title, type))
+    logger.debug('Update change history for %s %s' % (title, type))
     # Get change description from the appropriate field
     change_desc_field = 'change_description_%s' % type
     change_desc = data_dict.get(change_desc_field)
     # Ignore if internal update
-    logger.info('%s: %s' % (change_desc_field, change_desc))
+    logger.debug('%s: %s' % (change_desc_field, change_desc))
     if change_desc == CHANGE_DESC_PLACEHOLDER:
         logger.info('Internal change from API. <<< THIS CHANGE DESCRIPTION WILL BE IGNORED ')
         return

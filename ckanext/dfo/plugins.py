@@ -242,9 +242,15 @@ class DFOPlugin(p.SingletonPlugin):
 
     def after_update(self, context, data_dict):
         # We need to treat this as if it were after_create.
-        logger.info('after_update from resource or dataset')
-        disclaimer = data_dict.get('disclaimer')
-        logger.info('%s: Changed: %s' % (data_dict.get('title'), disclaimer))
+        package_id = data_dict.get('package_id')
+        obj_type = 'resource'
+        if not package_id:
+            obj_type = 'dataset'
+
+        logger.info('after_update from %s' % obj_type)
+        if obj_type == 'resource':
+            disclaimer = data_dict.get('disclaimer')
+            logger.info('%s: Changed: %s' % (data_dict.get('title'), disclaimer))
         return object_updated_or_created(context, data_dict)
 
     def after_search(self, search_results, search_params):
