@@ -55,6 +55,11 @@
         <br>
         <b>Workaround:</b> If this is the case, replace them with a smaller header tag with markdown formatting.
         <br><br>
+        <b>Problem:</b> <del>Description of Change field on resource level does not function. Changes are not appended
+        to the Change History field on the dataset metadata page.</del>
+        <br>
+        <b>Note:</b> This issue has been resolved.
+        <br><br>
         <b>Problem:</b> <del>Reorder resources button does not function.</del>
         <br>
         <b>Note:</b> This issue has been resolved.
@@ -454,7 +459,7 @@
         </tr>
         <tr>
           <td>Change History</td>
-          <td>A description of changes made to the data since its release.   Create an entry for each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed.  It is particularly important to record your change if you are uploading a new version of data, but nothing else has changed. Describe what has changed in the attached file, and why it was changed. If scripts have been used to generate a product, it is recommended to create a 'Release' of the code through GitLab or GitHub and reference that version of the release to track spatial products built using certains versions of code. </td>
+          <td>A description of changes made to the data since its release.   At the resource level, there is a Description of Change field where entries are automatically appended to this field (the dataset level Change History field. Add additional change history entries as needed. If only the dataset metadata has changed, this field may be used to note the update to the metadata.</td>
         </tr>
         <tr>
           <td>Change Date</td>
@@ -586,8 +591,13 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
                 <br>If you choose the Allowed Users/Groups option, individual users can be added by typing names into the Allowed Users field below. Note that the list of allowed users is only applicable to this option. A list of allowed users will not be applied if one of the other levels (such as Same Organization Members) is selected. The means that you cannot set the resources to the Same Organization Members <b>and</b> add individual users on top of that.
                 <br>If a user does not have permission to access a resource, they will see a button to Request Access rather than the usual Details button. A user should have permission to view/access all or none of a dataset's resources (not some). </li>
             </ul>
-
           </td>
+        </tr>
+        <tr>
+            <td>Description of Change
+            <td>
+                Use this field to describe what you have changed either in the metadata on this page, or in the uploaded file.  It is particularly important to record your change if you are uploading a new version of data, but nothing else has changed.  Describe what has changed in the attached file, and why it was changed.  If you are uploading data to this dataset for the first time, enter something like "Initial upload of data."  The description in this field will be appended to the change history on the dataset page.  This field is automatically populated with the last change description (which may include automatic internal updates).  Please update this text to describe what has changed in this iteration. If scripts have been used to generate a product, it is recommended to create a 'Release' of the code through GitLab or GitHub and reference that version of the release to track spatial products built using certains versions of code.
+            </td>
         </tr>
       </tbody>
     </table>
