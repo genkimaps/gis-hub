@@ -275,7 +275,7 @@ dataset_fields:
   help_text: "Language code and country of the metadata. Default: English."
   display_snippet: null
   form_snippet: null
-  validators: require_when_published
+#  validators: require_when_published
   choices:
   - label: English
     value: "eng; CAN"
@@ -289,7 +289,7 @@ dataset_fields:
   default: "utf8"
   display_snippet: null
   form_snippet: null
-  validators: require_when_published
+#  validators: require_when_published
 
 - field_name: metadata_standard
   label: Metadata Standard
@@ -297,7 +297,7 @@ dataset_fields:
   default: "North American Profile of ISO 19115:2003 - Geographic information - Metadata"
   display_snippet: null
   form_snippet: null
-  validators: require_when_published
+#  validators: require_when_published
 
 - field_name: date_completed
   label: Date Completed
@@ -366,7 +366,7 @@ dataset_fields:
   default: "utf8"
   display_snippet: null
   form_snippet: null
-  validators: require_when_published
+#  validators: require_when_published
 
 - field_name: data_language
   label: Data Language
@@ -374,7 +374,7 @@ dataset_fields:
   display_snippet: null
   form_snippet: null
   default: "English"
-  validators: require_when_published
+#  validators: require_when_published
 
 - field_name: hierarchyLevel
   label: Dataset Level
