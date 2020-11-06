@@ -335,7 +335,7 @@ p.composite-header {
 }
 
 .resource-item:hover {
-  background-color: none !important;
+  background-color: #ffffff !important;
 }
 
 #resource-edit .form-horizontal .info-block {
