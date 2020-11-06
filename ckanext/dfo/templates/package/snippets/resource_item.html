@@ -4,7 +4,7 @@
 {% set authorized = h.check_access('resource_show',{'id':res.id, 'resource':res }) %}
 {% set user_id = h.restricted_get_user_id() %}
 
-<div class="resource-item-dfo" data-id="{{ res.id }}">
+<div class="resource-item" data-id="{{ res.id }}">
     <div class="resource-item-dfo-preview">
         <span class="format-label pull-left" property="dc:format"
               data-format="{{ res.format.lower() or 'data' }}">
