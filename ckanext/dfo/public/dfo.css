@@ -334,6 +334,10 @@ p.composite-header {
     border-radius: 3px;  */
 }
 
+.resource-item:hover {
+  background-color: none !important;
+}
+
 #resource-edit .form-horizontal .info-block {
     padding: 0;
 }
