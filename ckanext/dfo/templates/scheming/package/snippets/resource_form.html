@@ -22,7 +22,7 @@
     {%- else -%}
         {%- set res_field_groups = ['General', 'Layer/File Info', 'Projection', 'Spatial', 'Table Attributes'] -%}
     {%- endif -%}
-    <div>{{ data.resource_type }}, fields {{ res_field_groups }}</div>
+    <div hidden>Resource type: {{ data.resource_type }}, fields groups: {{ res_field_groups }}</div>
     {#  {%- for group in schema.resource_fields|groupby('display_group') if not data.url_type or (data.url_type == 'upload' and group.grouper in upload_res_groups) -%}  #}
     {%- for group in schema.resource_fields|groupby('display_group') if group.grouper in res_field_groups -%}
         <h3 class="page-heading">
