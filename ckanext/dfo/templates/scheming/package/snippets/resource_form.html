@@ -65,7 +65,8 @@
 
     {% if 'Upload Data' not in res_field_groups %}
         {# Add hidden required fields #}
-        <input type="hidden" id="field-{{ field.field_name }}" name="{{ field.field_name }}" value="{{ data.get(field.field_name, '') }}">
+        <input type="hidden" id="field-url" name="url" value="{{ data.get('url', '') }}">
+        <input type="hidden" id="field-change_description_resource" name="change_description_resource" value="{{ data.get('change_description_resource', '') }}">
     {% endif %}
 
 
