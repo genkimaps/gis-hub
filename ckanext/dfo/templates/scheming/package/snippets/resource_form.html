@@ -17,7 +17,7 @@
         with the url (which is a globally required field)
         (not data.url_type and group.grouper != 'Upload Data')  #}
     {%- set upload_res_groups = ['General', 'Upload Data'] -%}
-    {%- if not data.url_type or data.url_type == 'upload' -%}
+    {%- if not data.resource_type or data.resource_type == 'Upload' -%}
         {%- set res_field_groups = ['General', 'Upload Data'] -%}
     {%- else -%}
         {%- set res_field_groups = ['General', 'Layer/File Info', 'Projection', 'Spatial', 'Table Attributes'] -%}
