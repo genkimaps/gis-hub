@@ -17,21 +17,31 @@
         with the url (which is a globally required field)
         (not data.url_type and group.grouper != 'Upload Data')  #}
     {%- set upload_res_groups = ['General', 'Upload Data'] -%}
-    {#  {%- for group in schema.resource_fields|groupby('display_group')  #}
-    {%- for group in schema.resource_fields|groupby('display_group') if not data.url_type or (data.url_type == 'upload' and group.grouper in upload_res_groups) -%}
+    {%- if not data.url_type or data.url_type == 'upload' -%}
+        {%- set res_field_groups = ['General', 'Upload Data'] -%}
+    {%- else -%}
+        {%- set res_field_groups = ['General', 'Layer/File Info', 'Projection', 'Spatial', 'Table Attributes'] -%}
+    {%- endif -%}
+    <div>{{ data.url_type }}, fields {{ res_field_groups }}</div>
+    {#  {%- for group in schema.resource_fields|groupby('display_group') if not data.url_type or (data.url_type == 'upload' and group.grouper in upload_res_groups) -%}  #}
+    {%- for group in schema.resource_fields|groupby('display_group') if group.grouper in res_field_groups -%}
         <h3 class="page-heading">
             {{ _(group.grouper) }}
         </h3>
 
         {%- for field in group.list -%}
-            {#  <p>{{ data.url_type }}</p>
-            <p>{{ group.list }}</p>
-            <p>{{ field }}</p>  #}
+            {# Debug section
+                <p>{{ data.url_type }}</p>
+                <p>{{ group.list }}</p>
+                <p>{{ field }}</p>
+            #}
             {%- if field.form_snippet is not none -%}
                 {%- if field.field_name not in data %}
-                    {# Set the field default value before rendering but only if
-                    it doesn't already exist in data which would mean the form
-                    has been submitted. #}
+                    {#
+                        Set the field default value before rendering but only if
+                        it doesn't already exist in data which would mean the form
+                        has been submitted.
+                    #}
                     {% if field.default %}
                         {% set _x_ = data.__setitem__(
                             field.field_name,
