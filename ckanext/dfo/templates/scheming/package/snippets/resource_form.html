@@ -21,7 +21,7 @@
         {%- set res_field_groups = ['General', 'Upload Data'] -%}
         {%- set hidden_groups = [] -%}
     {%- else -%}
-        {%- set res_field_groups = ['General', 'Layer/File Info', 'Projection', 'Spatial', 'Table Attributes', 'Upload Data'] -%}
+        {%- set res_field_groups = ['General', 'Layer/File Info', 'Projection', 'Spatial', 'Table Attributes'] -%}
         {%- set hidden_groups = ['Upload Data'] -%}
     {%- endif -%}
     <div hidden>Resource type: {{ data.resource_type }}, fields groups: {{ res_field_groups }}</div>
@@ -38,9 +38,7 @@
                 <p>{{ field }}</p>
             #}
             {%- if field.form_snippet is not none -%}
-                {%- if group.grouper in hidden_groups -%}
-                    {%- set field.form_snippet = 'hidden.html' -%}
-                {%- endif -%}
+
                 {%- if field.field_name not in data %}
                     {#
                         Set the field default value before rendering but only if
@@ -64,6 +62,12 @@
             {%- endif -%}
         {%- endfor -%}
     {%- endfor -%}
+
+    {% if 'Upload Data' not in res_field_groups %}
+        {# Add hidden required fields #}
+        <input type="hidden" id="field-{{ field.field_name }}" name="{{ field.field_name }}" value="{{ data.get(field.field_name, '') }}">
+    {% endif %}
+
 
   {%- if 'resource_fields' not in schema -%}
     <!-- force controller to skip resource-editing step for this type -->
