@@ -17,16 +17,8 @@
         with the url (which is a globally required field)
         (not data.url_type and group.grouper != 'Upload Data')  #}
     {%- set upload_res_groups = ['General', 'Upload Data'] -%}
-    {%- if not data.resource_type or data.resource_type == 'Upload' -%}
-        {%- set res_field_groups = ['General', 'Upload Data'] -%}
-        {%- set hidden_groups = [] -%}
-    {%- else -%}
-        {%- set res_field_groups = ['General', 'Layer/File Info', 'Projection', 'Spatial', 'Table Attributes'] -%}
-        {%- set hidden_groups = ['Upload Data'] -%}
-    {%- endif -%}
-    <div hidden>Resource type: {{ data.resource_type }}, fields groups: {{ res_field_groups }}</div>
-
-    {%- for group in schema.resource_fields|groupby('display_group') if group.grouper in res_field_groups -%}
+    {#  {%- for group in schema.resource_fields|groupby('display_group')  #}
+    {%- for group in schema.resource_fields|groupby('display_group') if not data.url_type or (data.url_type == 'upload' and group.grouper in upload_res_groups) -%}
         <h3 class="page-heading">
             {{ _(group.grouper) }}
         </h3>
@@ -62,13 +54,6 @@
             {%- endif -%}
         {%- endfor -%}
     {%- endfor -%}
-
-    {% if 'Upload Data' not in res_field_groups %}
-        {# Add hidden required fields #}
-        <input type="hidden" id="field-url" name="url" value="{{ data.get('url', '') }}">
-        <input type="hidden" id="field-change_description_resource" name="change_description_resource" value="internal update from hub-geo-api">
-    {% endif %}
-
 
   {%- if 'resource_fields' not in schema -%}
     <!-- force controller to skip resource-editing step for this type -->
