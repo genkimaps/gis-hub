@@ -55,14 +55,14 @@
         <br>
         <b>Workaround:</b> If this is the case, replace them with a smaller header tag with markdown formatting.
         <br><br>
-        <b>Problem:</b> Description of Change field on resource level does not function. Changes are not appended
+        <b>Problem:</b> The Change Description (Resource) field does not save changes for the data download resource. Changes are not appended
         to the Change History field on the dataset metadata page.
         <br>
-        <b>Workaround:</b> This field has been temporarily removed from the metadata schema at the resource level.
+        <b>Note:</b> This issue has been resolved.
         <br><br>
         <b>Problem:</b> Reorder resources button does not function.
         <br>
-        <b>Workaround:</b> Resources may be reordered alphabetically by contacting Cole Fields.
+        <b>Note:</b> This issue has been resolved.  When re-ordering resources, please keep the data download resource in the first position.
         <br><br>
         <b>Problem:</b> <del>Altering the Download Disclaimer or Download Disclaimer (External Link)
         metadata fields have no effect.</del>
@@ -458,11 +458,11 @@
         </tr>
         <tr>
           <td>Change History</td>
-          <td>A description of changes made to the data since its release.   Create an entry for each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed.  It is particularly important to record your change if you are uploading a new version of data, but nothing else has changed. Describe what has changed in the attached file, and why it was changed. If scripts have been used to generate a product, it is recommended to create a 'Release' of the code through GitLab or GitHub and reference that version of the release to track spatial products built using certains versions of code. </td>
+          <td>A description of changes made to the data since its release.   Create an entry for each change, indicate the date of change and describe what was changed and why. When a dataset is first published, there is one change history entry for the initial creation of the dataset.  Add additional change history entries as needed.  If scripts have been used to generate a product, it is recommended to create a 'Release' of the code through GitLab or GitHub and reference that version of the release to track spatial products built using certains versions of code.  If you are uploading a new version of data, but nothing else has changed, please be sure to record the change using the field Change Description (Resource) on the Edit Resource page (instead of on this page).  Your change description on the Edit Resource page will automatically be added to the Change History for the dataset. </td>
         </tr>
         <tr>
           <td>Change Date</td>
-          <td>Date on which the change was made to the data.  Default: today’s date.</td>
+          <td>Date on which the change was made to the data, or the metadata entry. </td>
         </tr>
         <tr>
           <td>Temporal Coverage <br>
@@ -592,6 +592,10 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
             </ul>
 
           </td>
+        </tr>
+        <tr>
+          <td>Change Description (Resource) <br> <i>(optional unless updating the zip file)</i></td>
+          <td>Describe what you have changed in the uploaded file or in the metadata on this page.  The text in this field will be added to the Change History section of the dataset page. This field is automatically populated with the last change description.  If you have made only minor changes to the metadata, you may leave this field blank.  If you have uploaded a new file, please be sure to describe what has changed. </td>
         </tr>
       </tbody>
     </table>
