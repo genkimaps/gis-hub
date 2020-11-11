@@ -1039,7 +1039,7 @@ resource_fields:
   # required: true  << Does not work for resource-level fields
   #  validators: not_empty  << Also does not work
   label: Change Description (Resource)
-  help_text: "Describe what you have changed in the uploaded file or in the metadata on this page. This field is automatically populated with the last change description.  Please update this to describe what has changed in this iteration. "
+  help_text: "Describe what you have changed in the uploaded file or in the metadata on this page.  The text in this field will be added to the Change History section of the dataset page. This field is automatically populated with the last change description.  If you have made only minor changes to the metadata, you may leave this field blank.  If you have uploaded a new file, please be sure to describe what has changed. "
   display_group: Upload Data
   form_snippet: textarea.html
   display_snippet: null
