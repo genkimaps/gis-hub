@@ -1034,10 +1034,10 @@ resource_fields:
   display_group: Upload Data
 
 - field_name: change_description_resource
-  # << Does not work for resource-level fields?
-  required: true
+  validators: require_when_published
+  # required: true  << Does not work for resource-level fields
   #  validators: not_empty  << Also does not work
-  label: Description of Change
+  label: Change Description (Resource)
   help_text: "Describe what you have changed in the uploaded file or in the metadata on this page. This field is automatically populated with the last change description.  Please update this to describe what has changed in this iteration. "
   display_group: Upload Data
   form_snippet: textarea.html
