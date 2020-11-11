@@ -588,6 +588,7 @@ dataset_fields:
     display_snippet: date.html
     default: "{{ h.now().strftime('%Y-%m-%d') }}"
     display_group: Science
+    validators: require_when_published
 
   - field_name: change_description
     label: Description of Change

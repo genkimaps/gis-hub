@@ -20,11 +20,10 @@ def validate_resource(context, resource):
 
 
 def save_change_history(context, data_dict, type):
-    """ Saves change history to the DATASET-LEVEL change_history field,
-        regardless of whether the change originated from a resource or
-        from the dataset.
+    """ Saves change history from resources to the DATASET-LEVEL change_history field.
+        This function is NOT called for changes made to the dataset-level change_description field.
     """
-    if type=='resource':
+    if type == 'resource':
         # Get the parent package id and the package metadata
         dataset_id = data_dict.get('package_id')
         ds_metadata = get_action('package_show')(context, {'id': dataset_id})
@@ -33,19 +32,22 @@ def save_change_history(context, data_dict, type):
             logger.error('Cannot get metadata for parent dataset: %s' % dataset_id)
 
     else:
-        dataset_id = data_dict.get('id')
-        title = data_dict.get('title')
-        ds_metadata = data_dict
-    patch = {'id': dataset_id}
+        logger.warning('save_change_history function only applies to resources')
+        logger.warning('Ignoring call from type: %s' % type)
+        return
 
-    logger.debug('Update change history for %s %s' % (title, type))
+    patch = {'id': dataset_id}
+    logger.info('Update change history for %s %s' % (title, type))
     # Get change description from the appropriate field
     change_desc_field = 'change_description_%s' % type
     change_desc = data_dict.get(change_desc_field)
-    # Ignore if internal update
-    logger.debug('%s: %s' % (change_desc_field, change_desc))
+    # Ignore if internal update or blank
+    logger.info('%s: "%s", type: %s' % (change_desc_field, change_desc, type(change_desc)))
     if change_desc == CHANGE_DESC_PLACEHOLDER:
         logger.info('Internal change from API. <<< THIS CHANGE DESCRIPTION WILL BE IGNORED ')
+        return
+    if not change_desc or len(change_desc.strip()) == 0:
+        logger.info('Empty change description')
         return
     # Get existing change history from dataset
     change_history = ds_metadata.get('change_history')
@@ -69,20 +71,20 @@ def save_change_history(context, data_dict, type):
         logger.warning('No current change description')
         return
 
+    # Add resource title to change description
     new_history_entry = {'change_date': datetime.now().strftime('%Y-%m-%d'),
-                         'change_description': change_desc}
+                         'change_description': '%s: %s' % (title, change_desc)}
 
     # Check if this entry already exists in change history
     change_history.append(new_history_entry)
-    # put change history back to string for API
+    # Convert change history back to string for API
     change_history_str = json.dumps(change_history)
 
     # Patch dataset with the new change history
     patch['change_history'] = change_history_str
-    # DON'T DO THIS, we are only using the change_description field at resource level.
-    # Ensure that the change_description field is set to the internal
-    # placeholder value, to avoid an infinite loop of updates
-    # patch[change_desc_field] = CHANGE_DESC_PLACEHOLDER
+    # We are copying the value the change_description_resource field to the
+    # composite change_history field at dataset level.  To avoid an infinite loop of updates,
+    # use the package_patch action, and do NOT update to the resource here.
     logger.info('Updating change history: %s' % change_history_str)
     result = get_action('package_patch')(context, patch)
     updated_change_history = result.get('change_history')
