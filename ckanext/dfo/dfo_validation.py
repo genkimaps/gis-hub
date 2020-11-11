@@ -42,7 +42,7 @@ def save_change_history(context, data_dict, type):
     change_desc_field = 'change_description_%s' % type
     change_desc = data_dict.get(change_desc_field)
     # Ignore if internal update or blank
-    logger.info('%s: "%s", type: %s' % (change_desc_field, change_desc, type(change_desc)))
+    logger.info('%s: "%s" ' % (change_desc_field, change_desc))
     if change_desc == CHANGE_DESC_PLACEHOLDER:
         logger.info('Internal change from API. <<< THIS CHANGE DESCRIPTION WILL BE IGNORED ')
         return
