@@ -1034,7 +1034,7 @@ resource_fields:
   display_group: Upload Data
 
 - field_name: change_description_resource
-  validators: require_when_published
+  #  validators: require_when_published  << Does not work for resource-level fields
   # required: true  << Does not work for resource-level fields
   #  validators: not_empty  << Also does not work
   label: Change Description (Resource)
