@@ -68,7 +68,9 @@ def object_updated_or_created(context, data_dict):
             logger.info('Checking contents of %s resources' % len(resources))
             for res in resources:
                 # Check for download_resource
-                if res.get('url_type') == 'upload':
+                url_type = res.get('url_type')
+                logger.info('url type: %s' % str(url_type))
+                if str(url_type) == 'upload':
                     position = res.get('position')
                     if position > 0:
                         logger.warning('Download resource in wrong position: %s' % position)
