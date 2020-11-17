@@ -62,21 +62,20 @@ def object_updated_or_created(context, data_dict):
         # TODO: ensure download placeholder is in position 0
         # Check resource contents
         resources = data_dict.get('resources')
-        # download_resource = None
         download_position = None
         if type(resources) is list:
             logger.info('Checking contents of %s resources' % len(resources))
             for i, res in enumerate(resources):
                 # Check for download_resource
+                # position property is not set, use the list index
                 url_type = res.get('url_type')
-                position = res.get('position')
-                logger.info('url type: %s, pos: %s, index: %s' % (str(url_type), position, i))
+                # position = res.get('position')
+                logger.info('url type: "%s", index: %s' % (str(url_type), i))
                 if str(url_type) == 'upload':
                     if i > 0:
-                        logger.warning('Download resource in wrong position: %s' % position)
+                        logger.warning('Download resource in wrong position: %s' % i)
                         # Set download resource position
-                        # download_resource = res
-                        download_position = position
+                        download_position = i
                 res_title = res.get('title')
                 change_desc = res.get('change_description_resource')
                 logger.info('Dataset: %s, Resource: %s, Change Description: "%s"' % (
@@ -89,20 +88,15 @@ def object_updated_or_created(context, data_dict):
                 # download_resource in first position, append other resources
                 new_resources = [download_resource] + resources
                 logger.info('Updating resource order:')
-                # pos = 0
                 for i, res in enumerate(new_resources):
                     res_title = res.get('title')
                     url_type = res.get('url_type')
-                    logger.info('%s, type: "%s", pos: %s' % (res_title, i, url_type))
-                    # pos += 1
+                    logger.info('%s: type: "%s", index: %s' % (res_title, i, url_type))
 
                 # Update package with new resource order
                 resource_ids = [x['id'] for x in new_resources]
                 data = {'id': ds_name, 'order': resource_ids}
-                # data_dict['resources'] = new_resources
                 result = get_action('package_resource_reorder')(context, data)
-
-
 
         else:
             logger.warning('Dataset %s: Resources list is in an unexpected format' % ds_name)
