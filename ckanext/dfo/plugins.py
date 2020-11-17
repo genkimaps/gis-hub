@@ -64,7 +64,7 @@ def object_updated_or_created(context, data_dict):
         if type(resources) is list:
             logger.info('Checking contents of %s resources' % len(resources))
             for res in resources:
-                for k, v in resources.items():
+                for k, v in res.iteritems():
                     logger.info('%s: %s' % (k, v))
                 res_title = res.get('title')
                 change_desc = data_dict.get('change_description_resource')
