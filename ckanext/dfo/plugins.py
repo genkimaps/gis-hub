@@ -61,6 +61,9 @@ def object_updated_or_created(context, data_dict):
 
         # Done: ensure download placeholder is in position 0
         resources = data_dict.get('resources')
+        logger.info('Resources list is: %s' % (str(type(resources))))
+        if resources is None:
+            logger.info('Only the dataset was updated, no resources to check')
         download_position = None
         if type(resources) is list:
             logger.info('Checking contents of %s resources' % len(resources))
