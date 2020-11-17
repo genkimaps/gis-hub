@@ -44,7 +44,7 @@ def object_updated_or_created(context, data_dict):
     """
     # logger.info(data_dict)
     obj_title = data_dict.get('title')
-    logger.info('%s: after_create/update from resource or dataset' % obj_title)
+    logger.debug('%s: after_create/update from resource or dataset' % obj_title)
     obj_type, data_dict = detect_object_type(data_dict)
     if obj_type == 'resource':
         # TODO: If resource, we only have the package id, have to get dataset name before running backup
@@ -52,7 +52,7 @@ def object_updated_or_created(context, data_dict):
         # return ensure_resource_type(context, data_dict)
         logger.info('Resource was updated: %s ' % obj_title)
         disclaimer = data_dict.get('disclaimer')
-        logger.info('Resource: %s Changed: %s' % (
+        logger.debug('Resource: %s Changed: %s' % (
             obj_title, disclaimer))
         return dfo_validation.validate_resource(context, data_dict)
     elif obj_type == 'dataset':
@@ -61,28 +61,25 @@ def object_updated_or_created(context, data_dict):
 
         # Check resource contents
         resources = data_dict.get('resources')
-        if not resources:
-            logger.warning('This dataset has no resources')
+        if type(resources) is list:
+            logger.info('Checking contents of %s resources' % len(resources))
+            for res in resources:
+                res_title = res.get('title')
+                change_desc = data_dict.get('change_description_resource')
+                logger.info('Dataset: %s Resource: %s Change Description: "%s"' % (
+                    obj_title, res_title, change_desc))
         else:
-            if type(resources) is list:
-                logger.info('Checking contents of %s resources' % len(resources))
-                for res in resources:
-                    res_title = res.get('title')
-                    disclaimer = data_dict.get('disclaimer')
-                    logger.info('Dataset: %s Resource: %s Changed: %s' % (
-                        obj_title, res_title, disclaimer))
-            else:
-                logger.warning('Dataset %s: Resources list is in an unexpected format' % ds_name)
+            logger.warning('Dataset %s: Resources list is in an unexpected format' % ds_name)
 
-        logger.warning('TODO: check if dataset has changed')
-        logger.info('Backup to cloud command:')
+        # TODO: check if dataset has changed before backup
+        logger.debug('Backup to cloud command:')
         # Trigger external call to hub-geo-api to upload metadata to S3?
         # Use external call because hub-geo-api is Python3, can't mix with py2 CKAN.
         cmd = ['sudo', '-u', 'dfo', '--login',
                dfo_plugin_settings.hubapi_venv,
                dfo_plugin_settings.hubapi_backup_script,
                ds_name]
-        logger.info(cmd)
+        logger.debug(cmd)
 
         try:
             # botocore.exceptions.NoCredentialsError: Unable to locate credentials
@@ -248,9 +245,9 @@ class DFOPlugin(p.SingletonPlugin):
             obj_type = 'dataset'
 
         logger.info('after_update from %s' % obj_type)
-        if obj_type == 'resource':
-            disclaimer = data_dict.get('disclaimer')
-            logger.info('%s: Changed: %s' % (data_dict.get('title'), disclaimer))
+        # if obj_type == 'resource':
+        #     disclaimer = data_dict.get('disclaimer')
+        #     logger.info('%s: Changed: %s' % (data_dict.get('title'), disclaimer))
         return object_updated_or_created(context, data_dict)
 
     def after_search(self, search_results, search_params):
@@ -279,10 +276,10 @@ class DFOPlugin(p.SingletonPlugin):
         logger.debug('before_create: Going to create resource/package: %s' % resource)
 
     def before_update(self, context, current, resource):
-        logger.info('before_update: Going to update resource')
         res_title = resource.get('title')
         disclaimer = resource.get('disclaimer')
-        logger.info('%s: Changed: %s' % (res_title, disclaimer))
+        logger.info('before_update: Going to update resource: %s' % res_title)
+        logger.debug('%s: Changed: %s' % (res_title, disclaimer))
         pass
 
     def before_show(self, resource):
