@@ -14,6 +14,8 @@ CHANGE_DESC_PLACEHOLDER = 'internal update from hub-geo-api'
 """ Begin RESOURCE validation """
 def validate_resource(context, resource):
     """ Filter chain to validate a resource """
+
+    # Ensure that resource type is set
     ensure_resource_type(context, resource)
     save_change_history(context, resource, 'resource')
     return resource

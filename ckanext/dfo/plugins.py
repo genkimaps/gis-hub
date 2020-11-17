@@ -11,6 +11,7 @@ from ckanext.scheming import helpers as scheming_helpers
 from ckantoolkit import get_validator
 from ckan.plugins.toolkit import Invalid
 from ckan.common import _
+from ckan.logic import get_action
 import dfo_plugin_settings
 import dfo_validation
 import dfo_autocomp
@@ -42,34 +43,65 @@ def object_updated_or_created(context, data_dict):
         care about resources and packages; other types are immediately
         returned.
     """
-    # logger.info(data_dict)
     obj_title = data_dict.get('title')
     logger.debug('%s: after_create/update from resource or dataset' % obj_title)
     obj_type, data_dict = detect_object_type(data_dict)
     if obj_type == 'resource':
-        # TODO: If resource, we only have the package id, have to get dataset name before running backup
-        # set resource type only if it's a resource
-        # return ensure_resource_type(context, data_dict)
+        # If the object is a resource, we don't have to worry about backup, because
+        # package_update will be triggered after the resource is updated.
         logger.info('Resource was updated: %s ' % obj_title)
-        disclaimer = data_dict.get('disclaimer')
-        logger.debug('Resource: %s Changed: %s' % (
-            obj_title, disclaimer))
+        change_desc = data_dict.get('change_description_resource')
+        logger.debug('Resource: %s Change Description: %s' % (
+            obj_title, change_desc))
         return dfo_validation.validate_resource(context, data_dict)
+
     elif obj_type == 'dataset':
         ds_name = data_dict.get('name')
         logger.info('Dataset was updated: %s ' % ds_name)
 
+        # TODO: ensure download placeholder is in position 0
         # Check resource contents
         resources = data_dict.get('resources')
+        # download_resource = None
+        download_position = None
         if type(resources) is list:
             logger.info('Checking contents of %s resources' % len(resources))
             for res in resources:
-                for k, v in res.iteritems():
-                    logger.info('%s: %s' % (k, v))
+                # Check for download_resource
+                if res.get('url_type') == 'upload':
+                    position = res.get('position')
+                    if position > 0:
+                        logger.warning('Download resource in wrong position: %s' % position)
+                        # Set download resource position
+                        # download_resource = res
+                        download_position = position
                 res_title = res.get('title')
-                change_desc = data_dict.get('change_description_resource')
-                logger.info('Dataset: %s Resource: %s Change Description: "%s"' % (
+                change_desc = res.get('change_description_resource')
+                logger.info('Dataset: %s, Resource: %s, Change Description: "%s"' % (
                     obj_title, res_title, change_desc))
+
+            # Fix position if needed
+            if download_position is not None:
+                # new_resources = []
+                download_resource = resources.pop(download_position)
+                # download_resource in first position, append other resources
+                new_resources = [download_resource] + resources
+                logger.info('Updating resource order:')
+                pos = 0
+                for res in new_resources:
+                    res_title = res.get('title')
+                    url_type = res.get('url_type')
+                    logger.info('%s, type: "%s", pos: %s' % (res_title, pos, url_type))
+                    pos += 1
+
+                # Update package with new resource order
+                resource_ids = [x['id'] for x in new_resources]
+                data = {'id': ds_name, 'order': resource_ids}
+                # data_dict['resources'] = new_resources
+                result = get_action('package_resource_reorder')(context, data)
+
+
+
         else:
             logger.warning('Dataset %s: Resources list is in an unexpected format' % ds_name)
 
@@ -84,15 +116,16 @@ def object_updated_or_created(context, data_dict):
         logger.debug(cmd)
 
         try:
-            # botocore.exceptions.NoCredentialsError: Unable to locate credentials
+            # To prevent botocore.exceptions.NoCredentialsError: Unable to locate credentials
             # Need to run as user dfo with --login to get enviro vars
             subprocess.Popen(cmd)
-            logger.info('Backup command was started without waiting')
+            logger.info('Backup command was started.')
         except:
             logger.error(traceback.format_exc())
             logger.info('Backup command failed')
         # check keyword case, duplicates, other validation
         return dfo_validation.validate_dataset(context, data_dict)
+
     # If any other object type, just return it
     return data_dict
 
