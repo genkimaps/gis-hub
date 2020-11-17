@@ -61,9 +61,6 @@ def object_updated_or_created(context, data_dict):
 
         # Done: ensure download placeholder is in position 0
         resources = data_dict.get('resources')
-        logger.info('Resources list is: %s' % (str(type(resources))))
-        if resources is None:
-            logger.info('Only the dataset was updated, no resources to check')
         download_position = None
         if type(resources) is list:
             logger.info('Checking contents of %s resources' % len(resources))
@@ -98,8 +95,12 @@ def object_updated_or_created(context, data_dict):
                 data = {'id': ds_name, 'order': resource_ids}
                 result = get_action('package_resource_reorder')(context, data)
 
+        elif resources is None:
+            logger.info('Only the dataset was updated, no resources to check')
         else:
-            logger.warning('Dataset %s: Resources list is in an unexpected format' % ds_name)
+            # logger.info('Resources list is: %s' % (str(type(resources))))
+            logger.warning('Dataset %s: Resources list in unexpected format: %s' % (
+                ds_name, str(type(resources))))
 
         # TODO: check if dataset has changed before backup
         logger.debug('Backup to cloud command:')
@@ -119,7 +120,7 @@ def object_updated_or_created(context, data_dict):
         except:
             logger.error(traceback.format_exc())
             logger.info('Backup command failed')
-        # check keyword case, duplicates, other validation
+
         return dfo_validation.validate_dataset(context, data_dict)
 
     # If any other object type, just return it

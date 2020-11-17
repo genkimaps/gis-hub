@@ -152,6 +152,8 @@ def ensure_resource_type(context, resource):
 """ Begin DATASET validation """
 def validate_dataset(context, dataset):
     """ Filter chain to validate a dataset """
+
+    # Check keyword case, duplicates, other validation
     dataset = kw_case_dups(context, dataset)
     # Disable save_change_history for dataset. Instead use existing dataset-level
     # change history field on the GUI.
