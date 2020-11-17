@@ -59,23 +59,20 @@ def object_updated_or_created(context, data_dict):
         ds_name = data_dict.get('name')
         logger.info('Dataset was updated: %s ' % ds_name)
 
-        # TODO: ensure download placeholder is in position 0
-        # Check resource contents
+        # Done: ensure download placeholder is in position 0
         resources = data_dict.get('resources')
         download_position = None
         if type(resources) is list:
             logger.info('Checking contents of %s resources' % len(resources))
             for i, res in enumerate(resources):
                 # Check for download_resource
-                # position property is not set, use the list index
+                # The 'position' property is not set, use the list index
                 url_type = res.get('url_type')
-                # position = res.get('position')
-                logger.info('url type: "%s", index: %s' % (str(url_type), i))
-                if str(url_type) == 'upload':
-                    if i > 0:
-                        logger.warning('Download resource in wrong position: %s' % i)
-                        # Set download resource position
-                        download_position = i
+                if str(url_type) == 'upload' and i > 0:
+                    logger.warning('Download resource in wrong position! %s' % i)
+                    logger.info('url type: "%s", index: %s' % (str(url_type), i))
+                    # Set download resource position
+                    download_position = i
                 res_title = res.get('title')
                 change_desc = res.get('change_description_resource')
                 logger.info('Dataset: %s, Resource: %s, Change Description: "%s"' % (
@@ -87,11 +84,11 @@ def object_updated_or_created(context, data_dict):
                 download_resource = resources.pop(download_position)
                 # download_resource in first position, append other resources
                 new_resources = [download_resource] + resources
-                logger.info('Updating resource order:')
+                logger.info('Updating resource order...')
                 for i, res in enumerate(new_resources):
                     res_title = res.get('title')
                     url_type = res.get('url_type')
-                    logger.info('%s: type: "%s", index: %s' % (res_title, i, url_type))
+                    logger.debug('%s: type: "%s", index: %s' % (res_title, url_type, i))
 
                 # Update package with new resource order
                 resource_ids = [x['id'] for x in new_resources]
@@ -103,8 +100,8 @@ def object_updated_or_created(context, data_dict):
 
         # TODO: check if dataset has changed before backup
         logger.debug('Backup to cloud command:')
-        # Trigger external call to hub-geo-api to upload metadata to S3?
-        # Use external call because hub-geo-api is Python3, can't mix with py2 CKAN.
+        # Trigger external call to hub-geo-api to upload metadata to S3.
+        # Must do this because hub-geo-api is Python3, can't mix with Python2 CKAN.
         cmd = ['sudo', '-u', 'dfo', '--login',
                dfo_plugin_settings.hubapi_venv,
                dfo_plugin_settings.hubapi_backup_script,
@@ -275,10 +272,7 @@ class DFOPlugin(p.SingletonPlugin):
         if not package_id:
             obj_type = 'dataset'
 
-        logger.info('after_update from %s' % obj_type)
-        # if obj_type == 'resource':
-        #     disclaimer = data_dict.get('disclaimer')
-        #     logger.info('%s: Changed: %s' % (data_dict.get('title'), disclaimer))
+        logger.info('"after_update" from %s' % obj_type)
         return object_updated_or_created(context, data_dict)
 
     def after_search(self, search_results, search_params):
@@ -357,13 +351,15 @@ class DFOPlugin(p.SingletonPlugin):
     @staticmethod
     def goc_themes_validator(value, context):
         # Validate keywords against a list of GOC themes
-        logger.info('Validating "%s" against GOC themes' % value)
+        logger.debug('Validating "%s" against GOC themes' % value)
         goc_themes = dfo_autocomp.goc_theme_list(context)
         
         keywords = value.split(',')
         for kw in keywords:
             if not kw.lower().strip() in goc_themes:
-                raise Invalid('Not a valid GoC theme: %s' % kw)
+                invalid_msg = 'Not a valid GoC theme: %s' % kw
+                logger.warning(invalid_msg)
+                raise Invalid(invalid_msg)
         return value
 
 
