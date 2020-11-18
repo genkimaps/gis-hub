@@ -15,1268 +15,1413 @@
         <h2 id="summaries">GIS Hub Summaries</h2>
         <p>This section contains monthly summary documents, provided as status updates to
             datasets on the platform. </p>
-        <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/01_2020-GISHubSummary.pdf?inline=false">Jan
-            2020</a><br>
-        <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/02_2020-GISHubSummary.pdf?inline=false">Feb
-            2020</a><br>
-        <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/04_2020-GISHubSummary.pdf?inline=false">Apr
-            2020</a><br>
-        <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/05_2020-GISHubSummary.pdf?inline=false">May
-            2020</a><br>
-        <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/08_2020-GISHubSummary.pdf?inline=false">Aug
-            2020</a><br>
-        <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/09_2020-GISHubSummary.pdf?inline=false">Sept
-            2020</a><br>
-        <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/10_2020-GISHubSummary.pdf?inline=false">Oct
-            2020</a><br>
-    </div>
-
-    <h2 id="issues">Known Issues</h2>
-    <p>This section summarizes known issues on the GIS Hub
-        that affect the end-user experience, and where available,
-        a workaround. </p>
-
-    <p>
-        <b>Problem:</b> Projections and/or projection codes are sometimes not
-        detected correctly.
-        <br>
-        <b>Workaround:</b> After uploading you data, the GIS Hub will attempt to
-        populate these fields automatically. If it fails to do so, you may see
-        "unknown" or something else. This field can be edited to have the correct value.
-        <br><br>
-        <b>Problem:</b> Markdown formatting may not render completely due to certain characters. For example, the
-        < and > symbols may cause issues such as missing text due to escape characters.
-        <br>
-        <b>Workaround:</b> If this is the case, replace them with an
-        <a href="https://www.whatsmyip.org/html-characters/">Entity Code</a>. Also see this
-        <a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax and best practice guide</a>.
-        <br><br>
-        <b>Problem:</b> Markdown formatting (such as main headers) may cause text to flow outside of the typical page
-        width due to the font size and spacing.
-        <br>
-        <b>Workaround:</b> If this is the case, replace them with a smaller header tag with markdown formatting.
-        <br><br>
-        <b>Problem:</b> The Change Description (Resource) field does not save changes for the data download resource.
-        Changes are not appended
-        to the Change History field on the dataset metadata page.
-        <br>
-        <b>Note:</b> This issue has been resolved.
-        <br><br>
-        <b>Problem:</b> Reorder resources button does not function.
-        <br>
-        <b>Note:</b> This issue has been resolved. When re-ordering resources, please keep the data download resource in
-        the first position.
-        <br><br>
-        <b>Problem:</b> Altering the Download Disclaimer or Download Disclaimer (External Link)
-        metadata fields have no effect.
-        <br>
-        <b>Note:</b> This issue has been resolved.
-        <br><br>
-        <b>Note: </b>Previous issues with species codes are now resolved. See the Species Codes
-        section in the document below.
-    </p>
-
-    <h2 id="intro">Introduction</h2>
-    <p>The GIS Hub system is live and ready for users to publish data.
-        This documentation page contains guidelines for preparing
-        your data and metadata for publishing on the system. Please note
-        that some of these guidelines may change as the system is improved. </p>
-
-    <p>Keep in mind that these are <i>guidelines</i> and not strict rules.
-        We prefer that staff start using the system as soon as possible,
-        so that any unforeseen issues can be resolved before full release.
-        Even if your data does not meet all of the requirements listed here,
-        you may prepare it for publishing anyway, with the understanding
-        that the published data and/or metadata can easily be updated in the future. </p>
-
-    <h2 id="datasets-intro">Datasets on the GIS Hub</h2>
-    <p>The GIS Hub runs on a software platform called <a href="https://ckan.org/">CKAN</a>
-        , which organizes data in way that is easy to search and understand. Data published on
-        the GIS Hub, like all CKAN sites, is contained in <i>datasets</i>. A dataset is a
-        container with data (tables, spatial layers, files) and related metadata, typically
-        downloadable as a single zip file. On the GIS Hub, the <a href="https://www.gis-hub.ca/dataset">
-            default list of datasets</a> shows all datasets that are visible to you, along with filters and
-        search tools to help you find relevant data. </p>
-
-    <h4 id="datasets-resources">Datasets & Resources</h4>
-    <p>A <b>dataset</b> is the zip file uploaded to the GIS Hub that contains the files processed and displayed
-        on a dataset's page such as <a href="https://www.gis-hub.ca/dataset/floating-structures">Floating Structures</a>.
-    </p>
-
-    <p>A <b>resource</b> is a single file or layer that is part of the dataset. For example. the
-        <a href="https://www.gis-hub.ca/dataset/floating-structures/resource/b75837fb-ef64-42ee-9fc9-7ad8621f520b">
-            Aquaculture</a> resource is one layer that is part of the Floating Structure's dataset.
-    </p>
-
-    <div class="docs-caption">
-        <img src="/base/images/docs/datasets.png" alt="GIS Hub datasets view"
-             width="width" height="height" class="docs-img"/>
-        List of datasets on the GIS Hub
-    </div>
-
-    <h2 id="overview">Metadata Overview</h2>
-    <p>Metadata is a key part of any dataset that is published and shared with others.
-        The CKAN software platform provides a default metadata standard with basic metadata
-        fields that are attached to all datasets. </p>
-
-    <p>There are two levels of metadata: <br>1) <b>Dataset Metadata</b> contains the majority of the information such
-        as science, general, and basic metadata)<br>2) <b>Resource Metadata</b> contains information like attributes in
-        the layer and a description for the layer as well as spatial information). The resource metadata page includes a
-        link to the web map preview and it is possible to embed the map preview in the resource page itself. To restrict
-        access to the resource metadata (and the web map preview), set the Access Restrictions appropriately (see
-        <a href="#add-data">Adding Data Section</a>).</br></p>
-
-    <p>The Pacific Science metadata working group has extended CKAN's basic
-        metadata standard with a comprehensive standard that includes
-        relevant fields for Science. In addition to
-        the scientific metadata, the standard includes general-purpose and
-        geospatial (non-science) metadata, which are required for all spatial
-        data published on the Federal Geospatial Portal (FGP) and/or Open Data.
-        Even if your data is not a candidate for publishing on FGP or Open Data,
-        the non-science metadata is required since it provides important information
-        for staff downloading and using the data. </p>
-
-    <p>Before creating a new dataset, you should read this entire page and
-        <a href="https://www.gis-hub.ca/dataset/meta-template/resource/5632fd3e-fc92-4443-bac9-2750cd456bcc">
-            download the metadata template (word document)</a> to your PC. Use the word doc
-        to write and edit the metadata, then copy and paste the relevant parts to the forms
-        on the GIS Hub when you are ready to publish your data.
-    </p>
-
-    <h2 id="modules">The Metadata Standard</h2>
-    <p>The metadata standard is divided into modules that group related metadata fields
-        together. When creating a new dataset on the GIS Hub, you will see the same
-        metadata fields and groupings in your browser as what you see in this page.
-        We suggest that you write your metadata in a document and copy and
-        paste the content into the metadata system, when both the data and
-        metadata are ready. </p>
-    <p>During the data upload process, your spatial data is extracted automatically
-        by the server and properties such as projection and spatial extents
-        are recorded. Metadata fields that are extracted automatically are
-        not shown in the metadata modules below—only the fields that require
-        manual input in the metadata entry system are shown.</p>
-    <p>All fields in each metadata module are required unless marked as
-        optional.</p>
-
-    <h3 id="basic">Basic Information</h3>
-    <p>This section is a set of basic information required for all metadata entries.
-        This information is displayed near the top of the page when viewing metadata.</p>
-    <p>The metadata standard requires contact information for organizations
-        responsible for various aspects of the data. Two sets of contact
-        information are required: data creator (included in the Basic Information
-        section) and program manager. </p>
-
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th scope="col" style="width:25%">Field</th>
-            <th scope="col" style="width:75%">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Title</td>
-            <td>Short title, no longer than a newspaper headline. This is displayed
-                on the GIS Hub when this dataset appears in search results.
-            </td>
-        </tr>
-        <tr>
-            <td>URL (Dataset ID)</td>
-            <td>The URL for a dataset is a human-friendly unique identifier, which
-                also forms part of the complete URL for a dataset. When creating a new
-                dataset, this field is automatically filled by making a URL-compatible
-                label from the title you entered above. For example, if your dataset title is
-                Sponge Reefs, the autogenerated URL is <i>sponge-reefs</i>. You can change
-                this using the Edit button. The URL should contain only lowercase letters
-                and hyphens and be a maximum of 20 characters. If you are editing an existing
-                dataset and you change the title, this field will <b>not</b> be updated. Please
-                do not change a dataset's URL after it has been created, since it is used
-                internally in various places.
-            </td>
-        </tr>
-        <tr>
-            <td>Quality Control</td>
-            <td>Status of quality control for this dataset. By default, it is set to Check Required. Change to the
-                appropriate status when quality control is complete or if problems found.
-            </td>
-        </tr>
-        <tr>
-            <td>Summary</td>
-            <td>Brief narrative summary of the dataset's contents. Please summarize the following:
-                <ul>
-                    <li>What data is included</li>
-                    <li>What accessory information (reports, scripts) is included</li>
-                    <li>Objectives</li>
-                    <li>Describe the knowledge gap(s) the dataset is intended to fill</li>
-                    <li>If there are multiple tables/layers in the dataset, how are they related?</li>
-                </ul>
-        </tr>
-        <tr>
-            <td>Maintainer Email</td>
-            <td>Email address of a person responsible for the dataset. Notifications about
-                access requests and other updates will be sent to this email.
-            </td>
-        </tr>
-
-        <tr>
-            <td>Organization</td>
-            <td>Choose from the list - The organization (GC Department or Agency)
-                primarily responsible for publishing the dataset. Departments
-                within government should be specified down to the section level.
-            </td>
-        </tr>
-        <tr>
-            <td>Visibility</td>
-            <td>Set to Public when all required metadata fields have been
-                entered and the data is ready to be published. Note that
-                setting Public means that the dataset is published and
-                will appear in search results on the GIS Hub. All users on the GIS Hub will be able to view the
-                metadata.
-                Access permissions for resources (who is allowed to download / view) are set elsewhere.
-                <br><br>
-                Set this to Private if you do not yet have all the information
-                you need to complete the required metadata fields. When set to
-                Private, you can save the metadata form, even if it is incomplete,
-                and come back to it later. Your Private (i.e., incomplete) datasets
-                are visible only to you and members of your organization. To come
-                back to one of your private datasets later, click your username
-                at the top right and look for entries marked Draft. You may also wish
-                to bookmark the URL of the dataset, which will not change.
-            </td>
-        </tr>
-        <tr>
-            <td>Cite this data as</td>
-            <td>Describe how this data should be cited. This is generated
-                automatically by the GIS Hub from the metadata you entered,
-                but it can be edited manually.
-            </td>
-        </tr>
-        <tr>
-            <td>Start Date</td>
-            <td>Indicate the earliest date represented in this dataset.</td>
-        </tr>
-        <tr>
-            <td>End Date</td>
-            <td>Indicate the latest date represented in this dataset.
-                (Note: this field is no longer optional. If data collection
-                is ongoing, do not leave this blank; choose Ongoing under the
-                Status section.) If this is a model or derived data
-                (as opposed to data collected in the field), enter the
-                last date that the model used to generate this data was updated.
-                In this case, end date can be the same as start date.
-            </td>
-        </tr>
-        <tr>
-            <td>Data Creator</td>
-            <td>The Principal Analyst. The lead person responsible for creating
-                the data. Provide the Name, Role, Department, Address, Phone, email.
-            </td>
-        </tr>
-        <tr>
-            <td>Co-Creators <br>
-                <i>(optional)</i>
-            </td>
-            <td>Provide the names of any additional co-creators (secondary authors)
-                for this dataset.
-            </td>
-        </tr>
-        <tr>
-            <td>Program Manager</td>
-            <td>The DFO Program Head responsible for the data (must be a permanent
-                DFO employee or section head?). Provide the Name, Role, Department,
-                Address, Phone, email.
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-
-    <h3 id="general">General Metadata</h3>
-    <p>This section describes general-purpose metadata required for
-        all spatial data. </p>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th scope="col" style="width:25%">Field</th>
-            <th scope="col" style="width:75%">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Topic Category</td>
-            <td>Main theme of the data. Choose the best match from the list.</td>
-        </tr>
-        <tr>
-            <td>Date Completed</td>
-            <td>The date on which the dataset was substantially complete
-                in its current form.
-            </td>
-        </tr>
-        <tr>
-            <td>Date Published</td>
-            <td>Date of publication of dataset. Default: today's date.
-                This refers to publication of the data on this portal,
-                not necessarily the date of publication of the associated
-                academic research (academic references are described elsewhere).
-            </td>
-        </tr>
-        <tr>
-            <td>Status</td>
-            <td>Development phase of the dataset. Choose the
-                best match from the list.
-            </td>
-        </tr>
-        <tr>
-            <td>Update Frequency</td>
-            <td>Revision cycle of the data. Choose the
-                best match from the list.
-            </td>
-        </tr>
-        <tr>
-            <td>Dataset Level</td>
-            <td>Use Dataset if this is a standalone data product. Series is
-                individual regions in a series of datasets covering a larger area,
-                or some other subset of a larger data package.
-            </td>
-        </tr>
-        <tr>
-            <td>Keywords (GoC Thesaurus)</td>
-            <td>At a minimum, one keyword must be supplied from the Government
-                of Canada Core Subject Thesaurus. Refer to <a href="http://canada.multites.net/cst/index.htm">
-                    http://canada.multites.net/cst/index.htm</a>.
-                You are most likely to find useful keywords in the
-                “nature and environment” and “science and technology” categories.
-                All keywords should be lowercase.
-                <p>
-                    This longstanding issue is now resolved:
-                    <del><b>Issue:</b> The autocomplete for
-                        non-science keywords is not restricted to the list of keywords from the
-                        Government of Canada Thesaurus. Autocomplete also shows Science keywords.
-                    </del>
-                </p>
-                This field now has the following features:
-                <ul>
-                    <li>the autocomplete only shows entries from the GoC Thesaurus</li>
-                    <li>it is not possible to enter a keyword that isn't in the GoC Thesaurus</li>
-                    <li>there is a link to the GoC Thesaurus website below the text box</li>
-                    <li>keywords can include punctuation, other than commas (try "children's books")</li>
-                </ul>
-
-            </td>
-        </tr>
-
-        </tbody>
-    </table>
-
-    <h3 id="science">Science Metadata</h3>
-    <p>This section is required for all scientific data. </p>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th scope="col" style="width:25%">Field</th>
-            <th scope="col" style="width:75%">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Science Keywords</td>
-            <td>Enter additional comma-separated keywords not included in the
-                general-purpose Government of Canada Core Subject Thesaurus.
-                These keywords may include domain-specific vocabulary appropriate
-                for scientific users. All keywords should be lowercase, including acronyms.
-                Acronyms should be in singular form (no trailing s).
-            </td>
-        </tr>
-        <tr>
-            <td>Theme</td>
-            <td>Choose the best match from the list.</td>
-        </tr>
-        <tr>
-            <td>Methods</td>
-            <td>The methods field documents scientific methods used in the
-                collection or derivation of this dataset. It includes
-                information on items such as tools, instrument calibration
-                and software. It can also include a complete description
-                of the lineage of the data. It may refer to sections of
-                an associated academic citation or other published resource.
-                <br><br>
-
-                Understanding the pedigree of the data is critical. Ideally, this will
-                link the data set, through its methods, all the way back to the
-                source data set(s), for which the data collection methods are known.
-                <br><br>
-
-                Relevant raster methods include: any interpolation or extrapolation,
-                and any masking or numeric manipulation of the source data.
-            </td>
-        </tr>
-        <tr>
-            <td>Data Sources</td>
-            <td>List of source data inputs used to produce this dataset.
-                For each input, provide a link to the source data where possible
-                (to another dataset on the GIS Hub, or an external link).
-                Include the date that the input was extracted, if known.
-                If the source data changes over time, indicate the date on
-                which the data was retrieved. Where possible, provide a
-                citation for each input.
-                <br><br>
-                Example input:
-                <br>
-                Originator: Canadian Hydrographic Service, Fisheries and Oceans Canada (DFO)
-                <br>
-                Publication_Date: 2015
-                <br>
-                Title: Geodatabase of Bathymetric point data for entire BC coast
-                <br>
-                Other_Citation_Details: Geodatabase: GEOBASE_Entire_Coast.gdb
-                <br>
-                (link to dataset if available)
-            </td>
-        </tr>
-        <tr>
-            <td>Scripts or Software Routines</td>
-            <td>Link to script(s) used to process the data, for example on the
-                GCCode GitLab site. Alternatively, include the scripts or queries
-                in a Scripts folder inside in the zip file that you will upload.
-                Document the purpose of each script, and anything required to run
-                the script again. This field is now displayed using Markdown formatting,
-                so links pasted here will be clickable.
-                <br><br>
-
-                If no scripts were used to create the data, use this field to
-                indicate how it was created, for example “manually created
-                using analysis tools in ArcGIS.”
-            </td>
-        </tr>
-        <tr>
-            <td>Spatial Data Quality</td>
-            <td>A measure of the quality of the spatial data representing some real-world entity. Describe the spatial
-                data quality with reference to the data processing steps. Was location data captured with survey-grade
-                GPS, consumer GPS, paper charts, ship’s log? Was data digitized from a scanned and georeferenced paper
-                map? Is this dataset the result of intentional degradation of the input data to preserve privacy (e.g. 3
-                boat rule) and therefore has a known spatial resolution? Were multiple datasets captured at different
-                spatial resolutions used in this analysis? Were point data extrapolated to polygons, or polygons/lines
-                converted to centroids?
-            </td>
-        </tr>
-        <tr>
-            <td>Positional Accuracy</td>
-            <td>May include horizontal and vertical. Express in metric units where possible.</td>
-        </tr>
-        <tr>
-            <td>Attribute Accuracy</td>
-            <td>Describe in general the degree to which attribute values reflect real-world conditions. For details on
-                specific attributes, see the Attributes Metadata section.
-            </td>
-        </tr>
-        <tr>
-            <td>Logical Consistency</td>
-            <td>Report on fidelity of relationships in the data set, the validity of its relationships to other data
-                sets, and the degree to which the entities represent the real-world objects or concepts they are
-                intended to capture.
-            </td>
-        </tr>
-        <tr>
-            <td>Completeness</td>
-            <td>Report on the completeness of the dataset relative to its areal coverage, and the overall completeness
-                of attributes.
-            </td>
-        </tr>
-        <tr>
-            <td>Absence Data</td>
-            <td>Does the dataset include recorded (observed) absence of specific features, and if so, for which
-                attributes?
-            </td>
-        </tr>
-        <tr>
-            <td>Uncertainties</td>
-            <td>Describe uncertainties in measurement and methodology. Include any known biases. For example, was data
-                collection opportunistic, or part of the survey design? In there any known bias from individual
-                observers?
-            </td>
-        </tr>
-        <tr>
-            <td>Use Restrictions</td>
-            <td>Restrictions on appropriate use of the resource. Examples: Not suitable for navigation. Do not use for
-                fisheries assessment.
-            </td>
-        </tr>
-        <tr>
-            <td>Change History</td>
-            <td>A description of changes made to the data since its release. Create an entry for each change, indicate
-                the date of change and describe what was changed and why. When a dataset is first published, there is
-                one change history entry for the initial creation of the dataset. Add additional change history entries
-                as needed. If scripts have been used to generate a product, it is recommended to create a 'Release' of
-                the code through GitLab or GitHub and reference that version of the release to track spatial products
-                built using certains versions of code. If you are uploading a new version of data, but nothing else has
-                changed, please be sure to record the change using the field Change Description (Resource) on the Edit
-                Resource page (instead of on this page). Your change description on the Edit Resource page will
-                automatically be added to the Change History for the dataset.
-            </td>
-        </tr>
-        <tr>
-            <td>Change Date</td>
-            <td>Date on which the change was made to the data, or the metadata entry.</td>
-        </tr>
-        <tr>
-            <td>Temporal Coverage <br>
-                (optional)
-            </td>
-            <td>If the temporal coverage of the dataset is more complex than a simple start and end date, describe it
-                here. You may describe temporal coverage as a single point in time, multiple points in time, and one or
-                more range of dates. Seasonality can also be described here. For derived datasets, please specify the
-                temporal coverage of all input data here. Specific start and end dates are preferable, but year ranges
-                are acceptable if the exact dates are uncertain or not applicable.
-            </td>
-        </tr>
-        <tr>
-            <td>References</td>
-            <td>Academic references that are closely associated with the data.
-                Create one entry for each reference. Indicate whether the reference
-                is the place where this data was published (e.g. as a map).
-            </td>
-        </tr>
-        <tr>
-            <td>Collaboration</td>
-            <td>Describe collaboration with academia, other government agencies, and external contributors. If produced
-                internally by DFO, enter 'No collaboration outside of DFO.' Indicate collaboration with organizations
-                rather than individuals.
-            </td>
-        </tr>
-        <tr>
-            <td>Other Information <br>
-                (optional)
-            </td>
-            <td>Relevant information that does not fit in any other category.</td>
-        </tr>
-        <tr>
-            <td>Confidentiality</td>
-            <td><p>Level of confidentiality or sensitivity of the dataset. For a description of the categories, refer
-                to: https://www.tpsgc-pwgsc.gc.ca/esc-src/protection-safeguarding/niveaux-levels-eng.html. </p>
-
-                <p>Not Protected means that no harm would occur if the data were released to the public. However,
-                    choosing this option does not imply that your data will be made public on this website (all datasets
-                    published on this site are restricted, at minimum, to registered users).</p>
-
-                <p>Protected A applies to data that could harm individuals or corporations if released, such as fishing
-                    events and bathymetry. Note that fishing data received 'in confidence' should be Protected A, not
-                    Confidential. </p>
-
-                <p>Confidential applies to data that could harm the national interest if released. At this time,
-                    Confidential should be used only for abalone data. </p>
-
-                <p>Data classified as Protected B, Secret, or any higher classification cannot be uploaded on this
-                    system. For these security classification, you may still create a dataset record using this system,
-                    but do not upload the actual data.</p>
-            </td>
-        </tr>
-
-        </tbody>
-    </table>
-
-
-    <h3 id="species">Species Data</h3>
-    <p>Species codes are only required if your data is biological.
-        Complete the following metadata for <b>each</b> species in your data.
-        If the list of species is excessively long, you may include a list
-        of species codes in a csv (see below). Click the green plus sign
-        to add another species code entry, and use the red buttons at right
-        to remove existing entries.
-    </p>
-
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th scope="col" style="width:25%">Field</th>
-            <th scope="col" style="width:75%">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Species Code</td>
-            <td>A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not
-                available,
-                the list can be updated. If you are editing existing species data, only the code will be displayed in
-                the
-                dropdown menus. To show the full species name, click the dropdown menu and re-type the species code,
-                then
-                press Enter.
-            </td>
-        </tr>
-        <tr>
-            <td>Age Data</td>
-            <td>Does the sample include age data?</td>
-        </tr>
-        <tr>
-            <td>Observation Type</td>
-            <td>Was the species observed incidentally, or targeted as part of the survey design? Was the presence of
-                species inferred or observed?
-                Choose from: Targeted observation, incidental observation, inferred.
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <h3>Including a species codes file</h3>
-    <p>
-        <b>Note: </b>Species data can either be entered manually using the form in the Species Data section,
-        <i>or</i> included in a species codes file, but not both. If you include a species codes file in your
-        data upload, any existing species data will be overwritten.
-    </p>
-    <p>In many cases, it will be more convenient to include a file with a list of species codes,
-        instead of filling out this form manually. The format of the file is one line per species code. </p>
-    <p>First column: species code. Ensure that the code includes any leading zeros, for example <b>004 instead of 4</b>.
-        <br>
-        2nd column: Observation type: targeted / incidental / inferred Default: targeted <br>
-        3rd column: Age data: yes / no Default: no
-    </p>
-    <p>For each line, only the species code is required. If the 2nd or 3rd column is not included for a given line, the
-        default values will be used. The csv file does not need a header. Values do not have to be enclosed in quotes
-        (any quotes found will be removed). Do not use any character other than a comma to separate values. </p>
-    <p>The file must be called <i>species_codes.csv</i> and included in the zip file with your data. </p>
-
-    <h2 id="add-data">Adding Data</h2>
-    <p>Once all of the required metadata listed above has been entered, you can continue to adding data to your dataset
-        record. Data that is uploaded to a dataset will be downloadable by all users who have access. Ensure that
-        Visibility is set to Public and click “Next: Add Data” at the bottom of the page. This will take you to the Add
-        Data screen. </p>
-    <p>Most of the metadata in this section is extracted automatically when you upload your data package. The only
-        fields you need to complete before uploading data are the following:</p>
-
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th scope="col" style="width:25%">Field</th>
-            <th scope="col" style="width:75%">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Title</td>
-            <td>If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package. <b>Ensure
-                that the title of the data package is NOT the same as any of the layers in your upload</b>. If this is a
-                layer/file inside your data upload, this field is populated automatically.
-            </td>
-        </tr>
-        <tr>
-            <td>Download Disclaimer <br> <i>(optional)</i></td>
-            <td>A disclaimer that is displayed to authorized users before allowing data download. Can consist of text
-                from Caveats, Use Restrictions, user-defined text, and/or links to external documents with full terms
-                and conditions. You may also choose to use the boilerplate disclaimer, which is shown by default.
-            </td>
-        </tr>
-        <tr>
-            <td>Download Disclaimer (External Link) <br> <i>(optional)</i></td>
-            <td>Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be
-                accepted before downloading this resource.
-            </td>
-        </tr>
-        <tr>
-            <td>Access Restrictions</td>
-            <img src="/base/images/docs/updated.png" alt="Updated"
-                 width="40" height="40"/>
-            <td>Access restrictions determine who can view resource metadata content and download the data. You may
-                choose to allow resource metadata and data download to be available to any of the following:
-                <ul>
-                    <li><b>All Registered Users:</b> anyone who is registered on the GIS Hub will have access.</li>
-                    <li><b>Any Organization Members:</b> restrict access to users who are in an organization on the GIS
-                        Hub.
-                    </li>
-                    <li><b>Same Organization Members:</b> restrict access to users who are in the same organization. For
-                        example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will
-                        have access.
-                    </li>
-                    <li><b>Allowed Users/Groups Only:</b> allow access only for specific users or groups. If any of the
-                        resources in a dataset have sensitive data that you wish to restrict, all resources - as well as
-                        the dataset (zip file) - must be set to Allowed Users/Groups Only. Not setting the dataset and
-                        resources to this level will allow any user to download the dataset.
-                        <br>If you choose the Allowed Users/Groups option, individual users can be added by typing names
-                        into the Allowed Users field below. Note that the list of allowed users is only applicable to
-                        this option. A list of allowed users will not be applied if one of the other levels (such as
-                        Same Organization Members) is selected. The means that you cannot set the resources to the Same
-                        Organization Members <b>and</b> add individual users on top of that.
-                        <br>If a user does not have permission to access a resource, they will see a button to Request
-                        Access rather than the usual Details button. A user should have permission to view/access all or
-                        none of a dataset's resources (not some).
-                    </li>
-                </ul>
-
-            </td>
-        </tr>
-        <tr>
-            <td>Change Description (Resource) <br> <i>(optional unless updating the zip file)</i></td>
-            <td>Describe what you have changed in the uploaded file or in the metadata on this page. The text in this
-                field will be added to the Change History section of the dataset page. This field is automatically
-                populated with the last change description. If you have made only minor changes to the metadata, you may
-                leave this field blank. If you have uploaded a new file, please be sure to describe what has changed.
-            </td>
-        </tr>
-        </tbody>
-    </table>
-
-    <p>All other fields on this form can be left <b>blank</b> or with their default values. The GIS hub will extract
-        metadata from your uploaded file and automatically populate this section. For each attribute field, the name and
-        type will be detected automatically, but you will need to provide a description, units, and coded values
-        manually, after the data has been uploaded and processed (see below). </p>
-    <p>To upload a file, choose Upload near the bottom of the form. <b>Please avoid spaces in filenames inside the
-        uploaded zip files.</b> For example, file geodatabases, PDFs, and other files should contain underscores rather
-        than spaces in their names (such as Feature_Classes_ROMS_BottomWaters.gdb). If updating an existing dataset, do
-        not change the file names (even to remove spaces in files if they were previously uploaded with spaces). Spatial
-        layers should have meaningful names (i.e. more than just a region code such as hg/wcvi). At the bottom of the
-        form, click the Finish button and wait for your upload to complete. After it is complete, you will be redirected
-        to the dataset summary page, showing the metadata associated with the dataset and a list of detected spatial
-        data layers/tables (listed at the top under Data and Resources). You need to <b>refresh the page once</b> to
-        show all of the extracted layers. If your dataset is large, you may need to wait several minutes before metadata
-        entries for all layers are shown. </p>
-
-    <div class="docs-caption">
-        <img src="/base/images/docs/resources-note.png" alt="Data and resources with layers added"
-             width="width" height="height" class="docs-img"/>
-        Data and resources list showing the data download placeholder and one entry for
-        each layer that was auto-detected in the uploaded data.
-    </div>
-
-    <p>The first item under Data and Resources after your data upload is complete is the data download placeholder. On
-        the right, it has a green Download ZIP button. Below this, one entry is created for each supported file found in
-        the uploaded zip. These entries refer to data contained within the zip file, so they do not have their own
-        download links (previously, each one had a download link, which was confusing). Each of these has a Details
-        button, where you can view and edit the metadata that is detected automatically. From the Details view, click
-        Manage to edit metadata for each item. At minimum, you must complete a description for each field in the
-        attributes (if the item has an attribute table), and complete the Layer Description field. The title field is
-        set to the layer name or file name—do not change it. </p>
-
-    <p>Instead of uploading a file, you may alternatively use the Link button to provide a URL, if the data is stored on
-        an external website. If you are linking to data on an external website, geospatial metadata will not be
-        automatically detected, so you will need to populate this section yourself. </p>
-
-    <p>Files other than geospatial data will also be detected and added to the list of Data and Resources,
-        if they are supported file types (see below). For items of these types, only the “Layer Description”
-        field needs to be completed. Other fields relevant to spatial data should be left blank for
-        non-spatial file types (blank fields are shown only when editing metadata, not when viewing). </p>
-
-    <h3 id="autometa">Auto-generated Metadata</h3>
-    <p>As mentioned above, the GIS hub will auto-generate some metadata after you upload a file. The following metadata
-        fields on the Resource page are automatically filled and you only need to edit them if the automated system made
-        a mistake. These fields should be left blank when uploading a new dataset. As a reminder, especially if your
-        uploaded file is large or contains many layers, it may take a few minutes to update the metadata. Please wait
-        1-2 minutes and refresh the page. </p>
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th scope="col" style="width:25%">Field</th>
-            <th scope="col" style="width:75%">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Map Preview</td>
-            <td>A Web Map Services (WMS) tile layer with vector features rendered using a default symbology will be
-                generated from uploaded layers (vector only). The link in this field allows a preview of the tile layer
-                in a web browser, no knowledge of GIS or GIS software is required. If the link opens but nothing is
-                displayed, it means that a map preview for this layer has not yet been generated. If the layer is
-                complex and contains many objects, it may take a long time to render. You may zoom in on an area of
-                interest to improve rendering time.
-            </td>
-        </tr>
-        <tr>
-            <td>Layer Name</td>
-            <td>Layer, table, or file name as detected by the GIS Hub after data upload.</td>
-        </tr>
-        <tr>
-            <td>Data Format</td>
-            <td>Data format, detected by the GIS Hub after data upload. Only a subset of all possible formats are
-                supported. Note that if your layer has the wrong file extension, it may not be detected correctly or at
-                all.
-            </td>
-        </tr>
-        <tr>
-            <td>File Location</td>
-            <td>Location of this layer, table, or file in the zip archive. If the file is nested in a subfolder within
-                the zip file, the path of the subfolder(s) will be shown here.
-            </td>
-        </tr>
-        <tr>
-            <td>Projection Name</td>
-            <td>The name of the projection of the data. Note that the naming convention may be different, depending on
-                the software used to create the file. For example, ArcGIS uses the name "BC_Albers_Equal_Area," while
-                other software may call it "NAD83 / BC Albers."
-            </td>
-        </tr>
-        <tr>
-            <td>Projection Code</td>
-            <td>The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the
-                layer information window in ArcGIS under 'WKID' or by searching on
-                http://spatialreference.org/ref/epsg/. On occasion, this code may not be detected for a given dataset.
-                Please manually update this field if it shows "unknown" after uploading data.
-            </td>
-        </tr>
-        <tr>
-            <td>Spatial Type</td>
-            <td>The type of data represented. One of Vector, Raster, Table, TIN, Video, None</td>
-        </tr>
-        <tr>
-            <td>Geometry Type</td>
-            <td>For vector layers only. Usually point, line, or polygon.</td>
-        </tr>
-        <tr>
-            <td>Bounding Box</td>
-            <td>Bounding Box in WGS84 latitude-longitude, decimal degrees for each layer.</td>
-        </tr>
-        <tr>
-            <td>Locale</td>
-            <td>Location of the spatial data with respect to DFO's regions and bioregions.</td>
-        </tr>
-
-        </tbody>
-    </table>
-
-    <h3 id="filetypes">Supported File Types</h3>
-    <p>The following file types are supported in the GIS Hub, and have relevant metadata automatically detected. </p>
-
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th scope="col" style="width:35%">File Type</th>
-            <th scope="col" style="width:65%">Notes</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>ESRI File Geodatabase (.gdb)</td>
-            <td>Preferred format for vector data, and standalone tables that are part of a spatial dataset. File
-                geodatabase rasters, and layers in a feature dataset, are not supported.
-            </td>
-        </tr>
-        <tr>
-            <td>Shapefile (.shp)</td>
-            <td>Shapefile is a commonly-used distribution format. However, it has problems with projections not being
-                consistently defined, and limitations in the size and structure of attribute tables. File geodatabases
-                are preferred.
-            </td>
-        </tr>
-        <tr>
-            <td>Geotiff (.tif, .tiff, .geotiff)</td>
-            <td>Preferred format for raster data.</td>
-        </tr>
-        <tr>
-            <td>Google Earth (.kml, .kmz)</td>
-            <td>You may wish to include a copy of your data in kml for the convenience of non-GIS users. However, this
-                should not be used as the primary data distribution format.
-            </td>
-        </tr>
-        <tr>
-            <td>GeoJSON (.json, .geojson)</td>
-            <td>A convenient interchange format for small files, but should not be used as the primary data distribution
-                format
-            </td>
-        </tr>
-        <tr>
-            <td>ESRI Layer file (.lyr)</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>.zip</td>
-            <td>You may add zip files containing supplementary data or documentation inside the main zip file that you
-                upload.
-            </td>
-        </tr>
-
-        <tr>
-            <td>Word Document (.doc, .docx)</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Portable Document Format (.pdf)</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Text file (.txt, .csv)</td>
-            <td>Can be used for text content, but preferably not for tabular data</td>
-        </tr>
-        <tr>
-            <td>Excel (.xls, .xlsx)</td>
-            <td></td>
-        </tr>
-
-
-        </tbody>
-    </table>
-
-    <h3 id="attrib-meta">Attribute Metadata</h3>
-    <p>Attribute field names and types are detected automatically from the uploaded data (if the upload contains
-        geospatial data with an attribute table in a recognized format). Additional information on each attribute must
-        be entered manually. To manually enter attribute metadata, wait until the metadata extraction is complete for
-        all layers/tables in the uploaded data. Each layer/table has its own set of attributes. In the list of Data and
-        Resources, click Details, then click Manage. Scroll down until you see the section Attributes. </p>
-    <p>Each attribute must have, at minimum, a description. Some attributes that are common to all spatial datasets will
-        be pre-filled with a description. For raster data, if the raster includes an attribute table, complete this
-        table using the attributes from the raster (raster attributes are not extracted automatically). If the raster
-        does not include an attribute table, use the Layer Description to indicate what the raster values
-        represent. </p>
-    <p>For <b>each</b> field in the attribute table, complete the following metadata. </p>
-
-    <table class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th scope="col" style="width:25%">Field</th>
-            <th scope="col" style="width:75%">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>Field Name</td>
-            <td>Field name in the attribute table (automatically filled when data is uploaded)</td>
-        </tr>
-        <tr>
-            <td>Field Type</td>
-            <td>Field type in the attribute table (automatically filled when data is uploaded). Text, Date, Integer,
-                Double, Boolean.
-            </td>
-        </tr>
-        <tr>
-            <td>Field Description</td>
-            <td>The description should indicate what the value represents, how was it measured, and whether it is
-                generalized.
-            </td>
-        </tr>
-        <tr>
-            <td>Units <br><i>(Optional)</i></td>
-            <td>If the attribute is quantitative, indicate the measured units and an estimate of the accuracy.</td>
-        </tr>
-        <tr>
-            <td>Coded Values <br><i>(Optional)</i></td>
-            <td>If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning
-                of each of the codes. (For a very long list of coded values, instead provide a link or reference to a
-                document or website describing the coded values.)
-            </td>
-        </tr>
-
-        </tbody>
-    </table>
-    <h2 id="linking">Links to External Data</h2>
-    <h3>Adding links in a dataset</h3>
-    <p>
-        As described above, a dataset contains the data download placeholder,
-        along with a resource for each recognized layer or file in the
-        uploaded data package. The GIS Hub also supports adding links to external
-        data. In fact, the link can be any URL. This is intended to allow, for example,
-        links to a downloadable dataset that is hosted on another server, outside the
-        GIS Hub. It can also be used to create internal links to other datasets on the
-        GIS Hub (for example, if there is documentation common to many datasets.
-
-    </p>
-    <p>
-        To create a link, click the Manage button at the top-right of a dataset's page.
-        If you do not see the Manage button, you do not have edit rights on this dataset.
-        In the next page click the Resources tab, then Add New Resource. Since you are
-        creating a link rather than uploading data, you can leave all of the fields blank
-        except Title. Scroll to the bottom, and under the Upload Data category, you will see
-        an pair of buttons: Upload and Link. Click Link, and paste the URL of the external
-        data. Note that the GIS Hub will not download data from external sites, and unlike files
-        uploaded directly to the GIS Hub, any geospatial data in an external link will not
-        be indexed on the dataset page. Links are clearly shown with a Go to Link button, to
-        distinguish them from other resources.
-    </p>
-    <img src="/base/images/docs/resource-link.png" alt="Display of link in a dataset's resources"
-         title="Display of link in a dataset's resources"
-         width="width" height="height" class="docs-img"/>
-    <p>
-        To edit or remove a link, click the Details button on the right, then click Manage.
-        It is preferable to link to the landing page from where a downloadable file can be
-        retrieved (in order to provide context), rather thank linking directly to the
-        download file itself.
-    </p>
-
-    <h2 id="data-prep">Data Preparation</h2>
-    <h3 id="spatial-val">Spatial Validation</h3>
-    <p>This section describes steps to validate your spatial data before publishing. A Data Quality Report toolbox for
-        ArcGIS has been developed to help with this process. The repository containing the zip file is located <a
-                href="https://gitlab.com/dfo-msea/gis-hub/qc-tool">here</a>. The zip file contains a readme for
-        installing and running the tool. </p>
-
-    <h4>Projection</h4>
-    <p>Ensure that the projection (spatial reference) is valid. Every dataset should have a projection from the <a
-            href="http://spatialreference.org/ref/epsg/">EPSG code list</a>. On the west coast of Canada, commonly-used
-        projections are: </p>
-
-    <ul>
-        <li>BC Albers equal area (EPSG:3005)</li>
-        <li>UTM zone 10N (EPSG:3157)</li>
-        <li>Latitude-longitude WGS 84 (unprojected) (EPSG:4326)</li>
-    </ul>
-
-    <p>Avoid using custom projections (not in the EPSG code list) if possible. The only reasonable exception to this
-        would be data collected on a custom grid, where documentation refers to specific coordinates on this grid. In
-        this case, every effort should be made to link the custom grid to a standard projection, and provide a copy of
-        the data in a standard projection. </p>
-
-    <p>Perform a visual check to ensure that the features are at the expected location. An excellent way to do this is
-        to add a basemap layer with satellite imagery in ArcGIS. Avoid comparing against other vector layers, since they
-        may all contain the same spatial offset! This is particularly important if the data were digitized from paper
-        charts or aerial photographs. </p>
-
-    <h4>Feature Geometry</h4>
-
-    <p>For vector layers, all feature geometries must be clean. In ArcGIS, run the <a
-            href="http://desktop.arcgis.com/en/arcmap/latest/tools/data-management-toolbox/repair-geometry.htm">repair
-        geometry tool</a> on all data. The Quality Report toolbox described above includes the Repair Geometry function.
-    </p>
-
-    <p>Geometries should have a reasonable number of vertices per feature, appropriate for the scale at which the data
-        are intended to be used. Do not simplify features whose boundaries must exactly line up with other features
-        (e.g. the shoreline of PFMAs): doing so may introduce slivers and gaps in future spatial analyses. Check for
-        sliver polygons (polygons with a very small area), gaps (use Erase analysis on a background polygon) and
-        overlaps (intersect the data with itself). Take appropriate steps to resolve. If resolution of these problems is
-        not feasible, clearly document the existence of these issues in the metadata (spatial data quality section).</p>
-
-    <h4>Geometry Types</h4>
-
-    <p>For vector data, feature classes must be point, polyline, or polygon features. Avoid the following:</p>
-    <ul>
-        <li>Complex or custom geometry types, unless absolutely necessary.</li>
-        <li>Feature class annotations</li>
-        <li>Feature class representations</li>
-        <li>Point symbols exploded to polygons (may happen when data is converted from a CAD format</li>
-        <li>A feature class should only include Z geometry if the data really are 2.5 or 3-dimensional. Similarly, M
-            geometry is only applicable if the data is has a time dimension (in other words, features change over time,
-            instead of having a unique feature per instance of time). Otherwise, use only XY geometry.
-        </li>
-    </ul>
-
-    <h3 id="attrib-val">Attribute Validation</h3>
-
-    <p>This section describes required validation for values in the attribute table. </p>
-    <h4>Null and 0 Values</h4>
-    <p>Null values in the attribute table are reasonable as long as they are justifiable and documented. As a rule, Null
-        values are not acceptable if they are there simply because that column in the attribute table has not yet been
-        populated. A null value indicating the absence or inapplicability of something is perfectly ok, as long as it is
-        documented. For example, if a Null value in a field means “no reading” or “no observation for this field on this
-        record” or “not applicable for this record” it should be clearly documented in the metadata for that field. In
-        addition, Null in any given field should only represent one condition, and must never be used to group different
-        conditions. For a quantitative field, it is preferable to use Null to represent “no data,” rather than an
-        arbitrary number such as -99. If an instrument or measurement has a minimum detection limit, say 0.001, and you
-        need to represent “below detection limit” in addition to “no data,” it is preferable to use Null for no data,
-        and an arbitrary number for “below detection” or other edge cases. Again, all of these conditions must be
-        documented in metadata. </p>
-
-    <p>A value of 0 in a quantitative field should indicate that the <b>measured</b> value was 0: be careful of number
-        fields which are populated by default with all zeros at the time of creation (which happens automatically in
-        some GIS software). If 0 is meaningless in the field, all zeros should be replaced with Nulls, or some other
-        value that has meaning. For qualitative fields, ensure that the difference between “observed absence” and “not
-        observed” is clear. “Observed absence” should have a defined text code, while “not observed” should be
-        represented with Null. </p>
-
-    <h4>Appropriate Field Types</h4>
-    <p>Do not use a text field to represent a quantitative attribute. Instead, use the appropriate numeric field type:
-        double or integer. It is better to use double instead of float, and integer instead of short integer (float and
-        short integer data types impose an arbitrary and invisible restriction on the range of values that can be stored
-        in a field, which can cause problems for future users of the data or scripts processing the data). </p>
-
-    <p>Conversely, do not use numeric fields to represent qualitative attributes. Qualitative attributes should be
-        stored in text fields, optionally restricted by a lookup of allowed values in the field. If a qualitative
-        attribute is stored in a related table by a foreign key, the foreign key id column must be integer: never store
-        foreign key ids as text values. Avoid the use of codes that start with leading zeros (e.g. 0001, 0002 stored as
-        text values). </p>
-
-    <h4>Field Names</h4>
-
-    <p>User-created field names should be standardized to a lowest common denominator format to maximize compatibility
-        with various software tools:</p>
-
-    <ul>
-        <li>All lower case (in ArcGIS, Field_name is distinct from field_name)</li>
-        <li>Words separated by underscore (species_code, not speciescode or species-code)</li>
-        <li>Starts with a letter</li>
-        <li>Not more than 24 characters</li>
-        <li>Each field name should be unique in the first eight characters, in the event that something truncates the
-            table’s field names at some point. Avoid creating tables with fields such as “species_code_observed” and
-            “species_code_inferred” which might be truncated to “species_” and “specie_1”.
-        </li>
-        <li>Ensure that <a
-                href="http://desktop.arcgis.com/en/arcmap/latest/manage-data/tables/field-properties-aliases-and-table-display-options.htm#GUID-29965C23-024B-40AF-81F6-AC27CC052CAC">attribute
-            aliases</a> are identical to attribute names
-        </li>
-    </ul>
-
-    <p>The geometry column is usually named Shape or SHAPE if the data is coming from ArcGIS, geom or the_geom if coming
-        from an open-source GIS program such as QGIS. For the object ID field, ensure that it does not have a number
-        appended, which may happen when tables are joined and exported. For example, if the object ID field is something
-        like OID_1 or ObjectID_1, export the data to a new feature class, which should reset the object ID field name.
-        Typical object ID field names are OID, FID, ObjectID. </p>
-
-    <h4>Field Relevance</h4>
-    <p>Remove any fields in the attribute table that do not inform the data. This includes stray fields created by
-        ArcGIS joins and other processes.</p>
-
-    <h3 id="data-packaging">Data Packaging</h3>
-    <h4>Formats</h4>
-    <p>ESRI File Geodatabase is the preferred format for vector spatial data. Avoid using feature datasets within a file
-        geodatabase: they add an extra layer of complexity and reduce the number of third-party tools that can read the
-        data. </p>
-
-    <p>Although the shapefile format supports up to 24 characters in field names, some software that generates
-        shapefiles truncates the field names to 8 or 10 characters. Shapefiles have additional limitations that may
-        cause problems. If you use shapefiles in programs such as R, the final output can be converted to a File
-        Geodatabase before publishing.</p>
-
-    <p>When publishing layers in a File Geodatabase, create a new file geodatabase and copy only the layers that you
-        want to publish. For a shapefile, include all of the related files (.shp, .shx, .dbf, and so on). </p>
-
-    <p>Geotiff is the preferred format for raster spatial data. File Geodatabase rasters are not supported at this time.
-        If you need to publish a dataset that includes both raster and vector layers, you can keep the vector layers in
-        a file GDB and export the Geotiffs to the filesystem, next to the .gdb folder. </p>
-
-    <p>Do not use personal geodatabases. This legacy format, which still comes up on occasion, has serious problems with
-        poor coordinate precision and size limitations.</p>
-
-    <h4>Layer Names</h4>
-    <p>Feature class and table naming conventions within a file geodatabase are the same as field naming conventions.
-        Geotiff filenames should also follow these conventions where possible. </p>
-
-    <h4>Packaging your data</h4>
-    <p>All data should be submitted in a folder containing the file geodatabase or shapefiles, and/or geotiff files. You
-        may put the data inside nested folders if it makes sense to do so. The metadata extractor will traverse the
-        entire folder tree and find all recognized files. However, the structure of the folder tree inside your uploaded
-        zip file will not be shown on the GIS Hub. Optionally, you may include ArcGIS .mxd or .lyr files pointing to
-        data in the file geodatabase (be sure to save the mxd file with relative paths). Prior to uploading, zip the
-        .gdb folder or shapefile, along with any .mxd or .lyr files you wish to include with the data. </p>
-
-    <p>Relevant documents, academic publications, or scripts related to the data can be included in the zip file along
-        with the spatial data. Ideally, they should be in a separate folder from the spatial data, or contained in a
-        nested zip file. </p>
-
-    <h2 id="new-dataset">Creating and Editing Datasets</h2>
-    <p>To create a new dataset, click the Add Dataset button near the top of the
-        <a href="https://www.gis-hub.ca/dataset">dataset page</a>. Follow the guidance
-        below on completing the metadata fields.
-        <br><br>Don't see the
-        Add Dataset button? This means that you are either not logged in, or you
-        have a read-only account. </p>
-
-    <h3 id="replace-data">Replacing Data</h3>
-    <p>You have created a dataset and uploaded a data file.
-        Your layers have been detected and added to the Data and Resources view. Now you have a new version of the data,
-        and you would like to replace the data package.
-    </p>
-    <p>To replace the data: </p>
-    <ol>
-        <li>click the Details button next to the
-            data package (must have a green Download button) that you want to replace.
-            <br>
-            <b>Note: only do this for items with a green Download button!</b>
-            <br>
-            Adding a file upload to items without the Download button will not work.
-        </li>
-        <li>On the next screen, click
-            Manage near the top-right.
-        </li>
-        <li>Scroll down to the File field, and click the Remove button on the right.
-            For versioning to work, <b>ensure that the uploaded file name matches the existing file name.</b>
-            <div class="docs-caption">
-                <img src="/base/images/docs/resource-replace.png" alt="Replacing a resource's uploaded data"
-                     title="Replacing a resource's uploaded data"
-                     width="width" height="height" class="docs-img"/>
+        <div class="dropdown">
+            <button class="dropbtn">Summaries</button>
+            <div class="dropdown-content">
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/01_2020-GISHubSummary.pdf?inline=false">Jan
+                    2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/02_2020-GISHubSummary.pdf?inline=false">Feb
+                    2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/04_2020-GISHubSummary.pdf?inline=false">Apr
+                    2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/05_2020-GISHubSummary.pdf?inline=false">May
+                    2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/08_2020-GISHubSummary.pdf?inline=false">Aug
+                    2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/09_2020-GISHubSummary.pdf?inline=false">Sept
+                    2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/10_2020-GISHubSummary.pdf?inline=false">Oct
+                    2020</a>
             </div>
-            Click Upload and choose a new file, then Update Resource
-            at the bottom of the screen.
-        </li>
-        <li>
-            On the dataset's metadata page, add an entry in the Change History field noting what was updated in the
-            dataset including versions of code such as a code 'Release'.
-        </li>
-    </ol>
+        </div>
 
-    <h4 id="data-matching">Automated Layer Matching</h4>
-    <p>When you upload a new version of a dataset, the
-        GIS Hub automatically unzips the file and matches the layers and
-        files that it detects with those that are already on the list of
-        Data and Resources. User-entered metadata including Attribute field
-        descriptions and layer descriptions will be transferred to the
-        metadata for the new layers, <i>if there is a match</i>.
-        Importantly, this matching is done using the <i>most specific
-            file/layer identifier</i>:
-    </p>
-    <ul>
-        <li>For a layer within a geodatabase, matching is done with the layer name</li>
-        <li>For shapefiles, geotiffs, and non-spatial files, matching is done with the filename</li>
-        <li>In both cases, the matching is not case-sensitive</li>
-    </ul>
-    <p>This means that you must ensure that your <b>layer/file names
-        are the same</b> when uploading a new version of your data. Attribute field names are matched using the same
-        process, so if you rename a field, the existing metadata will not be transferred.
-    </p>
-    <p>If some layer/file names have been changed, you may end up with orphan layers. These can be removed (after
-        copying
-        relevant metadata to the correct layer) by clicking Manage at top-right, then clicking the Delete button at the
-        bottom of the screen. </p>
+        <h2 id="issues">Known Issues</h2>
+        <p>This section summarizes known issues on the GIS Hub
+            that affect the end-user experience, and where available,
+            a workaround. </p>
 
-    <h3 id="versioning">Versioning</h3>
-    <p>The cloud storage for the GIS Hub supports file-level versioning, which means
-        that when you upload a new version of your dataset, the previous version will be kept.
-        Please make note of the following caveats: </p>
-    <ul>
-        <li>Versioning works only for the uploaded zip file as a whole. Versions of individual
-            layers or files within the zip file are not tracked
-        </li>
-        <li>There is no user interface to access previous versions of files on the GIS Hub.
-            You'll need to contact an admin to retrieve a previous version of a file for you.
-        </li>
-        <li>For versioning to work, the name of the new uploaded zip file must match the
-            name of the previous file. So don't replace <i>my_data.zip</i> with <i>my_data_v2.zip</i>.
-        </li>
-        <li>Versioning is for data (your uploaded zip file), which is updated atomically, but not for metadata.</li>
-    </ul>
+        <p>
+            <b>Problem:</b> Projections and/or projection codes are sometimes not
+            detected correctly.
+            <br>
+            <b>Workaround:</b> After uploading you data, the GIS Hub will attempt to
+            populate these fields automatically. If it fails to do so, you may see
+            "unknown" or something else. This field can be edited to have the correct value.
+            <br><br>
+            <b>Problem:</b> Markdown formatting may not render completely due to certain characters. For example, the
+            < and > symbols may cause issues such as missing text due to escape characters.
+            <br>
+            <b>Workaround:</b> If this is the case, replace them with an
+            <a href="https://www.whatsmyip.org/html-characters/">Entity Code</a>. Also see this
+            <a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax and best practice guide</a>.
+            <br><br>
+            <b>Problem:</b> Markdown formatting (such as main headers) may cause text to flow outside of the typical
+            page
+            width due to the font size and spacing.
+            <br>
+            <b>Workaround:</b> If this is the case, replace them with a smaller header tag with markdown formatting.
+            <br><br>
+            <b>Problem:</b> The Change Description (Resource) field does not save changes for the data download
+            resource.
+            Changes are not appended
+            to the Change History field on the dataset metadata page.
+            <br>
+            <b>Note:</b> This issue has been resolved.
+            <br><br>
+            <b>Problem:</b> Reorder resources button does not function.
+            <br>
+            <b>Note:</b> This issue has been resolved. When re-ordering resources, please keep the data download
+            resource in
+            the first position.
+            <br><br>
+            <b>Problem:</b> Altering the Download Disclaimer or Download Disclaimer (External Link)
+            metadata fields have no effect.
+            <br>
+            <b>Note:</b> This issue has been resolved.
+            <br><br>
+            <b>Note: </b>Previous issues with species codes are now resolved. See the Species Codes
+            section in the document below.
+        </p>
 
-    <h3 id="reorder-res">Reordering Resources</h3>
-    <p>A dataset may contain many resources. By default, these layers are uploaded alphabetically, with the download
-        placeholder in the top position. However, resources might get rearranged during updates to the dataset. Editors
-        can use the reorder resources button to arrange the resources in the preferred order. Click 'Manage' on a
-        dataset's metadata page. Then select the 'resources' tab. Click on 'Reorder resources' button, rearrange, and
-        save changes. Please make note of the following caveats:
-    </p>
-    <ul>
-        <li>The download placeholder is considered a resource, but it's position may not be moved from the top level.
-        </li>
-        <li>If a users reorders the resources and places the download placeholder in a position other than the top,
-            after saving, the placeholder will be moved back to the first position. This is not a bug.
-        </li>
-        <li>Only users with Editor permissions will be able to reorder resources.</li>
-    </ul>
-    <div class="docs-caption">
-        <img src="/base/images/docs/reorder_res.png" alt="GIS Hub reorder resources"
+        <h2 id="intro">Introduction</h2>
+        <p>The GIS Hub system is live and ready for users to publish data.
+            This documentation page contains guidelines for preparing
+            your data and metadata for publishing on the system. Please note
+            that some of these guidelines may change as the system is improved. </p>
+
+        <p>Keep in mind that these are <i>guidelines</i> and not strict rules.
+            We prefer that staff start using the system as soon as possible,
+            so that any unforeseen issues can be resolved before full release.
+            Even if your data does not meet all of the requirements listed here,
+            you may prepare it for publishing anyway, with the understanding
+            that the published data and/or metadata can easily be updated in the future. </p>
+
+        <h2 id="datasets-intro">Datasets on the GIS Hub</h2>
+        <p>The GIS Hub runs on a software platform called <a href="https://ckan.org/">CKAN</a>
+            , which organizes data in way that is easy to search and understand. Data published on
+            the GIS Hub, like all CKAN sites, is contained in <i>datasets</i>. A dataset is a
+            container with data (tables, spatial layers, files) and related metadata, typically
+            downloadable as a single zip file. On the GIS Hub, the <a href="https://www.gis-hub.ca/dataset">
+                default list of datasets</a> shows all datasets that are visible to you, along with filters and
+            search tools to help you find relevant data. </p>
+
+        <h4 id="datasets-resources">Datasets & Resources</h4>
+        <p>A <b>dataset</b> is the zip file uploaded to the GIS Hub that contains the files processed and displayed
+            on a dataset's page such as <a href="https://www.gis-hub.ca/dataset/floating-structures">Floating
+                Structures</a>.
+        </p>
+
+        <p>A <b>resource</b> is a single file or layer that is part of the dataset. For example. the
+            <a href="https://www.gis-hub.ca/dataset/floating-structures/resource/b75837fb-ef64-42ee-9fc9-7ad8621f520b">
+                Aquaculture</a> resource is one layer that is part of the Floating Structure's dataset.
+        </p>
+
+        <div class="docs-caption">
+            <img src="/base/images/docs/datasets.png" alt="GIS Hub datasets view"
+                 width="width" height="height" class="docs-img"/>
+            List of datasets on the GIS Hub
+        </div>
+
+        <h2 id="overview">Metadata Overview</h2>
+        <p>Metadata is a key part of any dataset that is published and shared with others.
+            The CKAN software platform provides a default metadata standard with basic metadata
+            fields that are attached to all datasets. </p>
+
+        <p>There are two levels of metadata: <br>1) <b>Dataset Metadata</b> contains the majority of the information
+            such
+            as science, general, and basic metadata)<br>2) <b>Resource Metadata</b> contains information like attributes
+            in
+            the layer and a description for the layer as well as spatial information). The resource metadata page
+            includes a
+            link to the web map preview and it is possible to embed the map preview in the resource page itself. To
+            restrict
+            access to the resource metadata (and the web map preview), set the Access Restrictions appropriately (see
+            <a href="#add-data">Adding Data Section</a>).</br></p>
+
+        <p>The Pacific Science metadata working group has extended CKAN's basic
+            metadata standard with a comprehensive standard that includes
+            relevant fields for Science. In addition to
+            the scientific metadata, the standard includes general-purpose and
+            geospatial (non-science) metadata, which are required for all spatial
+            data published on the Federal Geospatial Portal (FGP) and/or Open Data.
+            Even if your data is not a candidate for publishing on FGP or Open Data,
+            the non-science metadata is required since it provides important information
+            for staff downloading and using the data. </p>
+
+        <p>Before creating a new dataset, you should read this entire page and
+            <a href="https://www.gis-hub.ca/dataset/meta-template/resource/5632fd3e-fc92-4443-bac9-2750cd456bcc">
+                download the metadata template (word document)</a> to your PC. Use the word doc
+            to write and edit the metadata, then copy and paste the relevant parts to the forms
+            on the GIS Hub when you are ready to publish your data.
+        </p>
+
+        <h2 id="modules">The Metadata Standard</h2>
+        <p>The metadata standard is divided into modules that group related metadata fields
+            together. When creating a new dataset on the GIS Hub, you will see the same
+            metadata fields and groupings in your browser as what you see in this page.
+            We suggest that you write your metadata in a document and copy and
+            paste the content into the metadata system, when both the data and
+            metadata are ready. </p>
+        <p>During the data upload process, your spatial data is extracted automatically
+            by the server and properties such as projection and spatial extents
+            are recorded. Metadata fields that are extracted automatically are
+            not shown in the metadata modules below—only the fields that require
+            manual input in the metadata entry system are shown.</p>
+        <p>All fields in each metadata module are required unless marked as
+            optional.</p>
+
+        <h3 id="basic">Basic Information</h3>
+        <p>This section is a set of basic information required for all metadata entries.
+            This information is displayed near the top of the page when viewing metadata.</p>
+        <p>The metadata standard requires contact information for organizations
+            responsible for various aspects of the data. Two sets of contact
+            information are required: data creator (included in the Basic Information
+            section) and program manager. </p>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:25%">Field</th>
+                <th scope="col" style="width:75%">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Title</td>
+                <td>Short title, no longer than a newspaper headline. This is displayed
+                    on the GIS Hub when this dataset appears in search results.
+                </td>
+            </tr>
+            <tr>
+                <td>URL (Dataset ID)</td>
+                <td>The URL for a dataset is a human-friendly unique identifier, which
+                    also forms part of the complete URL for a dataset. When creating a new
+                    dataset, this field is automatically filled by making a URL-compatible
+                    label from the title you entered above. For example, if your dataset title is
+                    Sponge Reefs, the autogenerated URL is <i>sponge-reefs</i>. You can change
+                    this using the Edit button. The URL should contain only lowercase letters
+                    and hyphens and be a maximum of 20 characters. If you are editing an existing
+                    dataset and you change the title, this field will <b>not</b> be updated. Please
+                    do not change a dataset's URL after it has been created, since it is used
+                    internally in various places.
+                </td>
+            </tr>
+            <tr>
+                <td>Quality Control</td>
+                <td>Status of quality control for this dataset. By default, it is set to Check Required. Change to the
+                    appropriate status when quality control is complete or if problems found.
+                </td>
+            </tr>
+            <tr>
+                <td>Summary</td>
+                <td>Brief narrative summary of the dataset's contents. Please summarize the following:
+                    <ul>
+                        <li>What data is included</li>
+                        <li>What accessory information (reports, scripts) is included</li>
+                        <li>Objectives</li>
+                        <li>Describe the knowledge gap(s) the dataset is intended to fill</li>
+                        <li>If there are multiple tables/layers in the dataset, how are they related?</li>
+                    </ul>
+            </tr>
+            <tr>
+                <td>Maintainer Email</td>
+                <td>Email address of a person responsible for the dataset. Notifications about
+                    access requests and other updates will be sent to this email.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Organization</td>
+                <td>Choose from the list - The organization (GC Department or Agency)
+                    primarily responsible for publishing the dataset. Departments
+                    within government should be specified down to the section level.
+                </td>
+            </tr>
+            <tr>
+                <td>Visibility</td>
+                <td>Set to Public when all required metadata fields have been
+                    entered and the data is ready to be published. Note that
+                    setting Public means that the dataset is published and
+                    will appear in search results on the GIS Hub. All users on the GIS Hub will be able to view the
+                    metadata.
+                    Access permissions for resources (who is allowed to download / view) are set elsewhere.
+                    <br><br>
+                    Set this to Private if you do not yet have all the information
+                    you need to complete the required metadata fields. When set to
+                    Private, you can save the metadata form, even if it is incomplete,
+                    and come back to it later. Your Private (i.e., incomplete) datasets
+                    are visible only to you and members of your organization. To come
+                    back to one of your private datasets later, click your username
+                    at the top right and look for entries marked Draft. You may also wish
+                    to bookmark the URL of the dataset, which will not change.
+                </td>
+            </tr>
+            <tr>
+                <td>Cite this data as</td>
+                <td>Describe how this data should be cited. This is generated
+                    automatically by the GIS Hub from the metadata you entered,
+                    but it can be edited manually.
+                </td>
+            </tr>
+            <tr>
+                <td>Start Date</td>
+                <td>Indicate the earliest date represented in this dataset.</td>
+            </tr>
+            <tr>
+                <td>End Date</td>
+                <td>Indicate the latest date represented in this dataset.
+                    (Note: this field is no longer optional. If data collection
+                    is ongoing, do not leave this blank; choose Ongoing under the
+                    Status section.) If this is a model or derived data
+                    (as opposed to data collected in the field), enter the
+                    last date that the model used to generate this data was updated.
+                    In this case, end date can be the same as start date.
+                </td>
+            </tr>
+            <tr>
+                <td>Data Creator</td>
+                <td>The Principal Analyst. The lead person responsible for creating
+                    the data. Provide the Name, Role, Department, Address, Phone, email.
+                </td>
+            </tr>
+            <tr>
+                <td>Co-Creators <br>
+                    <i>(optional)</i>
+                </td>
+                <td>Provide the names of any additional co-creators (secondary authors)
+                    for this dataset.
+                </td>
+            </tr>
+            <tr>
+                <td>Program Manager</td>
+                <td>The DFO Program Head responsible for the data (must be a permanent
+                    DFO employee or section head?). Provide the Name, Role, Department,
+                    Address, Phone, email.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <h3 id="general">General Metadata</h3>
+        <p>This section describes general-purpose metadata required for
+            all spatial data. </p>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:25%">Field</th>
+                <th scope="col" style="width:75%">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Topic Category</td>
+                <td>Main theme of the data. Choose the best match from the list.</td>
+            </tr>
+            <tr>
+                <td>Date Completed</td>
+                <td>The date on which the dataset was substantially complete
+                    in its current form.
+                </td>
+            </tr>
+            <tr>
+                <td>Date Published</td>
+                <td>Date of publication of dataset. Default: today's date.
+                    This refers to publication of the data on this portal,
+                    not necessarily the date of publication of the associated
+                    academic research (academic references are described elsewhere).
+                </td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>Development phase of the dataset. Choose the
+                    best match from the list.
+                </td>
+            </tr>
+            <tr>
+                <td>Update Frequency</td>
+                <td>Revision cycle of the data. Choose the
+                    best match from the list.
+                </td>
+            </tr>
+            <tr>
+                <td>Dataset Level</td>
+                <td>Use Dataset if this is a standalone data product. Series is
+                    individual regions in a series of datasets covering a larger area,
+                    or some other subset of a larger data package.
+                </td>
+            </tr>
+            <tr>
+                <td>Keywords (GoC Thesaurus)</td>
+                <td>At a minimum, one keyword must be supplied from the Government
+                    of Canada Core Subject Thesaurus. Refer to <a href="http://canada.multites.net/cst/index.htm">
+                        http://canada.multites.net/cst/index.htm</a>.
+                    You are most likely to find useful keywords in the
+                    “nature and environment” and “science and technology” categories.
+                    All keywords should be lowercase.
+                    <p>
+                        This longstanding issue is now resolved:
+                        <del><b>Issue:</b> The autocomplete for
+                            non-science keywords is not restricted to the list of keywords from the
+                            Government of Canada Thesaurus. Autocomplete also shows Science keywords.
+                        </del>
+                    </p>
+                    This field now has the following features:
+                    <ul>
+                        <li>the autocomplete only shows entries from the GoC Thesaurus</li>
+                        <li>it is not possible to enter a keyword that isn't in the GoC Thesaurus</li>
+                        <li>there is a link to the GoC Thesaurus website below the text box</li>
+                        <li>keywords can include punctuation, other than commas (try "children's books")</li>
+                    </ul>
+
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <h3 id="science">Science Metadata</h3>
+        <p>This section is required for all scientific data. </p>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:25%">Field</th>
+                <th scope="col" style="width:75%">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Science Keywords</td>
+                <td>Enter additional comma-separated keywords not included in the
+                    general-purpose Government of Canada Core Subject Thesaurus.
+                    These keywords may include domain-specific vocabulary appropriate
+                    for scientific users. All keywords should be lowercase, including acronyms.
+                    Acronyms should be in singular form (no trailing s).
+                </td>
+            </tr>
+            <tr>
+                <td>Theme</td>
+                <td>Choose the best match from the list.</td>
+            </tr>
+            <tr>
+                <td>Methods</td>
+                <td>The methods field documents scientific methods used in the
+                    collection or derivation of this dataset. It includes
+                    information on items such as tools, instrument calibration
+                    and software. It can also include a complete description
+                    of the lineage of the data. It may refer to sections of
+                    an associated academic citation or other published resource.
+                    <br><br>
+
+                    Understanding the pedigree of the data is critical. Ideally, this will
+                    link the data set, through its methods, all the way back to the
+                    source data set(s), for which the data collection methods are known.
+                    <br><br>
+
+                    Relevant raster methods include: any interpolation or extrapolation,
+                    and any masking or numeric manipulation of the source data.
+                </td>
+            </tr>
+            <tr>
+                <td>Data Sources</td>
+                <td>List of source data inputs used to produce this dataset.
+                    For each input, provide a link to the source data where possible
+                    (to another dataset on the GIS Hub, or an external link).
+                    Include the date that the input was extracted, if known.
+                    If the source data changes over time, indicate the date on
+                    which the data was retrieved. Where possible, provide a
+                    citation for each input.
+                    <br><br>
+                    Example input:
+                    <br>
+                    Originator: Canadian Hydrographic Service, Fisheries and Oceans Canada (DFO)
+                    <br>
+                    Publication_Date: 2015
+                    <br>
+                    Title: Geodatabase of Bathymetric point data for entire BC coast
+                    <br>
+                    Other_Citation_Details: Geodatabase: GEOBASE_Entire_Coast.gdb
+                    <br>
+                    (link to dataset if available)
+                </td>
+            </tr>
+            <tr>
+                <td>Scripts or Software Routines</td>
+                <td>Link to script(s) used to process the data, for example on the
+                    GCCode GitLab site. Alternatively, include the scripts or queries
+                    in a Scripts folder inside in the zip file that you will upload.
+                    Document the purpose of each script, and anything required to run
+                    the script again. This field is now displayed using Markdown formatting,
+                    so links pasted here will be clickable.
+                    <br><br>
+
+                    If no scripts were used to create the data, use this field to
+                    indicate how it was created, for example “manually created
+                    using analysis tools in ArcGIS.”
+                </td>
+            </tr>
+            <tr>
+                <td>Spatial Data Quality</td>
+                <td>A measure of the quality of the spatial data representing some real-world entity. Describe the
+                    spatial
+                    data quality with reference to the data processing steps. Was location data captured with
+                    survey-grade
+                    GPS, consumer GPS, paper charts, ship’s log? Was data digitized from a scanned and georeferenced
+                    paper
+                    map? Is this dataset the result of intentional degradation of the input data to preserve privacy
+                    (e.g. 3
+                    boat rule) and therefore has a known spatial resolution? Were multiple datasets captured at
+                    different
+                    spatial resolutions used in this analysis? Were point data extrapolated to polygons, or
+                    polygons/lines
+                    converted to centroids?
+                </td>
+            </tr>
+            <tr>
+                <td>Positional Accuracy</td>
+                <td>May include horizontal and vertical. Express in metric units where possible.</td>
+            </tr>
+            <tr>
+                <td>Attribute Accuracy</td>
+                <td>Describe in general the degree to which attribute values reflect real-world conditions. For details
+                    on
+                    specific attributes, see the Attributes Metadata section.
+                </td>
+            </tr>
+            <tr>
+                <td>Logical Consistency</td>
+                <td>Report on fidelity of relationships in the data set, the validity of its relationships to other data
+                    sets, and the degree to which the entities represent the real-world objects or concepts they are
+                    intended to capture.
+                </td>
+            </tr>
+            <tr>
+                <td>Completeness</td>
+                <td>Report on the completeness of the dataset relative to its areal coverage, and the overall
+                    completeness
+                    of attributes.
+                </td>
+            </tr>
+            <tr>
+                <td>Absence Data</td>
+                <td>Does the dataset include recorded (observed) absence of specific features, and if so, for which
+                    attributes?
+                </td>
+            </tr>
+            <tr>
+                <td>Uncertainties</td>
+                <td>Describe uncertainties in measurement and methodology. Include any known biases. For example, was
+                    data
+                    collection opportunistic, or part of the survey design? In there any known bias from individual
+                    observers?
+                </td>
+            </tr>
+            <tr>
+                <td>Use Restrictions</td>
+                <td>Restrictions on appropriate use of the resource. Examples: Not suitable for navigation. Do not use
+                    for
+                    fisheries assessment.
+                </td>
+            </tr>
+            <tr>
+                <td>Change History</td>
+                <td>A description of changes made to the data since its release. Create an entry for each change,
+                    indicate
+                    the date of change and describe what was changed and why. When a dataset is first published, there
+                    is
+                    one change history entry for the initial creation of the dataset. Add additional change history
+                    entries
+                    as needed. If scripts have been used to generate a product, it is recommended to create a 'Release'
+                    of
+                    the code through GitLab or GitHub and reference that version of the release to track spatial
+                    products
+                    built using certains versions of code. If you are uploading a new version of data, but nothing else
+                    has
+                    changed, please be sure to record the change using the field Change Description (Resource) on the
+                    Edit
+                    Resource page (instead of on this page). Your change description on the Edit Resource page will
+                    automatically be added to the Change History for the dataset.
+                </td>
+            </tr>
+            <tr>
+                <td>Change Date</td>
+                <td>Date on which the change was made to the data, or the metadata entry.</td>
+            </tr>
+            <tr>
+                <td>Temporal Coverage <br>
+                    (optional)
+                </td>
+                <td>If the temporal coverage of the dataset is more complex than a simple start and end date, describe
+                    it
+                    here. You may describe temporal coverage as a single point in time, multiple points in time, and one
+                    or
+                    more range of dates. Seasonality can also be described here. For derived datasets, please specify
+                    the
+                    temporal coverage of all input data here. Specific start and end dates are preferable, but year
+                    ranges
+                    are acceptable if the exact dates are uncertain or not applicable.
+                </td>
+            </tr>
+            <tr>
+                <td>References</td>
+                <td>Academic references that are closely associated with the data.
+                    Create one entry for each reference. Indicate whether the reference
+                    is the place where this data was published (e.g. as a map).
+                </td>
+            </tr>
+            <tr>
+                <td>Collaboration</td>
+                <td>Describe collaboration with academia, other government agencies, and external contributors. If
+                    produced
+                    internally by DFO, enter 'No collaboration outside of DFO.' Indicate collaboration with
+                    organizations
+                    rather than individuals.
+                </td>
+            </tr>
+            <tr>
+                <td>Other Information <br>
+                    (optional)
+                </td>
+                <td>Relevant information that does not fit in any other category.</td>
+            </tr>
+            <tr>
+                <td>Confidentiality</td>
+                <td><p>Level of confidentiality or sensitivity of the dataset. For a description of the categories,
+                    refer
+                    to: https://www.tpsgc-pwgsc.gc.ca/esc-src/protection-safeguarding/niveaux-levels-eng.html. </p>
+
+                    <p>Not Protected means that no harm would occur if the data were released to the public. However,
+                        choosing this option does not imply that your data will be made public on this website (all
+                        datasets
+                        published on this site are restricted, at minimum, to registered users).</p>
+
+                    <p>Protected A applies to data that could harm individuals or corporations if released, such as
+                        fishing
+                        events and bathymetry. Note that fishing data received 'in confidence' should be Protected A,
+                        not
+                        Confidential. </p>
+
+                    <p>Confidential applies to data that could harm the national interest if released. At this time,
+                        Confidential should be used only for abalone data. </p>
+
+                    <p>Data classified as Protected B, Secret, or any higher classification cannot be uploaded on this
+                        system. For these security classification, you may still create a dataset record using this
+                        system,
+                        but do not upload the actual data.</p>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+
+
+        <h3 id="species">Species Data</h3>
+        <p>Species codes are only required if your data is biological.
+            Complete the following metadata for <b>each</b> species in your data.
+            If the list of species is excessively long, you may include a list
+            of species codes in a csv (see below). Click the green plus sign
+            to add another species code entry, and use the red buttons at right
+            to remove existing entries.
+        </p>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:25%">Field</th>
+                <th scope="col" style="width:75%">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Species Code</td>
+                <td>A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not
+                    available,
+                    the list can be updated. If you are editing existing species data, only the code will be displayed
+                    in
+                    the
+                    dropdown menus. To show the full species name, click the dropdown menu and re-type the species code,
+                    then
+                    press Enter.
+                </td>
+            </tr>
+            <tr>
+                <td>Age Data</td>
+                <td>Does the sample include age data?</td>
+            </tr>
+            <tr>
+                <td>Observation Type</td>
+                <td>Was the species observed incidentally, or targeted as part of the survey design? Was the presence of
+                    species inferred or observed?
+                    Choose from: Targeted observation, incidental observation, inferred.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Including a species codes file</h3>
+        <p>
+            <b>Note: </b>Species data can either be entered manually using the form in the Species Data section,
+            <i>or</i> included in a species codes file, but not both. If you include a species codes file in your
+            data upload, any existing species data will be overwritten.
+        </p>
+        <p>In many cases, it will be more convenient to include a file with a list of species codes,
+            instead of filling out this form manually. The format of the file is one line per species code. </p>
+        <p>First column: species code. Ensure that the code includes any leading zeros, for example <b>004 instead of
+            4</b>.
+            <br>
+            2nd column: Observation type: targeted / incidental / inferred Default: targeted <br>
+            3rd column: Age data: yes / no Default: no
+        </p>
+        <p>For each line, only the species code is required. If the 2nd or 3rd column is not included for a given line,
+            the
+            default values will be used. The csv file does not need a header. Values do not have to be enclosed in
+            quotes
+            (any quotes found will be removed). Do not use any character other than a comma to separate values. </p>
+        <p>The file must be called <i>species_codes.csv</i> and included in the zip file with your data. </p>
+
+        <h2 id="add-data">Adding Data</h2>
+        <p>Once all of the required metadata listed above has been entered, you can continue to adding data to your
+            dataset
+            record. Data that is uploaded to a dataset will be downloadable by all users who have access. Ensure that
+            Visibility is set to Public and click “Next: Add Data” at the bottom of the page. This will take you to the
+            Add
+            Data screen. </p>
+        <p>Most of the metadata in this section is extracted automatically when you upload your data package. The only
+            fields you need to complete before uploading data are the following:</p>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:25%">Field</th>
+                <th scope="col" style="width:75%">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Title</td>
+                <td>If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package. <b>Ensure
+                    that the title of the data package is NOT the same as any of the layers in your upload</b>. If this
+                    is a
+                    layer/file inside your data upload, this field is populated automatically.
+                </td>
+            </tr>
+            <tr>
+                <td>Download Disclaimer <br> <i>(optional)</i></td>
+                <td>A disclaimer that is displayed to authorized users before allowing data download. Can consist of
+                    text
+                    from Caveats, Use Restrictions, user-defined text, and/or links to external documents with full
+                    terms
+                    and conditions. You may also choose to use the boilerplate disclaimer, which is shown by default.
+                </td>
+            </tr>
+            <tr>
+                <td>Download Disclaimer (External Link) <br> <i>(optional)</i></td>
+                <td>Optional URL to a downloadable disclaimer (e.g. a PDF file) with terms and conditions that must be
+                    accepted before downloading this resource.
+                </td>
+            </tr>
+            <tr>
+                <td>Access Restrictions</td>
+                <img src="/base/images/docs/updated.png" alt="Updated"
+                     width="40" height="40"/>
+                <td>Access restrictions determine who can view resource metadata content and download the data. You may
+                    choose to allow resource metadata and data download to be available to any of the following:
+                    <ul>
+                        <li><b>All Registered Users:</b> anyone who is registered on the GIS Hub will have access.</li>
+                        <li><b>Any Organization Members:</b> restrict access to users who are in an organization on the
+                            GIS
+                            Hub.
+                        </li>
+                        <li><b>Same Organization Members:</b> restrict access to users who are in the same organization.
+                            For
+                            example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA,
+                            will
+                            have access.
+                        </li>
+                        <li><b>Allowed Users/Groups Only:</b> allow access only for specific users or groups. If any of
+                            the
+                            resources in a dataset have sensitive data that you wish to restrict, all resources - as
+                            well as
+                            the dataset (zip file) - must be set to Allowed Users/Groups Only. Not setting the dataset
+                            and
+                            resources to this level will allow any user to download the dataset.
+                            <br>If you choose the Allowed Users/Groups option, individual users can be added by typing
+                            names
+                            into the Allowed Users field below. Note that the list of allowed users is only applicable
+                            to
+                            this option. A list of allowed users will not be applied if one of the other levels (such as
+                            Same Organization Members) is selected. The means that you cannot set the resources to the
+                            Same
+                            Organization Members <b>and</b> add individual users on top of that.
+                            <br>If a user does not have permission to access a resource, they will see a button to
+                            Request
+                            Access rather than the usual Details button. A user should have permission to view/access
+                            all or
+                            none of a dataset's resources (not some).
+                        </li>
+                    </ul>
+
+                </td>
+            </tr>
+            <tr>
+                <td>Change Description (Resource) <br> <i>(optional unless updating the zip file)</i></td>
+                <td>Describe what you have changed in the uploaded file or in the metadata on this page. The text in
+                    this
+                    field will be added to the Change History section of the dataset page. This field is automatically
+                    populated with the last change description. If you have made only minor changes to the metadata, you
+                    may
+                    leave this field blank. If you have uploaded a new file, please be sure to describe what has
+                    changed.
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <p>All other fields on this form can be left <b>blank</b> or with their default values. The GIS hub will extract
+            metadata from your uploaded file and automatically populate this section. For each attribute field, the name
+            and
+            type will be detected automatically, but you will need to provide a description, units, and coded values
+            manually, after the data has been uploaded and processed (see below). </p>
+        <p>To upload a file, choose Upload near the bottom of the form. <b>Please avoid spaces in filenames inside the
+            uploaded zip files.</b> For example, file geodatabases, PDFs, and other files should contain underscores
+            rather
+            than spaces in their names (such as Feature_Classes_ROMS_BottomWaters.gdb). If updating an existing dataset,
+            do
+            not change the file names (even to remove spaces in files if they were previously uploaded with spaces).
+            Spatial
+            layers should have meaningful names (i.e. more than just a region code such as hg/wcvi). At the bottom of
+            the
+            form, click the Finish button and wait for your upload to complete. After it is complete, you will be
+            redirected
+            to the dataset summary page, showing the metadata associated with the dataset and a list of detected spatial
+            data layers/tables (listed at the top under Data and Resources). You need to <b>refresh the page once</b> to
+            show all of the extracted layers. If your dataset is large, you may need to wait several minutes before
+            metadata
+            entries for all layers are shown. </p>
+
+        <div class="docs-caption">
+            <img src="/base/images/docs/resources-note.png" alt="Data and resources with layers added"
+                 width="width" height="height" class="docs-img"/>
+            Data and resources list showing the data download placeholder and one entry for
+            each layer that was auto-detected in the uploaded data.
+        </div>
+
+        <p>The first item under Data and Resources after your data upload is complete is the data download placeholder.
+            On
+            the right, it has a green Download ZIP button. Below this, one entry is created for each supported file
+            found in
+            the uploaded zip. These entries refer to data contained within the zip file, so they do not have their own
+            download links (previously, each one had a download link, which was confusing). Each of these has a Details
+            button, where you can view and edit the metadata that is detected automatically. From the Details view,
+            click
+            Manage to edit metadata for each item. At minimum, you must complete a description for each field in the
+            attributes (if the item has an attribute table), and complete the Layer Description field. The title field
+            is
+            set to the layer name or file name—do not change it. </p>
+
+        <p>Instead of uploading a file, you may alternatively use the Link button to provide a URL, if the data is
+            stored on
+            an external website. If you are linking to data on an external website, geospatial metadata will not be
+            automatically detected, so you will need to populate this section yourself. </p>
+
+        <p>Files other than geospatial data will also be detected and added to the list of Data and Resources,
+            if they are supported file types (see below). For items of these types, only the “Layer Description”
+            field needs to be completed. Other fields relevant to spatial data should be left blank for
+            non-spatial file types (blank fields are shown only when editing metadata, not when viewing). </p>
+
+        <h3 id="autometa">Auto-generated Metadata</h3>
+        <p>As mentioned above, the GIS hub will auto-generate some metadata after you upload a file. The following
+            metadata
+            fields on the Resource page are automatically filled and you only need to edit them if the automated system
+            made
+            a mistake. These fields should be left blank when uploading a new dataset. As a reminder, especially if your
+            uploaded file is large or contains many layers, it may take a few minutes to update the metadata. Please
+            wait
+            1-2 minutes and refresh the page. </p>
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:25%">Field</th>
+                <th scope="col" style="width:75%">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Map Preview</td>
+                <td>A Web Map Services (WMS) tile layer with vector features rendered using a default symbology will be
+                    generated from uploaded layers (vector only). The link in this field allows a preview of the tile
+                    layer
+                    in a web browser, no knowledge of GIS or GIS software is required. If the link opens but nothing is
+                    displayed, it means that a map preview for this layer has not yet been generated. If the layer is
+                    complex and contains many objects, it may take a long time to render. You may zoom in on an area of
+                    interest to improve rendering time.
+                </td>
+            </tr>
+            <tr>
+                <td>Layer Name</td>
+                <td>Layer, table, or file name as detected by the GIS Hub after data upload.</td>
+            </tr>
+            <tr>
+                <td>Data Format</td>
+                <td>Data format, detected by the GIS Hub after data upload. Only a subset of all possible formats are
+                    supported. Note that if your layer has the wrong file extension, it may not be detected correctly or
+                    at
+                    all.
+                </td>
+            </tr>
+            <tr>
+                <td>File Location</td>
+                <td>Location of this layer, table, or file in the zip archive. If the file is nested in a subfolder
+                    within
+                    the zip file, the path of the subfolder(s) will be shown here.
+                </td>
+            </tr>
+            <tr>
+                <td>Projection Name</td>
+                <td>The name of the projection of the data. Note that the naming convention may be different, depending
+                    on
+                    the software used to create the file. For example, ArcGIS uses the name "BC_Albers_Equal_Area,"
+                    while
+                    other software may call it "NAD83 / BC Albers."
+                </td>
+            </tr>
+            <tr>
+                <td>Projection Code</td>
+                <td>The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of
+                    the
+                    layer information window in ArcGIS under 'WKID' or by searching on
+                    http://spatialreference.org/ref/epsg/. On occasion, this code may not be detected for a given
+                    dataset.
+                    Please manually update this field if it shows "unknown" after uploading data.
+                </td>
+            </tr>
+            <tr>
+                <td>Spatial Type</td>
+                <td>The type of data represented. One of Vector, Raster, Table, TIN, Video, None</td>
+            </tr>
+            <tr>
+                <td>Geometry Type</td>
+                <td>For vector layers only. Usually point, line, or polygon.</td>
+            </tr>
+            <tr>
+                <td>Bounding Box</td>
+                <td>Bounding Box in WGS84 latitude-longitude, decimal degrees for each layer.</td>
+            </tr>
+            <tr>
+                <td>Locale</td>
+                <td>Location of the spatial data with respect to DFO's regions and bioregions.</td>
+            </tr>
+
+            </tbody>
+        </table>
+
+        <h3 id="filetypes">Supported File Types</h3>
+        <p>The following file types are supported in the GIS Hub, and have relevant metadata automatically
+            detected. </p>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:35%">File Type</th>
+                <th scope="col" style="width:65%">Notes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>ESRI File Geodatabase (.gdb)</td>
+                <td>Preferred format for vector data, and standalone tables that are part of a spatial dataset. File
+                    geodatabase rasters, and layers in a feature dataset, are not supported.
+                </td>
+            </tr>
+            <tr>
+                <td>Shapefile (.shp)</td>
+                <td>Shapefile is a commonly-used distribution format. However, it has problems with projections not
+                    being
+                    consistently defined, and limitations in the size and structure of attribute tables. File
+                    geodatabases
+                    are preferred.
+                </td>
+            </tr>
+            <tr>
+                <td>Geotiff (.tif, .tiff, .geotiff)</td>
+                <td>Preferred format for raster data.</td>
+            </tr>
+            <tr>
+                <td>Google Earth (.kml, .kmz)</td>
+                <td>You may wish to include a copy of your data in kml for the convenience of non-GIS users. However,
+                    this
+                    should not be used as the primary data distribution format.
+                </td>
+            </tr>
+            <tr>
+                <td>GeoJSON (.json, .geojson)</td>
+                <td>A convenient interchange format for small files, but should not be used as the primary data
+                    distribution
+                    format
+                </td>
+            </tr>
+            <tr>
+                <td>ESRI Layer file (.lyr)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>.zip</td>
+                <td>You may add zip files containing supplementary data or documentation inside the main zip file that
+                    you
+                    upload.
+                </td>
+            </tr>
+
+            <tr>
+                <td>Word Document (.doc, .docx)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Portable Document Format (.pdf)</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Text file (.txt, .csv)</td>
+                <td>Can be used for text content, but preferably not for tabular data</td>
+            </tr>
+            <tr>
+                <td>Excel (.xls, .xlsx)</td>
+                <td></td>
+            </tr>
+
+
+            </tbody>
+        </table>
+
+        <h3 id="attrib-meta">Attribute Metadata</h3>
+        <p>Attribute field names and types are detected automatically from the uploaded data (if the upload contains
+            geospatial data with an attribute table in a recognized format). Additional information on each attribute
+            must
+            be entered manually. To manually enter attribute metadata, wait until the metadata extraction is complete
+            for
+            all layers/tables in the uploaded data. Each layer/table has its own set of attributes. In the list of Data
+            and
+            Resources, click Details, then click Manage. Scroll down until you see the section Attributes. </p>
+        <p>Each attribute must have, at minimum, a description. Some attributes that are common to all spatial datasets
+            will
+            be pre-filled with a description. For raster data, if the raster includes an attribute table, complete this
+            table using the attributes from the raster (raster attributes are not extracted automatically). If the
+            raster
+            does not include an attribute table, use the Layer Description to indicate what the raster values
+            represent. </p>
+        <p>For <b>each</b> field in the attribute table, complete the following metadata. </p>
+
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:25%">Field</th>
+                <th scope="col" style="width:75%">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Field Name</td>
+                <td>Field name in the attribute table (automatically filled when data is uploaded)</td>
+            </tr>
+            <tr>
+                <td>Field Type</td>
+                <td>Field type in the attribute table (automatically filled when data is uploaded). Text, Date, Integer,
+                    Double, Boolean.
+                </td>
+            </tr>
+            <tr>
+                <td>Field Description</td>
+                <td>The description should indicate what the value represents, how was it measured, and whether it is
+                    generalized.
+                </td>
+            </tr>
+            <tr>
+                <td>Units <br><i>(Optional)</i></td>
+                <td>If the attribute is quantitative, indicate the measured units and an estimate of the accuracy.</td>
+            </tr>
+            <tr>
+                <td>Coded Values <br><i>(Optional)</i></td>
+                <td>If the attribute contains a list of coded values (i.e. values from a lookup table), describe the
+                    meaning
+                    of each of the codes. (For a very long list of coded values, instead provide a link or reference to
+                    a
+                    document or website describing the coded values.)
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <h2 id="linking">Links to External Data</h2>
+        <h3>Adding links in a dataset</h3>
+        <p>
+            As described above, a dataset contains the data download placeholder,
+            along with a resource for each recognized layer or file in the
+            uploaded data package. The GIS Hub also supports adding links to external
+            data. In fact, the link can be any URL. This is intended to allow, for example,
+            links to a downloadable dataset that is hosted on another server, outside the
+            GIS Hub. It can also be used to create internal links to other datasets on the
+            GIS Hub (for example, if there is documentation common to many datasets.
+
+        </p>
+        <p>
+            To create a link, click the Manage button at the top-right of a dataset's page.
+            If you do not see the Manage button, you do not have edit rights on this dataset.
+            In the next page click the Resources tab, then Add New Resource. Since you are
+            creating a link rather than uploading data, you can leave all of the fields blank
+            except Title. Scroll to the bottom, and under the Upload Data category, you will see
+            an pair of buttons: Upload and Link. Click Link, and paste the URL of the external
+            data. Note that the GIS Hub will not download data from external sites, and unlike files
+            uploaded directly to the GIS Hub, any geospatial data in an external link will not
+            be indexed on the dataset page. Links are clearly shown with a Go to Link button, to
+            distinguish them from other resources.
+        </p>
+        <img src="/base/images/docs/resource-link.png" alt="Display of link in a dataset's resources"
+             title="Display of link in a dataset's resources"
              width="width" height="height" class="docs-img"/>
-        How to reorder a dataset's resources
-    </div>
+        <p>
+            To edit or remove a link, click the Details button on the right, then click Manage.
+            It is preferable to link to the landing page from where a downloadable file can be
+            retrieved (in order to provide context), rather thank linking directly to the
+            download file itself.
+        </p>
 
-    <h3 id="embed-map">Embed Map Preview</h3>
-    <p>By default, a map preview will be generated for any spatial resources in a dataset. The map preview links are
-        found on a resource's metadata page under the 'Map Preview' field. To embed a map preview for a resource:
-    </p>
-    <ol>
-        <li>Copy the link for the web map preview.</li>
-        <li>Click 'Details' on a resource under a dataset and click 'Manage'.</li>
-        <li>Click the 'Views' tab. Click 'New view' and 'Website'.</li>
-        <li>Paste the web map preview link into the Web Page url field. For the title, paste the resource name
-            ('ia_spongereefs_sog', for example) not the dataset name.
-        </li>
-        <li>Click 'Add' and then refresh the resource page to see the changes.</li>
-    </ol>
-    <p>Please make note of the following caveats: </p>
-    <ul>
-        <li>Web map previews may not always be generated. For example if the layer is extremely geometrically complex
-            or if there are problems with the geometry or projection information for the layer.
-        </li>
-    </ul>
-    <div class="docs-caption">
-        <img src="/base/images/docs/new_view.png" alt="Adding a new view of data"
-             width="width" height="height" class="docs-img"/>
-        Adding a new view of data
-    </div>
-    <div class="docs-caption">
-        <img src="/base/images/docs/map_preview.png" alt="Embedded map preview"
-             width="width" height="height" class="docs-img"/>
-        Embedded map preview
-    </div>
+        <h2 id="data-prep">Data Preparation</h2>
+        <h3 id="spatial-val">Spatial Validation</h3>
+        <p>This section describes steps to validate your spatial data before publishing. A Data Quality Report toolbox
+            for
+            ArcGIS has been developed to help with this process. The repository containing the zip file is located <a
+                    href="https://gitlab.com/dfo-msea/gis-hub/qc-tool">here</a>. The zip file contains a readme for
+            installing and running the tool. </p>
+
+        <h4>Projection</h4>
+        <p>Ensure that the projection (spatial reference) is valid. Every dataset should have a projection from the <a
+                href="http://spatialreference.org/ref/epsg/">EPSG code list</a>. On the west coast of Canada,
+            commonly-used
+            projections are: </p>
+
+        <ul>
+            <li>BC Albers equal area (EPSG:3005)</li>
+            <li>UTM zone 10N (EPSG:3157)</li>
+            <li>Latitude-longitude WGS 84 (unprojected) (EPSG:4326)</li>
+        </ul>
+
+        <p>Avoid using custom projections (not in the EPSG code list) if possible. The only reasonable exception to this
+            would be data collected on a custom grid, where documentation refers to specific coordinates on this grid.
+            In
+            this case, every effort should be made to link the custom grid to a standard projection, and provide a copy
+            of
+            the data in a standard projection. </p>
+
+        <p>Perform a visual check to ensure that the features are at the expected location. An excellent way to do this
+            is
+            to add a basemap layer with satellite imagery in ArcGIS. Avoid comparing against other vector layers, since
+            they
+            may all contain the same spatial offset! This is particularly important if the data were digitized from
+            paper
+            charts or aerial photographs. </p>
+
+        <h4>Feature Geometry</h4>
+
+        <p>For vector layers, all feature geometries must be clean. In ArcGIS, run the <a
+                href="http://desktop.arcgis.com/en/arcmap/latest/tools/data-management-toolbox/repair-geometry.htm">repair
+            geometry tool</a> on all data. The Quality Report toolbox described above includes the Repair Geometry
+            function.
+        </p>
+
+        <p>Geometries should have a reasonable number of vertices per feature, appropriate for the scale at which the
+            data
+            are intended to be used. Do not simplify features whose boundaries must exactly line up with other features
+            (e.g. the shoreline of PFMAs): doing so may introduce slivers and gaps in future spatial analyses. Check for
+            sliver polygons (polygons with a very small area), gaps (use Erase analysis on a background polygon) and
+            overlaps (intersect the data with itself). Take appropriate steps to resolve. If resolution of these
+            problems is
+            not feasible, clearly document the existence of these issues in the metadata (spatial data quality
+            section).</p>
+
+        <h4>Geometry Types</h4>
+
+        <p>For vector data, feature classes must be point, polyline, or polygon features. Avoid the following:</p>
+        <ul>
+            <li>Complex or custom geometry types, unless absolutely necessary.</li>
+            <li>Feature class annotations</li>
+            <li>Feature class representations</li>
+            <li>Point symbols exploded to polygons (may happen when data is converted from a CAD format</li>
+            <li>A feature class should only include Z geometry if the data really are 2.5 or 3-dimensional. Similarly, M
+                geometry is only applicable if the data is has a time dimension (in other words, features change over
+                time,
+                instead of having a unique feature per instance of time). Otherwise, use only XY geometry.
+            </li>
+        </ul>
+
+        <h3 id="attrib-val">Attribute Validation</h3>
+
+        <p>This section describes required validation for values in the attribute table. </p>
+        <h4>Null and 0 Values</h4>
+        <p>Null values in the attribute table are reasonable as long as they are justifiable and documented. As a rule,
+            Null
+            values are not acceptable if they are there simply because that column in the attribute table has not yet
+            been
+            populated. A null value indicating the absence or inapplicability of something is perfectly ok, as long as
+            it is
+            documented. For example, if a Null value in a field means “no reading” or “no observation for this field on
+            this
+            record” or “not applicable for this record” it should be clearly documented in the metadata for that field.
+            In
+            addition, Null in any given field should only represent one condition, and must never be used to group
+            different
+            conditions. For a quantitative field, it is preferable to use Null to represent “no data,” rather than an
+            arbitrary number such as -99. If an instrument or measurement has a minimum detection limit, say 0.001, and
+            you
+            need to represent “below detection limit” in addition to “no data,” it is preferable to use Null for no
+            data,
+            and an arbitrary number for “below detection” or other edge cases. Again, all of these conditions must be
+            documented in metadata. </p>
+
+        <p>A value of 0 in a quantitative field should indicate that the <b>measured</b> value was 0: be careful of
+            number
+            fields which are populated by default with all zeros at the time of creation (which happens automatically in
+            some GIS software). If 0 is meaningless in the field, all zeros should be replaced with Nulls, or some other
+            value that has meaning. For qualitative fields, ensure that the difference between “observed absence” and
+            “not
+            observed” is clear. “Observed absence” should have a defined text code, while “not observed” should be
+            represented with Null. </p>
+
+        <h4>Appropriate Field Types</h4>
+        <p>Do not use a text field to represent a quantitative attribute. Instead, use the appropriate numeric field
+            type:
+            double or integer. It is better to use double instead of float, and integer instead of short integer (float
+            and
+            short integer data types impose an arbitrary and invisible restriction on the range of values that can be
+            stored
+            in a field, which can cause problems for future users of the data or scripts processing the data). </p>
+
+        <p>Conversely, do not use numeric fields to represent qualitative attributes. Qualitative attributes should be
+            stored in text fields, optionally restricted by a lookup of allowed values in the field. If a qualitative
+            attribute is stored in a related table by a foreign key, the foreign key id column must be integer: never
+            store
+            foreign key ids as text values. Avoid the use of codes that start with leading zeros (e.g. 0001, 0002 stored
+            as
+            text values). </p>
+
+        <h4>Field Names</h4>
+
+        <p>User-created field names should be standardized to a lowest common denominator format to maximize
+            compatibility
+            with various software tools:</p>
+
+        <ul>
+            <li>All lower case (in ArcGIS, Field_name is distinct from field_name)</li>
+            <li>Words separated by underscore (species_code, not speciescode or species-code)</li>
+            <li>Starts with a letter</li>
+            <li>Not more than 24 characters</li>
+            <li>Each field name should be unique in the first eight characters, in the event that something truncates
+                the
+                table’s field names at some point. Avoid creating tables with fields such as “species_code_observed” and
+                “species_code_inferred” which might be truncated to “species_” and “specie_1”.
+            </li>
+            <li>Ensure that <a
+                    href="http://desktop.arcgis.com/en/arcmap/latest/manage-data/tables/field-properties-aliases-and-table-display-options.htm#GUID-29965C23-024B-40AF-81F6-AC27CC052CAC">attribute
+                aliases</a> are identical to attribute names
+            </li>
+        </ul>
+
+        <p>The geometry column is usually named Shape or SHAPE if the data is coming from ArcGIS, geom or the_geom if
+            coming
+            from an open-source GIS program such as QGIS. For the object ID field, ensure that it does not have a number
+            appended, which may happen when tables are joined and exported. For example, if the object ID field is
+            something
+            like OID_1 or ObjectID_1, export the data to a new feature class, which should reset the object ID field
+            name.
+            Typical object ID field names are OID, FID, ObjectID. </p>
+
+        <h4>Field Relevance</h4>
+        <p>Remove any fields in the attribute table that do not inform the data. This includes stray fields created by
+            ArcGIS joins and other processes.</p>
+
+        <h3 id="data-packaging">Data Packaging</h3>
+        <h4>Formats</h4>
+        <p>ESRI File Geodatabase is the preferred format for vector spatial data. Avoid using feature datasets within a
+            file
+            geodatabase: they add an extra layer of complexity and reduce the number of third-party tools that can read
+            the
+            data. </p>
+
+        <p>Although the shapefile format supports up to 24 characters in field names, some software that generates
+            shapefiles truncates the field names to 8 or 10 characters. Shapefiles have additional limitations that may
+            cause problems. If you use shapefiles in programs such as R, the final output can be converted to a File
+            Geodatabase before publishing.</p>
+
+        <p>When publishing layers in a File Geodatabase, create a new file geodatabase and copy only the layers that you
+            want to publish. For a shapefile, include all of the related files (.shp, .shx, .dbf, and so on). </p>
+
+        <p>Geotiff is the preferred format for raster spatial data. File Geodatabase rasters are not supported at this
+            time.
+            If you need to publish a dataset that includes both raster and vector layers, you can keep the vector layers
+            in
+            a file GDB and export the Geotiffs to the filesystem, next to the .gdb folder. </p>
+
+        <p>Do not use personal geodatabases. This legacy format, which still comes up on occasion, has serious problems
+            with
+            poor coordinate precision and size limitations.</p>
+
+        <h4>Layer Names</h4>
+        <p>Feature class and table naming conventions within a file geodatabase are the same as field naming
+            conventions.
+            Geotiff filenames should also follow these conventions where possible. </p>
+
+        <h4>Packaging your data</h4>
+        <p>All data should be submitted in a folder containing the file geodatabase or shapefiles, and/or geotiff files.
+            You
+            may put the data inside nested folders if it makes sense to do so. The metadata extractor will traverse the
+            entire folder tree and find all recognized files. However, the structure of the folder tree inside your
+            uploaded
+            zip file will not be shown on the GIS Hub. Optionally, you may include ArcGIS .mxd or .lyr files pointing to
+            data in the file geodatabase (be sure to save the mxd file with relative paths). Prior to uploading, zip the
+            .gdb folder or shapefile, along with any .mxd or .lyr files you wish to include with the data. </p>
+
+        <p>Relevant documents, academic publications, or scripts related to the data can be included in the zip file
+            along
+            with the spatial data. Ideally, they should be in a separate folder from the spatial data, or contained in a
+            nested zip file. </p>
+
+        <h2 id="new-dataset">Creating and Editing Datasets</h2>
+        <p>To create a new dataset, click the Add Dataset button near the top of the
+            <a href="https://www.gis-hub.ca/dataset">dataset page</a>. Follow the guidance
+            below on completing the metadata fields.
+            <br><br>Don't see the
+            Add Dataset button? This means that you are either not logged in, or you
+            have a read-only account. </p>
+
+        <h3 id="replace-data">Replacing Data</h3>
+        <p>You have created a dataset and uploaded a data file.
+            Your layers have been detected and added to the Data and Resources view. Now you have a new version of the
+            data,
+            and you would like to replace the data package.
+        </p>
+        <p>To replace the data: </p>
+        <ol>
+            <li>click the Details button next to the
+                data package (must have a green Download button) that you want to replace.
+                <br>
+                <b>Note: only do this for items with a green Download button!</b>
+                <br>
+                Adding a file upload to items without the Download button will not work.
+            </li>
+            <li>On the next screen, click
+                Manage near the top-right.
+            </li>
+            <li>Scroll down to the File field, and click the Remove button on the right.
+                For versioning to work, <b>ensure that the uploaded file name matches the existing file name.</b>
+                <div class="docs-caption">
+                    <img src="/base/images/docs/resource-replace.png" alt="Replacing a resource's uploaded data"
+                         title="Replacing a resource's uploaded data"
+                         width="width" height="height" class="docs-img"/>
+                </div>
+                Click Upload and choose a new file, then Update Resource
+                at the bottom of the screen.
+            </li>
+            <li>
+                On the dataset's metadata page, add an entry in the Change History field noting what was updated in the
+                dataset including versions of code such as a code 'Release'.
+            </li>
+        </ol>
+
+        <h4 id="data-matching">Automated Layer Matching</h4>
+        <p>When you upload a new version of a dataset, the
+            GIS Hub automatically unzips the file and matches the layers and
+            files that it detects with those that are already on the list of
+            Data and Resources. User-entered metadata including Attribute field
+            descriptions and layer descriptions will be transferred to the
+            metadata for the new layers, <i>if there is a match</i>.
+            Importantly, this matching is done using the <i>most specific
+                file/layer identifier</i>:
+        </p>
+        <ul>
+            <li>For a layer within a geodatabase, matching is done with the layer name</li>
+            <li>For shapefiles, geotiffs, and non-spatial files, matching is done with the filename</li>
+            <li>In both cases, the matching is not case-sensitive</li>
+        </ul>
+        <p>This means that you must ensure that your <b>layer/file names
+            are the same</b> when uploading a new version of your data. Attribute field names are matched using the same
+            process, so if you rename a field, the existing metadata will not be transferred.
+        </p>
+        <p>If some layer/file names have been changed, you may end up with orphan layers. These can be removed (after
+            copying
+            relevant metadata to the correct layer) by clicking Manage at top-right, then clicking the Delete button at
+            the
+            bottom of the screen. </p>
+
+        <h3 id="versioning">Versioning</h3>
+        <p>The cloud storage for the GIS Hub supports file-level versioning, which means
+            that when you upload a new version of your dataset, the previous version will be kept.
+            Please make note of the following caveats: </p>
+        <ul>
+            <li>Versioning works only for the uploaded zip file as a whole. Versions of individual
+                layers or files within the zip file are not tracked
+            </li>
+            <li>There is no user interface to access previous versions of files on the GIS Hub.
+                You'll need to contact an admin to retrieve a previous version of a file for you.
+            </li>
+            <li>For versioning to work, the name of the new uploaded zip file must match the
+                name of the previous file. So don't replace <i>my_data.zip</i> with <i>my_data_v2.zip</i>.
+            </li>
+            <li>Versioning is for data (your uploaded zip file), which is updated atomically, but not for metadata.</li>
+        </ul>
+
+        <h3 id="reorder-res">Reordering Resources</h3>
+        <p>A dataset may contain many resources. By default, these layers are uploaded alphabetically, with the download
+            placeholder in the top position. However, resources might get rearranged during updates to the dataset.
+            Editors
+            can use the reorder resources button to arrange the resources in the preferred order. Click 'Manage' on a
+            dataset's metadata page. Then select the 'resources' tab. Click on 'Reorder resources' button, rearrange,
+            and
+            save changes. Please make note of the following caveats:
+        </p>
+        <ul>
+            <li>The download placeholder is considered a resource, but it's position may not be moved from the top
+                level.
+            </li>
+            <li>If a users reorders the resources and places the download placeholder in a position other than the top,
+                after saving, the placeholder will be moved back to the first position. This is not a bug.
+            </li>
+            <li>Only users with Editor permissions will be able to reorder resources.</li>
+        </ul>
+        <div class="docs-caption">
+            <img src="/base/images/docs/reorder_res.png" alt="GIS Hub reorder resources"
+                 width="width" height="height" class="docs-img"/>
+            How to reorder a dataset's resources
+        </div>
+
+        <h3 id="embed-map">Embed Map Preview</h3>
+        <p>By default, a map preview will be generated for any spatial resources in a dataset. The map preview links are
+            found on a resource's metadata page under the 'Map Preview' field. To embed a map preview for a resource:
+        </p>
+        <ol>
+            <li>Copy the link for the web map preview.</li>
+            <li>Click 'Details' on a resource under a dataset and click 'Manage'.</li>
+            <li>Click the 'Views' tab. Click 'New view' and 'Website'.</li>
+            <li>Paste the web map preview link into the Web Page url field. For the title, paste the resource name
+                ('ia_spongereefs_sog', for example) not the dataset name.
+            </li>
+            <li>Click 'Add' and then refresh the resource page to see the changes.</li>
+        </ol>
+        <p>Please make note of the following caveats: </p>
+        <ul>
+            <li>Web map previews may not always be generated. For example if the layer is extremely geometrically
+                complex
+                or if there are problems with the geometry or projection information for the layer.
+            </li>
+        </ul>
+        <div class="docs-caption">
+            <img src="/base/images/docs/new_view.png" alt="Adding a new view of data"
+                 width="width" height="height" class="docs-img"/>
+            Adding a new view of data
+        </div>
+        <div class="docs-caption">
+            <img src="/base/images/docs/map_preview.png" alt="Embedded map preview"
+                 width="width" height="height" class="docs-img"/>
+            Embedded map preview
+        </div>
 
 </article>
 {% endblock %}
