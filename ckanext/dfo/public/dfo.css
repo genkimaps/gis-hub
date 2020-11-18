@@ -411,5 +411,6 @@ table.table-fit tbody td, table.table-fit tfoot td {
 }
 
 .highlight {
-    color: red;
+    background-color: rgba(255, 255, 153, 1);
+	font-weight: bold;
 }
