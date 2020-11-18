@@ -1,4 +1,9 @@
-{% extends "page.html" %}
+{% ckan_extends %}
+
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="/dfo.css" />
+{% endblock %}
 
 {% block subtitle %}Documentation{% endblock %}
 
@@ -980,16 +985,21 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
 
       <h3 id="embed-map">Embed Map Preview</h3>
       <p>By default, a map preview will be generated for any spatial resources in a dataset. The map preview links are
-        found on a resource's metadata page under the 'Map Preview' field. To embed a map preview for a resource, first
-        copy the link for the web map preview. Next, click 'Details' on a resource under a dataset. Next, click 'Manage'
-        and then the 'Views' tab. Click 'New view' and 'Website'. Paste the web map preview link into the Web Page url
-        field. For title, paste the resource name ('ia_spongereefs_sog', for example) not the dataset name. Click 'Add'
-        and then refresh the resource page to see the changes. Please make note of the following caveats:
+        found on a resource's metadata page under the 'Map Preview' field. To embed a map preview for a resource:
       </p>
-       <ul>
+      <ol>
+        <li>Copy the link for the web map preview.</li>
+        <li>Click 'Details' on a resource under a dataset and click 'Manage'.</li>
+        <li>Click the 'Views' tab. Click 'New view' and 'Website'.</li>
+        <li>Paste the web map preview link into the Web Page url field. For the title, paste the resource name
+          ('ia_spongereefs_sog', for example) not the dataset name.</li>
+        <li>Click 'Add' and then refresh the resource page to see the changes.</li>
+      </ol>
+      <p>Please make note of the following caveats: </p>
+      <ul>
         <li>Web map previews may not always be generated. For example if the layer is extremely geometrically complex
           or if there are problems with the geometry or projection information for the layer.</li>
-       </ul>ul
+       </ul>
       <div class="docs-caption">
         <img src="/base/images/docs/new_view.png" alt="Adding a new view of data"
         width="width" height="height" class="docs-img"/>
