@@ -1,5 +1,10 @@
 {% extends "page.html" %}
 
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="/dfo.css" />
+{% endblock %}
+
 {% block subtitle %}Documentation{% endblock %}
 
 {% block primary_content %}
