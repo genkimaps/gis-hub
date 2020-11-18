@@ -416,11 +416,10 @@ table.table-fit tbody td, table.table-fit tfoot td {
 }
 
 .nav img {
-  float: right;
-  width: "30";
-  height: "30";
+  float: left;
 }
 
 .nav p {
   position: relative
+  left: 10px;
 }
