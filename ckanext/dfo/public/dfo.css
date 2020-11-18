@@ -432,7 +432,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-  display: none;
+  display: block;
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
@@ -452,7 +452,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .dropdown-content a:hover {background-color: #ddd;}
 
 /* Show the dropdown menu on hover */
-.dropdown:hover .dropdown-content {display: block;}
+/*.dropdown:hover .dropdown-content {display: block;}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #3e8e41;}
