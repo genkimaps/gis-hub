@@ -417,8 +417,8 @@ table.table-fit tbody td, table.table-fit tfoot td {
 
 .header img {
   float: right;
-  width: 30px;
-  height: 30px;
+  width: "30";
+  height: "30";
 }
 
 .header h3 {
