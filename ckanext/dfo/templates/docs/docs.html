@@ -64,8 +64,8 @@
         <br>
         <b>Note:</b> This issue has been resolved.  When re-ordering resources, please keep the data download resource in the first position.
         <br><br>
-        <b>Problem:</b> <del>Altering the Download Disclaimer or Download Disclaimer (External Link)
-        metadata fields have no effect.</del>
+        <b>Problem:</b> Altering the Download Disclaimer or Download Disclaimer (External Link)
+        metadata fields have no effect.
         <br>
         <b>Note:</b> This issue has been resolved.
         <br><br>
@@ -95,7 +95,7 @@
         default list of datasets</a> shows all datasets that are visible to you, along with filters and
         search tools to help you find relevant data. </p>
 
-      <h4 id="datasets-resources">Datasets & Resources <span class="highlight">UPDATED</span></h4>
+      <h4 id="datasets-resources">Datasets & Resources</h4>
       <p>A <b>dataset</b> is the zip file uploaded to the GIS Hub that contains the files processed and displayed
       on a dataset's page such as <a href="https://www.gis-hub.ca/dataset/floating-structures">Floating Structures</a>.
       </p>
@@ -111,7 +111,7 @@
         List of datasets on the GIS Hub
       </div>
 
-      <h2 id="overview">Metadata Overview <span class="highlight">UPDATED</span></h2>
+      <h2 id="overview">Metadata Overview</h2>
       <p>Metadata is a key part of any dataset that is published and shared with others.
       The CKAN software platform provides a default metadata standard with basic metadata
         fields that are attached to all datasets. </p>
@@ -960,6 +960,25 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
         <li>Versioning is for data (your uploaded zip file), which is updated atomically, but not for metadata. </li>
       </ul>
 
+      <h3 id="#reorder-res"><span class="highlight">Reordering Resources</span></h3>
+      <p>A dataset may contain many resources. By default, these layers are uploaded alphabetically, with the download
+        placeholder in the top position. However, resources might get rearranged during updates to the dataset. Editors
+        can use the reorder resources button to arrange the resources in the preferred order. Click 'Manage' on a
+        dataset's metadata page. Then select the 'resources' tab. Click on 'Reorder resources' button, rearrange, and
+        save changes. Please make note of the following caveats:
+      </p>
+      <ul>
+        <li>The download placeholder is considered a resource, but it's position may not be moved from the top level.</li>
+        <li>If a users reorders the resources and places the download placeholder in a position other than the top,
+        after saving, the placeholder will be moved back to the first position. This is not a bug.</li>
+        <li>Only users with Editor permissions will be able to reorder resources.</li>
+      </ul>
+      <div class="docs-caption">
+        <img src="/base/images/docs/reorder_res.png" alt="GIS Hub reorder resources"
+        width="width" height="height" class="docs-img"/>
+        How to reorder a dataset's resources
+      </div>
+
     </div>
   </article>
 {% endblock %}
@@ -998,6 +1017,7 @@ Choose from: Targeted observation, incidental observation, inferred.</td>
       <p><a href="#replace-data">Replacing Data</a></p>
       <p><a href="#data-matching">Automated Layer Matching</a></p>
       <p><a href="#versioning">Versioning</a></p>
+      <p><a href="#reorder-res">Reordering Resources</a></p>
 
     </div>
   </div>
