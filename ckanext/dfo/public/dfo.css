@@ -414,3 +414,13 @@ table.table-fit tbody td, table.table-fit tfoot td {
     background-color: rgba(255, 255, 153, 1);
 	font-weight: bold;
 }
+
+.header img {
+  float: right;
+  width: 30px;
+  height: 30px;
+}
+
+.header h3 {
+  position: relative
+}
