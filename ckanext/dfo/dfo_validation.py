@@ -49,14 +49,14 @@ def save_change_history(context, data_dict, type):
         logger.info('Internal change from API. <<< THIS CHANGE DESCRIPTION WILL BE IGNORED ')
         return
     if not change_desc or len(change_desc.strip()) == 0:
-        logger.info('Empty change description')
+        logger.info('Empty change description is ignored.')
         return
     # Get existing change history from dataset
     change_history = ds_metadata.get('change_history')
     logger.debug('change_history: %s' % change_history)
-    if not change_history or change_history == '[]':
-        logger.error('Change history is EMPTY but should not be!')
-        return
+    # if not change_history or change_history == '[]':
+    #     logger.error('Change history is EMPTY but should not be!')
+    #     return
     # Convert change_history to dict
     try:
         if not change_history:
@@ -64,6 +64,7 @@ def save_change_history(context, data_dict, type):
             change_history = '[]'
         change_history = json.loads(change_history)
     except:
+        logger.error('Change history field: bad format. "%s"' % change_history)
         logger.error(format_exc())
         return
 
@@ -149,7 +150,16 @@ def ensure_resource_type(context, resource):
     result = get_action('resource_patch')(context, patch)
 
 
-""" Begin DATASET validation """
+""" 
+    Begin DATASET validation. The following functions are used for 
+    dataset validation:
+    validate_dataset()
+    set_dataset_display()
+    kw_case_dups()
+    lowerise_and_dedup()
+"""
+
+
 def validate_dataset(context, dataset):
     """ Filter chain to validate a dataset """
 
