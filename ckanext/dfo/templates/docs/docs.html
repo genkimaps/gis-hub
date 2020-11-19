@@ -1364,7 +1364,10 @@
                 You'll need to contact an admin to retrieve a previous version of a file for you.
             </li>
             <li>For versioning to work, the name of the new uploaded zip file must match the
-                name of the previous file. So don't replace <i>my_data.zip</i> with <i>my_data_v2.zip</i>.
+                name of the previous file. For example, if the original uploaded file was <i>my_data.zip</i>,
+                replacing it with a different filename, such as <i>my_data_v2.zip</i>, will break the
+                chain of data versions for this dataset.  In this case, previous versions of the data
+                are still stored in the cloud, but retrieving them will be more time consuming.
             </li>
             <li>Versioning is for data (your uploaded zip file), which is updated atomically, but not for metadata.</li>
         </ul>
@@ -1394,8 +1397,10 @@
         </div>
 
         <h3 id="embed-map">Embed Map Preview</h3>
-        <p>By default, a map preview will be generated for any spatial resources in a dataset. The map preview links are
-            found on a resource's metadata page under the 'Map Preview' field. To embed a map preview for a resource:
+        <p>By default, a map preview will be generated for spatial layers in a dataset, if they are
+            in a supported format.  A link to the map preview can be found on the resource's metadata page
+            under the 'Map Preview' field.  Clicking this link opens the map preview in a new tab.
+            To embed the map preview into the resource page, follow these steps:
         </p>
         <ol>
             <li>Copy the link for the web map preview.</li>
@@ -1408,9 +1413,9 @@
         </ol>
         <p>Please make note of the following caveats: </p>
         <ul>
-            <li>Web map previews may not always be generated. For example if the layer is extremely geometrically
-                complex
-                or if there are problems with the geometry or projection information for the layer.
+            <li>Web map previews may not always be generated, for example if a vector layer contains
+                very complex geometries, or if there are problems with the geometry or projection information
+                for the layer.
             </li>
         </ul>
         <div class="docs-caption">
