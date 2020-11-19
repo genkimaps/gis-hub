@@ -49,7 +49,7 @@ def save_change_history(context, data_dict, type):
         logger.info('Internal change from API. <<< THIS CHANGE DESCRIPTION WILL BE IGNORED ')
         return
     if not change_desc or len(change_desc.strip()) == 0:
-        logger.info('Empty change description is ignored.')
+        logger.info('Resource %s: Empty change description is being ignored.' % title)
         return
     # Get existing change history from dataset
     change_history = ds_metadata.get('change_history')
@@ -60,6 +60,7 @@ def save_change_history(context, data_dict, type):
     # Convert change_history to dict
     try:
         if not change_history:
+            logger.warning('change_history is blank. Now adding new change_history entry.')
             # Use empty list
             change_history = '[]'
         change_history = json.loads(change_history)
