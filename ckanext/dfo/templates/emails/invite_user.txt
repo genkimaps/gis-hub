@@ -1,6 +1,6 @@
-The GIS Hub is the central place to find key spatial datasets for MSEA staff and other users in the DFO Pacific Region.  It is designed to allow users to search, preview, download, and find detailed information (metadata) about the datasets.
+The GIS Hub is a data management system used by MSEA staff and other users in the DFO Pacific Region.  It is designed to allow users to search, preview, download, publish, and find detailed metadata related to datasets and resources.
 
-A key part of the GIS Hub is metadata.  We have designed a metadata standard that is both flexible and comprehensive, and meets the needs of DFO Science.  The metadata form on the GIS Hub makes the process of writing your metadata simple and standardized. If you have already been writing metadata, this step will not be much more than copying and pasting.  Note that incomplete metadata can be saved as a draft, and you can come back to complete it later.  When all required metadata is complete, you may publish the dataset.
+A key part of the GIS Hub is metadata.  The metadata standard is both flexible and comprehensive, and meets the needs of the MSEA section.  The metadata form on the GIS Hub makes the process of writing your metadata simple and standardized. If you have already been writing metadata, this step will not be much more than copying and pasting.  Note that incomplete metadata can be saved as a draft, and you can come back to complete it later.  When all required metadata is complete, you may publish the dataset.
 
 The system is only accessible to registered users.  Before you can access any of the site content, you must activate your account and set a new password using this link:
 
