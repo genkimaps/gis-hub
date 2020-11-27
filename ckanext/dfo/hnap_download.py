@@ -17,8 +17,10 @@ logger = settings.setup_logger(__name__)
 # <li>{% link_for _('Manage'), named_route='resource.edit', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
 
 class HNAPController(base.BaseController):
-    def get_hnap(self, dataset_id, resource_id):
+
+    @staticmethod
+    def get_hnap(dataset_id, resource_id):
         # return flask.send_file(filepath)
-        logger.info('HNAP controller: %s %s' % (id, resource_id))
+        logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
 
         return p.toolkit.render('docs/docs.html')
