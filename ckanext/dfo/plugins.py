@@ -345,7 +345,7 @@ class DFOPlugin(p.SingletonPlugin):
             action='docs'
         )
         map.connect(
-            '/get_hnap',
+            '/dataset/{dataset_id}/resource/get_hnap',
             controller='ckanext.dfo.hnap_download:HNAPController',
             action='get_hnap'
         )
