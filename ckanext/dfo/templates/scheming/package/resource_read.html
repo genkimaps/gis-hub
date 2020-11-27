@@ -1,6 +1,6 @@
 {% ckan_extends %}
-{# This extends resource_read.html in scheming/package, NOT resource_read.html
-    in base CKAN. #}
+{# This extends resource_read.html in ckanext-scheming/package,
+    NOT resource_read.html in base CKAN. #}
 
 {# Hide license #}
 {%- block resource_license -%}
@@ -47,6 +47,8 @@
     {% else %}
         {# The user IS authorized, display resource content as usual #}
         {# Customize what is displayed for different resource types #}
+
+        <li>{% link_for _('HNAP'), named_route='get_hnap', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
 
         {# Use the resource_type field #}
         {%- if res.resource_type == 'Upload' -%}

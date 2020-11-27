@@ -117,3 +117,17 @@ def search_species_code(context, data_dict):
                  }
         sp_codes.append(match)
     return sp_codes
+
+
+@side_effect_free
+def search_contacts(context, data_dict):
+    logger.info(data_dict)
+    term = data_dict.get('q')
+    contact_field = data_dict.get('field')
+    solr_qry = 'extras_%s:*%s*' % (contact_field, term)
+    packages = get_action('package_search')(
+        data_dict={'q': 'extras_creator_name:*<query>*', 'include_private': True})
+    data = []
+    for package in packages.get('results'):
+        pass
+

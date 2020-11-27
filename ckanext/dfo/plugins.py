@@ -15,6 +15,7 @@ from ckan.logic import get_action
 import dfo_plugin_settings
 import dfo_validation
 import dfo_autocomp
+import hnap_download
 import subprocess
 import traceback
 import json
@@ -159,7 +160,10 @@ class DFOPlugin(p.SingletonPlugin):
     # @side_effect_free
     def get_actions(self):
         return {'ac_goc_themes': dfo_autocomp.search_goc_theme,
-                'ac_species_code': dfo_autocomp.search_species_code}
+                'ac_species_code': dfo_autocomp.search_species_code,
+                'ac_contacts': dfo_autocomp.search_contacts
+                # 'hnap_export': hnap_download.run_hnap
+                }
 
     # IConfigurer
     def update_config(self, config):
@@ -339,6 +343,11 @@ class DFOPlugin(p.SingletonPlugin):
             '/docs',
             controller='ckanext.dfo.plugins:DocsController',
             action='docs'
+        )
+        map.connect(
+            '/get_hnap',
+            controller='ckanext.dfo.hnap_download:HNAPController',
+            action='get_hnap'
         )
         return map
 
