@@ -62,7 +62,7 @@ class HNAPController(base.BaseController):
         # return p.toolkit.render('docs/docs.html')
         # Added the HNAP export folder to CKAN's extra_public_paths
         # https://docs.ckan.org/en/2.9/maintaining/configuration.html#extra-public-paths
-        return p.toolkit.redirect_to('/' + hnap_file)
+        return p.toolkit.redirect_to('https://www.gis-hub.ca/' + hnap_file)
 
     # @side_effect_free
     # def get_hnap(self, context, data_dict):
