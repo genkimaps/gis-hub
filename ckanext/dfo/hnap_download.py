@@ -2,7 +2,6 @@ import dfo_plugin_settings as settings
 from ckan.logic import side_effect_free, get_action
 from ckan.lib import base
 import ckan.plugins as p
-from plugins import run_command_as
 import dfo_plugin_settings
 from flask import send_file, jsonify
 from subprocess import check_output
