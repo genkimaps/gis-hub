@@ -3,6 +3,7 @@ from ckan.logic import side_effect_free, get_action
 from ckan.lib import base
 import ckan.plugins as p
 from plugins import run_command_as
+import dfo_plugin_settings
 from flask import send_file, jsonify
 from subprocess import check_output
 import traceback
@@ -18,7 +19,7 @@ def run_hnap(context, data_dict):
     command_parts = ['/home/dfo/.virtualenvs/hubapi/bin/python',
                      '/home/dfo/hub-geo-api/hnap_export.py',
                      '-r', resource_id]
-    hnap_export_cmd = run_command_as(command_parts)
+    hnap_export_cmd = dfo_plugin_settings.run_command_as(command_parts)
     try:
         hnap_file = check_output(hnap_export_cmd)
     except:

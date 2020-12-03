@@ -39,20 +39,20 @@ def non_empty_fields(field_list, pkg_dict, exclude):
     return r
 
 
-def run_command_as(command_parts):
-    """
-    We need to run external commands that communicate with the hub-geo-api component
-    as user dfo with --login to get enviro vars and permissions.
-    This prevents various exceptions, including:
-    - botocore.exceptions.NoCredentialsError: Unable to locate credentials
-    - no write permission to folders within /home/dfo/hub-geo-api
-    :param command_parts: original command parts for the 'subprocess' call
-    :return: command with dfo login prepended
-    """
-    if not type(command_parts) is list:
-        logger.error('command_parts must be a list of command strings')
-        return
-    return ['sudo', '-u', 'dfo', '--login'] + command_parts
+# def run_command_as(command_parts):
+#     """
+#     We need to run external commands that communicate with the hub-geo-api component
+#     as user dfo with --login to get enviro vars and permissions.
+#     This prevents various exceptions, including:
+#     - botocore.exceptions.NoCredentialsError: Unable to locate credentials
+#     - no write permission to folders within /home/dfo/hub-geo-api
+#     :param command_parts: original command parts for the 'subprocess' call
+#     :return: command with dfo login prepended
+#     """
+#     if not type(command_parts) is list:
+#         logger.error('command_parts must be a list of command strings')
+#         return
+#     return ['sudo', '-u', 'dfo', '--login'] + command_parts
 
 
 def object_updated_or_created(context, data_dict):
@@ -124,7 +124,7 @@ def object_updated_or_created(context, data_dict):
         # Trigger external call to hub-geo-api to upload metadata to S3.
         # Must do this because hub-geo-api is Python3, can't mix with Python2 CKAN.
         # cmd = ['sudo', '-u', 'dfo', '--login',
-        backup_cmd = run_command_as([dfo_plugin_settings.hubapi_venv,
+        backup_cmd = dfo_plugin_settings.run_command_as([dfo_plugin_settings.hubapi_venv,
                dfo_plugin_settings.hubapi_backup_script,
                ds_name])
 

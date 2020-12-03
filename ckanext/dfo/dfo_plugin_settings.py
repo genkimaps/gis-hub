@@ -16,6 +16,22 @@ hubapi_venv = '/home/dfo/.virtualenvs/hubapi/bin/python3'
 hubapi_backup_script = '/home/dfo/hub-geo-api/backups.py'
 
 
+def run_command_as(command_parts):
+    """
+    We need to run external commands that communicate with the hub-geo-api component
+    as user dfo with --login to get enviro vars and permissions.
+    This prevents various exceptions, including:
+    - botocore.exceptions.NoCredentialsError: Unable to locate credentials
+    - no write permission to folders within /home/dfo/hub-geo-api
+    :param command_parts: original command parts for the 'subprocess' call
+    :return: command with dfo login prepended
+    """
+    if not type(command_parts) is list:
+        print('Error: command_parts must be a list of command strings')
+        return
+    return ['sudo', '-u', 'dfo', '--login'] + command_parts
+
+
 def setup_logger(name, level=logging.INFO):
     logger = logging.getLogger(name)
     logger.setLevel(level)
