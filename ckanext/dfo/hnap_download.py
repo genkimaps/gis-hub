@@ -38,7 +38,6 @@ def run_hnap(context, data_dict):
 
 class HNAPController(base.BaseController):
 
-    @side_effect_free
     def get_hnap(self):
         for k, v in request.params.iteritems():
             logger.info('%s: %s' % (k, v))
@@ -47,6 +46,7 @@ class HNAPController(base.BaseController):
         # logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
         return p.toolkit.render('docs/docs.html')
 
+    # @side_effect_free
     # def get_hnap(self, context, data_dict):
 
     # @staticmethod
