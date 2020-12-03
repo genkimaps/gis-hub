@@ -15,6 +15,10 @@ logger = settings.setup_logger(__name__)
 @side_effect_free
 def run_hnap(context, data_dict):
     resource_id = data_dict.get('resource_id')
+    return generate_hnap_file(resource_id)
+
+
+def generate_hnap_file(resource_id):
     logger.info('Running hub-geo-api for HNAP export of resource: %s' % resource_id)
     command_parts = [dfo_plugin_settings.hubapi_venv,
                      '/home/dfo/hub-geo-api/hnap_export.py',
@@ -41,10 +45,12 @@ class HNAPController(base.BaseController):
     def get_hnap(self):
         for k, v in request.params.iteritems():
             logger.info('%s: %s' % (k, v))
-        # resource_id = data_dict.get('resource_id')
-        # dataset_id = data_dict.get('dataset_id')
-        # logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
-        return p.toolkit.render('docs/docs.html')
+        resource_id = request.params.get('resource_id')
+        dataset_id = request.params.get('dataset_id')
+        logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
+        hnap_file = generate_hnap_file(resource_id)
+        return send_file(hnap_file)
+        # return p.toolkit.render('docs/docs.html')
 
     # @side_effect_free
     # def get_hnap(self, context, data_dict):
