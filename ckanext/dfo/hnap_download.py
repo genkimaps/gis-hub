@@ -7,6 +7,7 @@ import dfo_plugin_settings
 from flask import send_file, jsonify
 from subprocess import check_output
 import traceback
+import os
 
 
 logger = settings.setup_logger(__name__)
@@ -62,7 +63,7 @@ class HNAPController(base.BaseController):
         # return p.toolkit.render('docs/docs.html')
         # Added the HNAP export folder to CKAN's extra_public_paths
         # https://docs.ckan.org/en/2.9/maintaining/configuration.html#extra-public-paths
-        return p.toolkit.redirect_to('https://www.gis-hub.ca/' + hnap_file)
+        return p.toolkit.redirect_to('https://www.gis-hub.ca/' + os.path.basename(hnap_file))
 
     # @side_effect_free
     # def get_hnap(self, context, data_dict):
