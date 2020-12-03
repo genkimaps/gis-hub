@@ -21,6 +21,8 @@ def run_hnap(context, data_dict):
     hnap_export_cmd = dfo_plugin_settings.run_command_as(command_parts)
     try:
         hnap_file = check_output(hnap_export_cmd)
+        # Strip any excess characters such as trailing newline \n
+        hnap_file = hnap_file.strip()
     except:
         logger.error(traceback.format_exc())
         return jsonify({'error': traceback.format_exc()})
