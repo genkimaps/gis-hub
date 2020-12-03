@@ -39,6 +39,22 @@ def non_empty_fields(field_list, pkg_dict, exclude):
     return r
 
 
+def run_command_as(command_parts):
+    """
+    We need to run external commands that communicate with the hub-geo-api component
+    as user dfo with --login to get enviro vars and permissions.
+    This prevents various exceptions, including:
+    - botocore.exceptions.NoCredentialsError: Unable to locate credentials
+    - no write permission to folders within /home/dfo/hub-geo-api
+    :param command_parts: original command parts for the 'subprocess' call
+    :return: command with dfo login prepended
+    """
+    if not type(command_parts) is list:
+        logger.error('command_parts must be a list of command strings')
+        return
+    return ['sudo', '-u', 'dfo', '--login'] + command_parts
+
+
 def object_updated_or_created(context, data_dict):
     """ This is called AFTER an object is updated or created. We only
         care about resources and packages; other types are immediately
@@ -107,16 +123,15 @@ def object_updated_or_created(context, data_dict):
         logger.debug('Backup to cloud command:')
         # Trigger external call to hub-geo-api to upload metadata to S3.
         # Must do this because hub-geo-api is Python3, can't mix with Python2 CKAN.
-        cmd = ['sudo', '-u', 'dfo', '--login',
-               dfo_plugin_settings.hubapi_venv,
+        # cmd = ['sudo', '-u', 'dfo', '--login',
+        backup_cmd = run_command_as([dfo_plugin_settings.hubapi_venv,
                dfo_plugin_settings.hubapi_backup_script,
-               ds_name]
-        logger.debug(cmd)
+               ds_name])
+
+        logger.debug(backup_cmd)
 
         try:
-            # To prevent botocore.exceptions.NoCredentialsError: Unable to locate credentials
-            # Need to run as user dfo with --login to get enviro vars
-            subprocess.Popen(cmd)
+            subprocess.Popen(backup_cmd)
             logger.info('Backup command was started.')
         except:
             logger.error(traceback.format_exc())
