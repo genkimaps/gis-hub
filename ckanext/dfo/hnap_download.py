@@ -49,8 +49,18 @@ class HNAPController(base.BaseController):
         dataset_id = request.params.get('dataset_id')
         logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
         hnap_file = generate_hnap_file(resource_id)
-        return send_file(hnap_file)
+
+        """
+        This does not work:
+        File '/home/tk/venv/local/lib/python2.7/site-packages/flask/globals.py', line 37 in _lookup_req_object
+            raise RuntimeError(_request_ctx_err_msg)
+        RuntimeError: Working outside of request context.
+        """
+
+        # Doesn't work because we don't have a Flask context, this is pylons
+        # return send_file(hnap_file)
         # return p.toolkit.render('docs/docs.html')
+        return p.toolkit.redirect_to(hnap_file)
 
     # @side_effect_free
     # def get_hnap(self, context, data_dict):
