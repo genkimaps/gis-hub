@@ -3,8 +3,9 @@ from ckan.logic import side_effect_free, get_action
 from ckan.lib import base
 import ckan.plugins as p
 import flask
-from flask import send_file
+from flask import send_file, jsonify
 from subprocess import check_output
+import traceback
 
 
 logger = settings.setup_logger(__name__)
@@ -17,7 +18,11 @@ def run_hnap(context, data_dict):
     command_parts = ['/home/dfo/.virtualenvs/hubapi/bin/python',
                      '/home/dfo/hub-geo-api/hnap_export.py',
                      '-r', resource_id]
-    hnap_file = check_output(command_parts)
+    try:
+        hnap_file = check_output(command_parts)
+    except:
+        logger.error(traceback.format_exc())
+        return jsonify({'error': traceback.format_exc()})
     logger.info(hnap_file)
     logger.info(type(hnap_file))
 
