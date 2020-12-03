@@ -65,6 +65,9 @@ class HNAPController(base.BaseController):
         # https://docs.ckan.org/en/2.9/maintaining/configuration.html#extra-public-paths
         return p.toolkit.redirect_to('https://www.gis-hub.ca/' + os.path.basename(hnap_file))
 
+        # Test URL:
+        # https://www.gis-hub.ca/get_hnap?resource_id=8c074888-cf46-46e8-b082-16aa41916bd0
+
     # @side_effect_free
     # def get_hnap(self, context, data_dict):
 
