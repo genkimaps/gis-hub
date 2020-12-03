@@ -57,10 +57,12 @@ class HNAPController(base.BaseController):
         RuntimeError: Working outside of request context.
         """
 
-        # Doesn't work because we don't have a Flask context, this is pylons
+        # Doesn't work because we don't have a Flask context, probably using pylons
         # return send_file(hnap_file)
         # return p.toolkit.render('docs/docs.html')
-        return p.toolkit.redirect_to(hnap_file)
+        # Added the HNAP export folder to CKAN's extra_public_paths
+        # https://docs.ckan.org/en/2.9/maintaining/configuration.html#extra-public-paths
+        return p.toolkit.redirect_to('/' + hnap_file)
 
     # @side_effect_free
     # def get_hnap(self, context, data_dict):
