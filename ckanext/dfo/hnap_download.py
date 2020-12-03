@@ -13,9 +13,9 @@ logger = settings.setup_logger(__name__)
 
 @side_effect_free
 def run_hnap(context, data_dict):
-    logger.info(data_dict)
     resource_id = data_dict.get('resource_id')
-    command_parts = ['/home/dfo/.virtualenvs/hubapi/bin/python',
+    logger.info('Running hub-geo-api for HNAP export of resource: %s' % resource_id)
+    command_parts = [dfo_plugin_settings.hubapi_venv,
                      '/home/dfo/hub-geo-api/hnap_export.py',
                      '-r', resource_id]
     hnap_export_cmd = dfo_plugin_settings.run_command_as(command_parts)
@@ -24,8 +24,8 @@ def run_hnap(context, data_dict):
     except:
         logger.error(traceback.format_exc())
         return jsonify({'error': traceback.format_exc()})
-    logger.info(hnap_file)
-    logger.info(type(hnap_file))
+    logger.info('Downloading %s' % hnap_file)
+    return send_file(hnap_file)
 
 
 # Add to resource_read template:
