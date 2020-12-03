@@ -161,8 +161,8 @@ class DFOPlugin(p.SingletonPlugin):
     def get_actions(self):
         return {'ac_goc_themes': dfo_autocomp.search_goc_theme,
                 'ac_species_code': dfo_autocomp.search_species_code,
-                'ac_contacts': dfo_autocomp.search_contacts
-                # 'hnap_export': hnap_download.run_hnap
+                'ac_contacts': dfo_autocomp.search_contacts,
+                'hnap_export': hnap_download.run_hnap
                 }
 
     # IConfigurer

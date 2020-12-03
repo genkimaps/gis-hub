@@ -1,16 +1,25 @@
 import dfo_plugin_settings as settings
 from ckan.logic import side_effect_free, get_action
 from ckan.lib import base
-import flask
-
 import ckan.plugins as p
+import flask
+from flask import send_file
+from subprocess import check_output
+
 
 logger = settings.setup_logger(__name__)
 
 
-# @side_effect_free
-# def run_hnap(context, data_dict):
-#     pass
+@side_effect_free
+def run_hnap(context, data_dict):
+    logger.info(data_dict)
+    resource_id = data_dict.get('resource_id')
+    command_parts = ['/home/dfo/.virtualenvs/hubapi/bin/python',
+                     '/home/dfo/hub-geo-api/hnap_export.py',
+                     '-r', resource_id]
+    hnap_file = check_output(command_parts)
+    logger.info(hnap_file)
+    logger.info(type(hnap_file))
 
 
 # Add to resource_read template:
