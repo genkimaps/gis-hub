@@ -1,6 +1,7 @@
 import dfo_plugin_settings as settings
 from ckan.logic import side_effect_free, get_action
 from ckan.lib import base
+from ckan.common import request
 import ckan.plugins as p
 import dfo_plugin_settings
 from flask import send_file, jsonify
@@ -38,11 +39,15 @@ def run_hnap(context, data_dict):
 class HNAPController(base.BaseController):
 
     @side_effect_free
-    def get_hnap(self, context, data_dict):
-        resource_id = data_dict.get('resource_id')
-        dataset_id = data_dict.get('dataset_id')
-        logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
+    def get_hnap(self):
+        for k, v in request.params.iteritems():
+            logger.info('%s: %s' % (k, v))
+        # resource_id = data_dict.get('resource_id')
+        # dataset_id = data_dict.get('dataset_id')
+        # logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
         return p.toolkit.render('docs/docs.html')
+
+    # def get_hnap(self, context, data_dict):
 
     # @staticmethod
     # def get_hnap(dataset_id, resource_id):
