@@ -27,7 +27,8 @@ def run_hnap(context, data_dict):
         logger.error(traceback.format_exc())
         return jsonify({'error': traceback.format_exc()})
     logger.info('Downloading %s' % hnap_file)
-    return jsonify({'hnap_file': hnap_file})
+    return hnap_file
+    # return jsonify({'hnap_file': hnap_file})
     # return send_file(hnap_file)
 
 
