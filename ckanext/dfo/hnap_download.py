@@ -26,7 +26,7 @@ def run_hnap(context, data_dict):
     except:
         logger.error(traceback.format_exc())
         return jsonify({'error': traceback.format_exc()})
-    logger.info('Downloading %s' % hnap_file)
+    logger.info('Created HNAP XML file: %s' % hnap_file)
     return hnap_file
     # return jsonify({'hnap_file': hnap_file})
     # return send_file(hnap_file)
@@ -37,9 +37,16 @@ def run_hnap(context, data_dict):
 
 class HNAPController(base.BaseController):
 
-    @staticmethod
-    def get_hnap(dataset_id, resource_id):
-        # return flask.send_file(filepath)
+    @side_effect_free
+    def get_hnap(self, context, data_dict):
+        resource_id = data_dict.get('resource_id')
+        dataset_id = data_dict.get('dataset_id')
         logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
-
         return p.toolkit.render('docs/docs.html')
+
+    # @staticmethod
+    # def get_hnap(dataset_id, resource_id):
+    #     # return flask.send_file(filepath)
+    #     logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
+    #
+    #     return p.toolkit.render('docs/docs.html')
