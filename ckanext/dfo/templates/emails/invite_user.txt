@@ -10,7 +10,7 @@ To access the GIS Hub:
 GIS Hub:  {{ site_url }}
 
 Your account on the GIS Hub:
-Username: {{ user_name }}
+Username: The GIS Hub administrator will send you a separate email with your username.
 
 You have been added to the {{ group_type }} {{ group_title }} with the following role: {{ role_name }}.
 
