@@ -89,10 +89,10 @@ def setup_smtp(message_template, subject_template, hnap_xml_file):
         # Add the message from template to body of email.
         msg.attach(MIMEText(message_template, "plain"))
 
-        xml_file = hnap_xml_file
+        hnap_xml_file
 
         # Open xml file in binary mode
-        with open(xml_file, "rb") as attachment:
+        with open(hnap_xml_file, "rb") as attachment:
             # Add file as application/octet-stream
             # Email client can usually download this automatically as attachment
             part = MIMEBase("application", "octet-stream")
@@ -104,7 +104,7 @@ def setup_smtp(message_template, subject_template, hnap_xml_file):
         # Add header as key/value pair to attachment part
         part.add_header(
             "Content-Disposition",
-            f"attachment; filename= {xml_file}",
+            "attachment; filename= %s" % hnap_xml_file,
         )
 
         # Add attachment to message and convert message to string
