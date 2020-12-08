@@ -1,0 +1,4 @@
+Hello user,
+
+This is an automated message from the GIS Hub. Please find the HNAP xml file attached. If there is an error with the file,
+please contact the GIS Hub administrator.
