@@ -48,9 +48,7 @@
         {# The user IS authorized, display resource content as usual #}
         {# Customize what is displayed for different resource types #}
 
-        {# Disable for now
-            <li>{% link_for _('HNAP'), named_route='get_hnap', dataset_id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
-         #}
+        <li>{% link_for _('HNAP'), named_route='get_hnap', dataset_id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
 
         {# Use the resource_type field #}
         {%- if res.resource_type == 'Upload' -%}
