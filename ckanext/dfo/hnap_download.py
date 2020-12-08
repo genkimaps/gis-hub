@@ -89,7 +89,6 @@ def setup_smtp(message_template, subject_template, hnap_xml_file):
         # Add the message from template to body of email.
         msg.attach(MIMEText(message_template, "plain"))
 
-        hnap_xml_file
 
         # Open xml file in binary mode
         with open(hnap_xml_file, "rb") as attachment:
