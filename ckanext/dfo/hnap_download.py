@@ -14,6 +14,7 @@ from email import encoders
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from string import Template
 
 logger = settings.setup_logger(__name__)
 
@@ -25,8 +26,8 @@ def run_hnap(context, data_dict):
     hnap_file = generate_hnap_file(resource_id)
 
     # Load template email body and subject.
-    email_template_obj = read_templates("templates/emails/hnap_generate.txt.txt",
-                                        "templates/emails/hnap_generate_subject.txt.txt")
+    email_template_obj = read_templates("templates/emails/hnap_generate.txt",
+                                        "templates/emails/hnap_generate_subject.txt")
 
     # Use data from maintainer_list and email_template_obj to send email to list of users.
     setup_smtp(email_template_obj[0], email_template_obj[1], hnap_file)
