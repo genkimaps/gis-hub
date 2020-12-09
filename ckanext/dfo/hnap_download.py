@@ -85,32 +85,32 @@ def setup_smtp(message_template, subject_template, hnap_xml_file):
         # Setup the parameters of the message.
         msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
         msg["To"] = "Cole.Fields@dfo-mpo.gc.ca"
-        msg["Subject"] = "Test" # subject_template.safe_substitute()
+        msg["Subject"] = subject_template.safe_substitute()
 
-        message_template_str = "this is blank" #message_template.safe_substitute()
+        message_template_str = message_template.safe_substitute()
 
         # Add the message from template to body of email.
         msg.attach(MIMEText(message_template_str, "plain"))
 
 
-        # # Open xml file in binary mode
-        # with open(hnap_xml_file, "rb") as attachment:
-        #     # Add file as application/octet-stream
-        #     # Email client can usually download this automatically as attachment
-        #     part = MIMEBase("application", "octet-stream")
-        #     part.set_payload(attachment.read())
-        #
-        # # Encode file in ASCII characters to send by email
-        # encoders.encode_base64(part)
-        #
-        # # Add header as key/value pair to attachment part
-        # part.add_header(
-        #     "Content-Disposition",
-        #     "attachment; filename= %s" % hnap_xml_file,
-        # )
-        #
-        # # Add attachment to message and convert message to string
-        # msg.attach(part)
+        # Open xml file in binary mode
+        with open(hnap_xml_file, "rb") as attachment:
+            # Add file as application/octet-stream
+            # Email client can usually download this automatically as attachment
+            part = MIMEBase("application", "octet-stream")
+            part.set_payload(attachment.read())
+
+        # Encode file in ASCII characters to send by email
+        encoders.encode_base64(part)
+
+        # Add header as key/value pair to attachment part
+        part.add_header(
+            "Content-Disposition",
+            "attachment; filename= %s" % hnap_xml_file,
+        )
+
+        # Add attachment to message and convert message to string
+        msg.attach(part)
 
         # Send the message via the server set up earlier.
         server.sendmail(msg["From"], msg["To"], msg.as_string())
