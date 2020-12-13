@@ -12,6 +12,8 @@ import os
 
 logger = settings.setup_logger(__name__)
 
+# Example URL to trigger HNAP export
+# https://www.gis-hub.ca/api/3/action/hnap_export?id=952a7f28-b73e-4bcc-a049-953db05cb396
 
 @side_effect_free
 def run_hnap(context, data_dict):
@@ -23,7 +25,7 @@ def run_hnap(context, data_dict):
         err_msg = 'No email address for user: %s' % username
         logger.error(err_msg)
         return err_msg
-    resource_id = data_dict.get('resource_id')
+    resource_id = data_dict.get('id')
     return generate_hnap_file(resource_id, email=email)
 
 
@@ -36,6 +38,7 @@ def generate_hnap_file(resource_id, email=None):
         command_parts += ['-e', email]
         logger.info('Email results to: %s' % email)
     hnap_export_cmd = dfo_plugin_settings.run_command_as(command_parts)
+    logger.info(hnap_export_cmd)
     try:
         if not email:
             # Send command to hub-geo-api, wait for output
