@@ -3,6 +3,8 @@ from ckan.logic import side_effect_free, get_action
 from ckan.lib import base
 from ckan.common import request
 import ckan.plugins as p
+from ckan.common import c
+import ckan.lib.helpers as h
 import dfo_plugin_settings
 from flask import send_file, jsonify
 from subprocess import check_output, Popen
@@ -16,7 +18,7 @@ logger = settings.setup_logger(__name__)
 # https://www.gis-hub.ca/api/3/action/hnap_export?id=952a7f28-b73e-4bcc-a049-953db05cb396
 
 @side_effect_free
-def run_hnap(context, data_dict):
+def hnap_export(context, data_dict):
     username = context.get('user')
     # Get the email address for current user
     result = get_action('user_show')(context, {'id': username})
@@ -65,12 +67,21 @@ def generate_hnap_file(resource_id, email=None):
 class HNAPController(base.BaseController):
 
     def get_hnap(self):
+
+        # Make a context object
+        context = {"user": c.user, "auth_user_obj": c.userobj}
+
         for k, v in request.params.iteritems():
             logger.info('%s: %s' % (k, v))
         resource_id = request.params.get('resource_id')
         dataset_id = request.params.get('dataset_id')
-        logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
-        hnap_file = generate_hnap_file(resource_id)
+        logger.info('HNAP controller: calling hnap_export on: %s %s' % (dataset_id, resource_id))
+        result = get_action('hnap_export')(context, {'id': resource_id})
+        logger.info(result)
+        # hnap_file = generate_hnap_file(resource_id)
+
+        # url = h.url_for('dataset.read', id=dd['name'])
+        return h.redirect_to(u'resource.read', id=dataset_id, resource_id=resource_id)
 
         """
         This does not work:
@@ -84,7 +95,7 @@ class HNAPController(base.BaseController):
         # return p.toolkit.render('docs/docs.html')
         # Added the HNAP export folder to CKAN's extra_public_paths
         # https://docs.ckan.org/en/2.9/maintaining/configuration.html#extra-public-paths
-        return p.toolkit.redirect_to('https://www.gis-hub.ca/' + os.path.basename(hnap_file))
+        # return p.toolkit.redirect_to('https://www.gis-hub.ca/' + os.path.basename(hnap_file))
 
         # Test URL:
         # https://www.gis-hub.ca/get_hnap?resource_id=8c074888-cf46-46e8-b082-16aa41916bd0
