@@ -6,7 +6,7 @@ import ckan.plugins as p
 from ckan.common import c
 import ckan.lib.helpers as h
 import dfo_plugin_settings
-from flask import send_file, jsonify
+from flask import send_file, jsonify, redirect
 from subprocess import check_output, Popen
 import traceback
 import os
@@ -81,7 +81,11 @@ class HNAPController(base.BaseController):
         # hnap_file = generate_hnap_file(resource_id)
 
         # url = h.url_for('dataset.read', id=dd['name'])
-        return h.redirect_to(u'resource.read', id=dataset_id, resource_id=resource_id)
+        url = h.url_for(controller='package', action='resource_read', id=dataset_id, resource_id=resource_id)
+        logger.info('Redirecting: %s' % url)
+        # return redirect(url)
+        return h.redirect_to(url)
+        # return h.redirect_to(u'resource.read', id=dataset_id, resource_id=resource_id)
 
         """
         This does not work:
