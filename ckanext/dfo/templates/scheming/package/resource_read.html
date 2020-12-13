@@ -49,8 +49,10 @@
         {# Customize what is displayed for different resource types #}
 
         {# Disable for now
-            <li>{% link_for _('HNAP'), named_route='get_hnap', dataset_id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
+            <li>{% link_for _('Export HNAP'), named_route='get_hnap', dataset_id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
          #}
+
+        <div>{% link_for _('Export HNAP'), controller='hnap_download', action='hnap_export', id=res.id, class_='btn btn-default', icon='wrench' %}</div>
 
         {# Use the resource_type field #}
         {%- if res.resource_type == 'Upload' -%}
