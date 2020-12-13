@@ -5,7 +5,7 @@ from ckan.common import request
 import ckan.plugins as p
 import dfo_plugin_settings
 from flask import send_file, jsonify
-from subprocess import check_output
+from subprocess import check_output, Popen
 import traceback
 import os
 
@@ -15,25 +15,43 @@ logger = settings.setup_logger(__name__)
 
 @side_effect_free
 def run_hnap(context, data_dict):
+    username = context.get('user')
+    # Get the email address for current user
+    result = get_action('user_show')(context, {'id': username})
+    email = result.get('email')
+    if not email:
+        err_msg = 'No email address for user: %s' % username
+        logger.error(err_msg)
+        return err_msg
     resource_id = data_dict.get('resource_id')
-    return generate_hnap_file(resource_id)
+    return generate_hnap_file(resource_id, email=email)
 
 
-def generate_hnap_file(resource_id):
+def generate_hnap_file(resource_id, email=None):
     logger.info('Running hub-geo-api for HNAP export of resource: %s' % resource_id)
     command_parts = [dfo_plugin_settings.hubapi_venv,
                      '/home/dfo/hub-geo-api/hnap_export.py',
                      '-r', resource_id]
+    if email:
+        command_parts += ['-e', email]
+        logger.info('Email results to: %s' % email)
     hnap_export_cmd = dfo_plugin_settings.run_command_as(command_parts)
     try:
-        hnap_file = check_output(hnap_export_cmd)
-        # Strip any excess characters such as trailing newline \n
-        hnap_file = hnap_file.strip()
+        if not email:
+            # Send command to hub-geo-api, wait for output
+            hnap_file = check_output(hnap_export_cmd)
+            # Strip any excess characters such as trailing newline \n
+            hnap_file = hnap_file.strip()
+            user_msg = 'Created HNAP XML file: %s' % hnap_file
+        else:
+            # Use Popen, do not wait for command to finish
+            Popen(hnap_export_cmd)
+            user_msg = 'HNAP export will be sent to: %s' % email
     except:
         logger.error(traceback.format_exc())
         return jsonify({'error': traceback.format_exc()})
-    logger.info('Created HNAP XML file: %s' % hnap_file)
-    return hnap_file
+    logger.info(user_msg)
+    return user_msg
     # return jsonify({'hnap_file': hnap_file})
     # return send_file(hnap_file)
 
