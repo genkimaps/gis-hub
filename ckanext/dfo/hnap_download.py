@@ -41,6 +41,7 @@ def generate_hnap_file(resource_id, email=None):
         logger.info('Email results to: %s' % email)
     hnap_export_cmd = dfo_plugin_settings.run_command_as(command_parts)
     logger.info(hnap_export_cmd)
+    logger.info(' '.join(hnap_export_cmd))
     try:
         if not email:
             # Send command to hub-geo-api, wait for output
