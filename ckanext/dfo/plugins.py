@@ -15,6 +15,7 @@ from ckan.logic import get_action
 import dfo_plugin_settings
 import dfo_validation
 import dfo_autocomp
+import hnap_download
 import subprocess
 import traceback
 import json
@@ -106,16 +107,15 @@ def object_updated_or_created(context, data_dict):
         logger.debug('Backup to cloud command:')
         # Trigger external call to hub-geo-api to upload metadata to S3.
         # Must do this because hub-geo-api is Python3, can't mix with Python2 CKAN.
-        cmd = ['sudo', '-u', 'dfo', '--login',
-               dfo_plugin_settings.hubapi_venv,
+        # cmd = ['sudo', '-u', 'dfo', '--login',
+        backup_cmd = dfo_plugin_settings.run_command_as([dfo_plugin_settings.hubapi_venv,
                dfo_plugin_settings.hubapi_backup_script,
-               ds_name]
-        logger.debug(cmd)
+               ds_name])
+
+        logger.debug(backup_cmd)
 
         try:
-            # To prevent botocore.exceptions.NoCredentialsError: Unable to locate credentials
-            # Need to run as user dfo with --login to get enviro vars
-            subprocess.Popen(cmd)
+            subprocess.Popen(backup_cmd)
             logger.info('Backup command was started.')
         except:
             logger.error(traceback.format_exc())
@@ -159,7 +159,10 @@ class DFOPlugin(p.SingletonPlugin):
     # @side_effect_free
     def get_actions(self):
         return {'ac_goc_themes': dfo_autocomp.search_goc_theme,
-                'ac_species_code': dfo_autocomp.search_species_code}
+                'ac_species_code': dfo_autocomp.search_species_code,
+                'ac_contacts': dfo_autocomp.search_contacts,
+                'hnap_export': hnap_download.hnap_export
+                }
 
     # IConfigurer
     def update_config(self, config):
@@ -339,6 +342,11 @@ class DFOPlugin(p.SingletonPlugin):
             '/docs',
             controller='ckanext.dfo.plugins:DocsController',
             action='docs'
+        )
+        map.connect(
+            '/dataset/{dataset_name}/resource/get_hnap',
+            controller='ckanext.dfo.hnap_download:HNAPController',
+            action='get_hnap'
         )
         return map
 
