@@ -14,25 +14,31 @@
 
         <h2 id="summaries">GIS Hub Summaries</h2>
         <p>This section contains monthly summary documents, provided as status updates to
-            datasets on the platform. </p>
+            datasets on the system.
+        </p>
         <div class="dropdown">
-            <button class="dropbtn">Summaries</button>
+            <button class="dropbtn">PDF Summaries</button>
             <div class="dropdown-content">
-                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/01_2020-GISHubSummary.pdf?inline=false">Jan
-                    2020</a>
-                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/02_2020-GISHubSummary.pdf?inline=false">Feb
-                    2020</a>
-                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/04_2020-GISHubSummary.pdf?inline=false">Apr
-                    2020</a>
-                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/05_2020-GISHubSummary.pdf?inline=false">May
-                    2020</a>
-                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/08_2020-GISHubSummary.pdf?inline=false">Aug
-                    2020</a>
-                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/09_2020-GISHubSummary.pdf?inline=false">Sept
-                    2020</a>
-                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/10_2020-GISHubSummary.pdf?inline=false">Oct
-                    2020 <img src="/base/images/docs/new.png" alt="New" height="40"
-                              width="40"></a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/01_2020-GISHubSummary.pdf?"
+                   target="_blank">Jan 2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/02_2020-GISHubSummary.pdf?"
+                   target="_blank">Feb 2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/04_2020-GISHubSummary.pdf?"
+                   target="_blank">Apr 2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/05_2020-GISHubSummary.pdf?"
+                   target="_blank">May 2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/08_2020-GISHubSummary.pdf?"
+                   target="_blank">Aug 2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/09_2020-GISHubSummary.pdf?"
+                   target="_blank">Sept 2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/10_2020-GISHubSummary.pdf?"
+                   target="_blank">Oct 2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/11_2020-GISHubSummary.pdf?"
+                   target="_blank">Nov 2020</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/12_2020-GISHubSummary.pdf?"
+                   target="_blank">Dec 2020 <img src="/base/images/docs/new.png" alt="New" height="25" width="25"></a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/GIS_Hub_Summary_2020.pdf?"
+                   target="_blank">2020 Summary <img src="/base/images/docs/new.png" alt="New" height="25" width="25"></a>
             </div>
         </div>
 
@@ -723,8 +729,6 @@
             </tr>
             <tr>
                 <td>Access Restrictions</td>
-                <img src="/base/images/docs/updated.png" alt="Updated"
-                     width="40" height="40"/>
                 <td>Access restrictions determine who can view resource metadata content and download the data. You may
                     choose to allow resource metadata and data download to be available to any of the following:
                     <ul>
@@ -1366,7 +1370,7 @@
             <li>For versioning to work, the name of the new uploaded zip file must match the
                 name of the previous file. For example, if the original uploaded file was <i>my_data.zip</i>,
                 replacing it with a different filename, such as <i>my_data_v2.zip</i>, will break the
-                chain of data versions for this dataset.  In this case, previous versions of the data
+                chain of data versions for this dataset. In this case, previous versions of the data
                 are still stored in the cloud, but retrieving them will be more time consuming.
             </li>
             <li>Versioning is for data (your uploaded zip file), which is updated atomically, but not for metadata.</li>
@@ -1398,8 +1402,8 @@
 
         <h3 id="embed-map">Embed Map Preview</h3>
         <p>By default, a map preview will be generated for spatial layers in a dataset, if they are
-            in a supported format.  A link to the map preview can be found on the resource's metadata page
-            under the 'Map Preview' field.  Clicking this link opens the map preview in a new tab.
+            in a supported format. A link to the map preview can be found on the resource's metadata page
+            under the 'Map Preview' field. Clicking this link opens the map preview in a new tab.
             To embed the map preview into the resource page, follow these steps:
         </p>
         <ol>
@@ -1428,7 +1432,14 @@
                  width="width" height="height" class="docs-img"/>
             Embedded map preview
         </div>
-
+        <h3 id="hnap">HNAP Metadata XML File</h3>
+        <p>The GIS Hub metadata is a superset of the ISO 19115 metadata standard. The Federal Geospatial Platform uses
+            the Harmonized North American Profile (HNAP) metadata standard. To receive an xml file of HNAP-valid
+            metadata from a GIS Hub resource, click on the 'Send HNAP' button for a resource. An email will be sent to
+            the email you registered with for your GIS Hub account with the attached xml file. This xml file can be
+            imported into FGP/Open Maps as a new record. Metadata should be verified before any publication to FGP/Open
+            Maps.
+        </p>
 </article>
 {% endblock %}
 
@@ -1444,11 +1455,12 @@
             contain one or more sub-sections. The <img src="/base/images/docs/updated.png" alt="Updated" height="20"
                                                        width="20">
             icon indicates that this section has been updated recently. The <img src="/base/images/docs/new.png"
-                                                                                 alt="New" height="30"
-                                                                                 width="30"> icon indicates a new
+                                                                                 alt="New" height="25"
+                                                                                 width="25"> icon indicates a new
             section.
         </p>
-        <p><a href="#summaries">GIS Hub Summaries</a></p>
+        <p><a href="#summaries">GIS Hub Summaries </a><img src="/base/images/docs/updated.png" alt="Updated"
+                                                           height="20" width="20"></p>
         <p><a href="#issues">Known Issues </a><img src="/base/images/docs/updated.png" alt="Updated" height="20"
                                                    width="20"></p>
         <p><a href="#intro">Introduction</a></p>
@@ -1475,10 +1487,10 @@
         <p><a href="#replace-data">Replacing Data</a></p>
         <p><a href="#data-matching">Automated Layer Matching</a></p>
         <p><a href="#versioning">Versioning</a></p>
-        <p><a href="#reorder-res">Reordering Resources </a><img src="/base/images/docs/new.png" alt="New" height="30"
-                              width="30"></p>
-        <p><a href="#embed-map">Embed Map Preview </a><img src="/base/images/docs/new.png" alt="New" height="30"
-                              width="30"></p>
+        <p><a href="#reorder-res">Reordering Resources </a></p>
+        <p><a href="#embed-map">Embed Map Preview </a></p>
+        <p><a href="#hnap">HNAP Metadata XML </a><img src="/base/images/docs/new.png" alt="New" height="25"
+                                                      width="25"></p>
 
     </div>
 </div>

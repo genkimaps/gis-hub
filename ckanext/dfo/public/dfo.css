@@ -415,6 +415,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
 	font-weight: bold;
 }
 
+/* THIS IS FOR THE SUMMARIES DROPDOWN MENU */
 /* Style The Dropdown Button */
 .dropbtn {
   background-color: #294280;
@@ -430,7 +431,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
   position: relative;
   display: inline-block;
 }
-/*
+
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
@@ -440,7 +441,6 @@ table.table-fit tbody td, table.table-fit tfoot td {
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
-
 
 /* Links inside the dropdown */
 .dropdown-content a {

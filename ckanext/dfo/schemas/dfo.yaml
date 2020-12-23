@@ -151,11 +151,12 @@ dataset_fields:
 
   - field_name: creator_organization
     label: Organization
-    help_text: "Use semicolon separated values such as 'Government of Canada; Fisheries and Oceans Canada; Fisheries Management; Sustainable Fisheries Framework Unit'"
+    help_text: "Use semicolon separated values such as 'Government of Canada; Fisheries and Oceans Canada; Sustainable Fisheries Framework Unit'."
     validators: require_when_published
 
   - field_name: creator_address
     label: Address
+    help_text: "Provide the address in the following format 'Street Address, City, Province, Postal Code, Country'. For example '3190 Hammond Bay Road, Nanaimo, British Columbia, V9T 6N7, Canada'"
     validators: require_when_published
 
   - field_name: creator_phone
@@ -194,7 +195,7 @@ dataset_fields:
 
   - field_name: manager_organization
     label: Organization
-    help_text: "Use semicolon separated values such as 'Government of Canada; Fisheries and Oceans Canada; Fisheries Management; Sustainable Fisheries Framework Unit'"
+    help_text: "Use semicolon separated values such as 'Government of Canada; Fisheries and Oceans Canada; Sustainable Fisheries Framework Unit'.'"
     display_group: Contact Information
     validators: require_when_published
 
