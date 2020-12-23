@@ -48,11 +48,8 @@
         {# The user IS authorized, display resource content as usual #}
         {# Customize what is displayed for different resource types #}
 
-        {# Disable for now
-            <li>{% link_for _('Export HNAP'), named_route='get_hnap', dataset_id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
-            <div>{% link_for _('Export HNAP'), controller='hnap_download', action='hnap_export', id=res.id, class_='btn btn-default', icon='wrench' %}</div>
-         #}
 
+        {# Button to generate HNAP file and deliver by email #}
         <div>
             <p>
                 Click the Send HNAP button below to have a copy of this metadata record sent to your email on file in the HNAP format.  This format is suitable for publishing on the FGP and Open Data.  After clicking the button, this page will reload.  If you do not receive a file by email within a few minutes, please contact the administrator.  Ensure that you have access to the email address that you used when registering for the GIS Hub.
