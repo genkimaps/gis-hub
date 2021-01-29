@@ -2,14 +2,12 @@ import dfo_plugin_settings as settings
 from ckan.logic import side_effect_free, get_action
 from ckan.lib import base
 from ckan.common import request
-import ckan.plugins as p
 from ckan.common import c
 import ckan.lib.helpers as h
 import dfo_plugin_settings
 from flask import send_file, jsonify, redirect
 from subprocess import check_output, Popen
 import traceback
-import os
 
 
 logger = settings.setup_logger(__name__)
@@ -58,18 +56,17 @@ def generate_hnap_file(resource_id, email=None):
         return jsonify({'error': traceback.format_exc()})
     logger.info(user_msg)
     return user_msg
-    # return jsonify({'hnap_file': hnap_file})
-    # return send_file(hnap_file)
 
-
-# Add to resource_read template:
-# <li>{% link_for _('Manage'), named_route='resource.edit', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
 
 class HNAPController(base.BaseController):
 
     def get_hnap(self):
 
-        # Make a context object
+        """ Make a context object.  Without this, we get an error from Flask:
+        RuntimeError: Working outside of request context.
+        The context object makes use of the global CKAN object 'c' which contains
+        session info including the logged-in user.
+        """
         context = {"user": c.user, "auth_user_obj": c.userobj}
 
         for k, v in request.params.iteritems():
@@ -79,38 +76,8 @@ class HNAPController(base.BaseController):
         logger.info('HNAP controller: calling hnap_export on: %s %s' % (dataset_id, resource_id))
         result = get_action('hnap_export')(context, {'id': resource_id})
         logger.info(result)
-        # hnap_file = generate_hnap_file(resource_id)
 
-        # url = h.url_for('dataset.read', id=dd['name'])
+        # Generate the URL for this resource page, and reload the page (actually redirect to the same page)
         url = h.url_for(controller='package', action='resource_read', id=dataset_id, resource_id=resource_id)
         logger.info('Redirecting: %s' % url)
-        # return redirect(url)
         return h.redirect_to(url)
-        # return h.redirect_to(u'resource.read', id=dataset_id, resource_id=resource_id)
-
-        """
-        This does not work:
-        File '/home/tk/venv/local/lib/python2.7/site-packages/flask/globals.py', line 37 in _lookup_req_object
-            raise RuntimeError(_request_ctx_err_msg)
-        RuntimeError: Working outside of request context.
-        """
-
-        # Doesn't work because we don't have a Flask context, probably using pylons
-        # return send_file(hnap_file)
-        # return p.toolkit.render('docs/docs.html')
-        # Added the HNAP export folder to CKAN's extra_public_paths
-        # https://docs.ckan.org/en/2.9/maintaining/configuration.html#extra-public-paths
-        # return p.toolkit.redirect_to('https://www.gis-hub.ca/' + os.path.basename(hnap_file))
-
-        # Test URL:
-        # https://www.gis-hub.ca/get_hnap?resource_id=8c074888-cf46-46e8-b082-16aa41916bd0
-
-    # @side_effect_free
-    # def get_hnap(self, context, data_dict):
-
-    # @staticmethod
-    # def get_hnap(dataset_id, resource_id):
-    #     # return flask.send_file(filepath)
-    #     logger.info('HNAP controller: %s %s' % (dataset_id, resource_id))
-    #
-    #     return p.toolkit.render('docs/docs.html')
