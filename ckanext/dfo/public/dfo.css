@@ -531,3 +531,18 @@ table.table-fit tbody td, table.table-fit tfoot td {
   text-shadow: none;
   margin-top: 15px;
 }
+
+.dsmeta {
+  color: #1da859;
+  font-size: 10px;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.dsmeta-content {
+  font-size: 10px;
+  font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+}
