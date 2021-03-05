@@ -39,6 +39,7 @@
         {% endblock %}
         {% block notes %}
           {% if notes %}
+            <p class="dsmeta">QUALITY CONTROL: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ quality_control }}</p></br>
             <p class="dsmeta">DESCRIPTION:</p>
             <div>{{ notes|urlize }}</div>
           {% else %}
@@ -51,7 +52,6 @@
           {% block resources_outer %}
             <ul class="dataset-resources unstyled">
               {% block resources_inner %}
-                <p class="dsmeta">QUALITY CONTROL: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ quality_control }}</p></br>
                 <p class="dsmeta">RESOURCES: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ package.resources|count - 1 }}</p><br>
                 <p class="dsmeta">UPDATED: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[0]) }}</p><br>
                 {% for resource in h.dict_list_reduce(package.resources, 'format') %}
