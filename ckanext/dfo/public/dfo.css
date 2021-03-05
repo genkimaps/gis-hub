@@ -463,3 +463,71 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .dropdown:hover .dropbtn {
   background-color: #1c3269;
 }
+
+/* THIS IS FOR THE NOTIFICATIONS COUNT ICON */
+.account-masthead .account .notifications a span.badge {
+  font-size: 12px;
+  margin-left: 3px;
+  padding: 1px 6px;
+  background-color: #282828;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-shadow: none;
+  color: #ffffff;
+}
+.account-masthead .account .notifications a:hover span {
+  color: #ffffff;
+  background-color: #3d3d3d;
+}
+
+/* THIS IS FOR THE PRIMARY BUTTONS LIKE ADD DATASET*/
+.btn-primary {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #3d3d3d;
+  background-image: -moz-linear-gradient(top, #3d3d3d, #3d3d3d);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#3d3d3d), to(#3d3d3d));
+  background-image: -webkit-linear-gradient(top, #3d3d3d, #3d3d3d);
+  background-image: -o-linear-gradient(top, #3d3d3d, #3d3d3d);
+  background-image: linear-gradient(to bottom, #3d3d3d, #3d3d3d);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffec66ab', endColorstr='#ffe73892', GradientType=0);
+  border-color: #ffffff #ffffff #ffffff;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #3d3d3d;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
+  color: #ffffff;
+  background-color: #3d3d3d;
+  *background-color: #3d3d3d;
+}
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #3d3d3d \9;
+}
+
+/* THIS IS FOR THE NAV BUTTON TO DISPLAY NAV MENU WHICH IS ENABLED WHEN SCREEN SIZE SHRINKS */
+.masthead .btn-navbar,
+.masthead .btn-navbar:hover,
+.masthead .btn-navbar:focus,
+.masthead .btn-navbar:active,
+.masthead .btn-navbar.active,
+.masthead .btn-navbar.disabled,
+.masthead .btn-navbar[disabled] {
+  background-color: #969696;
+  background-image: none;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  text-shadow: none;
+  margin-top: 15px;
+}
