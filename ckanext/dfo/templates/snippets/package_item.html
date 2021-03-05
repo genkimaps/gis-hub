@@ -39,7 +39,6 @@
         {% endblock %}
         {% block notes %}
           {% if notes %}
-            <p class="dsmeta">QUALITY CONTROL: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ quality_control }}</p></br>
             <p class="dsmeta">DESCRIPTION:</p>
             <div>{{ notes|urlize }}</div>
           {% else %}
