@@ -56,11 +56,10 @@
               {% block resources_inner %}
                 <p class="dsmeta">RESOURCES: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ package.resources|count - 1 }}</p><br>
                 <p class="dsmeta">UPDATED: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[0]) }}</p><br>
-                {% for resource in h.dict_list_reduce(package.resources, 'format') %}
+                {% for resource in h.dict_list_reduce(package.resources, 'tags') %}
                 <li>
                   <a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label" data-format="{{ resource.lower() }}">{{ resource }}</a>
                 </li>
-                {% endfor %}
               {% endblock %}
             </ul>
           {% endblock %}
