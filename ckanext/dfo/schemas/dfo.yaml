@@ -60,14 +60,16 @@ dataset_fields:
   label: Federal Geospatial Platform Record
   help_text: "If this dataset (partially or entirely) has been published to the FGP, provide the URL to the record."
   display_group: Basic Information
-  display_snippet: text.html
+  display_snippet: markdown.html
+  form_snippet: markdown.html
 
 - field_name: openmaps_record
   label: Open Maps Record
   help_text: "If this dataset (partially or entirely) has been published to Open Maps, provide the URL to the record."
   display_group: Basic Information
-  display_snippet: text.html
-
+  display_snippet: markdown.html
+  form_snippet: markdown.html
+  
 - field_name: notes
   label: Summary
   help_text: "Brief narrative summary of the dataset's contents."
