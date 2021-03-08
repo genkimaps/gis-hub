@@ -532,6 +532,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
   margin-top: 15px;
 }
 
+/* THIS IS TO DISPLAY ADDITIONAL METADATA FROM DATASETS/RESOURCES ON THE DATASET PAGE WITH LISTED RECORDS  */
 .dsmeta {
   color: #1da859;
   font-size: 10px;
@@ -543,6 +544,14 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .dsmeta-content {
   font-size: 10px;
   font-weight: bold;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.dsmeta-tags {
+  color: #8c8c8c;
+  font-size: 10px;
+  font-style: italic;
   display: inline-block;
   vertical-align: top;
 }
