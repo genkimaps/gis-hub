@@ -58,7 +58,7 @@
                 <p class="dsmeta">UPDATED: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[0]) }}</p><br>
                 {% for resource in package.tags %}
                 <li>
-                  <p class="dsmeta-tags">{{ resource }}</p>
+                  <p class="dsmeta-tags">{{ resource.name }}</p>
                 </li>
                 {% endfor %}
                 {% for resource in h.dict_list_reduce(package.resources, 'format') %}
