@@ -56,54 +56,74 @@
             that affect the end-user experience, and where available,
             a workaround. </p>
 
-        <p>
-            <b>Problem:</b> Punctuation characters are not valid characters for keywords. For example, the apostrophe in
-            Dall's porpoise will cause the form submission to fail.
-            <br>
-            <b>Workaround:</b> There is no workaround other than to avoid using punctuation.
-            <br><br>
-            <b>Problem:</b> Projections and/or projection codes are sometimes not
-            detected correctly.
-            <br>
-            <b>Workaround:</b> After uploading you data, the GIS Hub will attempt to
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th scope="col" style="width:55%">Problem</th>
+                <th scope="col" style="width:30%">Workaround</th>
+                <th scope="col" style="width:15%">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Punctuation characters are not valid characters for keywords. For example, the apostrophe in
+            Dall's porpoise will cause the form submission to fail.</td>
+                <td>There is no workaround other than to avoid using punctuation characters.</td>
+                <td>Ongoing</td>
+            </tr>
+            <tr>
+                <td>Projections and/or projection codes are sometimes not
+            detected correctly.</td>
+                <td>After uploading you data, the GIS Hub will attempt to
             populate these fields automatically. If it fails to do so, you may see
-            "unknown" or something else. This field can be edited to have the correct value.
-            <br><br>
-            <b>Problem:</b> Markdown formatting may not render completely due to certain characters. For example, the
-            < and > symbols may cause issues such as missing text due to escape characters.
-            <br>
-            <b>Workaround:</b> If this is the case, replace them with an
-            <a href="https://www.whatsmyip.org/html-characters/">Entity Code</a>. Also see this
-            <a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax and best practice guide</a>.
-            <br><br>
-            <b>Problem:</b> Markdown formatting (such as main headers) may cause text to flow outside of the typical
-            page
-            width due to the font size and spacing.
-            <br>
-            <b>Workaround:</b> If this is the case, replace them with a smaller header tag with markdown formatting.
-            <br><br>
-            <b>Problem:</b> The Change Description (Resource) field does not save changes for the data download
-            resource.
-            Changes are not appended
-            to the Change History field on the dataset metadata page.
-            <br>
-            <b>Note:</b> This issue has been resolved.
-            <br><br>
-            <b>Problem:</b> Reorder resources button does not function.
-            <br>
-            <b>Note:</b> This issue has been resolved. When re-ordering resources, please keep the data download
-            resource in
-            the first position.
-            <br><br>
-            <b>Problem:</b> Altering the Download Disclaimer or Download Disclaimer (External Link)
-            metadata fields have no effect.
-            <br>
-            <b>Note:</b> This issue has been resolved.
-            <br><br>
-            <b>Note: </b>Previous issues with species codes are now resolved. See the Species Codes
-            section in the document below.
-        </p>
-
+            "unknown" or something else. This field can be edited to have the correct value.</td>
+                <td>Ongoing</td>
+            </tr>
+            <tr>
+                <td>Markdown formatting may not render completely due to certain characters. For example, the
+                    < and > symbols may cause issues such as missing text due to escape characters.</td>
+                <td>If this is the case, replace them with an
+                    <a href="https://www.whatsmyip.org/html-characters/">Entity Code</a>. Also see this
+                    <a href="https://www.markdownguide.org/basic-syntax/">Markdown syntax and best practice guide</a>.</td>
+                <td>Ongoing</td>
+            </tr>
+            <tr>
+                <td>Markdown formatting (such as main headers) may cause text to flow outside of the typical page
+                    width due to the font size and spacing.</td>
+                <td>If this is the case, replace them with a smaller header tag with markdown formatting.</td>
+                <td>Ongoing</td>
+            </tr>
+            <tr>
+                <td>The Change Description (Resource) field does not save changes for the data download
+            resource. Changes are not appended to the Change History field on the dataset metadata page.</td>
+                <td>N/A</td>
+                <td>Resolved</td>
+            </tr>
+            <tr>
+                <td>Reorder resources button does not function.</td>
+                <td>This issue has been resolved. When re-ordering resources, please keep the data download resource
+                    in the first position.</td>
+                <td>Resolved</td>
+            </tr>
+            <tr>
+                <td>Altering the Download Disclaimer or Download Disclaimer (External Link)
+            metadata fields have no effect.</td>
+                <td>N/A</td>
+                <td>Resolved</td>
+            </tr>
+            <tr>
+                <td>Species codes not being added properly or species names not displaying.</td>
+                <td>N/A</td>
+                <td>Resolved</td>
+            </tr>
+            <tr>
+                <td>The autocomplete for non-science keywords is not restricted to the list of keywords from the
+                    Government of Canada Thesaurus. Autocomplete also shows Science keywords.</td>
+                <td>N/A</td>
+                <td>Resolved</td>
+            </tr>
+            </tbody>
+        </table>
         <h2 id="intro">Introduction</h2>
         <p>The GIS Hub system is live and ready for users to publish data.
             This documentation page contains guidelines for preparing

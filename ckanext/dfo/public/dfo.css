@@ -532,17 +532,29 @@ table.table-fit tbody td, table.table-fit tfoot td {
   margin-top: 15px;
 }
 
+/* THIS IS FOR THE PACKAGE-ITEMS TEMPLATE WHICH LISTS DATASETS ON GIS-HUB.CA/DATASET */
 .dsmeta {
-  color: #1da859;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   display: inline-block;
   vertical-align: top;
 }
 
 .dsmeta-content {
-  font-size: 10px;
-  font-weight: bold;
+  color: #aaaaaa;
+  font-size: 12px;
   display: inline-block;
   vertical-align: top;
 }
+
+.empty {
+  color: #aaaaaa;
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* THIS IS FOR THE DATASET HEADING */
+.dataset-heading a {
+  color: #0f6fa3;
+}
+

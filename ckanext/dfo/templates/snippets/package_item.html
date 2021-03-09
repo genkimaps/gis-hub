@@ -42,8 +42,8 @@
         {% endblock %}
         {% block notes %}
           {% if notes %}
-            <p class="dsmeta">DESCRIPTION:</p>
-            <div>{{ notes|urlize }}</div>
+            <p class="dsmeta">DESCRIPTION:</p><br>
+            <div class="dsmeta-content">{{ notes|urlize }}</div>
           {% else %}
             <p class="empty">{{ _("This dataset has no description") }}</p>
           {% endif %}
