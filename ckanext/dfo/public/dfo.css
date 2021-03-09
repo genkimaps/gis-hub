@@ -541,14 +541,14 @@ table.table-fit tbody td, table.table-fit tfoot td {
 }
 
 .dsmeta-content {
-  color: #aaaaaa;
+  color: #696969;
   font-size: 12px;
   display: inline-block;
   vertical-align: top;
 }
 
 .empty {
-  color: #aaaaaa;
+  color: #696969;
   font-size: 12px;
   font-style: italic;
 }
