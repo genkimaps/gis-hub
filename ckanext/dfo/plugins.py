@@ -291,6 +291,15 @@ class DFOPlugin(p.SingletonPlugin):
     def before_search(self, search_params):
         return search_params
 
+    @staticmethod
+    def days_since_published(pub_datestring):
+        """
+        Return
+        """
+        pub_datetime = datetime.strptime(pub_datestring, '%Y-%m-%dT%H:%M:%S.%f')
+        difference = datetime.now() - pub_datetime
+        return int(difference.days)
+
     # ITemplateHelpers
     def get_helpers(self):
         return {
@@ -298,6 +307,7 @@ class DFOPlugin(p.SingletonPlugin):
             'non_empty_fields': non_empty_fields,
             'scheming_field_required': self.field_required_helper,
             'now': datetime.now,
+            'days_since_published': self.days_since_published,
             'utcnow': datetime.utcnow,
             'resource_display_name': self.resource_display_name,
             'load_json': self.load_json
