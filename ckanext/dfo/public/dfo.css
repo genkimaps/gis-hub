@@ -582,3 +582,11 @@ table.table-fit tbody td, table.table-fit tfoot td {
   color: #ffffff;
   text-shadow: none;
 }
+
+.label[data-format=tif],
+.label[data-format*=tif] {
+  background-color: #773eb3;
+  color: #ffffff;
+  text-shadow: none;
+}
+
