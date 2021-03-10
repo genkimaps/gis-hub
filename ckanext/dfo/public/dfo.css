@@ -563,10 +563,13 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .label[data-format=shp],
 .label[data-format*=shp] {
   background-color: #f2b63d;
+  text-shadow: none;
 }
+
 .label[data-format=gdb],
 .label[data-format*=gdb] {
   background-color: #3694ff;
+  text-shadow: none;
 }
 
 .label[data-format=zip],
@@ -601,6 +604,16 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .label[data-format*=docx] {
   background-color: #3e53b0;
   color: #ffffff;
+  text-shadow: none;
+}
+
+.label[data-format=pdf],
+.label[data-format*=pdf] {
+  text-shadow: none;
+}
+
+.label[data-format=xls],
+.label[data-format*=xls] {
   text-shadow: none;
 }
 
