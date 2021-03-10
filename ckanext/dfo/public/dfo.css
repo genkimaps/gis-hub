@@ -536,14 +536,14 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .dsmeta {
   font-size: 12px;
   font-weight: bold;
-  display: inline-block;
+  display: inline;
   vertical-align: top;
 }
 
 .dsmeta-content {
   color: #696969;
   font-size: 12px;
-  display: inline-block;
+  display: inline;
   vertical-align: top;
 }
 
@@ -556,5 +556,15 @@ table.table-fit tbody td, table.table-fit tfoot td {
 /* THIS IS FOR THE DATASET HEADING */
 .dataset-heading a {
   color: #0f6fa3;
+  text-decoration: none;
 }
 
+/* THIS IS FOR THE DATA FORMAT COLOURS (ADDED SHP AND GDB) */
+.label[data-format=shp],
+.label[data-format*=shp] {
+  background-color: #f2b63d;
+}
+.label[data-format=gdb],
+.label[data-format*=gdb] {
+  background-color: #3694ff;
+}
