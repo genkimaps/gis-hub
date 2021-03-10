@@ -590,3 +590,17 @@ table.table-fit tbody td, table.table-fit tfoot td {
   text-shadow: none;
 }
 
+.label[data-format=link],
+.label[data-format*=link] {
+  background-color: #94d4c1;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.label[data-format=docx],
+.label[data-format*=docx] {
+  background-color: #3e53b0;
+  color: #ffffff;
+  text-shadow: none;
+}
+
