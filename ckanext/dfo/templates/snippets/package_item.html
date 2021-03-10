@@ -24,6 +24,9 @@
               {% if package.get("fgp_record") or package.get("openmaps_record") %}
                 <span class="label label-warning">{{ _('FGP/Open Maps') }}</span>
               {% endif %}
+              {% if h.days_since_published(package.metadata_created) | float < 60.0 %}
+                <span class="label label-success">{{ _('New') }}</span>
+              {% endif %}
             {% endblock %}
             {% block heading_meta %}
               {% if package.get('state', '').startswith('draft') %}
