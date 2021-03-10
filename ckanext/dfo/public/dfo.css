@@ -617,3 +617,12 @@ table.table-fit tbody td, table.table-fit tfoot td {
   text-shadow: none;
 }
 
+/* THIS IS FOR THE GREEN SUCCESS LABEL */
+.label-success,
+.badge-success {
+  text-shadow: none;
+}
+.label-success[href],
+.badge-success[href] {
+  text-shadow: none;
+}
