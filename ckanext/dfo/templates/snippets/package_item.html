@@ -65,12 +65,14 @@
                   <a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label" data-format="{{ resource.lower() }}">{{ resource }}</a>
                 </li>
                 {% endfor %}<br>
-                <p class="dsmeta">Groups: &nbsp;&nbsp;</p><br>
-                {% for resource in package.groups %}
-                <li>
-                  <a href="{{ '/group/%s'%resource.name }}" class="label">{{ resource.display_name }}</a>
-                </li>
-                {% endfor %}
+                {% if package.groups %}
+                  <p class="dsmeta">Groups: &nbsp;&nbsp;</p><br>
+                  {% for resource in package.groups %}
+                  <li>
+                    <a href="{{ '/group/%s'%resource.name }}" class="label">{{ resource.display_name }}</a>
+                  </li>
+                  {% endfor %}
+                {% endif %}
               {% endblock %}
             </ul>
           {% endblock %}
