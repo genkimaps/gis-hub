@@ -617,12 +617,21 @@ table.table-fit tbody td, table.table-fit tfoot td {
   text-shadow: none;
 }
 
-/* THIS IS FOR THE GREEN SUCCESS LABEL */
+/* THIS IS FOR THE GREEN SUCCESS LABEL & ORANGE WARNING LABEL */
 .label-success,
 .badge-success {
   text-shadow: none;
 }
 .label-success[href],
 .badge-success[href] {
+  text-shadow: none;
+}
+
+.label-warning,
+.badge-warning {
+  text-shadow: none;
+}
+.label-warning[href],
+.badge-warning[href] {
   text-shadow: none;
 }
