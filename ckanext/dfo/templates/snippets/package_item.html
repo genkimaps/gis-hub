@@ -69,7 +69,7 @@
                   <p class="dsmeta">Groups: &nbsp;&nbsp;</p><br>
                   {% for resource in package.groups %}
                   <li>
-                    <a href="{{ '/group/%s'%resource.name }}" class="label">{{ resource.display_name }}</a>
+                    <a href="{{ '/group/%s'%resource.name }}" class="label" data-format="grp">{{ resource.display_name }}</a>
                   </li>
                   {% endfor %}
                 {% endif %}

@@ -568,3 +568,17 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .label[data-format*=gdb] {
   background-color: #3694ff;
 }
+
+.label[data-format=zip],
+.label[data-format*=zip] {
+  background-color: #9c9c9c;
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.label[data-format=grp],
+.label[data-format*=grp] {
+  background-color: #474747;
+  color: #ffffff;
+  text-shadow: none;
+}
