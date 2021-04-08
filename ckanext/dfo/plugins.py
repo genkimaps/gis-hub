@@ -358,6 +358,16 @@ class DFOPlugin(p.SingletonPlugin):
             controller='ckanext.dfo.hnap_download:HNAPController',
             action='get_hnap'
         )
+        map.connect(
+            '/mapview',
+            controller='ckanext.dfo.plugins:MapViewController',
+            action='mapview'
+        )
+        # map.connect(
+        #     '/mapview',
+        #     controller='ckanext.dfo.plugins:FoliumMapController',
+        #     action='mapview'
+        # )
         return map
 
     def after_map(self, map):
@@ -455,6 +465,16 @@ def get_thumbnail(package_id):
 class DocsController(base.BaseController):
     def docs(self):
         return p.toolkit.render('docs/docs.html')
+
+
+class MapViewController(base.BaseController):
+    def mapview(self):
+        return p.toolkit.render('mapview/mapview.html')
+
+
+# class FoliumMapController(base.BaseController):
+#     def folium_base(self):
+#         return p.toolkit.render('mapview/basemap.html')
 
 
 class AdvancedSearch(base.BaseController):
