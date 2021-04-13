@@ -3,9 +3,11 @@
 {% block styles %}
   {{ super() }}
   <link rel="stylesheet" href="/dfo.css" />
+  <link rel="stylesheet" href="/leaflet.css" />
 {% endblock %}
 
 {% block body_extras %}
     {{ super() }}
     {% resource 'dfo/dfo.js' %}
+    {% resource 'dfo/leaflet.js' %}
 {% endblock %}
