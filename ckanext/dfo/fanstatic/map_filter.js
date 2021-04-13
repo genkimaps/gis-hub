@@ -12,7 +12,7 @@ ckan.module('map_filter', function ($) {
     initialize: function () {
       console.log("map_filter initialized for element: ", this.el);
 
-      var mymap = L.map('filtermap').setView([49.2, -127.6], 8);
+      var mymap = L.map('filtermap').setView([52.079354, -132.303103], 5);
 
       // Tile background layer
       var esriImagery = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'

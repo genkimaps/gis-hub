@@ -635,9 +635,3 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .badge-warning[href] {
   text-shadow: none;
 }
-
-/* DATASET FILTER MAP */
-.dataset-filter_map #dataset-filter-container{
-  height: 250px;
-}
-}
