@@ -52,6 +52,10 @@ ckan.module('map_filter', function ($) {
           var type = e.layerType,
               layer = e.layer;
 
+          layer.on('click', function() {
+            alert(layer.getLatLngs());
+          });
+
           // Need to add layers to drawnItems FeatureGroup to make them editable.
           drawnItems.addLayer(layer);
       });
