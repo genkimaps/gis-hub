@@ -47,19 +47,31 @@ ckan.module('map_filter', function ($) {
       });
       mymap.addControl(drawControl);
 
+      var popup = L.popup();
+
+      function onMapClick(e) {
+        popup
+          .setLatLng(e.latlng)
+          .setContent("You clicked the map at " + e.latlng.toString())
+          .openOn(mymap);
+      }
+
       // Enable drawn shapes to be saved on the map.
       mymap.on('draw:created', function (e) {
           var type = e.layerType,
               layer = e.layer;
 
-          layer.on('click', function() {
-            alert(layer.getLatLngs());
+          layer.on('click', function(e) {
+            popup
+              .setLatLng(e.latlng)
+              .setContent("Coordinates " + layer.getLatLngs().toString())
+              .openOn(mymap);
+
           });
 
           // Need to add layers to drawnItems FeatureGroup to make them editable.
           drawnItems.addLayer(layer);
       });
-
     }
   };
 });
