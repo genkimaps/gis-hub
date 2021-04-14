@@ -26,26 +26,34 @@ ckan.module('map_filter', function ($) {
         // id: 'mapbox.streets'
       }).addTo(mymap);
 
-      // FeatureGroup is to store editable layers
+      // FeatureGroup is to store editable layers. Make sure to add them to map.
       var drawnItems = new L.FeatureGroup();
+      mymap.addLayer(drawnItems)
 
+      // Add draw control toolbar to map.
       var drawControl = new L.Control.Draw({
+          position: 'topright',
+          // Disable everything except draw rectangle.
+          draw: {
+            polygon: false,
+            polyline: false,
+            circle: false,
+            marker: false,
+            circlemarker: false
+          },
           edit: {
               featureGroup: drawnItems
           }
       });
       mymap.addControl(drawControl);
 
+      // Enable drawn shapes to be saved on the map.
       mymap.on('draw:created', function (e) {
           var type = e.layerType,
               layer = e.layer;
 
-          if (type === 'marker') {
-              // Do marker specific actions
-          }
-
-          // Do whatever else you need to. (save to db, add to map etc)
-          mymap.addLayer(layer);
+          // Need to add layers to drawnItems FeatureGroup to make them editable.
+          drawnItems.addLayer(layer);
       });
 
     }
