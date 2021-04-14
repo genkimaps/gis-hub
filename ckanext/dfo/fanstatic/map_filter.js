@@ -12,7 +12,7 @@ ckan.module('map_filter', function ($) {
     initialize: function () {
       console.log("map_filter initialized for element: ", this.el);
 
-      var mymap = L.map('filtermap', {drawControl: true}).setView([52.079354, -132.303103], 5);
+      var mymap = L.map('filtermap').setView([52.079354, -132.303103], 5);
 
       // Tile background layer
       var esriImagery = 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
@@ -28,16 +28,25 @@ ckan.module('map_filter', function ($) {
 
       // FeatureGroup is to store editable layers
       var drawnItems = new L.FeatureGroup();
-      mymap.addLayer(drawnItems);
+
       var drawControl = new L.Control.Draw({
-        edit: {
-          featureGroup: drawnItems
+          edit: {
+              featureGroup: drawnItems
           }
       });
       mymap.addControl(drawControl);
 
-      var toolbar = L.Toolbar();
-      toolbar.addToolbar(mymap);
+      mymap.on('draw:created', function (e) {
+          var type = e.layerType,
+              layer = e.layer;
+
+          if (type === 'marker') {
+              // Do marker specific actions
+          }
+
+          // Do whatever else you need to. (save to db, add to map etc)
+          mymap.addLayer(layer);
+      });
 
     }
   };
