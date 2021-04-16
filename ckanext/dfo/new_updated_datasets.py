@@ -1,4 +1,4 @@
-import hub-geo-api.ckanapi as ck
+import ckanapi as ck
 import json
 
 test = ck.get_dataset('seamounts')
