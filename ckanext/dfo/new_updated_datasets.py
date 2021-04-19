@@ -9,6 +9,7 @@ import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
+import dateutil.parser
 # Use sys.append to append path to where ckanapi module lives.
 # https://stackoverflow.com/questions/22955684/how-to-import-py-file-from-another-directory
 sys.path.append("/home/dfo/hub-geo-api")
@@ -81,7 +82,7 @@ def get_metadata(dataset):
     Get dates for metadata created.
     :return:
     """
-    iso_date = dataset.get("metadata_created")
+    iso_date = dateutil.parser.parse(dataset.get("metadata_created"))
     today = datetime.today().date()
     if iso_date.date() < today:
         # get metadata for email
