@@ -83,8 +83,10 @@ def get_metadata(dataset):
     :return:
     """
     iso_date = dateutil.parser.parse(dataset.get("metadata_created"))
-    today = datetime.today().date()
-    if iso_date.date() < today:
+    # https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#ckan-display-timezone
+    # time comparisons should be UTC time as that is the default
+    today = datetime.utcnow().date()
+    if iso_date.date() == today:
         # get metadata for email
         template_meta = {"url": "https://www.gis-hub.ca/dataset/" + dataset.get("name"),
                          "summary": dataset.get("notes"),
