@@ -1,7 +1,11 @@
-Hello ${PERSON_NAME},
+Hello test,
 
-This is an automated message from the GIS Hub. You are listed as a data maintainer for the ${DATASET_NAME} dataset. According to the system, it has been at least ${DAYS_SINCE_MODIFIED_MAX} days since one or more of the resources in the dataset have been modified.
+${DATASET_NAME} has been added to the GIS Hub.
 
-The dataset can be found here: ${DATA_URL}. Please confirm with the data creator if there have been any modifications to the data and update as necessary. If it does not require any updates, please notify the GIS Hub Administrator at Cole.Fields@dfo-mpo.gc.ca.
+The dataset can be found here: ${DATA_URL}.
 
-NOTE: The automated tool disregards resources of the following types: .docx, doc, .pdf, .zip (supplemental resources stored in a separate zip file).
+Summary from metadata:
+
+${SUMMARY}
+
+This is a test.

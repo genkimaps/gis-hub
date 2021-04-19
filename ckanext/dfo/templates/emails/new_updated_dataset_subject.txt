@@ -1,1 +1,1 @@
-Update to ${DATASET_NAME} dataset on GIS Hub.
+New dataset on GIS Hub: ${DATASET_NAME}.
