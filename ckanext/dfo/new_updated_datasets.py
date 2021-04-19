@@ -112,9 +112,7 @@ def main():
     parser.add_argument("group_id", type=str, help="Group name or ID to query and retrieve datasets.")
     args = parser.parse_args()
 
-    group_datasets = process(args.group_id)
-    with open("/tmp/new-test.json", "w") as outfile:
-        json.dump(group_datasets[0], outfile)
+    process(args.group_id)
     # Load template email body and subject.
     # email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
     #                                     "templates/emails/new_updated_dataset_subject.txt")
