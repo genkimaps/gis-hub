@@ -108,6 +108,7 @@ logger = settings.setup_logger()
 
 
 def process(group_name):
+    logger.info("Getting list of datasets in {}".format(group_name))
     datasets_group = ck.list_datasets_in_group(group_name)
     return datasets_group
 
@@ -120,7 +121,7 @@ def main():
     args = parser.parse_args()
 
     group_datasets = process(args.group_id)
-    with open("/tmp/new-test.json") as outfile:
+    with open("/tmp/new-test.json", "w") as outfile:
         json.dump(group_datasets[0], outfile)
     # Load template email body and subject.
     # email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
