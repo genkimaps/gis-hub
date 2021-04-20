@@ -1,6 +1,5 @@
 # import modules
 import sys
-import json
 from string import Template
 import io
 import smtplib
@@ -72,7 +71,8 @@ def send_email(metadata_dict, message_template, subject_template):
             message = message_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
                                                   DATA_URL=metadata_dict.get("ds_url"),
                                                   SUMMARY=metadata_dict.get("ds_summary"),
-                                                  GROUP_NAME=metadata_dict.get("group_title"))
+                                                  GROUP_NAME=metadata_dict.get("group_title"),
+                                                  GROUP_URL=metadata_dict.get("group_url"))
 
             # Add in custom subject with dataset name.
             subject = subject_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
@@ -135,6 +135,9 @@ def get_metadata(dataset, group_name):
 
 
 def process(group_name):
+    """
+    Get datasets in group, check for newly published ones, send email to members of group if new data exists.
+    """
     logger.info("Getting list of datasets in {}".format(group_name))
     datasets_group = ck.list_datasets_in_group(group_name)
     dataset_dicts = [get_metadata(dataset, group_name) for dataset in datasets_group]
