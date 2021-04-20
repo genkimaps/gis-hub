@@ -1,15 +1,14 @@
-Hello ${GROUP_NAME} members,
+${GROUP_NAME} members,
 
-A new dataset, ${DATASET_NAME}, has been published to the GIS Hub and added to the ${GROUP_NAME} group.
+A new dataset - ${DATASET_NAME} - has been published to the GIS Hub and added to the ${GROUP_NAME} group.
 
-${DATASET_NAME} URL: ${DATA_URL}
+Dataset URL: ${DATA_URL}
 
-${GROUP_NAME} URL: ${GROUP_URL}
+Group URL: ${GROUP_URL}
 
 Dataset summary:
-----------------
-
+------------------------
 ${SUMMARY}
-----------------
+------------------------
 
-This is an automated email, please do not respond.
+This is an automated email, please do not reply.
