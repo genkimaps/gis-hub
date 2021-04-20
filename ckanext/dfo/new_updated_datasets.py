@@ -125,7 +125,10 @@ def get_metadata(dataset, group_name):
                              "group_title": group_data.get("title"),
                              "group_url": "https://www.gis-hub.ca/group/" + group_name,
                              "group_emails": group_user_emails}
+            logger.info("Metadata dictionary prepared for email template...")
             return template_meta
+        else:
+            logger.info("Dataset was published {}...".format(iso_date))
     except Exception as e:
         logger.error("Error preparing metadata into a dictionary...")
         logger.error(e.args, e.message)
@@ -136,11 +139,11 @@ def process(group_name):
     datasets_group = ck.list_datasets_in_group(group_name)
     dataset_dicts = [get_metadata(dataset, group_name) for dataset in datasets_group]
 
-    # # Load template email body and subject.
-    # email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
-    #                                     "templates/emails/new_updated_dataset_subject.txt")
-    # for data_dict in dataset_dicts:
-    #     send_email(data_dict, email_template_obj[0], email_template_obj[1])
+    # Load template email body and subject.
+    email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
+                                        "templates/emails/new_updated_dataset_subject.txt")
+    for data_dict in dataset_dicts:
+        send_email(data_dict, email_template_obj[0], email_template_obj[1])
 
     return
 
