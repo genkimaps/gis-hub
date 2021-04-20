@@ -1,11 +1,13 @@
-Hello test,
+Hello,
 
-${DATASET_NAME} has been added to the GIS Hub.
+A new dataset, ${DATASET_NAME}, has been published to the GIS Hub and added to the ${GROUP_NAME} group.
 
-The dataset can be found here: ${DATA_URL}.
+${DATASET_NAME} URL: ${DATA_URL}.
 
-Summary from metadata:
+${GROUP_NAME} URL: .
+
+Dataset summary:
 
 ${SUMMARY}
 
-This is a test.
+This is an automated message, please do not respond.
