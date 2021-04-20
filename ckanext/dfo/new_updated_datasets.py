@@ -134,7 +134,7 @@ def get_metadata(dataset, group_name):
 def process(group_name):
     logger.info("Getting list of datasets in {}".format(group_name))
     datasets_group = ck.list_datasets_in_group(group_name)
-    dataset_dicts = [get_metadata(dataset) for dataset in datasets_group]
+    dataset_dicts = [get_metadata(dataset, group_name) for dataset in datasets_group]
 
     # # Load template email body and subject.
     # email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
