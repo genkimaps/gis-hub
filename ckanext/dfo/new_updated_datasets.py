@@ -80,7 +80,7 @@ def send_email(metadata_dict, message_template, subject_template):
 
             # Setup the parameters of the message.
             msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
-            msg["To"] = metadata_dict.get("group_emails")
+            msg["To"] = ", ".join(metadata_dict.get("group_emails"))
             msg["Subject"] = subject
 
             # Add the message from template to body of email.
@@ -88,7 +88,7 @@ def send_email(metadata_dict, message_template, subject_template):
 
             # Send the message via the server set up earlier.
             logger.info("Sending email...")
-            server.sendmail(msg["From"], msg["To"], msg.as_string())
+            server.sendmail(msg["From"], metadata_dict.get("group_emails"), msg.as_string())
 
             server.quit()
     except Exception as e:
@@ -138,13 +138,12 @@ def process(group_name):
     logger.info("Getting list of datasets in {}".format(group_name))
     datasets_group = ck.list_datasets_in_group(group_name)
     dataset_dicts = [get_metadata(dataset, group_name) for dataset in datasets_group]
-    logger.info(dataset_dicts)
 
-    # # Load template email body and subject.
-    # email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
-    #                                     "templates/emails/new_updated_dataset_subject.txt")
-    # for data_dict in dataset_dicts:
-    #     send_email(data_dict, email_template_obj[0], email_template_obj[1])
+    # Load template email body and subject.
+    email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
+                                        "templates/emails/new_updated_dataset_subject.txt")
+    for data_dict in dataset_dicts:
+        send_email(data_dict, email_template_obj[0], email_template_obj[1])
 
     return
 
