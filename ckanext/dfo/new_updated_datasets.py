@@ -138,12 +138,13 @@ def process(group_name):
     logger.info("Getting list of datasets in {}".format(group_name))
     datasets_group = ck.list_datasets_in_group(group_name)
     dataset_dicts = [get_metadata(dataset, group_name) for dataset in datasets_group]
+    logger.info(dataset_dicts)
 
-    # Load template email body and subject.
-    email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
-                                        "templates/emails/new_updated_dataset_subject.txt")
-    for data_dict in dataset_dicts:
-        send_email(data_dict, email_template_obj[0], email_template_obj[1])
+    # # Load template email body and subject.
+    # email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
+    #                                     "templates/emails/new_updated_dataset_subject.txt")
+    # for data_dict in dataset_dicts:
+    #     send_email(data_dict, email_template_obj[0], email_template_obj[1])
 
     return
 
