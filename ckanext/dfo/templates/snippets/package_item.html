@@ -28,6 +28,8 @@
             {% block heading_meta %}
               {% if package.get('state', '').startswith('draft') %}
                 <span class="label label-info">{{ _('Draft') }}</span>
+              {% elif package.get('status', '').startswith('draft') %}
+                <span class="label label-info">{{ _('Draft') }}</span>
               {% elif package.get('state', '').startswith('deleted') %}
                 <span class="label label-important">{{ _('Deleted') }}</span>
               {% endif %}
