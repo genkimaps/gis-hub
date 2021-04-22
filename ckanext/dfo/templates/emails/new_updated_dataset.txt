@@ -1,6 +1,6 @@
 ${GROUP_NAME} members,
 
-A new dataset - ${DATASET_NAME} - has been published to the GIS Hub and added to the ${GROUP_NAME} group.
+${STATE} dataset - ${DATASET_NAME} - on the GIS Hub in the ${GROUP_NAME} group.
 
 Dataset URL: ${DATA_URL}
 

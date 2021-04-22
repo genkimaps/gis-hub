@@ -72,11 +72,13 @@ def send_email(metadata_dict, message_template, subject_template):
                                                   DATA_URL=metadata_dict.get("ds_url"),
                                                   SUMMARY=metadata_dict.get("ds_summary"),
                                                   GROUP_NAME=metadata_dict.get("group_title"),
-                                                  GROUP_URL=metadata_dict.get("group_url"))
+                                                  GROUP_URL=metadata_dict.get("group_url"),
+                                                  STATE=metadata_dict.get("state"))
 
             # Add in custom subject with dataset name.
             subject = subject_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
-                                                  GROUP_NAME=metadata_dict.get("group_title"))
+                                                  GROUP_NAME=metadata_dict.get("group_title"),
+                                                  STATE=metadata_dict.get("state"))
 
             # Setup the parameters of the message.
             msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
@@ -97,17 +99,27 @@ def send_email(metadata_dict, message_template, subject_template):
     del msg
 
 
-def get_metadata(dataset, group_name):
+def latest_modified_date(dataset):
+    # get resources from dataset
+    resources = dataset.get("resources")
+    # get most recently modified date from list of resources
+    max_date = max([dateutil.parser.parse(res.get("last_modified")) for res in resources])
+
+
+def get_new_datasets(dataset, group_name):
     """
     Get all the metadata required to fill template into a dictionary.
     """
     try:
-        iso_date = dateutil.parser.parse(dataset.get("metadata_created"))
+        date_created = dateutil.parser.parse(dataset.get("metadata_created"))
         # https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#ckan-display-timezone
         # time comparisons should be UTC time as that is the default
         today = datetime.utcnow().date()
+        # get date of most recent modified metadata from dataset
+        res_last_modified_date = latest_modified_date(dataset)
         logger.info("Checking publication dates of datasets for new records...")
-        if iso_date.date() == today:
+        # if dataset was created today, send email to members of org
+        if date_created.date() == today:
             logger.info("New dataset found...")
             # get group metadata
             logger.info("Getting all the metadata from dataset and users to send email...")
@@ -124,11 +136,34 @@ def get_metadata(dataset, group_name):
                              "ds_title": dataset.get("title"),
                              "group_title": group_data.get("title"),
                              "group_url": "https://www.gis-hub.ca/group/" + group_name,
-                             "group_emails": group_user_emails}
+                             "group_emails": group_user_emails,
+                             "state": "New"}
+            logger.info("Metadata dictionary prepared for email template...")
+            return template_meta
+        # if resources were updated today, AND dataset was not created today, send email to members of org
+        elif res_last_modified_date.date() == today and date_created != today:
+            logger.info("Updated dataset found...")
+            # get group metadata
+            logger.info("Getting all the metadata from dataset and users to send email...")
+            group_data = ck.get_group(group_name)
+            # have to get the user IDs in order to filter user list and get emails
+            group_user_ids = [user.get("id") for user in group_data.get("users")]
+            # get list of all users information on gis hub
+            all_users = ck.get_user_info()
+            # now filter the list of all users to get the ones part of the group
+            group_user_emails = [u.get("email") for u in all_users if u.get("id") in group_user_ids]
+            # get metadata for email
+            template_meta = {"ds_url": "https://www.gis-hub.ca/dataset/" + dataset.get("name"),
+                             "ds_summary": dataset.get("notes"),
+                             "ds_title": dataset.get("title"),
+                             "group_title": group_data.get("title"),
+                             "group_url": "https://www.gis-hub.ca/group/" + group_name,
+                             "group_emails": group_user_emails,
+                             "state": "Updated"}
             logger.info("Metadata dictionary prepared for email template...")
             return template_meta
         else:
-            logger.info("Dataset was published {}...".format(iso_date))
+            logger.info("Dataset was published {}...".format(date_created))
     except Exception as e:
         logger.error("Error preparing metadata into a dictionary...")
         logger.error(e.args, e.message)
@@ -140,12 +175,12 @@ def process(group_name):
     """
     logger.info("Getting list of datasets in {}".format(group_name))
     datasets_group = ck.list_datasets_in_group(group_name)
-    dataset_dicts = [get_metadata(dataset, group_name) for dataset in datasets_group]
+    new_dataset_dicts = [get_new_datasets(dataset, group_name) for dataset in datasets_group]
 
     # Load template email body and subject.
     email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
                                         "templates/emails/new_updated_dataset_subject.txt")
-    for data_dict in dataset_dicts:
+    for data_dict in new_dataset_dicts:
         send_email(data_dict, email_template_obj[0], email_template_obj[1])
 
     return
