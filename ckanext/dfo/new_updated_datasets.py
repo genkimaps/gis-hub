@@ -104,6 +104,7 @@ def latest_modified_date(dataset):
     resources = dataset.get("resources")
     # get most recently modified date from list of resources
     max_date = max([dateutil.parser.parse(res.get("last_modified")) for res in resources])
+    return max_date
 
 
 def get_new_datasets(dataset, group_name):
