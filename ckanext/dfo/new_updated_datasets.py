@@ -106,7 +106,8 @@ def latest_modified_date(dataset):
         if resources is not None:
             # get most recently modified date from list of resources
             max_date = max(
-                [dateutil.parser.parse(res.get("last_modified")) for res in resources])
+                [dateutil.parser.parse(res.get("last_modified")) for res in resources if
+                 res.get("last_modified") is not None])
             return max_date
     except Exception as e:
         logger.error("Error getting last modified date...")
@@ -252,7 +253,8 @@ def check_updated(dataset):
                 logger.info("{} has no followers...".format(dataset.get("name")))
         else:
             logger.info(
-                "Most recently modified resource date from {} was: {}".format(dataset.get("name"), res_last_modified_date))
+                "Most recently modified resource date from {} was: {}".format(dataset.get("name"),
+                                                                              res_last_modified_date))
     except Exception as e:
         logger.error("Error preparing metadata into a dictionary...")
         logger.error(e.args)
