@@ -114,8 +114,8 @@ def get_new_datasets(dataset, group_name):
     try:
         date_created = dateutil.parser.parse(dataset.get("metadata_created"))
         # https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#ckan-display-timezone
-        # time comparisons should be UTC time as that is the default
-        today = datetime.utcnow().date()
+        # todays datetime
+        today = datetime.today().date()
         # get date of most recent modified metadata from dataset
         res_last_modified_date = latest_modified_date(dataset)
         logger.info("Checking publication dates of datasets for new records...")
