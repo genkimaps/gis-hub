@@ -118,12 +118,16 @@ def get_new_datasets(dataset, group_name):
         date_created = dateutil.parser.parse(dataset.get("metadata_created"))
         # https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#ckan-display-timezone
         # todays datetime
-        today = datetime.today().date()
+        today = datetime.today()
+        date_diff = today - date_created
+        minutes_diff = date_diff.total_seconds() / 60
         # get date of most recent modified metadata from dataset
         res_last_modified_date = latest_modified_date(dataset)
+        res_date_diff = today - res_last_modified_date
+        res_minutes_diff = res_date_diff.total_seconds() / 60
         logger.info("Checking publication dates of datasets for new records...")
-        # if dataset was created today, send email to members of org
-        if date_created.date() == today:
+        # if dataset was created in the last hour, send email to members of org
+        if minutes_diff < 60.0:
             logger.info("New dataset found...")
             # get group metadata
             logger.info("Getting all the metadata from dataset and users to send email...")
@@ -147,8 +151,8 @@ def get_new_datasets(dataset, group_name):
                              }
             logger.info("Metadata dictionary prepared for email template...")
             return template_meta
-        # if resources were updated today, AND dataset was not created today, send email to members of org
-        elif res_last_modified_date.date() == today and date_created != today:
+        # if resources were updated in the last hour, AND dataset was not created today, send email to members of org
+        elif res_minutes_diff < 60.0 and date_created.date() != today.date():
             logger.info("Updated dataset found...")
             # get group metadata
             logger.info("Getting all the metadata from dataset and users to send email...")
@@ -181,6 +185,7 @@ def get_new_datasets(dataset, group_name):
                              "state": "Updated",
                              "change_date": change_date,
                              "change_desc": change_desc}
+            
             logger.info("Metadata dictionary prepared for email template...")
             return template_meta
         else:
