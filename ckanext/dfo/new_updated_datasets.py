@@ -96,7 +96,6 @@ def send_email(metadata_dict, message_template, subject_template):
             server.quit()
     except Exception as e:
         logger.error("Error loading email settings and sending email...")
-        logger.error(e.args, e.message)
 
 
 def latest_modified_date(dataset):
@@ -190,7 +189,6 @@ def new_or_updated_group(dataset, group_name):
             logger.info("Dataset was published {}...".format(date_created))
     except Exception as e:
         logger.error("Error preparing metadata into a dictionary...")
-        logger.error(e.args, e.message)
 
 
 def check_updated(dataset):
