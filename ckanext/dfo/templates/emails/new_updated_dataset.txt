@@ -11,4 +11,8 @@ Dataset summary:
 ${SUMMARY}
 ------------------------
 
+${CHANGE_DATE}
+
+${CHANGE_DESC}
+
 This is an automated email, please do not reply.

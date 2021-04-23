@@ -55,7 +55,7 @@
             <ul class="dataset-resources unstyled">
               {% block resources_inner %}
                 <p class="dsmeta">Published: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(package.metadata_created) }}</p><br>
-                <p class="dsmeta">Updated: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[0]) }}</p><br>
+                <p class="dsmeta">Updated: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[-1]) }}</p><br>
                 <p class="dsmeta">Resources: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ package.resources|count - 1 }}</p><br>
                 {% for resource in h.dict_list_reduce(package.resources, 'format') %}
                 <li>

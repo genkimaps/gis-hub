@@ -9,6 +9,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
 import dateutil.parser
+import json
 # Use sys.append to append path to where ckanapi module lives.
 # https://stackoverflow.com/questions/22955684/how-to-import-py-file-from-another-directory
 sys.path.append("/home/dfo/hub-geo-api")
@@ -73,7 +74,9 @@ def send_email(metadata_dict, message_template, subject_template):
                                                   SUMMARY=metadata_dict.get("ds_summary"),
                                                   GROUP_NAME=metadata_dict.get("group_title"),
                                                   GROUP_URL=metadata_dict.get("group_url"),
-                                                  STATE=metadata_dict.get("state"))
+                                                  STATE=metadata_dict.get("state"),
+                                                  CHANGE_DATE=metadata_dict.get("change_date"),
+                                                  CHANGE_DESC=metadata_dict.get("change_desc"))
 
             # Add in custom subject with dataset name.
             subject = subject_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
@@ -138,7 +141,10 @@ def get_new_datasets(dataset, group_name):
                              "group_title": group_data.get("title"),
                              "group_url": "https://www.gis-hub.ca/group/" + group_name,
                              "group_emails": group_user_emails,
-                             "state": "New"}
+                             "state": "New",
+                             "change_date": "",
+                             "change_desc": ""
+                             }
             logger.info("Metadata dictionary prepared for email template...")
             return template_meta
         # if resources were updated today, AND dataset was not created today, send email to members of org
@@ -153,6 +159,18 @@ def get_new_datasets(dataset, group_name):
             all_users = ck.get_user_info()
             # now filter the list of all users to get the ones part of the group
             group_user_emails = [u.get("email") for u in all_users if u.get("id") in group_user_ids]
+            # change history text
+            change_string = dataset.get("change_history")
+            change_list = json.loads(change_string)
+            # get latest change history entry
+            # leave as empty strings so if no change information, the text is blank when the template is filled.
+            change_date = ""
+            change_desc = ""
+            if len(change_string) > 0:
+                change_date = f"Change Date: {change_list[-1].get('change_date')}"
+                change_desc = f"Description: {change_list[-1].get('change_description')}"
+
+
             # get metadata for email
             template_meta = {"ds_url": "https://www.gis-hub.ca/dataset/" + dataset.get("name"),
                              "ds_summary": dataset.get("notes"),
@@ -160,7 +178,9 @@ def get_new_datasets(dataset, group_name):
                              "group_title": group_data.get("title"),
                              "group_url": "https://www.gis-hub.ca/group/" + group_name,
                              "group_emails": group_user_emails,
-                             "state": "Updated"}
+                             "state": "Updated",
+                             "change_date": change_date,
+                             "change_desc": change_desc}
             logger.info("Metadata dictionary prepared for email template...")
             return template_meta
         else:
@@ -199,3 +219,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+for i in change_list:
+    print(f"Change Date: {i.get('change_date')}")
+    desc = f"Description: {i.get('change_description')}"
+    print(desc)
+    print("-" * len(desc))
