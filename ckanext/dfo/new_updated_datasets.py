@@ -92,11 +92,11 @@ def send_email(metadata_dict, message_template, subject_template):
             logger.info("Sending email...")
             server.sendmail(msg["From"], metadata_dict.get("group_emails"), msg.as_string())
 
+            del msg
             server.quit()
     except Exception as e:
         logger.error("Error loading email settings and sending email...")
         logger.error(e.args, e.message)
-    del msg
 
 
 def latest_modified_date(dataset):
