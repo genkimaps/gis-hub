@@ -103,7 +103,7 @@ def latest_modified_date(dataset):
     # get resources from dataset
     resources = dataset.get("resources")
     # get most recently modified date from list of resources
-    max_date = max([dateutil.parser.parse(res.get("last_modified")) for res in resources])
+    max_date = max([dateutil.parser.parse(res.get("last_modified")) for res in resources if res.get("last_modified") is not None])
     return max_date
 
 
