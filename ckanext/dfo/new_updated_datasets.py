@@ -95,7 +95,7 @@ def send_email(metadata_dict, message_template, subject_template, template="grou
                 logger.info("Invalid template argument.")
             # Setup the parameters of the message.
             msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
-            msg["To"] = ", ".join(metadata_dict.get("group_emails"))
+            msg["To"] = ", ".join(metadata_dict.get("emails"))
             msg["Subject"] = subject
 
             # Add the message from template to body of email.
@@ -103,7 +103,7 @@ def send_email(metadata_dict, message_template, subject_template, template="grou
 
             # Send the message via the server set up earlier.
             logger.info("Sending email...")
-            server.sendmail(msg["From"], metadata_dict.get("group_emails"), msg.as_string())
+            server.sendmail(msg["From"], metadata_dict.get("emails"), msg.as_string())
 
             del msg
             server.quit()
@@ -162,7 +162,7 @@ def new_or_updated_group(dataset, group_name):
                              "ds_title": dataset.get("title"),
                              "group_title": group_data.get("title"),
                              "group_url": "https://www.gis-hub.ca/group/" + group_name,
-                             "group_emails": group_user_emails,
+                             "emails": group_user_emails,
                              "state": "New",
                              "change_date": "",
                              "change_desc": ""
@@ -198,7 +198,7 @@ def new_or_updated_group(dataset, group_name):
                              "ds_title": dataset.get("title"),
                              "group_title": group_data.get("title"),
                              "group_url": "https://www.gis-hub.ca/group/" + group_name,
-                             "group_emails": group_user_emails,
+                             "emails": group_user_emails,
                              "state": "Updated",
                              "change_date": change_date,
                              "change_desc": change_desc}
