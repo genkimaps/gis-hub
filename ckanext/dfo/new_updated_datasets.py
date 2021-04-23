@@ -66,7 +66,7 @@ def send_email(metadata_dict, message_template, subject_template, group=False):
 
             # Add in the actual person name to the message template.
             logger.info("Loading information into email templates...")
-            if group is True
+            if group is True:
                 message = message_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
                                                       DATA_URL=metadata_dict.get("ds_url"),
                                                       SUMMARY=metadata_dict.get("ds_summary"),
