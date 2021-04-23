@@ -48,7 +48,7 @@ def read_templates(body_file, subject_file):
         logger.error(e.args)
 
 
-def send_email(metadata_dict, message_template, subject_template, group=False):
+def send_email(metadata_dict, message_template, subject_template, template="group"):
     """
     Send email to users if a new dataset is published or updated.
     """
@@ -66,7 +66,7 @@ def send_email(metadata_dict, message_template, subject_template, group=False):
 
             # Add in the actual person name to the message template.
             logger.info("Loading information into email templates...")
-            if group is True:
+            if template == "group":
                 message = message_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
                                                       DATA_URL=metadata_dict.get("ds_url"),
                                                       SUMMARY=metadata_dict.get("ds_summary"),
@@ -80,7 +80,7 @@ def send_email(metadata_dict, message_template, subject_template, group=False):
                 subject = subject_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
                                                       GROUP_NAME=metadata_dict.get("group_title"),
                                                       STATE=metadata_dict.get("state"))
-            else:
+            elif template == "datasets":
                 message = message_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
                                                       DATA_URL=metadata_dict.get("ds_url"),
                                                       SUMMARY=metadata_dict.get("ds_summary"),
@@ -91,7 +91,8 @@ def send_email(metadata_dict, message_template, subject_template, group=False):
                 # Add in custom subject with dataset name.
                 subject = subject_template.substitute(DATASET_NAME=metadata_dict.get("ds_title"),
                                                       STATE=metadata_dict.get("state"))
-
+            else:
+                logger.info("Invalid template argument.")
             # Setup the parameters of the message.
             msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")
             msg["To"] = ", ".join(metadata_dict.get("group_emails"))
@@ -285,7 +286,7 @@ def process_group(group_name):
         email_template_group = read_templates("templates/emails/new_updated_dataset_group.txt",
                                               "templates/emails/new_updated_dataset_group_subject.txt")
         for data_dict in new_updated_group:
-            send_email(data_dict, email_template_group[0], email_template_group[1], group=True)
+            send_email(data_dict, email_template_group[0], email_template_group[1], template="group")
     else:
         logger.info("No new or updated datasets in {} last 60 minutes.".format(group_name))
 
@@ -307,7 +308,7 @@ def process_updated():
                                                 "templates/emails/new_updated_dataset_group.txt")
 
         for data_dict in updated_meta:
-            send_email(data_dict, email_template_updated[0], email_template_updated[1], group=False)
+            send_email(data_dict, email_template_updated[0], email_template_updated[1], template="datasets")
     else:
         logger.info("No updated datasets in last 60 minutes.")
 
