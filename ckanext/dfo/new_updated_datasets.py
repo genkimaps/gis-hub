@@ -268,11 +268,14 @@ def process_group(group_name):
     datasets_group = ck.list_datasets_in_group(group_name)
     new_updated_group = [new_or_updated_group(dataset, group_name) for dataset in datasets_group]
 
-    # Load template email body and subject.
-    email_template_group = read_templates("templates/emails/new_updated_dataset_group.txt",
-                                          "templates/emails/new_updated_dataset_group_subject.txt")
-    for data_dict in new_updated_group:
-        send_email(data_dict, email_template_group[0], email_template_group[1])
+    if len(new_updated_group) > 0:
+        # Load template email body and subject.
+        email_template_group = read_templates("templates/emails/new_updated_dataset_group.txt",
+                                              "templates/emails/new_updated_dataset_group_subject.txt")
+        for data_dict in new_updated_group:
+            send_email(data_dict, email_template_group[0], email_template_group[1])
+    else:
+        logger.info("No new or updated datasets in {} last 60 minutes.".format(group_name))
 
     return
 
@@ -286,12 +289,15 @@ def process_updated():
     all_datasets = ck.list_datasets()
     updated_meta = [check_updated(dataset) for dataset in all_datasets]
 
-    # Load template email body and subject.
-    email_template_updated = read_templates("templates/emails/new_updated_dataset.txt",
-                                            "templates/emails/new_updated_dataset_group.txt")
+    if len(updated_meta) > 0:
+        # Load template email body and subject.
+        email_template_updated = read_templates("templates/emails/new_updated_dataset.txt",
+                                                "templates/emails/new_updated_dataset_group.txt")
 
-    for data_dict in updated_meta:
-        send_email(data_dict, email_template_updated[0], email_template_updated[1])
+        for data_dict in updated_meta:
+            send_email(data_dict, email_template_updated[0], email_template_updated[1])
+    else:
+        logger.info("No updated datasets in last 60 minutes.")
 
     return
 
