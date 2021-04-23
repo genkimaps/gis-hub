@@ -288,11 +288,11 @@ def main():
     parser.add_argument("group_id", type=str, help="Group name or ID to query and retrieve datasets.")
     args = parser.parse_args()
 
-    # check for new and/or updated datasets and send emails
-    process_group(args.group_id)
-
     # check for updated datasets and followers
     process_updated()
+
+    # check for new and/or updated datasets and send emails
+    process_group(args.group_id)
 
 
 if __name__ == "__main__":
