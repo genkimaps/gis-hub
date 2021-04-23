@@ -170,9 +170,9 @@ def get_new_datasets(dataset, group_name):
             # leave as empty strings so if no change information, the text is blank when the template is filled.
             change_date = ""
             change_desc = ""
-            if len(change_string) > 0:
-                change_date = f"Change Date: {change_list[-1].get('change_date')}"
-                change_desc = f"Description: {change_list[-1].get('change_description')}"
+            if len(change_list) > 0:
+                change_date = "Change Date: {}".format(change_list[-1].get('change_date'))
+                change_desc = "Description: {}".format(change_list[-1].get('change_description'))
 
 
             # get metadata for email
@@ -185,7 +185,7 @@ def get_new_datasets(dataset, group_name):
                              "state": "Updated",
                              "change_date": change_date,
                              "change_desc": change_desc}
-            
+
             logger.info("Metadata dictionary prepared for email template...")
             return template_meta
         else:
@@ -224,10 +224,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-for i in change_list:
-    print(f"Change Date: {i.get('change_date')}")
-    desc = f"Description: {i.get('change_description')}"
-    print(desc)
-    print("-" * len(desc))
