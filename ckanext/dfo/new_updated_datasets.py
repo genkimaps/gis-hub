@@ -264,6 +264,14 @@ def process_group(group_name):
     for data_dict in new_updated_group:
         send_email(data_dict, email_template_group[0], email_template_group[1])
 
+    return
+
+
+def process_updated():
+    """
+    Check all datasets for updated, email followers if any
+    """
+    logger.info("Checking all datasets for updates and followers to email...")
     # get all datasets
     all_datasets = ck.list_datasets()
     updated_meta = [check_updated(dataset) for dataset in all_datasets]
@@ -287,6 +295,9 @@ def main():
 
     # check for new and/or updated datasets and send emails
     process_group(args.group_id)
+
+    # check for updated datasets and followers
+    process_updated()
 
 
 if __name__ == "__main__":
