@@ -305,7 +305,7 @@ def process_updated():
     if len(updated_meta) > 0:
         # Load template email body and subject.
         email_template_updated = read_templates("templates/emails/new_updated_dataset.txt",
-                                                "templates/emails/new_updated_dataset_group.txt")
+                                                "templates/emails/new_updated_dataset_subject.txt")
 
         for data_dict in updated_meta:
             send_email(data_dict, email_template_updated[0], email_template_updated[1], template="datasets")
