@@ -1,6 +1,10 @@
-${STATE} dataset - ${DATASET_NAME} - on the GIS Hub.
+${GROUP_NAME} members,
+
+${STATE} dataset - ${DATASET_NAME} - on the GIS Hub in the ${GROUP_NAME} group.
 
 Dataset URL: ${DATA_URL}
+
+Group URL: ${GROUP_URL}
 
 Dataset summary:
 ------------------------

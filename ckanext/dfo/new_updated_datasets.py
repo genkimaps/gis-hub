@@ -10,6 +10,7 @@ from email.mime.text import MIMEText
 from datetime import datetime
 import dateutil.parser
 import json
+
 # Use sys.append to append path to where ckanapi module lives.
 # https://stackoverflow.com/questions/22955684/how-to-import-py-file-from-another-directory
 sys.path.append("/home/dfo/hub-geo-api")
@@ -106,11 +107,12 @@ def latest_modified_date(dataset):
     # get resources from dataset
     resources = dataset.get("resources")
     # get most recently modified date from list of resources
-    max_date = max([dateutil.parser.parse(res.get("last_modified")) for res in resources if res.get("last_modified") is not None])
+    max_date = max(
+        [dateutil.parser.parse(res.get("last_modified")) for res in resources if res.get("last_modified") is not None])
     return max_date
 
 
-def get_new_datasets(dataset, group_name):
+def new_or_updated_group(dataset, group_name):
     """
     Get all the metadata required to fill template into a dictionary.
     """
@@ -174,7 +176,6 @@ def get_new_datasets(dataset, group_name):
                 change_date = "Change Date: {}".format(change_list[-1].get('change_date'))
                 change_desc = "Description: {}".format(change_list[-1].get('change_description'))
 
-
             # get metadata for email
             template_meta = {"ds_url": "https://www.gis-hub.ca/dataset/" + dataset.get("name"),
                              "ds_summary": dataset.get("notes"),
@@ -195,19 +196,84 @@ def get_new_datasets(dataset, group_name):
         logger.error(e.args, e.message)
 
 
-def process(group_name):
+def check_updated(dataset):
+    date_created = dateutil.parser.parse(dataset.get("metadata_created"))
+    # https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#ckan-display-timezone
+    # todays datetime
+    today = datetime.today()
+    date_diff = today - date_created
+    minutes_diff = date_diff.total_seconds() / 60
+    # get date of most recent modified metadata from dataset
+    res_last_modified_date = latest_modified_date(dataset)
+    res_date_diff = today - res_last_modified_date
+    res_minutes_diff = res_date_diff.total_seconds() / 60
+    logger.info("Checking publication dates of datasets for new records...")
+
+    if res_minutes_diff < 60.0 and date_created.date() != today.date():
+        logger.info("Updated dataset found...")
+        # get metadata
+        logger.info("Getting all the metadata from dataset and users to send email...")
+        followers_list = ck.get_dataset_followers(dataset)
+        # check if there are any followers
+        if len(followers_list) > 0:
+            # have to get the user IDs in order to filter user list and get emails
+            follower_ids = [follower.get("id") for follower in followers_list]
+            # get list of all users information on gis hub
+            all_users = ck.get_user_info()
+            # now filter the list of all users to get the ones part of the group
+            user_emails = [u.get("email") for u in all_users if u.get("id") in follower_ids]
+            # change history text
+            change_string = dataset.get("change_history")
+            change_list = json.loads(change_string)
+            # get latest change history entry
+            # leave as empty strings so if no change information, the text is blank when the template is filled.
+            change_date = ""
+            change_desc = ""
+            if len(change_list) > 0:
+                change_date = "Change Date: {}".format(change_list[-1].get('change_date'))
+                change_desc = "Description: {}".format(change_list[-1].get('change_description'))
+
+            # get metadata for email
+            template_meta = {"ds_url": "https://www.gis-hub.ca/dataset/" + dataset.get("name"),
+                             "ds_summary": dataset.get("notes"),
+                             "ds_title": dataset.get("title"),
+                             "emails": user_emails,
+                             "state": "Updated",
+                             "change_date": change_date,
+                             "change_desc": change_desc}
+
+            logger.info("Metadata dictionary prepared for email template...")
+            return template_meta
+        else:
+            logger.info("Dataset has no followers...")
+    else:
+        logger.info("Most recently modified resource date from dataset was: {}".format(res_last_modified_date))
+
+
+def process_group(group_name):
     """
     Get datasets in group, check for newly published ones, send email to members of group if new data exists.
     """
     logger.info("Getting list of datasets in {}".format(group_name))
     datasets_group = ck.list_datasets_in_group(group_name)
-    new_dataset_dicts = [get_new_datasets(dataset, group_name) for dataset in datasets_group]
+    new_updated_group = [new_or_updated_group(dataset, group_name) for dataset in datasets_group]
 
     # Load template email body and subject.
-    email_template_obj = read_templates("templates/emails/new_updated_dataset.txt",
-                                        "templates/emails/new_updated_dataset_subject.txt")
-    for data_dict in new_dataset_dicts:
-        send_email(data_dict, email_template_obj[0], email_template_obj[1])
+    email_template_group = read_templates("templates/emails/new_updated_dataset_group.txt",
+                                          "templates/emails/new_updated_dataset_group_subject.txt")
+    for data_dict in new_updated_group:
+        send_email(data_dict, email_template_group[0], email_template_group[1])
+
+    # get all datasets
+    all_datasets = ck.list_datasets()
+    updated_meta = [check_updated(dataset) for dataset in all_datasets]
+
+    # Load template email body and subject.
+    email_template_updated = read_templates("templates/emails/new_updated_dataset.txt",
+                                            "templates/emails/new_updated_dataset_group.txt")
+
+    for data_dict in updated_meta:
+        send_email(data_dict, email_template_updated[0], email_template_updated[1])
 
     return
 
@@ -219,7 +285,8 @@ def main():
     parser.add_argument("group_id", type=str, help="Group name or ID to query and retrieve datasets.")
     args = parser.parse_args()
 
-    process(args.group_id)
+    # check for new and/or updated datasets and send emails
+    process_group(args.group_id)
 
 
 if __name__ == "__main__":
