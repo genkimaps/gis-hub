@@ -53,11 +53,7 @@ def send_email(metadata_dict, message_template, subject_template):
     Send email to users if a new dataset is published.
     """
     try:
-        if metadata_dict is None:
-            # If dataset records is None, exit program.
-            logger.warning("Metadata dictionary is empty, program is exiting.")
-            sys.exit()
-        else:
+        if metadata_dict is not None:
             # Set up the SMTP server with mailgun settings.
             logger.info("Setting up email connection parameters...")
             server = smtplib.SMTP(host=os.environ.get("CKAN_SMTP_SERVER"))
