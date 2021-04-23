@@ -208,7 +208,7 @@ def check_updated(dataset):
         logger.info("Updated dataset found...")
         # get metadata
         logger.info("Getting all the metadata from dataset and users to send email...")
-        followers_list = ck.get_dataset_followers(dataset)
+        followers_list = ck.get_dataset_followers(dataset.get("id"))
         # check if there are any followers
         if len(followers_list) > 0:
             # have to get the user IDs in order to filter user list and get emails
