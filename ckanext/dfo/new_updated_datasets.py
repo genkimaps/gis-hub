@@ -31,7 +31,7 @@ log_dict = {"meta_new": "Preparing metadata from dataset and users to send email
             "dataset_new_found": "New dataset found: {}...",
             "dataset_updated_found": "Updated dataset found: {}...",
             "no_followers": "{} has no followers...",
-            "all_users_text": "Getting metadata and followers from {} send email..."
+            "all_users_text": "Checking {} for followers..."
             }
 
 smtp_settings = {"server": os.environ.get("CKAN_SMTP_SERVER"),
@@ -266,7 +266,7 @@ def check_updated(dataset):
         if res_minutes_diff < 60.0 and date_created.date() != today.date():
             logger.info(log_dict.get("dataset_updated_found").format(dataset.get("name")))
             # get metadata
-            logger.info(log_dict.get("all_users_text").format(dataset))
+            logger.info(log_dict.get("all_users_text").format(dataset.get("name")))
             followers_list = ck.get_dataset_followers(dataset.get("id"))
             # check if there are any followers
             if len(followers_list) > 0:
