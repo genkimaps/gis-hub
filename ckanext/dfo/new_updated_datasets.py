@@ -31,7 +31,10 @@ log_dict = {"meta_new": "Preparing metadata from dataset and users to send email
             "dataset_new_found": "New dataset found: {}...",
             "dataset_updated_found": "Updated dataset found: {}...",
             "no_followers": "{} has no followers...",
-            "all_users_text": "Checking {} for followers..."
+            "all_users_text": "Checking {} for followers...",
+            "group_datasets": "Getting list of datasets in {}",
+            "updated_all_check": "Checking all datasets for updates and followers to email...",
+            "updated_all_none": "No updated datasets in last 60 minutes."
             }
 
 smtp_settings = {"server": os.environ.get("CKAN_SMTP_SERVER"),
@@ -312,7 +315,7 @@ def process_group(group_name):
     """
     Get datasets in group, check for newly published ones, send email to members of group if new data exists.
     """
-    logger.info("Getting list of datasets in {}".format(group_name))
+    logger.info(log_dict.get("group_datasets").format(group_name))
     datasets_group = ck.list_datasets_in_group(group_name)
     new_updated_group = [new_or_updated_group(dataset, group_name) for dataset in datasets_group]
 
@@ -332,7 +335,7 @@ def process_updated():
     """
     Check all datasets for updated, email followers if any
     """
-    logger.info("Checking all datasets for updates and followers to email...")
+    logger.info(log_dict.get("updated_all_check"))
     # get all datasets
     all_datasets = ck.list_datasets()
     updated_meta = [check_updated(dataset) for dataset in all_datasets]
@@ -345,7 +348,7 @@ def process_updated():
         for data_dict in updated_meta:
             send_email(data_dict, email_template_updated[0], email_template_updated[1], template="datasets")
     else:
-        logger.info("No updated datasets in last 60 minutes.")
+        logger.info(log_dict.get("updated_all_none"))
 
     return
 
