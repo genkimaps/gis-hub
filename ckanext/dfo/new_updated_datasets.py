@@ -165,12 +165,13 @@ def latest_modified_date(dataset):
         resources = dataset.get("resources")
         if resources is not None:
             # get most recently modified date from list of resources, remove None values from list
-            dates_strings = [res.get("last_modified") for res in resources]
-            # do this in 2 steps - seems to be a difference between python2 and python3?
-            dates_strings_cleaned = [date for date in dates_strings if date]
-            dates = [dateutil.parser.parse(date_str) for date_str in dates_strings_cleaned]
-            most_recent_date = max(dates)
-            return most_recent_date
+            dates_strings = [res.get("last_modified") for res in resources if res.get("last_modified") is not None]
+            if len(dates_strings) > 0:
+                dates = [dateutil.parser.parse(date_str) for date_str in dates_strings]
+                most_recent_date = max(dates)
+                return most_recent_date
+            else:
+                return None
     except Exception as e:
         logger.error(log_dict.get("last_modified_error"))
         logger.error(e.args)
@@ -189,64 +190,65 @@ def new_or_updated_group(dataset, group_name):
         minutes_diff = date_diff.total_seconds() / 60
         # get date of most recent modified metadata from dataset
         res_last_modified_date = latest_modified_date(dataset)
-        res_date_diff = today - res_last_modified_date
-        res_minutes_diff = res_date_diff.total_seconds() / 60
-        # if dataset was created in the last hour, send email to members of org
-        if minutes_diff < 60.0:
-            logger.info(log_dict.get("dataset_new_found").format(dataset.get("name")))
-            # get group metadata
-            logger.info(log_dict.get("meta_new"))
-            group_data = ck.get_group(group_name)
-            # have to get the user IDs in order to filter user list and get emails
-            group_user_ids = [user.get("id") for user in group_data.get("users")]
-            # get list of all users information on gis hub
-            all_users = ck.get_user_info()
-            # now filter the list of all users to get the ones part of the group
-            group_user_emails = [u.get("email") for u in all_users if u.get("id") in group_user_ids]
-            # get metadata for email
-            template_meta = MetaTemplateGroup(dataset,
-                                              group_data,
-                                              group_name,
-                                              group_user_emails,
-                                              state="New",
-                                              change_date="",
-                                              change_desc="")
-            logger.info(log_dict.get("meta_prepared"))
-            return template_meta
-        # if resources were updated in the last hour, AND dataset was not created today, send email to members of group
-        elif res_minutes_diff < 60.0 and date_created.date() != today.date():
-            logger.info(log_dict.get("dataset_updated_found").format(dataset.get("name")))
-            # get group metadata
-            logger.info(log_dict.get("meta_updated"))
-            group_data = ck.get_group(group_name)
-            # have to get the user IDs in order to filter user list and get emails
-            group_user_ids = [user.get("id") for user in group_data.get("users")]
-            # get list of all users information on gis hub
-            all_users = ck.get_user_info()
-            # now filter the list of all users to get the ones part of the group
-            group_user_emails = [u.get("email") for u in all_users if u.get("id") in group_user_ids]
-            # change history text
-            change_string = dataset.get("change_history")
-            change_list = json.loads(change_string)
-            # get latest change history entry
-            # leave as empty strings so if no change information, the text is blank when the template is filled.
-            change_date = ""
-            change_desc = ""
-            if len(change_list) > 0:
-                change_date = "Change Date: {}".format(change_list[-1].get('change_date'))
-                change_desc = "Description: {}".format(change_list[-1].get('change_description'))
+        if res_last_modified_date is not None:
+            res_date_diff = today - res_last_modified_date
+            res_minutes_diff = res_date_diff.total_seconds() / 60
+            # if dataset was created in the last hour, send email to members of org
+            if minutes_diff < 60.0:
+                logger.info(log_dict.get("dataset_new_found").format(dataset.get("name")))
+                # get group metadata
+                logger.info(log_dict.get("meta_new"))
+                group_data = ck.get_group(group_name)
+                # have to get the user IDs in order to filter user list and get emails
+                group_user_ids = [user.get("id") for user in group_data.get("users")]
+                # get list of all users information on gis hub
+                all_users = ck.get_user_info()
+                # now filter the list of all users to get the ones part of the group
+                group_user_emails = [u.get("email") for u in all_users if u.get("id") in group_user_ids]
+                # get metadata for email
+                template_meta = MetaTemplateGroup(dataset,
+                                                  group_data,
+                                                  group_name,
+                                                  group_user_emails,
+                                                  state="New",
+                                                  change_date="",
+                                                  change_desc="")
+                logger.info(log_dict.get("meta_prepared"))
+                return template_meta
+            # if resources were updated in the last hour, AND dataset was not created today, send email to members of group
+            elif res_minutes_diff < 60.0 and date_created.date() != today.date():
+                logger.info(log_dict.get("dataset_updated_found").format(dataset.get("name")))
+                # get group metadata
+                logger.info(log_dict.get("meta_updated"))
+                group_data = ck.get_group(group_name)
+                # have to get the user IDs in order to filter user list and get emails
+                group_user_ids = [user.get("id") for user in group_data.get("users")]
+                # get list of all users information on gis hub
+                all_users = ck.get_user_info()
+                # now filter the list of all users to get the ones part of the group
+                group_user_emails = [u.get("email") for u in all_users if u.get("id") in group_user_ids]
+                # change history text
+                change_string = dataset.get("change_history")
+                change_list = json.loads(change_string)
+                # get latest change history entry
+                # leave as empty strings so if no change information, the text is blank when the template is filled.
+                change_date = ""
+                change_desc = ""
+                if len(change_list) > 0:
+                    change_date = "Change Date: {}".format(change_list[-1].get('change_date'))
+                    change_desc = "Description: {}".format(change_list[-1].get('change_description'))
 
-            # get metadata for email
-            template_meta = MetaTemplateGroup(dataset=dataset,
-                                              group_data=group_data,
-                                              group_name=group_name,
-                                              group_user_emails=group_user_emails,
-                                              state="Updated",
-                                              change_date=change_date,
-                                              change_desc=change_desc)
+                # get metadata for email
+                template_meta = MetaTemplateGroup(dataset=dataset,
+                                                  group_data=group_data,
+                                                  group_name=group_name,
+                                                  group_user_emails=group_user_emails,
+                                                  state="Updated",
+                                                  change_date=change_date,
+                                                  change_desc=change_desc)
 
-            logger.info(log_dict.get("meta_prepared"))
-            return template_meta
+                logger.info(log_dict.get("meta_prepared"))
+                return template_meta
     except Exception as e:
         logger.error(log_dict.get("meta_dict_error"))
         logger.error(e.args)
@@ -262,44 +264,45 @@ def check_updated(dataset):
         minutes_diff = date_diff.total_seconds() / 60
         # get date of most recent modified metadata from dataset
         res_last_modified_date = latest_modified_date(dataset)
-        res_date_diff = today - res_last_modified_date
-        res_minutes_diff = res_date_diff.total_seconds() / 60
-        # if resources have been updated, process and send email
-        if res_minutes_diff < 60.0 and date_created.date() != today.date():
-            logger.info(log_dict.get("dataset_updated_found").format(dataset.get("name")))
-            # get metadata
-            logger.info(log_dict.get("all_users_text").format(dataset.get("name")))
-            followers_list = ck.get_dataset_followers(dataset.get("id"))
-            # check if there are any followers
-            if len(followers_list) > 0:
-                # have to get the user IDs in order to filter user list and get emails
-                follower_ids = [follower.get("id") for follower in followers_list]
-                # get list of all users information on gis hub
-                all_users = ck.get_user_info()
-                # now filter the list of all users to get the ones part of the group
-                user_emails = [u.get("email") for u in all_users if u.get("id") in follower_ids]
-                # change history text
-                change_string = dataset.get("change_history")
-                change_list = json.loads(change_string)
-                # get latest change history entry
-                # leave as empty strings so if no change information, the text is blank when the template is filled.
-                change_date = ""
-                change_desc = ""
-                if len(change_list) > 0:
-                    change_date = "Change Date: {}".format(change_list[-1].get('change_date'))
-                    change_desc = "Description: {}".format(change_list[-1].get('change_description'))
+        if res_last_modified_date is not None:
+            res_date_diff = today - res_last_modified_date
+            res_minutes_diff = res_date_diff.total_seconds() / 60
+            # if resources have been updated, process and send email
+            if res_minutes_diff < 60.0 and date_created.date() != today.date():
+                logger.info(log_dict.get("dataset_updated_found").format(dataset.get("name")))
+                # get metadata
+                logger.info(log_dict.get("all_users_text").format(dataset.get("name")))
+                followers_list = ck.get_dataset_followers(dataset.get("id"))
+                # check if there are any followers
+                if len(followers_list) > 0:
+                    # have to get the user IDs in order to filter user list and get emails
+                    follower_ids = [follower.get("id") for follower in followers_list]
+                    # get list of all users information on gis hub
+                    all_users = ck.get_user_info()
+                    # now filter the list of all users to get the ones part of the group
+                    user_emails = [u.get("email") for u in all_users if u.get("id") in follower_ids]
+                    # change history text
+                    change_string = dataset.get("change_history")
+                    change_list = json.loads(change_string)
+                    # get latest change history entry
+                    # leave as empty strings so if no change information, the text is blank when the template is filled.
+                    change_date = ""
+                    change_desc = ""
+                    if len(change_list) > 0:
+                        change_date = "Change Date: {}".format(change_list[-1].get('change_date'))
+                        change_desc = "Description: {}".format(change_list[-1].get('change_description'))
 
-                # get metadata for email
-                template_meta = MetaTemplate(dataset=dataset,
-                                             user_emails=user_emails,
-                                             state="Updated",
-                                             change_date=change_date,
-                                             change_desc=change_desc)
+                    # get metadata for email
+                    template_meta = MetaTemplate(dataset=dataset,
+                                                 user_emails=user_emails,
+                                                 state="Updated",
+                                                 change_date=change_date,
+                                                 change_desc=change_desc)
 
-                logger.info(log_dict.get("meta_prepared"))
-                return template_meta
-            else:
-                logger.info(log_dict.get("no_followers").format(dataset.get("name")))
+                    logger.info(log_dict.get("meta_prepared"))
+                    return template_meta
+                else:
+                    logger.info(log_dict.get("no_followers").format(dataset.get("name")))
     except Exception as e:
         logger.error(log_dict.get("meta_dict_error"))
         logger.error(e.args)
