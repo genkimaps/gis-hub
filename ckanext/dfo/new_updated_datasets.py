@@ -145,7 +145,7 @@ def send_email(metadata_dict, message_template, subject_template, template="grou
                 logger.info(log_dict.get("email_template_arg_error"))
             # Setup the parameters of the message.
             msg["From"] = smtp_settings.get("mail_from")
-            msg["To"] = ", ".join(metadata_dict.get("emails"))
+            msg["To"] = ", ".join(metadata_dict.emails)
             msg["Subject"] = subject
 
             # Add the message from template to body of email.
@@ -153,7 +153,7 @@ def send_email(metadata_dict, message_template, subject_template, template="grou
 
             # Send the message via the server set up earlier.
             logger.info(log_dict.get("email_send"))
-            server.sendmail(msg["From"], metadata_dict.get("emails"), msg.as_string())
+            server.sendmail(msg["From"], metadata_dict.emails, msg.as_string())
 
             del msg
             server.quit()
