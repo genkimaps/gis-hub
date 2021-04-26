@@ -165,10 +165,10 @@ def latest_modified_date(dataset):
         resources = dataset.get("resources")
         if resources is not None:
             # get most recently modified date from list of resources, remove None values from list
-            dates_strings = [res.get("last_modified") for res in resources if
-                     res.get("last_modified") is not None]
-
-            dates = [dateutil.parser.parse(date_str) for date_str in dates_strings]
+            dates_strings = [res.get("last_modified") for res in resources]
+            # do this in 2 steps - seems to be a difference between python2 and python3?
+            dates_strings_cleaned = [date for date in dates_strings if date]
+            dates = [dateutil.parser.parse(date_str) for date_str in dates_strings_cleaned]
             most_recent_date = max(dates)
             return most_recent_date
     except Exception as e:
