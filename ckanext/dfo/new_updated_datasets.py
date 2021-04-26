@@ -164,11 +164,13 @@ def latest_modified_date(dataset):
         # get resources from dataset
         resources = dataset.get("resources")
         if resources is not None:
-            # get most recently modified date from list of resources
-            max_date = max(
-                [dateutil.parser.parse(res.get("last_modified")) for res in resources if
-                 res.get("last_modified") is not None])
-            return max_date
+            # get most recently modified date from list of resources, remove None values from list
+            dates_strings = [res.get("last_modified") for res in resources if
+                     res.get("last_modified") is not None]
+
+            dates = [dateutil.parser.parse(date_str) for date_str in dates_strings]
+            most_recent_date = max(dates)
+            return most_recent_date
     except Exception as e:
         logger.error(log_dict.get("last_modified_error"))
         logger.error(e.args)
