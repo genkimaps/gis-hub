@@ -32,9 +32,14 @@ log_dict = {"meta_new": "Preparing metadata from dataset and users to send email
             "dataset_updated_found": "Updated dataset found: {}...",
             "no_followers": "{} has no followers...",
             "all_users_text": "Checking {} for followers...",
-            "group_datasets": "Getting list of datasets in {}",
+            "group_datasets": "Getting list of datasets in {}...",
             "updated_all_check": "Checking all datasets for updates and followers to email...",
-            "updated_all_none": "No updated datasets in last 60 minutes."
+            "updated_all_none": "No updated datasets in last 60 minutes...",
+            "get_orgs_error": "Error preparing list of organizations on GIS Hub...",
+            "get_orgs_list": "Getting list of organizations on GIS Hub...",
+            "process_orgs": "Checking for new datasets in all organizations...",
+            "process_orgs_error": "Error checking for new datasets in all organizations...",
+            "get_time_diff_error": "Error getting time difference for resources in {}..."
             }
 
 smtp_settings = {"server": os.environ.get("CKAN_SMTP_SERVER"),
@@ -42,6 +47,7 @@ smtp_settings = {"server": os.environ.get("CKAN_SMTP_SERVER"),
                  "password": os.environ.get("CKAN_SMTP_PASSWORD"),
                  "mail_from": os.environ.get("CKAN_SMTP_MAIL_FROM")}
 
+TODAY = datetime.today()
 
 class MetaTemplateGroup:
     def __init__(self, dataset, group_data, group_name, group_user_emails, state, change_date, change_desc):
@@ -153,6 +159,7 @@ def send_email(metadata_dict, message_template, subject_template, template="grou
 
             # Send the message via the server set up earlier.
             logger.info(log_dict.get("email_send"))
+            logger.info(metadata_dict)
             server.sendmail(msg["From"], metadata_dict.emails, msg.as_string())
 
             del msg
@@ -185,18 +192,13 @@ def new_or_updated_group(dataset, group_name):
     Get all the metadata required to fill template into a dictionary.
     """
     try:
-        date_created = dateutil.parser.parse(dataset.get("metadata_created"))
-        # https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#ckan-display-timezone
-        # todays datetime
-        today = datetime.today()
-        date_diff = today - date_created
-        minutes_diff = date_diff.total_seconds() / 60
+        date_created, minutes_diff = get_date_minutes_diff(dataset, TODAY)
         # get date of most recent modified metadata from dataset
         res_last_modified_date = latest_modified_date(dataset)
         if res_last_modified_date is not None:
-            res_date_diff = today - res_last_modified_date
+            res_date_diff = TODAY - res_last_modified_date
             res_minutes_diff = res_date_diff.total_seconds() / 60
-            # if dataset was created in the last hour, send email to members of org
+            # if dataset was created in the last hour, send email to members of group
             if minutes_diff < 60.0:
                 logger.info(log_dict.get("dataset_new_found").format(dataset.get("name")))
                 # get group metadata
@@ -219,7 +221,7 @@ def new_or_updated_group(dataset, group_name):
                 logger.info(log_dict.get("meta_prepared"))
                 return template_meta
             # if resources were updated in the last hour, AND dataset was not created today, send email to members of group
-            elif res_minutes_diff < 60.0 and date_created.date() != today.date():
+            elif res_minutes_diff < 60.0 and date_created.date() != TODAY.date():
                 logger.info(log_dict.get("dataset_updated_found").format(dataset.get("name")))
                 # get group metadata
                 logger.info(log_dict.get("meta_updated"))
@@ -259,19 +261,14 @@ def new_or_updated_group(dataset, group_name):
 
 def check_updated(dataset):
     try:
-        date_created = dateutil.parser.parse(dataset.get("metadata_created"))
-        # https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#ckan-display-timezone
-        # todays datetime
-        today = datetime.today()
-        date_diff = today - date_created
-        minutes_diff = date_diff.total_seconds() / 60
+        date_created, minutes_diff = get_date_minutes_diff(dataset, TODAY)
         # get date of most recent modified metadata from dataset
         res_last_modified_date = latest_modified_date(dataset)
         if res_last_modified_date is not None:
-            res_date_diff = today - res_last_modified_date
+            res_date_diff = TODAY - res_last_modified_date
             res_minutes_diff = res_date_diff.total_seconds() / 60
             # if resources have been updated, process and send email
-            if res_minutes_diff < 60.0 and date_created.date() != today.date():
+            if res_minutes_diff < 60.0 and date_created.date() != TODAY.date():
                 logger.info(log_dict.get("dataset_updated_found").format(dataset.get("name")))
                 # get metadata
                 logger.info(log_dict.get("all_users_text").format(dataset.get("name")))
@@ -308,6 +305,48 @@ def check_updated(dataset):
                     logger.info(log_dict.get("no_followers").format(dataset.get("name")))
     except Exception as e:
         logger.error(log_dict.get("meta_dict_error"))
+        logger.error(e.args)
+
+
+def get_orgs():
+    try:
+        logger.info(log_dict.get("get_orgs_list"))
+        orgs_list = ck.get_list_organizations()
+        # remove test from list
+        orgs_list.remove('test')
+        return orgs_list
+    except Exception as e:
+        logger.error(log_dict.get("get_orgs_error"))
+        logger.error(e.args)
+
+
+def get_date_minutes_diff(dataset, today):
+    try:
+        date_created = dateutil.parser.parse(dataset.get("metadata_created"))
+        date_diff = today - date_created
+        minutes_diff = date_diff.total_seconds() / 60
+        date_dict = date_created, minutes_diff
+        return date_dict
+    except Exception as e:
+        logger.error(log_dict.get("get_time_diff_error").format(dataset))
+        logger.error(e.args)
+
+
+def process_orgs(organization_list):
+    try:
+        logger.info(log_dict.get("process_orgs"))
+        # get organizations information
+        orgs = [ck.get_organization(org) for org in organization_list]
+        # remove any orgs without datasets
+        orgs_to_process = [org for org in orgs if len(org.get("packages")) > 0]
+        # check if any package in any org has been updated in last 60 minutes
+        orgs_new_ds = [ds for org in orgs_to_process for ds in org.get("packages") if get_date_minutes_diff(i, TODAY)[1] < 60.0]
+        if len(orgs_new_ds) > 1:
+            #
+
+        return
+    except Exception as e:
+        logger.error(log_dict.get("process_orgs_error"))
         logger.error(e.args)
 
 
@@ -363,8 +402,10 @@ def main():
     # check for updated datasets and followers
     process_updated()
 
-    # check for new and/or updated datasets and send emails
+    # check for new and/or updated datasets and send emails - gets arg from shell script --> group is spill response
     process_group(args.group_id)
+
+    # get list of
 
 
 if __name__ == "__main__":
