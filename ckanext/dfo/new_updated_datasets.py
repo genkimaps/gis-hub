@@ -433,7 +433,7 @@ def main():
     args = parser.parse_args()
 
     # check for updated datasets and followers
-    process_updated()
+    # process_updated()
 
     # check for new and/or updated datasets and send emails - gets arg from shell script --> group is spill response
     process_group(args.group_id)
