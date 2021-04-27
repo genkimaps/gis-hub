@@ -10,6 +10,7 @@ from email.mime.text import MIMEText
 from datetime import datetime
 import dateutil.parser
 import json
+from dateutil import tz
 
 # Use sys.append to append path to where ckanapi module lives.
 # https://stackoverflow.com/questions/22955684/how-to-import-py-file-from-another-directory
@@ -48,7 +49,10 @@ smtp_settings = {"server": os.environ.get("CKAN_SMTP_SERVER"),
                  "password": os.environ.get("CKAN_SMTP_PASSWORD"),
                  "mail_from": os.environ.get("CKAN_SMTP_MAIL_FROM")}
 
+# get today in local time zone
 TODAY = datetime.today()
+to_zone = tz.tzlocal()
+TODAY = TODAY.replace(tzinfo=to_zone)
 
 
 class MetaTemplateGroup:
@@ -324,10 +328,16 @@ def get_orgs():
 
 def get_date_minutes_diff(dataset, today):
     try:
+        # get date created
         date_created = dateutil.parser.parse(dataset.get("metadata_created"))
-        date_diff = today - date_created
+        # need to convert UTC time to local time
+        from_zone = tz.tzutc()
+        to_zone = tz.tzlocal()
+        date_created_utc = date_created.replace(tzinfo=from_zone)
+        date_created_local = date_created_utc.astimezone(to_zone)
+        date_diff = today - date_created_local
         minutes_diff = date_diff.total_seconds() / 60
-        return date_created, minutes_diff
+        return date_created_local, minutes_diff
     except Exception as e:
         logger.error(log_dict.get("get_time_diff_error").format(dataset))
         logger.error(e.args)
