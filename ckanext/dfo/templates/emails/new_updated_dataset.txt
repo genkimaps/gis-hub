@@ -1,14 +1,14 @@
-${GROUP_NAME} members,
-
-A new dataset - ${DATASET_NAME} - has been published to the GIS Hub and added to the ${GROUP_NAME} group.
+${STATE} dataset - ${DATASET_NAME} - on the GIS Hub. NOTE: dataset may be in draft status and metadata may be incomplete (see 'Status' field).
 
 Dataset URL: ${DATA_URL}
-
-Group URL: ${GROUP_URL}
 
 Dataset summary:
 ------------------------
 ${SUMMARY}
 ------------------------
+
+${CHANGE_DATE}
+
+${CHANGE_DESC}
 
 This is an automated email, please do not reply.

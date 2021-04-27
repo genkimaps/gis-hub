@@ -1,0 +1,18 @@
+${GROUP_NAME} members,
+
+${STATE} dataset - ${DATASET_NAME} - on the GIS Hub in the ${GROUP_NAME} group. NOTE: dataset may be in draft status and metadata may be incomplete (see 'Status' field).
+
+Dataset URL: ${DATA_URL}
+
+Group URL: ${GROUP_URL}
+
+Dataset summary:
+------------------------
+${SUMMARY}
+------------------------
+
+${CHANGE_DATE}
+
+${CHANGE_DESC}
+
+This is an automated email, please do not reply.
