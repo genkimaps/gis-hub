@@ -344,7 +344,7 @@ def process_orgs(organization_list):
         orgs_new_ds = [ds for org in orgs_to_process for ds in org.get("packages") if
                        get_date_minutes_diff(ds, TODAY)[1] < 60.0]
         # Check if there are any new datasets
-        if len(orgs_new_ds) > 1:
+        if len(orgs_new_ds) > 0:
             # Loop through new datasets in organization
             for ds in orgs_new_ds:
                 # Get owner organization
