@@ -1,4 +1,4 @@
-${STATE} dataset - ${DATASET_NAME} - on the GIS Hub.
+${STATE} dataset - ${DATASET_NAME} - on the GIS Hub. NOTE: dataset may be in draft status and metadata may be incomplete (see 'Status' field).
 
 Dataset URL: ${DATA_URL}
 

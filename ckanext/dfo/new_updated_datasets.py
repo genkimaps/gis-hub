@@ -38,6 +38,7 @@ log_dict = {"meta_new": "Preparing metadata from dataset and users to send email
             "get_orgs_error": "Error preparing list of organizations on GIS Hub...",
             "get_orgs_list": "Getting list of organizations on GIS Hub...",
             "process_orgs": "Checking for new datasets in all organizations...",
+            "process_orgs_no_new": "No new datasets in any organizations...",
             "process_orgs_error": "Error checking for new datasets in all organizations...",
             "get_time_diff_error": "Error getting time difference for resources in {}..."
             }
@@ -48,6 +49,7 @@ smtp_settings = {"server": os.environ.get("CKAN_SMTP_SERVER"),
                  "mail_from": os.environ.get("CKAN_SMTP_MAIL_FROM")}
 
 TODAY = datetime.today()
+
 
 class MetaTemplateGroup:
     def __init__(self, dataset, group_data, group_name, group_user_emails, state, change_date, change_desc):
@@ -340,9 +342,40 @@ def process_orgs(organization_list):
         # remove any orgs without datasets
         orgs_to_process = [org for org in orgs if len(org.get("packages")) > 0]
         # check if any package in any org has been updated in last 60 minutes
-        orgs_new_ds = [ds for org in orgs_to_process for ds in org.get("packages") if get_date_minutes_diff(i, TODAY)[1] < 60.0]
+        orgs_new_ds = [ds for org in orgs_to_process for ds in org.get("packages") if
+                       get_date_minutes_diff(ds, TODAY)[1] < 60.0]
+        # Check if there are any new datasets
         if len(orgs_new_ds) > 1:
-            #
+            # Loop through new datasets in organization
+            for ds in orgs_new_ds:
+                # Get owner organization
+                owner_org_id = ds.get("owner_org")
+                # Get list of followers of org
+                follower_meta = ck.get_organization_followers(owner_org_id)
+                # Get owner org meta in order to get members of that org
+                owner_org = next(item for item in orgs_to_process if item.get("id") == owner_org_id)
+                # Get list of members of org
+                org_members = [user.get("id") for user in owner_org.get("users")]
+                # Check if follower is a member of owner org
+                follower_ids = [follower.get("id") for follower in follower_meta if follower.get("id") in org_members]
+                # Get list of all users information on gis hub
+                all_users = ck.get_user_info()
+                # Now filter the list of all users to get the ones part of the group
+                follower_emails = [u.get("email") for u in all_users if u.get("id") in follower_ids]
+                # Prepare metadata and load into template
+                template_meta = MetaTemplate(dataset=ds,
+                                             user_emails=follower_emails,
+                                             state="New",
+                                             change_date="",
+                                             change_desc="")
+                logger.info(log_dict.get("meta_prepared"))
+                # Load template email body and subject.
+                email_template_new = read_templates("templates/emails/new_updated_dataset.txt",
+                                                    "templates/emails/new_updated_dataset_subject.txt")
+                # Send email
+                send_email(template_meta, email_template_new[0], email_template_new[1], template="datasets")
+        else:
+            logger.info(log_dict.get("process_orgs_no_new"))
 
         return
     except Exception as e:
@@ -405,7 +438,9 @@ def main():
     # check for new and/or updated datasets and send emails - gets arg from shell script --> group is spill response
     process_group(args.group_id)
 
-    # get list of
+    # check for new datasets in all organizations - if there are any, email organization followers if they are a member
+    org_list = get_orgs()
+    process_orgs(org_list)
 
 
 if __name__ == "__main__":
