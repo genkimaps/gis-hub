@@ -327,8 +327,7 @@ def get_date_minutes_diff(dataset, today):
         date_created = dateutil.parser.parse(dataset.get("metadata_created"))
         date_diff = today - date_created
         minutes_diff = date_diff.total_seconds() / 60
-        date_dict = date_created, minutes_diff
-        return date_dict
+        return date_created, minutes_diff
     except Exception as e:
         logger.error(log_dict.get("get_time_diff_error").format(dataset))
         logger.error(e.args)
