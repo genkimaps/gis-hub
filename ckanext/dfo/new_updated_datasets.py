@@ -342,7 +342,7 @@ def process_orgs(organization_list):
         orgs_to_process = [org for org in orgs if len(org.get("packages")) > 0]
         # check if any package in any org has been updated in last 60 minutes
         orgs_new_ds = [ds for org in orgs_to_process for ds in org.get("packages") if
-                       get_date_minutes_diff(ds, TODAY)[1] < 120.0]
+                       get_date_minutes_diff(ds, TODAY)[1] < 60.0]
         # Check if there are any new datasets
         if len(orgs_new_ds) > 0:
             # Loop through new datasets in organization
@@ -355,9 +355,11 @@ def process_orgs(organization_list):
                 owner_org = next(item for item in orgs_to_process if item.get("id") == owner_org_id)
                 # Get list of members of org
                 org_members = [user.get("id") for user in owner_org.get("users")]
+                # If dataset is private, email only followers who belong to org, else email all followers.
                 if ds.get("private"):
                     # Check if follower is a member of owner org
-                    follower_ids = [follower.get("id") for follower in follower_meta if follower.get("id") in org_members]
+                    follower_ids = [follower.get("id") for follower in follower_meta if
+                                    follower.get("id") in org_members]
                 else:
                     # Get ids of followers
                     follower_ids = [follower.get("id") for follower in follower_meta]
@@ -438,7 +440,7 @@ def main():
     args = parser.parse_args()
 
     # check for updated datasets and followers
-    # process_updated()
+    process_updated()
 
     # check for new and/or updated datasets and send emails - gets arg from shell script --> group is spill response
     process_group(args.group_id)
