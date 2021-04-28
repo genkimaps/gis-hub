@@ -51,8 +51,6 @@ smtp_settings = {"server": os.environ.get("CKAN_SMTP_SERVER"),
 
 # get today in local time zone
 TODAY = datetime.today()
-to_zone = tz.tzlocal()
-TODAY = TODAY.replace(tzinfo=to_zone)
 
 
 class MetaTemplateGroup:
