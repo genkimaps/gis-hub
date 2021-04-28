@@ -185,7 +185,6 @@ def latest_modified_date(dataset):
             if len(dates_strings) > 0:
                 dates = [dateutil.parser.parse(date_str) for date_str in dates_strings]
                 most_recent_date = max(dates)
-                most_recent_date = most_recent_date.replace(tzinfo=default_tzinfo)
                 return most_recent_date
             else:
                 return None
