@@ -185,6 +185,7 @@ def latest_modified_date(dataset):
             if len(dates_strings) > 0:
                 dates = [dateutil.parser.parse(date_str) for date_str in dates_strings]
                 most_recent_date = max(dates)
+                most_recent_date = most_recent_date.replace(tzinfo=default_tzinfo)
                 return most_recent_date
             else:
                 return None
@@ -201,7 +202,6 @@ def new_or_updated_group(dataset, group_name):
         date_created, minutes_diff = get_date_minutes_diff(dataset, TODAY)
         # get date of most recent modified metadata from dataset
         res_last_modified_date = latest_modified_date(dataset)
-        res_last_modified_date.replace(tzinfo=default_tzinfo)
         if res_last_modified_date is not None:
             res_date_diff = TODAY - res_last_modified_date
             res_minutes_diff = res_date_diff.total_seconds() / 60
@@ -271,7 +271,6 @@ def check_updated(dataset):
         date_created, minutes_diff = get_date_minutes_diff(dataset, TODAY)
         # get date of most recent modified metadata from dataset
         res_last_modified_date = latest_modified_date(dataset)
-        res_last_modified_date.replace(tzinfo=default_tzinfo)
         if res_last_modified_date is not None:
             res_date_diff = TODAY - res_last_modified_date
             res_minutes_diff = res_date_diff.total_seconds() / 60
