@@ -1504,6 +1504,22 @@
             imported into FGP/Open Maps as a new record. Metadata should be verified before any publication to FGP/Open
             Maps.
         </p>
+        <h3 id="data-maintainers">Data Maintainer Emails</h3>
+        <p>There is an automated system that is run monthly to email the data maintainers of datasets if certain
+            conditions are met. The
+            conditions are: 1) the dataset's spatial resources have not been updated in at least 365 days 2) the
+            dataset's metadata 'Update Frequency'
+            field is not set to 'As Needed' or 'Not Planned'.
+        </p>
+        <h3 id="follow-email">New and Updated Dataset Emails</h3>
+        <p>There is an automated system to detect when a new dataset is uploaded or the resources of an existing one are
+            updated. To receive email notifications about updated datasets, simply follow a dataset. To receive email
+            notifications about new
+            datasets, follow an organization. If a dataset is private to that organization, you will only receive an
+            email if you belong to
+            that same organization and you follow them. However, if you follow an organization that publishes a public
+            dataset, you will be notified. Unfollow to stop receiving emails about new or updated datasets.
+        </p>
     </div>
 </article>
 {% endblock %}
@@ -1551,7 +1567,12 @@
         <p><a href="#reorder-res">Reordering Resources</a></p>
         <p><a href="#embed-map">Embed Map Preview</a></p>
         <p><a href="#hnap">HNAP Metadata XML</a></p>
-        <br><br>
+        <p><a href="#data-maintainers">Data Maintainer Emails</a><img src="/base/images/docs/new.png"
+                                                                      alt="New" height="20"
+                                                                      width="20"></p>
+        <p><a href="follow-email">New and Updated Dataset Emails </a><img src="/base/images/docs/new.png"
+                                                                          alt="New" height="20"
+                                                                          width="20"></p>
     </div>
 </div>
 {% endblock %}
