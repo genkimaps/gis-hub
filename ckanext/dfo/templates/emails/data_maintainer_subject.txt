@@ -1,1 +1,1 @@
-Update to ${DATASET_NAME} dataset on GIS Hub.
+Does ${DATASET_NAME} dataset on GIS Hub need updating?

@@ -25,6 +25,8 @@ def parse_csv(csv_path):
                 data = pd.read_csv(csv_file)
                 # Filter out records with NA values.
                 data = data.dropna()
+                # Filter out records where update frequency is 'Not Planned' or 'As Needed'
+                data = data[~data["update_frequency"].isin(["Not Planned", "As Needed"])]
                 # Filter out records where last modified date was over 365 days ago.
                 data = data[data["days_since_modified"] >= 365]
                 # Remove records where resource is a document or zip file.
@@ -76,13 +78,13 @@ def setup_smtp(dataset_records, message_template, subject_template):
                 msg = MIMEMultipart()
 
                 # Add in the actual person name to the message template.
-                message = message_template.substitute(PERSON_NAME=record["maintainer_name"],
-                                                      DATASET_NAME=record["title"],
-                                                      DAYS_SINCE_MODIFIED_MAX=max(record["days_since_modified"]),
-                                                      DATA_URL=record["url"])
+                message = message_template.substitute(PERSON_NAME=record.get("maintainer_name"),
+                                                      DATASET_NAME=record.get("title"),
+                                                      DAYS_SINCE_MODIFIED_MAX=max(record.get("days_since_modified")),
+                                                      DATA_URL=record.get("url"))
 
                 # Add in custom subject with dataset name.
-                subject = subject_template.substitute(DATASET_NAME=record["title"])
+                subject = subject_template.substitute(DATASET_NAME=record.get("title"))
 
                 # Setup the parameters of the message.
                 msg["From"] = os.environ.get("CKAN_SMTP_MAIL_FROM")

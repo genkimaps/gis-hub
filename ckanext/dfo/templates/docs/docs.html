@@ -24,7 +24,9 @@
                 <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/2021-02-GISHubSummary.pdf?"
                    target="_blank">Feb 2021</a>
                 <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/2021-03-GISHubSummary.pdf?"
-                   target="_blank">Mar 2021 <img src="/base/images/docs/new.png" alt="New" height="25" width="25"></a>
+                   target="_blank">Mar 2021</a>
+                <a href="https://gitlab.com/dfo-msea/gis-hub/summaries/-/raw/master/2021-04-GISHubSummary.pdf?"
+                   target="_blank">Apr 2021 <img src="/base/images/docs/new.png" alt="New" height="25" width="25"></a>
             </div>
         </div>
         <div class="dropdown">
@@ -316,10 +318,10 @@
                     Set this to Private if you do not yet have all the information
                     you need to complete the required metadata fields. When set to
                     Private, you can save the metadata form, even if it is incomplete,
-                    and come back to it later. Your Private (i.e., incomplete) datasets
+                    and come back to it later. Your Private datasets
                     are visible only to you and members of your organization. To come
                     back to one of your private datasets later, click your username
-                    at the top right and look for entries marked Draft. You may also wish
+                    at the top right and look for the entry. You may also wish
                     to bookmark the URL of the dataset, which will not change.
                 </td>
             </tr>
@@ -402,7 +404,9 @@
             <tr>
                 <td>Status</td>
                 <td>Development phase of the dataset. Choose the
-                    best match from the list.
+                    best match from the list. If the dataset is incomplete, select 'Draft' and the dataset will be
+                    flagged with a label that it is in Draft Mode. This should make it obvious to users that the
+                    metadata is being worked on, but is incomplete.
                 </td>
             </tr>
             <tr>
@@ -1500,6 +1504,22 @@
             imported into FGP/Open Maps as a new record. Metadata should be verified before any publication to FGP/Open
             Maps.
         </p>
+        <h3 id="data-maintainers">Data Maintainer Emails</h3>
+        <p>There is an automated system that is run monthly to email the data maintainers of datasets if certain
+            conditions are met. The
+            conditions are: 1) the dataset's spatial resources have not been updated in at least 365 days 2) the
+            dataset's metadata 'Update Frequency'
+            field is not set to 'As Needed' or 'Not Planned'.
+        </p>
+        <h3 id="follow-email">New and Updated Dataset Emails</h3>
+        <p>There is an automated system to detect when a new dataset is uploaded or the resources of an existing one are
+            updated. To receive email notifications about updated datasets, simply follow a dataset. To receive email
+            notifications about new
+            datasets, follow an organization. If a dataset is private to that organization, you will only receive an
+            email if you belong to
+            that same organization and you follow them. However, if you follow an organization that publishes a public
+            dataset, you will be notified. Unfollow to stop receiving emails about new or updated datasets.
+        </p>
     </div>
 </article>
 {% endblock %}
@@ -1527,8 +1547,7 @@
         <p><a href="#datasets-intro">Datasets on the GIS Hub </a></p>
         <p><a href="#overview">Metadata Overview</a></p>
         <p><a href="#modules">The Metadata Standard</a></p>
-        <p><a href="#basic">Basic Information </a><img src="/base/images/docs/updated.png" alt="Updated"
-                                                       height="20" width="20"></p>
+        <p><a href="#basic">Basic Information </a></p>
         <p><a href="#general">General Metadata</a></p>
         <p><a href="#science">Science Metadata</a></p>
         <p><a href="#species">Species Codes</a></p>
@@ -1548,7 +1567,12 @@
         <p><a href="#reorder-res">Reordering Resources</a></p>
         <p><a href="#embed-map">Embed Map Preview</a></p>
         <p><a href="#hnap">HNAP Metadata XML</a></p>
-        <br><br>
+        <p><a href="#data-maintainers">Data Maintainer Emails</a><img src="/base/images/docs/new.png"
+                                                                      alt="New" height="25"
+                                                                      width="25"></p>
+        <p><a href="#follow-email">New and Updated Dataset Emails </a><img src="/base/images/docs/new.png"
+                                                                           alt="New" height="25"
+                                                                           width="25"></p>
     </div>
 </div>
 {% endblock %}

@@ -1,0 +1,14 @@
+${STATE} dataset - ${DATASET_NAME} - on the GIS Hub. NOTE: dataset may be in draft status and metadata may be incomplete (see 'Status' field).
+
+Dataset URL: ${DATA_URL}
+
+Dataset summary:
+------------------------
+${SUMMARY}
+------------------------
+
+${CHANGE_DATE}
+
+${CHANGE_DESC}
+
+This is an automated email, please do not reply.

@@ -12,12 +12,7 @@
         {% block heading %}
           <h3 class="dataset-heading">
             {% block heading_private %}
-              {% if package.private %}
-                <span class="dataset-private label label-inverse">
-                  <i class="fa fa-lock"></i>
-                  {{ _('Private') }}
-                </span>
-              {% endif %}
+              {{ super() }}
             {% endblock %}
             {% block heading_title %}
               {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
@@ -28,6 +23,8 @@
             {% block heading_meta %}
               {% if package.get('state', '').startswith('draft') %}
                 <span class="label label-info">{{ _('Draft') }}</span>
+              {% elif package.get('status', '') == 'Draft' %}
+                <span class="label label-info">{{ _('Draft') }}</span>
               {% elif package.get('state', '').startswith('deleted') %}
                 <span class="label label-important">{{ _('Deleted') }}</span>
               {% endif %}
@@ -36,17 +33,10 @@
           </h3>
         {% endblock %}
         {% block banner %}
-          {% if banner %}
-            <span class="banner">{{ _('Popular') }}</span>
-          {% endif %}
+          {{ super() }}
         {% endblock %}
         {% block notes %}
-          {% if notes %}
-            <p class="dsmeta">Description:</p><br>
-            <div class="dsmeta-content">{{ notes|urlize }}</div>
-          {% else %}
-            <p class="empty">{{ _("This dataset has no description") }}</p>
-          {% endif %}
+          {{ super() }}
         {% endblock %}
       </div>
       {% block resources %}
@@ -55,7 +45,7 @@
             <ul class="dataset-resources unstyled">
               {% block resources_inner %}
                 <p class="dsmeta">Published: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(package.metadata_created) }}</p><br>
-                <p class="dsmeta">Updated: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[0]) }}</p><br>
+                <p class="dsmeta">Updated: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[-1]) }}</p><br>
                 <p class="dsmeta">Resources: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ package.resources|count - 1 }}</p><br>
                 {% for resource in h.dict_list_reduce(package.resources, 'format') %}
                 <li>
@@ -78,4 +68,3 @@
     {% endblock %}
   </li>
 {% endblock %}
-

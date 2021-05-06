@@ -40,9 +40,10 @@ def non_empty_fields(field_list, pkg_dict, exclude):
 
 
 def object_updated_or_created(context, data_dict):
-    """ This is called AFTER an object is updated or created. We only
-        care about resources and packages; other types are immediately
-        returned.
+    """
+    This is called AFTER an object is updated or created. We only
+    care about resources and packages; other types are immediately
+    returned.
     """
     obj_title = data_dict.get('title')
     logger.debug('%s: after_create/update from resource or dataset' % obj_title)
@@ -60,7 +61,7 @@ def object_updated_or_created(context, data_dict):
         ds_name = data_dict.get('name')
         logger.info('Dataset was updated: %s ' % ds_name)
 
-        # Done: ensure download placeholder is in position 0
+        # Ensure download placeholder is in position 0
         resources = data_dict.get('resources')
         download_position = None
         if type(resources) is list:
@@ -81,7 +82,6 @@ def object_updated_or_created(context, data_dict):
 
             # Fix position if needed
             if download_position is not None:
-                # new_resources = []
                 download_resource = resources.pop(download_position)
                 # download_resource in first position, append other resources
                 new_resources = [download_resource] + resources
@@ -103,11 +103,11 @@ def object_updated_or_created(context, data_dict):
             logger.warning('Dataset %s: Resources list in unexpected format: %s' % (
                 ds_name, str(type(resources))))
 
-        # TODO: check if dataset has changed before backup
+        # We do not need to check if dataset has changed before backup;
+        # that is handled in the backup script.
         logger.debug('Backup to cloud command:')
         # Trigger external call to hub-geo-api to upload metadata to S3.
         # Must do this because hub-geo-api is Python3, can't mix with Python2 CKAN.
-        # cmd = ['sudo', '-u', 'dfo', '--login',
         backup_cmd = dfo_plugin_settings.run_command_as([dfo_plugin_settings.hubapi_venv,
                dfo_plugin_settings.hubapi_backup_script,
                ds_name])
