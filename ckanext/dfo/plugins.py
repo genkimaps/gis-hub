@@ -23,8 +23,9 @@ import json
 logger = dfo_plugin_settings.setup_logger(__name__)
 logger.info('This is the logger for ckanext-dfo')
 
-
 """ Functions for DFO-specific validation """
+
+
 def non_empty_fields(field_list, pkg_dict, exclude):
     r = []
     for field in field_list:
@@ -109,8 +110,8 @@ def object_updated_or_created(context, data_dict):
         # Trigger external call to hub-geo-api to upload metadata to S3.
         # Must do this because hub-geo-api is Python3, can't mix with Python2 CKAN.
         backup_cmd = dfo_plugin_settings.run_command_as([dfo_plugin_settings.hubapi_venv,
-               dfo_plugin_settings.hubapi_backup_script,
-               ds_name])
+                                                         dfo_plugin_settings.hubapi_backup_script,
+                                                         ds_name])
 
         logger.debug(backup_cmd)
 
@@ -142,19 +143,19 @@ def detect_object_type(data_dict):
 
 
 class DFOPlugin(p.SingletonPlugin):
-    p.implements(p.IConfigurer)
+    p.implements(p.IConfigurer, inherit=True)
     p.implements(p.IFacets)
     p.implements(p.IPackageController)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes)
     p.implements(p.IValidators)
     p.implements(p.IResourceController)
-    
+
     # Added for custom autocomplete
     p.implements(p.IActions)
-    
+
     # Implement function in IActions for custom autocomplete
-    # DO NOT USE @side_effect_free here! Causes CKAN 2.7.x to crash on startup, 
+    # DO NOT USE @side_effect_free here! Causes CKAN 2.7.x to crash on startup,
     # when loading plugins (but does not crash CKAN 2.8)
     # @side_effect_free
     def get_actions(self):
@@ -349,6 +350,7 @@ class DFOPlugin(p.SingletonPlugin):
             action='search'
         )
         map.connect(
+            'docs',
             '/docs',
             controller='ckanext.dfo.plugins:DocsController',
             action='docs'
@@ -375,7 +377,7 @@ class DFOPlugin(p.SingletonPlugin):
         # Validate keywords against a list of GOC themes
         logger.debug('Validating "%s" against GOC themes' % value)
         goc_themes = dfo_autocomp.goc_theme_list(context)
-        
+
         keywords = value.split(',')
         for kw in keywords:
             if not kw.lower().strip() in goc_themes:
@@ -383,7 +385,6 @@ class DFOPlugin(p.SingletonPlugin):
                 logger.warning(invalid_msg)
                 raise Invalid(invalid_msg)
         return value
-
 
     @staticmethod
     def required_validator(key, flattened_data, errors, context):
@@ -424,7 +425,7 @@ class DFOPlugin(p.SingletonPlugin):
         # Our custom DFO validator to only require a field on publishing.
         if 'require_when_published' in validators:
             return True
-    
+
     @staticmethod
     def resource_display_name(resource_dict):
         # Use title then name
