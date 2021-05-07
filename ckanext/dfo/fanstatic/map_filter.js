@@ -64,9 +64,13 @@ ckan.module('map_filter', function ($) {
           layer.on('click', function(e) {
             popup
               .setLatLng(e.latlng)
-              .setContent("Coordinates " + layer.getLatLngs().toString())
+              .setContent("North: " + layer.getBounds()._northEast.lat.toString() +
+                          "West: " + layer.getBounds()._southWest.lng.toString() +
+                          "South: " + layer.getBounds()._southWest.lat.toString() +
+                          "East: " + layer.getBounds()._northEast.lng.toString()
+                          )
               .openOn(mymap);
-
+              console.log(layer.getBounds())
           });
 
           // Need to add layers to drawnItems FeatureGroup to make them editable.
