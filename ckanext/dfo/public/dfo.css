@@ -643,3 +643,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
         background-color: rgb(179, 179, 179);
 }
+
+div.dropdown-backdrop {
+    z-index: -1;
+}   
