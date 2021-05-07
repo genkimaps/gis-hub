@@ -635,3 +635,11 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .badge-warning[href] {
   text-shadow: none;
 }
+
+/* THIS IS FOR THE DROPDOWN HOVER LINKS*/
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-image:none !important;
+}
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+        background-color: rgb(179, 179, 179);
+}
