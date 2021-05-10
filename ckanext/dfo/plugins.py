@@ -295,11 +295,37 @@ class DFOPlugin(p.SingletonPlugin):
     @staticmethod
     def days_since_published(pub_datestring):
         """
-        Return
+        Return number of days from input datetime to today.
         """
         pub_datetime = datetime.strptime(pub_datestring, '%Y-%m-%dT%H:%M:%S.%f')
         difference = datetime.now() - pub_datetime
         return int(difference.days)
+
+    @staticmethod
+    def group_list():
+        """
+        Return list of groups information from GIS Hub.
+
+        """
+        groups = toolkit.get_action('group_list')(
+            data_dict={'all_fields': True})
+
+        groups_dict = [{'display_name': dict.get('display_name'), 'name': dict.get('name')} for dict in groups]
+        groups_dict.insert(0, {'display_name': 'All Groups', 'name': ''})
+        return groups_dict
+
+    @staticmethod
+    def org_list():
+        """
+        Return list of organizations information from GIS Hub.
+
+        """
+        orgs = toolkit.get_action('organization_list')(
+            data_dict={'all_fields': True})
+
+        orgs_dict = [{'display_name': dict.get('display_name'), 'name': dict.get('name')} for dict in orgs]
+        orgs_dict.insert(0, {'display_name': 'All Organizations', 'name': ''})
+        return orgs_dict
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -311,7 +337,9 @@ class DFOPlugin(p.SingletonPlugin):
             'days_since_published': self.days_since_published,
             'utcnow': datetime.utcnow,
             'resource_display_name': self.resource_display_name,
-            'load_json': self.load_json
+            'load_json': self.load_json,
+            'group_list': self.group_list,
+            'org_list': self.org_list
         }
 
     # Additional methods only in IResourceController

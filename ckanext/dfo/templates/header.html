@@ -1,24 +1,46 @@
 {% ckan_extends %}
 
 {% block styles %}
-  {{ super() }}
-  <link rel="stylesheet" href="/dfo.css" />
+{{ super() }}
+<link rel="stylesheet" href="/dfo.css"/>
 {% endblock %}
 
 {# Did not work ('docs', _('Documentation'))  #}
 
 {% block header_site_navigation %}
 <nav class="section navigation">
-  <ul class="nav nav-pills">
-    {% block header_site_navigation_tabs %}
-      {{ h.build_nav_main(
-        ('search', _('Datasets')),
-        ('organizations_index', _('Organizations')),
-        ('group_index', _('Groups')),
-        ('about', _('About')),
-        ('docs', _('Documentation'))
-      ) }}
-    {% endblock %}
-  </ul>
+    <ul class="nav nav-pills">
+        {% block header_site_navigation_tabs %}
+        <li><a href="/dataset">Datasets</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle"
+               data-toggle="dropdown"
+               href="/organization">
+                Organizations
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                {% for dict_item in h.org_list() %}
+                <li><a href="/organization/{{ dict_item['name'] }}">{{ dict_item['display_name'] }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li class="dropdown">
+            <a class="dropdown-toggle"
+               data-toggle="dropdown"
+               href="/group">
+                Groups
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                {% for dict_item in h.group_list() %}
+                <li><a href="/group/{{ dict_item['name'] }}">{{ dict_item['display_name'] }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+        <li><a href="/docs">Documentation</a></li>
+        {% endblock %}
+    </ul>
 </nav>
 {% endblock %}
+
