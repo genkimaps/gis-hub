@@ -7,3 +7,4 @@ __temp__
 **/*.pyc
 **/.DS_Store
 desktop.ini
+testing.yaml
