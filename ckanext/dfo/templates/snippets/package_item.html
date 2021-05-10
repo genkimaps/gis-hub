@@ -44,16 +44,16 @@
           {% block resources_outer %}
             <ul class="dataset-resources unstyled">
               {% block resources_inner %}
-                <p class="dsmeta">Published: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(package.metadata_created) }}</p><br>
-                <p class="dsmeta">Updated: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[-1]) }}</p><br>
-                <p class="dsmeta">Resources: &nbsp;&nbsp;</p><p class="dsmeta-content">{{ package.resources|count - 1 }}</p><br>
+                <li class="dsmeta">Published: &nbsp;&nbsp;</li><li class="dsmeta-content">{{ h.render_datetime(package.metadata_created) }}</li><br>
+                <li class="dsmeta">Updated: &nbsp;&nbsp;</li><li class="dsmeta-content">{{ h.render_datetime(h.dict_list_reduce(package.resources, 'last_modified')[-1]) }}</li><br>
+                <li class="dsmeta">Resources: &nbsp;&nbsp;</li><li class="dsmeta-content">{{ package.resources|count - 1 }}</li><br>
                 {% for resource in h.dict_list_reduce(package.resources, 'format') %}
                 <li>
                   <a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label" data-format="{{ resource.lower() }}">{{ resource }}</a>
                 </li>
                 {% endfor %}<br>
                 {% if package.groups %}
-                  <p class="dsmeta">Groups: &nbsp;&nbsp;</p><br>
+                  <li class="dsmeta">Groups: &nbsp;&nbsp;</li><br>
                   {% for resource in package.groups %}
                   <li>
                     <a href="{{ '/group/%s'%resource.name }}" class="label" data-format="grp">{{ resource.display_name }}</a>
