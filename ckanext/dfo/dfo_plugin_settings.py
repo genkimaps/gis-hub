@@ -8,8 +8,11 @@ log_folder = os.path.join(plugin_root, 'logs')
 screen_fmt = logging.Formatter(
     '%(asctime)s:%(levelname)s:%(module)s(%(lineno)d) - %(message)s')
 
-goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
-species_codes_id = 'cdc22563-dc61-4abc-9b6d-a863382e4b6c'
+# goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
+# species_codes_id = 'cdc22563-dc61-4abc-9b6d-a863382e4b6c'
+
+goc_themes_id = '99190d4d-654e-4e4c-8652-66495e489057'
+species_codes_id = '0c88bc84-435d-4e24-9abf-927195c3a7d0'
 
 hubapi_venv = '/home/dfo/.virtualenvs/hubapi/bin/python3'
 hubapi_backup_script = '/home/dfo/hub-geo-api/backups.py'
