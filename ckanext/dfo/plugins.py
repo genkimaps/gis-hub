@@ -23,8 +23,9 @@ import json
 logger = dfo_plugin_settings.setup_logger(__name__)
 logger.info('This is the logger for ckanext-dfo')
 
-
 """ Functions for DFO-specific validation """
+
+
 def non_empty_fields(field_list, pkg_dict, exclude):
     r = []
     for field in field_list:
@@ -109,8 +110,8 @@ def object_updated_or_created(context, data_dict):
         # Trigger external call to hub-geo-api to upload metadata to S3.
         # Must do this because hub-geo-api is Python3, can't mix with Python2 CKAN.
         backup_cmd = dfo_plugin_settings.run_command_as([dfo_plugin_settings.hubapi_venv,
-               dfo_plugin_settings.hubapi_backup_script,
-               ds_name])
+                                                         dfo_plugin_settings.hubapi_backup_script,
+                                                         ds_name])
 
         logger.debug(backup_cmd)
 
@@ -142,19 +143,19 @@ def detect_object_type(data_dict):
 
 
 class DFOPlugin(p.SingletonPlugin):
-    p.implements(p.IConfigurer)
+    p.implements(p.IConfigurer, inherit=True)
     p.implements(p.IFacets)
     p.implements(p.IPackageController)
     p.implements(p.ITemplateHelpers)
     p.implements(p.IRoutes)
     p.implements(p.IValidators)
     p.implements(p.IResourceController)
-    
+
     # Added for custom autocomplete
     p.implements(p.IActions)
-    
+
     # Implement function in IActions for custom autocomplete
-    # DO NOT USE @side_effect_free here! Causes CKAN 2.7.x to crash on startup, 
+    # DO NOT USE @side_effect_free here! Causes CKAN 2.7.x to crash on startup,
     # when loading plugins (but does not crash CKAN 2.8)
     # @side_effect_free
     def get_actions(self):
@@ -294,11 +295,37 @@ class DFOPlugin(p.SingletonPlugin):
     @staticmethod
     def days_since_published(pub_datestring):
         """
-        Return
+        Return number of days from input datetime to today.
         """
         pub_datetime = datetime.strptime(pub_datestring, '%Y-%m-%dT%H:%M:%S.%f')
         difference = datetime.now() - pub_datetime
         return int(difference.days)
+
+    @staticmethod
+    def group_list():
+        """
+        Return list of groups information from GIS Hub.
+
+        """
+        groups = toolkit.get_action('group_list')(
+            data_dict={'all_fields': True})
+
+        groups_dict = [{'display_name': dict.get('display_name'), 'name': dict.get('name')} for dict in groups]
+        groups_dict.insert(0, {'display_name': 'All Groups', 'name': ''})
+        return groups_dict
+
+    @staticmethod
+    def org_list():
+        """
+        Return list of organizations information from GIS Hub.
+
+        """
+        orgs = toolkit.get_action('organization_list')(
+            data_dict={'all_fields': True})
+
+        orgs_dict = [{'display_name': dict.get('display_name'), 'name': dict.get('name')} for dict in orgs]
+        orgs_dict.insert(0, {'display_name': 'All Organizations', 'name': ''})
+        return orgs_dict
 
     # ITemplateHelpers
     def get_helpers(self):
@@ -310,7 +337,9 @@ class DFOPlugin(p.SingletonPlugin):
             'days_since_published': self.days_since_published,
             'utcnow': datetime.utcnow,
             'resource_display_name': self.resource_display_name,
-            'load_json': self.load_json
+            'load_json': self.load_json,
+            'group_list': self.group_list,
+            'org_list': self.org_list
         }
 
     # Additional methods only in IResourceController
@@ -349,6 +378,7 @@ class DFOPlugin(p.SingletonPlugin):
             action='search'
         )
         map.connect(
+            'docs',
             '/docs',
             controller='ckanext.dfo.plugins:DocsController',
             action='docs'
@@ -375,7 +405,7 @@ class DFOPlugin(p.SingletonPlugin):
         # Validate keywords against a list of GOC themes
         logger.debug('Validating "%s" against GOC themes' % value)
         goc_themes = dfo_autocomp.goc_theme_list(context)
-        
+
         keywords = value.split(',')
         for kw in keywords:
             if not kw.lower().strip() in goc_themes:
@@ -383,7 +413,6 @@ class DFOPlugin(p.SingletonPlugin):
                 logger.warning(invalid_msg)
                 raise Invalid(invalid_msg)
         return value
-
 
     @staticmethod
     def required_validator(key, flattened_data, errors, context):
@@ -424,7 +453,7 @@ class DFOPlugin(p.SingletonPlugin):
         # Our custom DFO validator to only require a field on publishing.
         if 'require_when_published' in validators:
             return True
-    
+
     @staticmethod
     def resource_display_name(resource_dict):
         # Use title then name

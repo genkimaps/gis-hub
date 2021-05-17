@@ -1,0 +1,580 @@
+scheming_version: 1
+dataset_type: dataset
+
+display_group_default: General
+
+display_groups:
+  - label: Basic Information
+    description: "This section contains basic information about the dataset, suitable for a minimal metadata entry. "
+  - label: General
+    description: "General metadata compatible with the Canada Open Data metadata standard. "
+  - label: Contact Information
+    description: "This section contains contact information for the data creator and program manager. "
+  - label: Science
+    description: "This section contains metadata specific to the Science branch at DFO. "
+    collapse_by_default: true
+
+about:
+about_url:
+form_languages:
+- en
+
+dataset_fields:
+
+# Basic Information
+
+- field_name: title
+  label: Title
+  preset: title
+  help_text: "Title of the dataset. Titles should be concise (no more than headline-length). The URL for the dataset is a unique identifier created from the title you enter when creating the dataset. Click the Edit button to change it manually. The URL should contain only lowercase letters and hyphens and be a maximum of 20 characters."
+  # validators: require_when_published
+  display_group: Basic Information
+  display_snippet: text.html
+
+# If the name field is removed from the schema, it should be autoslugged from the title
+# But this does not happen, we get an error "The form contains invalid entries:  name: Missing value"
+- field_name: name
+  preset: dataset_slug
+  label: Dataset ID
+  help_text: "Enter a unique URL for this dataset. The URL should contain only lowercase letters and hyphens and be a maximum of 20 characters. For example, if your dataset is Sponge Reefs, set an easy-to-remember URL such as sponge-reefs. This will form part of the complete URL for the dataset."
+  display_group: Basic Information
+  display_snippet: text.html
+
+  
+- field_name: notes
+  label: Summary
+  help_text: "Brief narrative summary of the dataset's contents."
+  form_snippet: markdown.html
+  display_snippet: markdown.html
+  display_group: Basic Information
+  validators: require_when_published
+  default: "Please describe the following: \n
+    - What data is included (data products): \n
+    - What accessory information (reports, scripts) is included: \n
+    - Objectives: \n
+    - Describe the knowledge gap(s) the dataset is intended to fill: \n
+    - If there are multiple tables/layers in the dataset, how are they related?
+    "
+
+- field_name: maintainer_email
+  label: Maintainer Email
+  help_text: "Email address of the person responsible for the dataset.  Notifications about access requests and other updates will be sent to this email."
+  validators: not_empty
+  display_group: Basic Information
+  display_snippet: text.html
+
+- field_name: owner_org
+  label: "Data Publisher (Organization)"
+  help_text: "The organization (GoC Department or Agency) primarily responsible for publishing the dataset."
+  validators: require_when_published owner_org_validator unicode
+  form_snippet: organization.html
+  display_group: Basic Information
+  display_snippet: null
+  # Do not use text.html because it shows only the guid of the owner_org, like: 430db324-f471-4ffe-a76b-17ed40991cd4
+
+# This field is no longer used. But we cannot remove it from the schema,
+# or it causes CKAN to crash
+- field_name: primary_reference
+  label: Primary Reference
+  help_text: "The primary academic reference describing this dataset."
+  form_snippet: null
+  display_snippet: null
+  display_group: Basic Information
+#  validators: require_when_published
+
+- field_name: start_date
+  label: Start Date
+  help_text: "Indicate the earliest date represented in this dataset."
+  form_snippet: date.html
+  validators: require_when_published
+  display_group: Basic Information
+
+- field_name: end_date
+  label: End Date
+  help_text: "Indicate the latest date represented in this dataset. If data collection is ongoing, enter the date of the most recent record in the data, and choose Ongoing under the Status section.  If this is a model or derived data (as opposed to data collected in the field), enter the last date that the model used to generate this data was updated.  In this case, end date can be the same as start date.  "
+  form_snippet: date.html
+  display_group: Basic Information
+  validators: require_when_published
+
+- field_name: summary_french
+  label: Summary French
+  help_text: "Brief narrative summary of the dataset's contents."
+  form_snippet: null
+  display_snippet: null
+  default: "Placeholder for French summary"
+
+# Contacts
+
+# General
+
+
+# Charset/language
+
+- field_name: language
+  label: Metadata Language
+  help_text: "Language code and country of the metadata. Default: English."
+  display_snippet: null
+  form_snippet: null
+#  validators: require_when_published
+  choices:
+  - label: English
+    value: "eng; CAN"
+  - label: French
+    value: "fr; CAN"
+  default: "eng; CAN"
+
+- field_name: character_set
+  label: Metadata Character Set
+  help_text: "Encoding of the metadata record. Default: utf8"
+  default: "utf8"
+  display_snippet: null
+  form_snippet: null
+#  validators: require_when_published
+
+- field_name: metadata_standard
+  label: Metadata Standard
+  help_text: "Name of the metadata standard/profile used."
+  default: "North American Profile of ISO 19115:2003 - Geographic information - Metadata"
+  display_snippet: null
+  form_snippet: null
+#  validators: require_when_published
+
+- field_name: status
+  label: Status
+  help_text: Development phase of the dataset.
+  display_snippet: select.html
+  form_snippet: select.html
+  validators: require_when_published
+  choices:
+  - label: Draft
+    value: Draft
+  - label: Completed
+    value: Completed
+  - label: Ongoing
+    value: Ongoing
+  - label: Proposed
+    value: Proposed
+  - label: Obsolete
+    value: Obsolete
+  - label: Historical Archive
+    value: Historical Archive
+
+- field_name: data_charset
+  label: Data Character Set
+  help_text: "Character coding standard in the dataset. Default: utf8"
+  default: "utf8"
+  display_snippet: null
+  form_snippet: null
+#  validators: require_when_published
+
+- field_name: data_language
+  label: Data Language
+  help_text: "Language of the data (attributes and values). Default: English."
+  display_snippet: null
+  form_snippet: null
+  default: "English"
+#  validators: require_when_published
+
+- field_name: hierarchyLevel
+  label: Dataset Level
+  help_text: "Use Dataset if this is a standalone data product.  Series is individual regions in a series of datasets covering a larger area, or some other subset of a larger data package."
+  display_snippet: select.html
+  form_snippet: select.html
+  validators: require_when_published
+  default: Dataset
+  choices:
+  - label: Dataset
+    value: Dataset
+  - label: Series
+    value: Series
+
+- field_name: theme
+  label: Theme
+  help_text: Choose the best match from the list.
+  display_snippet: select.html
+  form_snippet: select.html
+  make_searchable: True
+  display_group: Science
+  validators: require_when_published
+  choices:
+  - label: Administrative Boundaries
+    value: admin_boundaries
+  - label: Base Mapping
+    value: base_mapping
+  - label: Bathymetry
+    value: bathymetry
+  - label: Benthic Species or Ecosystem
+    value: benthic_species
+  - label: Classification
+    value: classification
+  - label: Coastal Species or Ecosystem
+    value: coastal_species
+  - label: Groundfish Fisheries
+    value: groundfish_fisheries
+  - label: Groundfish Survey
+    value: groundfish_survey
+  - label: Herring Fisheries
+    value: herring_fisheries
+  - label: Herring Survey
+    value: herring_survey
+  - label: Marine Mammals
+    value: marine_mammals
+  - label: Pelagic Species or Ecosystem
+    value: pelagic_species
+  - label: Protected Areas
+    value: protected_areas
+  - label: Salmon
+    value: salmon
+  - label: Salmon Fisheries
+    value: salmon_fisheries
+  - label: Salmon Survey
+    value: salmon_survey
+  - label: Shellfish Fisheries
+    value: shellfish_fisheries
+  - label: Shellfish Survey
+    value: shellfish_survey
+
+- field_name: methods
+  label: Methods
+  help_text: The methods field documents scientific methods used in the collection
+        or derivation of this dataset.  It includes information on items such
+        as tools, instrument calibration and software. It can also include a
+        complete description of the lineage of the data.  It may refer to
+        sections of an associated academic citation or other published
+        resource.
+  form_snippet: markdown.html
+  display_snippet: markdown.html
+  display_group: Science
+  validators: require_when_published
+
+
+# Composite Repeating Field for Source Data
+
+
+# Composite repeating field for species codes
+# - field_name: species_codes
+#   label: Species Codes
+#   help_text: "A list of species names / species codes.  If your data does not contain any species codes, disregard this section and leave the fields blank in the section below.  For each species in your data, provide the following information.  Species Code: A code from the list of ~7400 species codes in use at Pacific Science. If a code you need is not available, the list can be updated. Age Data: Does the sample include age data?  Observation Type:  Was the species observed incidentally, or targeted as part of the survey design?  Was the presence of species inferred or observed?  Choose from: Targeted observation, incidental observation, inferred.  If you have a large number of species codes, you may include a file named species_codes.csv.  For a detailed description of the format of this file, refer to the GIS Hub publishing guide document. "
+#   repeatable: true
+#   form_blanks: 1
+#   display_snippet: table.html
+#   display_group: Science
+#   subfields:
+
+#   - field_name: sp_code
+#     label: Species Code
+#     preset: select
+#     choices_helper: scheming_datastore_choices
+#     datastore_choices_limit: 10000
+#     datastore_choices_resource: cdc22563-dc61-4abc-9b6d-a863382e4b6c
+#     datastore_choices_columns:
+#       value: code
+#       label: species_name
+#     form_attrs:
+#       data-module: autocomplete
+#     display_snippet_options:
+#       row_header: True
+#     display_group: Science
+
+#   - field_name: age_data
+#     label: Age Data
+#     display_snippet: select.html
+#     form_snippet: select.html
+#     display_group: Science
+#     choices:
+#     - label: true
+#       value: true
+#     - label: false
+#       value: false
+
+#   - field_name: obs_type
+#     label: Observation Type
+#     display_snippet: select.html
+#     form_snippet: select.html
+#     display_group: Science
+#     choices:
+#     - label: Targeted observation
+#       value: Targeted
+#     - label: Incidental observation
+#       value: Incidental
+#     - label: Inferred
+#       value: Inferred
+
+
+#
+## Resource (layer/file-level) metadata fields
+#resource_fields:
+#
+## Changed to title
+#- field_name: title
+#  label: Title
+#  help_text: "If you are uploading a data package, enter a short title, e.g. Bottom Patches - Data Package.  Ensure that the title of the data package is NOT the same as any of the layers in your upload.  If this is a layer/file inside your data upload, this field is populated automatically."
+#  display_snippet: text.html
+#  validators: require_when_published
+#
+## Layer/File Info
+#- field_name: layer_name
+#  label: Layer Name
+#  help_text: "Layer name is detected by the GIS Hub after data upload.  You do not need to complete this field manually. "
+#  display_group: Layer/File Info
+#  form_snippet: text.html
+#
+#- field_name: layer_description
+#  label: Layer Description
+#  help_text: "Describe what this layer/table/document represents, in the context of the entire dataset.  If there is more than one layer in your uploaded data, complete this field only after the data has been uploaded and a metadata entry has been created for each layer. "
+#  display_group: Layer/File Info
+#  form_snippet: textarea.html
+#  display_snippet: text.html
+#
+#- field_name: data_format
+#  label: Data Format
+#  help_text: "Data format is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the data format was detected incorrectly. "
+#  display_group: Layer/File Info
+#  form_snippet: select.html
+#  display_snippet: select.html
+#  default: File Geodatabase
+#  choices:
+#    - label: File Geodatabase
+#      value: File Geodatabase
+#    - label: Shapefile
+#      value: Shapefile
+#    - label: GeoTiff
+#      value: GeoTiff
+#    - label: GeoJson
+#      value: GeoJson
+#    - label: Google Earth (KML/KMZ)
+#      value: Google Earth
+#    - label: Other (Document, non-spatial, etc.)
+#      value: Other
+#
+#- field_name: filepath
+#  label: File Location
+#  help_text: "Location of this file in the zip archive.  You do not need to complete this field manually."
+#  display_group: Layer/File Info
+#  form_snippet: text.html
+#  display_snippet: text.html
+#
+## Map preview link
+#- field_name: map_preview_link
+#  label: Map Preview
+#  help_text: "Link to a web map preview of this layer.  You do not need to complete this field manually.
+#  A map preview link will be generated if the layer was successfully published to the GIS hub mapserver.
+#  If the data is not in a supported format, or it is too complex to display in a web map, this field will
+#  not contain a link. "
+#  display_group: Layer/File Info
+#  form_snippet: markdown.html
+#  display_snippet: markdown.html
+#
+## Projection
+## Spatial metadata fields that are both annoying for users to enter manually and cannot have a default should be
+## optional and hidden for now (will be populated later by Python script on backend).
+#
+#- field_name: projection_text
+#  label: Projection Name
+#  display_group: Projection
+#  help_text: "The name of the projection of the data. Example: BC_Albers_Equal_Area.  This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
+#  form_snippet: text.html
+#
+#- field_name: projection_code
+#  label: Projection Code
+#  display_group: Projection
+#  help_text: "The numeric EPSG/WKID projection code. You can find this information in the Coordinate System tab of the layer information window in ArcGIS under 'WKID' or by searching on http://spatialreference.org/ref/epsg/.   This is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless it was detected incorrectly."
+#  form_snippet: text.html
+#
+#- field_name: projection_codespace
+#  label: Codespace
+#  default: "http://www.epsg-registry.org"
+#  display_group: Projection
+#  form_snippet: hidden.html
+#  display_snippet: null
+#
+#- field_name: codespace_version
+#  label: Codespace Version
+#  default: "9.2.2"
+#  display_group: Projection
+#  form_snippet: hidden.html
+#  display_snippet: null
+#
+#- field_name: projection_wkt
+#  display_group: Projection
+#  form_snippet: hidden.html
+#  display_snippet: null
+#
+## Spatial
+#
+#- field_name: spatial
+#  label: Spatial Extent Preview
+#  display_group: Spatial
+#  display_snippet: null
+#  form_snippet: hidden.html
+#
+#- field_name: spatial_type
+#  label: Spatial Type
+#  form_snippet: select.html
+#  display_snippet: select.html
+#  display_group: Spatial
+#  help_text: "Spatial type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the spatial type was detected incorrectly. "
+#  default: vector
+#  choices:
+#    - label: Vector
+#      value: vector
+#    - label: Raster
+#      value: raster
+#    - label: Table
+#      value: table
+#    - label: TIN
+#      value: tin
+#    - label: Video
+#      value: video
+#    - label: None
+#      value: none
+#
+#- field_name: geometry_type
+#  label: Geometry Type
+#  form_snippet: select.html
+#  display_snippet: select.html
+#  display_group: Spatial
+#  help_text: "Geometry type is detected by the GIS Hub after data upload.  You do not need to complete this field manually, unless the geometry type was detected incorrectly. "
+#  default: point
+#  choices:
+#    - label: Point
+#      value: point
+#    - label: Polyline
+#      value: polyline
+#    - label: Polygon
+#      value: polygon
+#    - label: TIN
+#      value: tin
+#    - label: Geometry
+#      value: geometry
+#    - label: Coverage
+#      value: coverage
+#    - label: Mixed
+#      value: mixed
+#    - label: None
+#      value: none
+#
+#- field_name: bbox
+#  label: Bounding Box
+#  help_text: "Bounding Box in WGS84 latitude-longitude, decimal degrees is calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
+#  display_group: Spatial
+#  form_snippet: textarea.html
+#  display_snippet: text.html
+#  default: "Generated by the GIS Hub after data upload."
+#
+#- field_name: locale
+#  label: Locale
+#  help_text: "Location of the spatial data in DFO's regions and bioregions, calculated for each layer by the GIS Hub after data upload.  You do not need to complete this field manually. "
+#  form_snippet: textarea.html
+#  display_snippet: text.html
+#  default: "Generated by the GIS Hub after data upload."
+#  display_group: Spatial
+#
+#- field_name: uuid
+#  label: Unique ID
+#  display_group: Spatial
+#  form_snippet: null
+#
+#- field_name: raster_info
+#  label: Raster Metadata
+#  display_group: Spatial
+#  form_snippet: null
+#  display_snippet: text.html
+#  help_text: "Field for raster metadata, including pixel size, dimensions, and raster band details. This field will be filled automatically when a GeoTiff or other recognized raster file is uploaded. Do not populate this field manually."
+#
+## Composite Repeating Field for Attributes
+## One to many relationship for attribute table fields
+#
+#- field_name: attribute
+#  label: Attributes
+#  help_text: "You must clearly document all attributes for all spatial layers and standalone tables in your uploaded data.  Some attribute information (field name and type) will be populated automatically after you upload spatial data.  If you have not yet uploaded data, or you are replacing the existing data, leave these fields blank for now.  After your data has been uploaded and field names and types have been extracted, you will still have to edit this section later to add, at minimum, a description for each field.  The field description should indicate what the value represents, how was it measured, and whether it is generalized.  Units: if the attribute is quantitative, indicate the measured units and an estimate of the accuracy.  Coded Values: if the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. (For a very long list of coded values, instead provide a link to a document or website describing the coded values.)  Note: raster attributes cannot be detected automatically.  You must add any raster attributes manually using this form. "
+#  form_blanks: 1
+#  repeatable: true
+#  display_snippet: attribute.html
+#  display_group: Table Attributes
+#  subfields:
+#
+#  - field_name: column_name
+#    label: Field Name
+#    form_snippet: text.html
+#    display_snippet: text.html
+#    display_group: Table Attributes
+#
+#  - field_name: column_type
+#    label: Field Type
+#    form_snippet: select.html
+#    display_snippet: select.html
+#    display_group: Table Attributes
+#    choices:
+#      - label: Text
+#        value: Text
+#      - label: Integer
+#        value: Integer
+#      - label: Float
+#        value: Float
+#      - label: Date
+#        value: Date
+#      - label: Boolean
+#        value: Boolean
+#      - label: ObjectId
+#        value: ObjectId
+#      - label: Geometry
+#        value: Geometry
+#
+#  - field_name: description
+#    label: Field Description
+#    # help_text: "Indicate what the value represents, how was it measured, is it generalized, and an estimate of the accuracy (if applicable)."
+#    form_snippet: text.html
+#    display_snippet: text.html
+#    display_group: Table Attributes
+#
+#  - field_name: units
+#    label: Units
+#    # help_text: If relevant, indicate the units.
+#    form_snippet: text.html
+#    display_snippet: text.html
+#    display_group: Table Attributes
+#
+#  - field_name: coded_values
+#    label: Coded Values
+#    # help_text: "If the attribute contains a list of coded values (i.e. values from a lookup table), describe the meaning of each of the codes. If the list of coded values is excessively long, do not try to paste it in this box; instead include a link to a document or website describing the coded values."
+#    form_snippet: text.html
+#    display_snippet: text.html
+#    display_group: Table Attributes
+#
+#- field_name: attr_data
+#  display_snippet: null
+#  form_snippet: hidden.html
+#
+#
+## Upload
+#
+#- field_name: restricted
+#  label: "Access Restrictions"
+#  help_text: "Access restrictions determine who can view all of the metadata content and download the data.  Even for sensitive datasets, a minimum set of metadata fields are required and will be visible to all users: the dataset title, summary, keywords, and contact information for the data owner.  You may choose to allow other metadata fields and data download to be available to any of the following.  All Registered Users: anyone who is registered on the GIS Hub will have access. Any Organization Members: restrict access to users who are in an organization on the GIS Hub. Same Organization Members: restrict access to users who are in the same organization. For example, if you are in the MSEA organization, all MSEA users, but no one outside of MSEA, will have access.  Allowed Users/Groups Only: allow access only for specific users or groups.  If you choose this option, individual users can be added by typing names into the Allowed Users field below. "
+#  display_snippet: null
+#  display_group: Upload Data
+#  subfields:
+#  - field_name: level
+#    label: Level
+#    preset: select
+#    form_include_blank_choice: False
+#    validators: require_when_published
+#    choices:
+#    - value: registered
+#      label: All Registered Users
+#    - value: any_organization
+#      label: Any Organization Members
+#    - value: same_organization
+#      label: Same Organization Members
+#    - value: only_allowed_users
+#      label: Allowed Users/Groups Only
+#  - field_name: allowed_users
+#    label: Allowed Users
+#    preset: tag_string_autocomplete
+#    form_attrs:
+#        data-module: autocomplete
+#        data-module-tags: ""
+#        data-module-source: "/api/2/util/user/autocomplete?q=?"
+#
+#

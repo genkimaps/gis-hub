@@ -7,6 +7,3 @@ __temp__
 **/*.pyc
 **/.DS_Store
 desktop.ini
-node_modules/
-testing.yaml
-paster.py
