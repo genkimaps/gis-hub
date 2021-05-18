@@ -635,3 +635,7 @@ table.table-fit tbody td, table.table-fit tfoot td {
 .badge-warning[href] {
   text-shadow: none;
 }
+
+.dropdown-backdrop{
+    position: static;
+}
