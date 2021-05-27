@@ -14,8 +14,8 @@ screen_fmt = logging.Formatter(
 goc_themes_id = '99190d4d-654e-4e4c-8652-66495e489057'
 species_codes_id = '0c88bc84-435d-4e24-9abf-927195c3a7d0'
 
-hubapi_venv = '/home/dfo/.virtualenvs/hubapi/bin/python3'
-hubapi_backup_script = '/home/dfo/hub-geo-api/backups.py'
+hubapi_venv = '/home/cole/.virtualenvs/hub-geo-api/bin/python3'
+hubapi_backup_script = '/home/cole/ckan/hub-geo-api/backups.py'
 
 
 def run_command_as(command_parts):
@@ -31,7 +31,7 @@ def run_command_as(command_parts):
     if not type(command_parts) is list:
         print('Error: command_parts must be a list of command strings')
         return
-    return ['sudo', '-u', 'dfo', '--login'] + command_parts
+    return ['sudo', '-u', 'cole', '--login'] + command_parts
 
 
 def setup_logger(name, level=logging.INFO):
