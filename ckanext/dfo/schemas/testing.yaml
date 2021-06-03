@@ -40,6 +40,12 @@ dataset_fields:
   display_group: Basic Information
   display_snippet: text.html
 
+- field_name: spatial
+  label: Spatial Extent
+  form_snippet: textarea.html
+  help_text: "GeoJSON geometry"
+  display_group: Basic Information
+
 - field_name: quality_control
   label: Quality Control
   help_text: "Indicates the status of quality control on the dataset and its metadata."
