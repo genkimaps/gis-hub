@@ -1,20 +1,10 @@
 {% ckan_extends %}
 
-{% block primary_content %}
-    {% block map_content %}
-    <div class="additional-info">
-        <div class="dataset-label">Search by Location</div>
-        {{ h.snippet('package/snippets/dataset_filter_map.html') }}
-    </div>
-    {% endblock %}
-    {{ super() }}
-{% endblock %}
-
 {% block secondary_content %}
 
   {% snippet "spatial/snippets/spatial_query.html", default_extent="[[45.0,
     -120.0], [60.0, -140.0]]" %}
 
+  {{ super() }}
+
 {% endblock %}
-
-
