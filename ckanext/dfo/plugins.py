@@ -389,7 +389,7 @@ class DFOPlugin(p.SingletonPlugin):
             action='get_hnap'
         )
         map.connect(
-            '/dataset/{package_id}/map_display/{resource_id}',
+            '/dataset/{dataset_id}/map_display/{resource_id}',
             controller='ckanext.dfo.map_display:MapDisplayController',
             action='map_display')
 

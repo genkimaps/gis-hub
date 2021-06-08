@@ -24,7 +24,7 @@ logger = settings.setup_logger(__name__)
 
 class MapDisplayController(base.BaseController):
 
-    def map_display(self):
+    def map_display(self, dataset_id, resource_id):
 
         """ Make a context object.  Without this, we get an error from Flask:
         RuntimeError: Working outside of request context.
@@ -33,10 +33,14 @@ class MapDisplayController(base.BaseController):
         """
         context = {"user": c.user, "auth_user_obj": c.userobj}
 
-        for k, v in request.params.iteritems():
-            logger.info('%s: %s' % (k, v))
-        resource_id = request.params.get('resource_id')
-        dataset_id = request.params.get('dataset_id')
+        # request.params.get is only used for URL parameters after the ?
+        # e.g. for gis-hub.ca/someurl?animal=dog we would use request.params.get('animal')
+        # But here package_id, resource_id are part of the URL pattern, passed from map.connect in plugins.py
+
+        # for k, v in request.params.iteritems():
+        #     logger.info('%s: %s' % (k, v))
+        # resource_id = request.params.get('resource_id')
+        # dataset_id = request.params.get('dataset_id')
         logger.info('Map display requested: %s, %s' % (dataset_id, resource_id))
 
         """
