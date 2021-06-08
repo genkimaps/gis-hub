@@ -1,10 +1,20 @@
-{# {% ckan_extends %}
+{#
+    DO NOT USE ckan_extends here. Causes a very obscure error when rendering the jinja template:
+    ValueError: invalid literal for int() with base 10: ''
+    Originally caused by:
+    File '/home/tk/ckanext-dfo/ckanext/dfo/map_display.py', line 186 in map_display
+      extra_vars={'data': data})
+    {% ckan_extends %}
+#}
 
 
+{#
     This template is rendered in a resource view. It displays the full map preview for a spatial resource,
     rendered either as Mapbox vector tiles, or WMS raster tiles from a Geotiff.  In both cases the data is
     served from Geoserver and displayed in an OpenLayers map.
 #}
+
+{% extends "base.html" %}
 
 
 {% resource 'dfo/resource_map_display.js' %}
@@ -16,3 +26,12 @@
     data-module-layername="{{ data.get('layer_name') }}"
     style="height: 600px;">
 </div>
+
+<script>
+    // This is only used if we are rendering a template raw, without using ckan_extends
+
+    // Options passed to this JavaScript module by the calling template.
+    // var layer_name = this.options.layername;
+    var layer_name = 'vvv'
+    console.log('Rendering map preview: '+layer_name)
+</script>
