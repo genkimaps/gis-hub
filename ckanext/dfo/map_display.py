@@ -62,7 +62,7 @@ class MapDisplayController(base.BaseController):
             'resource_id': resource_id,
             }
         return render(
-            'restricted/restricted_request_access_form.html',
+            'map_display/resource_map_display.html',
             extra_vars=extra_vars)
 
 
