@@ -124,15 +124,10 @@ class MapDisplayController(base.BaseController):
         from flask import abort as flask_abort
         resource = model.Resource.get(resource_id)
 
-        # errmsg = ''
         if not resource:
             errmsg = 'Resource %s not found! Are you sure that %s is a resource id, and not the id of some other object? (package, organization)' % (
                 resource_id, resource_id)
             return self.preview_error_page(errmsg)
-            # logger.warning(errmsg)
-            # return render(
-            #     'map_display/resource_map_nopreview.html',
-            #     extra_vars={'errmsg': errmsg})
 
         resource = resource.as_dict()
         layer_name = resource.get('layer_name')
@@ -141,26 +136,11 @@ class MapDisplayController(base.BaseController):
         if spatial_type not in ['raster', 'vector']:
             errmsg = 'Map display requested for non-spatial resource: %s' % layer_name
             return self.preview_error_page(errmsg)
-            # logger.warning(errmsg)
-            # return render(
-            #     'map_display/resource_map_nopreview.html',
-            #     extra_vars={'errmsg': errmsg})
 
         map_preview_link = resource.get('map_preview_link')
         if not map_preview_link:
             errmsg = 'No map preview link: user is not authorized, or map preview was not created.'
             return self.preview_error_page(errmsg)
-            # logger.warning(errmsg)
-            # return render(
-            #     'map_display/resource_map_nopreview.html',
-            #     extra_vars={'errmsg': errmsg})
-
-
-        # if errmsg:
-        #     logger.warning(errmsg)
-        #     return render(
-        #         'map_display/resource_map_nopreview.html',
-        #         extra_vars={'errmsg': errmsg})
 
         # The internal layer name used in Geoserver
         gs_layer_name = self.extract_geoserver_layer_name(

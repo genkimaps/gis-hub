@@ -24,7 +24,10 @@
 {% block page %}
     {% resource 'dfo/resource_map_display.js' %}
     <div id="ol_resource_map_container">
-        <div >This is the map preview for {{ data.get('dataset_id') }}, {{ data.get('spatial_type') }} Geoserver layer {{ data.get('layer_name') }} (resource id: {{ data.get('resource_id') }})</div>
+        <div>
+            This is the map preview for {{ data.get('dataset_id') }}: {{ data.get('layer_name') }}, 
+            Geoserver {{ data.get('spatial_type') }} layer {{ data.get('gs_layer_name') }}  (resource id: {{ data.get('resource_id') }})
+        </div>
 
         <div id="ol_resource_map"
             data-module="dfo_map_display"

@@ -159,7 +159,7 @@ body {
 
 /* White bg for OpenLayers map */
 #ol_resource_map_container {
-    background-color: coral;
+    background-color: white;
 }
 
 
