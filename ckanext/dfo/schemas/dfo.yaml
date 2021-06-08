@@ -40,6 +40,27 @@ dataset_fields:
   display_group: Basic Information
   display_snippet: text.html
 
+- field_name: status
+  label: Status
+  help_text: Development phase of the dataset.
+  display_snippet: select.html
+  form_snippet: select.html
+  display_group: Basic Information
+  validators: require_when_published
+  choices:
+  - label: Draft
+    value: Draft
+  - label: Completed
+    value: Completed
+  - label: Ongoing
+    value: Ongoing
+  - label: Proposed
+    value: Proposed
+  - label: Obsolete
+    value: Obsolete
+  - label: Historical Archive
+    value: Historical Archive
+
 - field_name: quality_control
   label: Quality Control
   help_text: "Indicates the status of quality control on the dataset and its metadata."
@@ -326,26 +347,6 @@ dataset_fields:
   default: "{{ h.now().strftime('%Y-%m-%d') }}"
   form_snippet: date.html
   validators: require_when_published
-
-- field_name: status
-  label: Status
-  help_text: Development phase of the dataset.
-  display_snippet: select.html
-  form_snippet: select.html
-  validators: require_when_published
-  choices:
-  - label: Draft
-    value: Draft
-  - label: Completed
-    value: Completed
-  - label: Ongoing
-    value: Ongoing
-  - label: Proposed
-    value: Proposed
-  - label: Obsolete
-    value: Obsolete
-  - label: Historical Archive
-    value: Historical Archive
 
 - field_name: update_frequency
   label: Update Frequency
