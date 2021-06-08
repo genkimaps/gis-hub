@@ -63,7 +63,9 @@ class MapDisplayController(base.BaseController):
             }
         return render(
             'map_display/resource_map_display.html',
-            extra_vars=extra_vars)
+            dataset_id=dataset_id,
+            resource_id=resource_id)
+            # context=context, extra_vars=extra_vars)
 
 
 
