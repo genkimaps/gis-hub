@@ -51,7 +51,7 @@ class MapDisplayController(base.BaseController):
             m = re.search(patt, map_preview_link)
             try:
                 ds_name = m.group(1)
-                res_name = m.group(0)
+                res_name = m.group(2)
                 gs_layer_name = '%s_%s' % (ds_name, res_name)
             except:
                 logger.error('Invalid vector preview data: "%s"' % map_preview_link)
@@ -173,11 +173,11 @@ class MapDisplayController(base.BaseController):
                 extra_vars={'errmsg': errmsg})
 
         data = {
-            'dataset_id': dataset_id,
-            'resource_id': resource_id,
-            'spatial_type': spatial_type,
-            'layer_name': layer_name,
-            'gs_layer_name': gs_layer_name
+            'dataset_id': str(dataset_id),
+            'resource_id': str(resource_id),
+            'spatial_type': str(spatial_type),
+            'layer_name': str(layer_name),
+            'gs_layer_name': str(gs_layer_name)
             }
 
         logger.info('Show map display with: %s' % data)
