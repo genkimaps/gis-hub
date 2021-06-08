@@ -49,14 +49,20 @@ class MapDisplayController(base.BaseController):
         if spatial_type == 'vector':
             patt = r'\/vector\/(.+)\/(.+)$'
             m = re.search(patt, map_preview_link)
-            ds_name = m.group(1)
-            res_name = m.group(0)
-            gs_layer_name = '%s_%s' % (ds_name, res_name)
+            try:
+                ds_name = m.group(1)
+                res_name = m.group(0)
+                gs_layer_name = '%s_%s' % (ds_name, res_name)
+            except:
+                logger.error('Invalid vector preview URL: %s' % map_preview_link)
 
         elif spatial_type == 'raster':
             patt = r'\/raster\/(.+)$'
             m = re.search(patt, map_preview_link)
-            gs_layer_name = m.group(1)
+            try:
+                gs_layer_name = m.group(1)
+            except:
+                logger.error('Invalid raster preview URL: %s' % map_preview_link)
 
         else:
             logger.error('Invalid spatial type: %s' % spatial_type)
@@ -122,6 +128,10 @@ class MapDisplayController(base.BaseController):
                 'map_display/resource_map_nopreview.html')
 
         map_preview_link = resource.get('map_preview_link')
+        if not map_preview_link:
+            logger.warning('No map preview link: user is not authorized, or map preview was not created.')
+            return render(
+                'map_display/resource_map_nopreview.html')
 
         # The internal layer name used in Geoserver
         gs_layer_name = self.extract_geoserver_layer_name(
