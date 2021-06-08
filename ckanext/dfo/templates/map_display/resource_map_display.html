@@ -14,12 +14,10 @@
     served from Geoserver and displayed in an OpenLayers map.
 #}
 
-{% extends "base.html" %}
-
-
-{% resource 'dfo/resource_map_display.js' %}
+{% extends "page.html" %}
 
 {% block page %}
+    {% resource 'dfo/resource_map_display.js' %}
     <div>This is the map preview for {{ data.get('dataset_id') }}, {{ data.get('spatial_type') }} layer {{ data.get('layer_name') }} (resource id: {{ data.get('resource_id') }})</div>
 
     <div id="ol_resource_map"
