@@ -157,6 +157,11 @@ body {
     padding: 10px 15px;
 }
 
+/* White bg for OpenLayers map */
+#ol_resource_map_container {
+    background-color: coral;
+}
+
 
 .additional-info .dataset-label {
     font-weight: bold;
