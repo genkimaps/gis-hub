@@ -19,19 +19,21 @@
 
 {% resource 'dfo/resource_map_display.js' %}
 
-<div>This is the map preview for {{ data.get('dataset_id') }}, {{ data.get('spatial_type') }} layer {{ data.get('layer_name') }} (resource id: {{ data.get('resource_id') }})</div>
+{% block page %}
+    <div>This is the map preview for {{ data.get('dataset_id') }}, {{ data.get('spatial_type') }} layer {{ data.get('layer_name') }} (resource id: {{ data.get('resource_id') }})</div>
 
-<div id="ol_resource_map"
-    data-module="dfo_map_display"
-    data-module-layername="{{ data.get('layer_name') }}"
-    style="height: 600px;">
-</div>
+    <div id="ol_resource_map"
+        data-module="dfo_map_display"
+        data-module-layername="{{ data.get('layer_name') }}"
+        style="height: 600px;">
+    </div>
 
-<script>
-    // This is only used if we are rendering a template raw, without using ckan_extends
+    <script>
+        // This is only used if we are rendering a template raw, without using ckan_extends
 
-    // Options passed to this JavaScript module by the calling template.
-    // var layer_name = this.options.layername;
-    var layer_name = 'vvv'
-    console.log('Rendering map preview: '+layer_name)
-</script>
+        // Options passed to this JavaScript module by the calling template.
+        // var layer_name = this.options.layername;
+        var layer_name = 'vvv'
+        console.log('Rendering map preview: '+layer_name)
+    </script>
+{% endblock -%}
