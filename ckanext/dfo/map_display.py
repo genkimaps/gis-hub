@@ -57,14 +57,15 @@ class MapDisplayController(base.BaseController):
         # We can do a simpler version of this (compared to the way it works in ckanext-restricted)
         # Don't worry about this for now, just check if we can render the map display URL.
 
-        extra_vars = {
+        data = {
             'dataset_id': dataset_id,
             'resource_id': resource_id,
             }
         return render(
             'map_display/resource_map_display.html',
-            dataset_id=dataset_id,
-            resource_id=resource_id)
+            extra_vars={'data': data})
+            # dataset_id=dataset_id,
+            # resource_id=resource_id)
             # context=context, extra_vars=extra_vars)
 
 
