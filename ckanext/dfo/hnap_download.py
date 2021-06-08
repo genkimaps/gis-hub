@@ -1,3 +1,11 @@
+"""
+This module does three main things:
+1. Exposes a URL endpoint to trigger export of the HNAP-compatible metadata file
+for a given dataset
+2. Generates the HNAP file by running an external script, at /home/dfo/hub-geo-api/hnap_export.py
+3. Runs another external script to initiate the process of sending the file to the user by email.
+"""
+
 import dfo_plugin_settings as settings
 from ckan.logic import side_effect_free, get_action
 from ckan.lib import base
