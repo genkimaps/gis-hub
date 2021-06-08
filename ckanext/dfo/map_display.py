@@ -61,9 +61,28 @@ class MapDisplayController(base.BaseController):
         # We can do a simpler version of this (compared to the way it works in ckanext-restricted)
         # Don't worry about this for now, just check if we can render the map display URL.
 
+        # Get resource metadata
+        import ckan.model as model
+        from flask import abort as flask_abort
+        resource = model.Resource.get(resource_id)
+        if not resource:
+            logger.warning('Resource %s not found!' % resource_id)
+            flask_abort(401, 'Access denied')
+        resource = resource.as_dict()
+        layer_name = resource.get('layer_name')
+
+        spatial_type = resource.get('spatial_type')
+        if spatial_type not in ['raster', 'vector']:
+            logger.warning('Map display requested for non-spatial resource: %s' % layer_name)
+            return render(
+                'map_display/resource_map_nopreview.html')
+
+
         data = {
             'dataset_id': dataset_id,
             'resource_id': resource_id,
+            'spatial_type': spatial_type,
+            'layer_name': layer_name
             }
         return render(
             'map_display/resource_map_display.html',
