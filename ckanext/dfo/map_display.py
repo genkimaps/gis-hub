@@ -136,6 +136,10 @@ class MapDisplayController(base.BaseController):
         # The internal layer name used in Geoserver
         gs_layer_name = self.extract_geoserver_layer_name(
             spatial_type, map_preview_link)
+        if not gs_layer_name:
+            logger.warning('Cannot find a valid Geoserver layer name')
+            return render(
+                'map_display/resource_map_nopreview.html')
 
         data = {
             'dataset_id': dataset_id,
