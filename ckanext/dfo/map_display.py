@@ -54,7 +54,7 @@ class MapDisplayController(base.BaseController):
                 res_name = m.group(0)
                 gs_layer_name = '%s_%s' % (ds_name, res_name)
             except:
-                logger.error('Invalid vector preview URL: %s' % map_preview_link)
+                logger.error('Invalid vector preview data: "%s"' % map_preview_link)
 
         elif spatial_type == 'raster':
             patt = r'\/raster\/(.+)$'
@@ -62,7 +62,7 @@ class MapDisplayController(base.BaseController):
             try:
                 gs_layer_name = m.group(1)
             except:
-                logger.error('Invalid raster preview URL: %s' % map_preview_link)
+                logger.error('Invalid raster preview data: "%s"' % map_preview_link)
 
         else:
             logger.error('Invalid spatial type: %s' % spatial_type)
@@ -116,8 +116,14 @@ class MapDisplayController(base.BaseController):
         from flask import abort as flask_abort
         resource = model.Resource.get(resource_id)
         if not resource:
-            logger.warning('Resource %s not found!' % resource_id)
-            flask_abort(401, 'Access denied')
+            errmsg = 'Resource %s not found! Are you sure that %s is a resource id, and not the id of some other object? (package, organization)' % (
+                resource_id, resource_id)
+            logger.warning(errmsg)
+            # flask_abort(401, 'Access denied')
+            return render(
+                'map_display/resource_map_nopreview.html',
+                extra_vars={'errmsg': errmsg})
+
         resource = resource.as_dict()
         layer_name = resource.get('layer_name')
 
