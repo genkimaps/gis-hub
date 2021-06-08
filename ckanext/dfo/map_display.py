@@ -16,6 +16,7 @@ import dfo_plugin_settings
 from flask import send_file, jsonify, redirect
 from subprocess import check_output, Popen
 import traceback
+import re
 
 render = base.render
 
@@ -23,6 +24,46 @@ logger = settings.setup_logger(__name__)
 
 
 class MapDisplayController(base.BaseController):
+
+    def extract_geoserver_layer_name(self, spatial_type, map_preview_link):
+        """
+        Generates the appropriate layer name from parts of the map preview link.
+        For a vector layer, the URL looks like:
+        /vector/substrate_obs/obs_hg
+        /vector/{dataset_name}/{resource_name}
+        And the postgis table name is dataset_name_resource_name
+
+        For a raster layer, the URL looks like:
+        /raster/env_layers_nsbssb_bpi_broad
+        /raster/{layer_name}
+        Where the layer_name corresponds to a Geotiff file such as:
+        ~/geoserver217/data_dir/data/hubdata/env_layers_nsbssb_bpi_broad/env_layers_nsbssb_bpi_broad.tif
+
+        :param spatial_type: raster or vector
+        :param map_preview_link: the full text created by the mapserver layer loading module, which includes
+        comments on status, as well as the actual preview URL.
+        :return: layer name
+        """
+
+        gs_layer_name = None
+        if spatial_type == 'vector':
+            patt = r'\/vector\/(.+)\/(.+)$'
+            m = re.search(patt, map_preview_link)
+            ds_name = m.group(1)
+            res_name = m.group(0)
+            gs_layer_name = '%s_%s' % (ds_name, res_name)
+
+        elif spatial_type == 'raster':
+            patt = r'\/raster\/(.+)$'
+            m = re.search(patt, map_preview_link)
+            gs_layer_name = m.group(1)
+
+        else:
+            logger.error('Invalid spatial type: %s' % spatial_type)
+
+        logger.info('Internal layer name for %s: %s' % (
+            spatial_type, gs_layer_name))
+        return gs_layer_name
 
     def map_display(self, dataset_id, resource_id):
 
@@ -49,12 +90,15 @@ class MapDisplayController(base.BaseController):
         2. Check that the resource_id actually exists in this dataset. This prevents users from 
         using a malformed URL to access a resource that they are not supposed to see. 
         3. Is this a raster or a vector layer? Use a different map template for each.
-        4. Get the extent of the layer from geoserver. 
+        4. Get the extent of the layer from the bbox in resource metadata 
+        (no need to make an extra API call to Geoserver!).  
         Steps 3 and 4 have been handled by the Node.js middleware in mapserver until now. 
         5. Since we're going to change the map preview URLs, we need to add a piece of metadata to 
         every spatial resource with the Postgis table name / raster layer name. 
-        e.g. resource 952a7f28-b73e-4bcc-a049-953db05cb396 in bops dataset has layer name 'bops_wcvi'
-        This is already implicitly stored in the "map_preview_link" metadata field. 
+        e.g. resource c70de8dd-1547-496c-b899-e0424cc1c17a in substrate-obs dataset has layer name 'substrate_obs_obs_wcvi'
+        This can be derived from the "map_preview_link" metadata field: https://maps.gis-hub.ca/vector/substrate_obs/obs_wcvi
+        6. Render the map template. See resource_read.html and resource_map.js for examples of how data 
+        is passed to the Javscript template. 
         """
 
         # 1. Check if user is authorized for this resource
@@ -77,19 +121,19 @@ class MapDisplayController(base.BaseController):
             return render(
                 'map_display/resource_map_nopreview.html')
 
+        map_preview_link = resource.get('map_preview_link')
+
+        # The internal layer name used in Geoserver
+        gs_layer_name = self.extract_geoserver_layer_name(
+            spatial_type, map_preview_link)
 
         data = {
             'dataset_id': dataset_id,
             'resource_id': resource_id,
             'spatial_type': spatial_type,
-            'layer_name': layer_name
+            'layer_name': layer_name,
+            'gs_layer_name': gs_layer_name
             }
         return render(
             'map_display/resource_map_display.html',
             extra_vars={'data': data})
-            # dataset_id=dataset_id,
-            # resource_id=resource_id)
-            # context=context, extra_vars=extra_vars)
-
-
-
