@@ -71,6 +71,14 @@ class MapDisplayController(base.BaseController):
             spatial_type, gs_layer_name))
         return gs_layer_name
 
+    def preview_error_page(self, errmsg):
+        # If an error message is set, show the error page.
+        logger.warning(errmsg)
+        return render(
+            'map_display/resource_map_nopreview.html',
+            extra_vars={'errmsg': errmsg})
+
+
     def map_display(self, dataset_id, resource_id):
 
         """ Make a context object.  Without this, we get an error from Flask:
@@ -115,37 +123,54 @@ class MapDisplayController(base.BaseController):
         import ckan.model as model
         from flask import abort as flask_abort
         resource = model.Resource.get(resource_id)
+
+        # errmsg = ''
         if not resource:
             errmsg = 'Resource %s not found! Are you sure that %s is a resource id, and not the id of some other object? (package, organization)' % (
                 resource_id, resource_id)
-            logger.warning(errmsg)
-            # flask_abort(401, 'Access denied')
-            return render(
-                'map_display/resource_map_nopreview.html',
-                extra_vars={'errmsg': errmsg})
+            return self.preview_error_page(errmsg)
+            # logger.warning(errmsg)
+            # return render(
+            #     'map_display/resource_map_nopreview.html',
+            #     extra_vars={'errmsg': errmsg})
 
         resource = resource.as_dict()
         layer_name = resource.get('layer_name')
 
         spatial_type = resource.get('spatial_type')
         if spatial_type not in ['raster', 'vector']:
-            logger.warning('Map display requested for non-spatial resource: %s' % layer_name)
-            return render(
-                'map_display/resource_map_nopreview.html')
+            errmsg = 'Map display requested for non-spatial resource: %s' % layer_name
+            return self.preview_error_page(errmsg)
+            # logger.warning(errmsg)
+            # return render(
+            #     'map_display/resource_map_nopreview.html',
+            #     extra_vars={'errmsg': errmsg})
 
         map_preview_link = resource.get('map_preview_link')
         if not map_preview_link:
-            logger.warning('No map preview link: user is not authorized, or map preview was not created.')
-            return render(
-                'map_display/resource_map_nopreview.html')
+            errmsg = 'No map preview link: user is not authorized, or map preview was not created.'
+            return self.preview_error_page(errmsg)
+            # logger.warning(errmsg)
+            # return render(
+            #     'map_display/resource_map_nopreview.html',
+            #     extra_vars={'errmsg': errmsg})
+
+
+        # if errmsg:
+        #     logger.warning(errmsg)
+        #     return render(
+        #         'map_display/resource_map_nopreview.html',
+        #         extra_vars={'errmsg': errmsg})
 
         # The internal layer name used in Geoserver
         gs_layer_name = self.extract_geoserver_layer_name(
             spatial_type, map_preview_link)
         if not gs_layer_name:
-            logger.warning('Cannot find a valid Geoserver layer name')
+            errmsg = 'Cannot find a valid Geoserver layer name'
+            logger.warning(errmsg)
             return render(
-                'map_display/resource_map_nopreview.html')
+                'map_display/resource_map_nopreview.html',
+                extra_vars={'errmsg': errmsg})
 
         data = {
             'dataset_id': dataset_id,
@@ -154,6 +179,8 @@ class MapDisplayController(base.BaseController):
             'layer_name': layer_name,
             'gs_layer_name': gs_layer_name
             }
+
+        logger.info('Show map display with: %s' % data)
         return render(
             'map_display/resource_map_display.html',
             extra_vars={'data': data})
