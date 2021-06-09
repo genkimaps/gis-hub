@@ -47,7 +47,7 @@ ckan.module('dfo_map_display', function ($) {
         
       var vector_url = 'https://www.gis-hub.ca/map_preview/' +this.options.dataset+ '/' +this.options.resource+ 
         '/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
-        '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
+        '/EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
       console.log('Vector preview: ' +vector_url)
       
       var mvtLayer = new ol.layer.VectorTile({
