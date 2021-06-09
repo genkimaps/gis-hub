@@ -85,11 +85,11 @@ class MapDisplayController(base.BaseController):
         :return: dict of (N, S, E, W) or None
         (N, S, E, W) are returned as strings for now; convert to float in JS frontend
         """
-
-        n_patt = 'North: (\d+\.\d+)(,|$)'
-        w_patt = 'West: (\d+\.\d+)(,|$)'
-        s_patt = 'South: (\d+\.\d+)(,|$)'
-        e_patt = 'East: (\d+\.\d+)(,|$)'
+        ll_coord_patt = '([?\-]\d+\.\d+)'
+        n_patt = 'North: %s' % ll_coord_patt
+        w_patt = 'West: %s' % ll_coord_patt
+        s_patt = 'South: %s' % ll_coord_patt
+        e_patt = 'East: %s' % ll_coord_patt
         try:
             m = re.search(n_patt, bbox)
             north = m.group(1)
@@ -102,16 +102,16 @@ class MapDisplayController(base.BaseController):
 
             m = re.search(w_patt, bbox)
             west = m.group(1)
-            # north =
-            return {'north': north,
+
+            extent = {'north': north,
                     'east': east,
                     'south': south,
                     'west': west}
+            logger.info('Extent: %s' % extent)
+            return extent
         except:
             logger.error(traceback.format_exc())
             return {}
-
-
 
     def map_display(self, dataset_id, resource_id):
 
@@ -181,14 +181,18 @@ class MapDisplayController(base.BaseController):
             spatial_type, map_preview_link)
         if not gs_layer_name:
             errmsg = 'Cannot find a valid Geoserver layer name'
-            logger.warning(errmsg)
-            return render(
-                'map_display/resource_map_nopreview.html',
-                extra_vars={'errmsg': errmsg})
+            return self.preview_error_page(errmsg)
+            # logger.warning(errmsg)
+            # return render(
+            #     'map_display/resource_map_nopreview.html',
+            #     extra_vars={'errmsg': errmsg})
 
         # Parse layer extent (lat-lon) from bbox field
         bbox = resource.get('bbox')
         extent = self.read_bbox_coords(bbox)
+        if not extent:
+            errmsg = 'Cannot read extent from bbox field'
+            return self.preview_error_page(errmsg)
 
         data = {
             'dataset_id': str(dataset_id),
