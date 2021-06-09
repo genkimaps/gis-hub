@@ -30,7 +30,7 @@
 
     <div id="ol_resource_map_container">
         <div>
-            This is the map preview for {{ data.get('dataset_id') }}: {{ data.get('layer_name') }}, 
+            Map preview for {{ data.get('dataset_id') }}: {{ data.get('layer_name') }}, 
             Geoserver {{ data.get('spatial_type') }} layer {{ data.get('gs_layer_name') }}  (resource id: {{ data.get('resource_id') }})
         </div>
 
@@ -41,17 +41,10 @@
             data-module-east="{{ data.get('east') }}"
             data-module-south="{{ data.get('south') }}"
             data-module-west="{{ data.get('west') }}"
+            data-module-dataset="{{ data.get('dataset_id') }}"
+            data-module-resource="{{ data.get('resource_id') }}"
             style="height: 600px;">
         </div>
     </div>
-
-    {# <script>
-        // This is only used if we are rendering a template raw, without using ckan_extends
-
-        // Options passed to this JavaScript module by the calling template.
-        // var layer_name = this.options.layername;
-        var layer_name = 'vvv'
-        console.log('Rendering map preview: '+layer_name)
-    </script> #}
 
 {% endblock -%}

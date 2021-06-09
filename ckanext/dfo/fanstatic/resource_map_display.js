@@ -33,15 +33,23 @@ ckan.module('dfo_map_display', function ($) {
       var south = Number.parseFloat(this.options.south);
       var west = Number.parseFloat(this.options.west);
 
+      // var dataset = this.options.dataset;
+
       const projection_epsg = '900913';
+
+      var vector_url = 'https://gis-hub.ca/map_preview/' +this.options.dataset+ '/' +this.options.resource+ 
+        '/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
+        '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
+      console.log('Vector preview: ' +vector_url)
       
       var mvtLayer = new ol.layer.VectorTile({
         source: new ol.source.VectorTile({
           tilePixelRatio: 1, // oversampling when > 1
           tileGrid: ol.tilegrid.createXYZ({maxZoom: 15}),
           format: new ol.format.MVT(),
-          url: 'https://maps.gis-hub.ca/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
-              '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
+          // url: 'https://maps.gis-hub.ca/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
+          //     '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
+          url: vector_url
         })
       })
 

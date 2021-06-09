@@ -128,32 +128,26 @@ class MapDisplayController(base.BaseController):
         # e.g. for gis-hub.ca/someurl?animal=dog we would use request.params.get('animal')
         # But here package_id, resource_id are part of the URL pattern, passed from map.connect in plugins.py
 
-        # for k, v in request.params.iteritems():
-        #     logger.info('%s: %s' % (k, v))
-        # resource_id = request.params.get('resource_id')
-        # dataset_id = request.params.get('dataset_id')
         logger.info('Map display requested: %s, %s' % (dataset_id, resource_id))
 
         """
         Need to do a few things before rendering the map. 
-        1. Check if user is authorized for this resource
+        
         2. Check that the resource_id actually exists in this dataset. This prevents users from 
         using a malformed URL to access a resource that they are not supposed to see. 
         3. Is this a raster or a vector layer? Use a different map template for each.
         4. Get the extent of the layer from the bbox in resource metadata 
-        (no need to make an extra API call to Geoserver!).  
+        (no need to make an extra API call to Geoserver).  
         Steps 3 and 4 have been handled by the Node.js middleware in mapserver until now. 
-        5. Since we're going to change the map preview URLs, we need to add a piece of metadata to 
-        every spatial resource with the Postgis table name / raster layer name. 
+        5. Get the Postgis table name / raster layer name, which can be derived from the 
+        "map_preview_link" metadata field: https://maps.gis-hub.ca/vector/substrate_obs/obs_wcvi 
         e.g. resource c70de8dd-1547-496c-b899-e0424cc1c17a in substrate-obs dataset has layer name 'substrate_obs_obs_wcvi'
-        This can be derived from the "map_preview_link" metadata field: https://maps.gis-hub.ca/vector/substrate_obs/obs_wcvi
         6. Render the map template. See resource_read.html and resource_map.js for examples of how data 
         is passed to the Javscript template. 
+        
+        NOTE: we do NOT need to check if user is authorized for this resource. This is handled downstream, 
+        in the nginx auth request for each map tile. 
         """
-
-        # 1. Check if user is authorized for this resource
-        # We can do a simpler version of this (compared to the way it works in ckanext-restricted)
-        # Don't worry about this for now, just check if we can render the map display URL.
 
         # Get resource metadata
         import ckan.model as model
@@ -184,10 +178,6 @@ class MapDisplayController(base.BaseController):
         if not gs_layer_name:
             errmsg = 'Cannot find a valid Geoserver layer name'
             return self.preview_error_page(errmsg)
-            # logger.warning(errmsg)
-            # return render(
-            #     'map_display/resource_map_nopreview.html',
-            #     extra_vars={'errmsg': errmsg})
 
         # Parse layer extent (lat-lon) from bbox field
         bbox = resource.get('bbox')
