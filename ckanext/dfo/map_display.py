@@ -85,7 +85,7 @@ class MapDisplayController(base.BaseController):
         :return: dict of (N, S, E, W) or None
         (N, S, E, W) are returned as strings for now; convert to float in JS frontend
         """
-        ll_coord_patt = '([?\-]\d+\.\d+)'
+        ll_coord_patt = '([\-]?\d+\.\d+)'
         n_patt = 'North: %s' % ll_coord_patt
         w_patt = 'West: %s' % ll_coord_patt
         s_patt = 'South: %s' % ll_coord_patt
@@ -111,6 +111,8 @@ class MapDisplayController(base.BaseController):
             return extent
         except:
             logger.error(traceback.format_exc())
+            logger.error('Pattern: %s, bbox %s' % (
+                ll_coord_patt, bbox))
             return {}
 
     def map_display(self, dataset_id, resource_id):
