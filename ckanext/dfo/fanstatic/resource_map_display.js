@@ -25,8 +25,8 @@ ckan.module('dfo_map_display', function ($) {
       console.log("dfo_map_display initialized for element: ", this.el);
 
       // Options passed to this JavaScript module by the calling template.
-      var layer_name = this.options.layername;
-      console.log('Rendering map preview: '+layer_name);
+      var geoserverlayer = this.options.geoserverlayer;
+      console.log('Rendering map preview: '+geoserverlayer);
 
       var north = Number.parseFloat(this.options.north);
       var east = Number.parseFloat(this.options.east);
@@ -40,7 +40,7 @@ ckan.module('dfo_map_display', function ($) {
           tilePixelRatio: 1, // oversampling when > 1
           tileGrid: ol.tilegrid.createXYZ({maxZoom: 15}),
           format: new ol.format.MVT(),
-          url: 'https://maps.gis-hub.ca/geoserver/gwc/service/tms/1.0.0/hubdata:' +layer_name+
+          url: 'https://maps.gis-hub.ca/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
               '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
         })
       })
