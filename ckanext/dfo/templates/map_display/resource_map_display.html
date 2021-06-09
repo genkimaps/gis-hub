@@ -23,6 +23,11 @@
 
 {% block page %}
     {% resource 'dfo/resource_map_display.js' %}
+
+    <!-- CDN for openlayers -->
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css">
+
     <div id="ol_resource_map_container">
         <div>
             This is the map preview for {{ data.get('dataset_id') }}: {{ data.get('layer_name') }}, 
@@ -36,12 +41,13 @@
         </div>
     </div>
 
-    <script>
+    {# <script>
         // This is only used if we are rendering a template raw, without using ckan_extends
 
         // Options passed to this JavaScript module by the calling template.
         // var layer_name = this.options.layername;
         var layer_name = 'vvv'
         console.log('Rendering map preview: '+layer_name)
-    </script>
+    </script> #}
+
 {% endblock -%}
