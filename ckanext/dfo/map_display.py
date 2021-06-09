@@ -128,7 +128,8 @@ class MapDisplayController(base.BaseController):
         # e.g. for gis-hub.ca/someurl?animal=dog we would use request.params.get('animal')
         # But here package_id, resource_id are part of the URL pattern, passed from map.connect in plugins.py
 
-        logger.info('Map display requested: %s, %s' % (dataset_id, resource_id))
+        logger.info('Map display requested by %s: %s, %s' % (
+            c.user, dataset_id, resource_id))
 
         """
         Need to do a few things before rendering the map. 
