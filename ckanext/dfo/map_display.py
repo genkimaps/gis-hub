@@ -78,6 +78,40 @@ class MapDisplayController(base.BaseController):
             'map_display/resource_map_nopreview.html',
             extra_vars={'errmsg': errmsg})
 
+    def read_bbox_coords(self, bbox):
+        """
+        Parse the bbox field to get NSEW values in lat-lon
+        :param bbox:
+        :return: dict of (N, S, E, W) or None
+        (N, S, E, W) are returned as strings for now; convert to float in JS frontend
+        """
+
+        n_patt = 'North: (\d+\.\d+)(,|$)'
+        w_patt = 'West: (\d+\.\d+)(,|$)'
+        s_patt = 'South: (\d+\.\d+)(,|$)'
+        e_patt = 'East: (\d+\.\d+)(,|$)'
+        try:
+            m = re.search(n_patt, bbox)
+            north = m.group(1)
+
+            m = re.search(e_patt, bbox)
+            east = m.group(1)
+
+            m = re.search(s_patt, bbox)
+            south = m.group(1)
+
+            m = re.search(w_patt, bbox)
+            west = m.group(1)
+            # north =
+            return {'north': north,
+                    'east': east,
+                    'south': south,
+                    'west': west}
+        except:
+            logger.error(traceback.format_exc())
+            return {}
+
+
 
     def map_display(self, dataset_id, resource_id):
 
@@ -152,13 +186,19 @@ class MapDisplayController(base.BaseController):
                 'map_display/resource_map_nopreview.html',
                 extra_vars={'errmsg': errmsg})
 
+        # Parse layer extent (lat-lon) from bbox field
+        bbox = resource.get('bbox')
+        extent = self.read_bbox_coords(bbox)
+
         data = {
             'dataset_id': str(dataset_id),
             'resource_id': str(resource_id),
             'spatial_type': str(spatial_type),
             'layer_name': str(layer_name),
             'gs_layer_name': str(gs_layer_name)
-            }
+        }
+        # Add coords to data dict
+        data.update(extent)
 
         logger.info('Show map display with: %s' % data)
         return render(

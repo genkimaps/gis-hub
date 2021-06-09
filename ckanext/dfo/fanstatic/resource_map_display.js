@@ -26,7 +26,12 @@ ckan.module('dfo_map_display', function ($) {
 
       // Options passed to this JavaScript module by the calling template.
       var layer_name = this.options.layername;
-      console.log('Rendering map preview: '+layer_name)
+      console.log('Rendering map preview: '+layer_name);
+
+      var north = Number.parseFloat(this.options.north);
+      var east = Number.parseFloat(this.options.east);
+      var south = Number.parseFloat(this.options.south);
+      var west = Number.parseFloat(this.options.west);
 
       const projection_epsg = '900913';
       
@@ -35,8 +40,8 @@ ckan.module('dfo_map_display', function ($) {
           tilePixelRatio: 1, // oversampling when > 1
           tileGrid: ol.tilegrid.createXYZ({maxZoom: 15}),
           format: new ol.format.MVT(),
-          url: 'https://maps.gis-hub.ca/geoserver/gwc/service/tms/1.0.0/hubdata:{{ layer_name }}' +
-              '@EPSG%3A'+projection_epsg+'@pbf/{z}/{x}/{-y}.pbf'
+          url: 'https://maps.gis-hub.ca/geoserver/gwc/service/tms/1.0.0/hubdata:' +layer_name+
+              '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
         })
       })
 
@@ -62,6 +67,15 @@ ckan.module('dfo_map_display', function ($) {
         }),
         layers: layers
       });
+
+      // Set map view to layer extent
+      // https://stackoverflow.com/q/35150114
+      var bottomLeft = [west, south];
+      var topRight = [east, north];
+      var ext = ol.extent.boundingExtent([bottomLeft, topRight]);
+      console.log('Extent Lat-Lon: '+JSON.stringify(ext))
+
+
 
     }
   };
