@@ -75,8 +75,10 @@ ckan.module('dfo_map_display', function ($) {
       var ext = ol.extent.boundingExtent([bottomLeft, topRight]);
       console.log('Extent Lat-Lon: '+JSON.stringify(ext))
 
+      var extWebMercator = ol.proj.transformExtent(ext, 'EPSG:4326', 'EPSG:'+projection_epsg)
+      console.log('Extent Web Mercator: '+JSON.stringify(extWebMercator))
 
-
+      map.getView().fit(extWebMercator)
     }
   };
 });
