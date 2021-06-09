@@ -37,7 +37,15 @@ ckan.module('dfo_map_display', function ($) {
 
       const projection_epsg = '900913';
 
-      var vector_url = 'https://gis-hub.ca/map_preview/' +this.options.dataset+ '/' +this.options.resource+ 
+      /**  We must include www. in the URL, or cookies (which contains the session of logged-in user) 
+       * will NOT be included in the request. In other words, suppose a user is browsing to 
+       * https://www.gis-hub.ca/dataset/some-dataset and then tries to access a map preview URL at 
+       * https://gis-hub.ca/map_preview/blah-blah, the auth cookie will NOT be sent, because for security 
+       * reasons, the browser thinks that https://www.gis-hub.ca and https://gis-hub.ca are completely 
+       * different servers. 
+       */
+        
+      var vector_url = 'https://www.gis-hub.ca/map_preview/' +this.options.dataset+ '/' +this.options.resource+ 
         '/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
         '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
       console.log('Vector preview: ' +vector_url)
