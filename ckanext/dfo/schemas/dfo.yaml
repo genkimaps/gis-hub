@@ -744,6 +744,13 @@ dataset_fields:
       value: Confidential
   validators: require_when_published
 
+# Dataset level spatial field to hold the convex hull geometry collection
+- field_name: spatial
+  label: Spatial Extent
+  form_snippet: hidden.html
+  help_text: "GeoJSON geometry"
+  display_group: Science
+
 - field_name: reliability
   label: Reliability
   help_text: A measure or estimate of the reliability of the dataset for a specific purpose, if known.
