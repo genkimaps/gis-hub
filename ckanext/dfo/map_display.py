@@ -160,13 +160,9 @@ class MapDisplayController(base.BaseController):
             c.user, resource_id))
 
         if not c.user:
-            # Not logged in, redirect to login page
-            # import ckan.plugins.toolkit as toolkit
-            # import ckan.lib.helpers as h
+            # Not logged in, show login error
             errmsg = 'Must be logged in to view this page.'
             return self.preview_error_page(errmsg)
-            # logger.warning('Not logged in!')
-            # return h.redirect_to(u'user.login')
 
         # Get resource metadata
         import ckan.model as model
@@ -210,7 +206,6 @@ class MapDisplayController(base.BaseController):
             c.user, layer_name, resource_id))
 
         data = {
-            # 'dataset_id': str(dataset_id),
             'resource_id': str(resource_id),
             'spatial_type': str(spatial_type),
             'layer_name': str(layer_name),
