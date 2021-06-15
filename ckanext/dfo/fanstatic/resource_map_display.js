@@ -33,8 +33,6 @@ ckan.module('dfo_map_display', function ($) {
       var south = Number.parseFloat(this.options.south);
       var west = Number.parseFloat(this.options.west);
 
-      // var dataset = this.options.dataset;
-
       const projection_epsg = '900913';
 
       /**  We must include www. in the URL, or cookies (which contains the session of logged-in user) 
@@ -45,7 +43,7 @@ ckan.module('dfo_map_display', function ($) {
        * different servers. 
        */
         
-      var vector_url = 'https://www.gis-hub.ca/map_preview/' +this.options.dataset+ '/' +this.options.resource+ 
+      var vector_url = 'https://www.gis-hub.ca/map_preview/' +this.options.resource+ 
         '/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
         '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
       console.log('Vector preview: ' +vector_url)
