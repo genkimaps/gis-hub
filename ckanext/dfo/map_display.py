@@ -157,6 +157,12 @@ class MapDisplayController(base.BaseController):
         logger.info('Map display requested by %s: resource: %s' % (
             c.user, resource_id))
 
+        if not c.user:
+            # Not logged in, redirect to login page
+            import ckan.plugins.toolkit as toolkit
+            logger.warning('Not logged in!')
+            toolkit.redirect_to('user.login')
+
         # Get resource metadata
         import ckan.model as model
         from flask import abort as flask_abort
