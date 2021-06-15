@@ -11,8 +11,9 @@ screen_fmt = logging.Formatter(
 # goc_themes_id = '88f5c7a2-7b25-4ce8-a0c6-081236f5da76'
 # species_codes_id = 'cdc22563-dc61-4abc-9b6d-a863382e4b6c'
 
-goc_themes_id = '99190d4d-654e-4e4c-8652-66495e489057'
-species_codes_id = '0c88bc84-435d-4e24-9abf-927195c3a7d0'
+goc_themes_id = '8f0bd7af-43a4-4ba0-ad56-42ddc2ec1eeb'
+species_codes_id = 'cb85c106-ce44-40f6-a3fe-f18d8584151f'
+
 
 hubapi_venv = '/home/cole/.virtualenvs/hub-geo-api/bin/python3'
 hubapi_backup_script = '/home/cole/ckan/hub-geo-api/backups.py'
