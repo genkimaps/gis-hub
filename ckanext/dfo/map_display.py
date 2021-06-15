@@ -154,15 +154,19 @@ class MapDisplayController(base.BaseController):
         in the nginx auth request for each map tile. 
         """
 
+        # Example URL: https://www.gis-hub.ca/map_display/c70de8dd-1547-496c-b899-e0424cc1c17a
+
         logger.info('Map display requested by %s: resource: %s' % (
             c.user, resource_id))
 
         if not c.user:
             # Not logged in, redirect to login page
             # import ckan.plugins.toolkit as toolkit
-            import ckan.lib.helpers as h
-            logger.warning('Not logged in!')
-            return h.redirect_to(u'user.login')
+            # import ckan.lib.helpers as h
+            errmsg = 'Must be logged in to view this page.'
+            return self.preview_error_page(errmsg)
+            # logger.warning('Not logged in!')
+            # return h.redirect_to(u'user.login')
 
         # Get resource metadata
         import ckan.model as model
