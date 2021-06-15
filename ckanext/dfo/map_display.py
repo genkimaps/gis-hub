@@ -25,6 +25,8 @@ logger = settings.setup_logger(__name__)
 
 class MapDisplayController(base.BaseController):
 
+    # Test URL: https://www.gis-hub.ca/dataset/test05/map_display/c70de8dd-1547-496c-b899-e0424cc1c17a
+
     def extract_geoserver_layer_name(self, spatial_type, map_preview_link):
         """
         Generates the appropriate layer name from parts of the map preview link.
@@ -115,31 +117,33 @@ class MapDisplayController(base.BaseController):
                 ll_coord_patt, bbox))
             return {}
 
-    def map_display(self, dataset_id, resource_id):
+    def map_display(self, resource_id):
+        """
+        Get metadata for this resource, pass to resource map template.
+        Don't check for user permissions here, not needed.
+        :param resource_id:
+        :return:
+        """
 
         """ Make a context object.  Without this, we get an error from Flask:
         RuntimeError: Working outside of request context.
         The context object makes use of the global CKAN object 'c' which contains
         session info including the logged-in user.
-        """
+
+        request.params.get is only used for URL parameters after the ?
+        e.g. for gis-hub.ca/someurl?animal=dog we would use request.params.get('animal')
+        But here package_id, resource_id are part of the URL pattern, passed from map.connect in plugins.py
+        
         context = {"user": c.user, "auth_user_obj": c.userobj}
-
-        # request.params.get is only used for URL parameters after the ?
-        # e.g. for gis-hub.ca/someurl?animal=dog we would use request.params.get('animal')
-        # But here package_id, resource_id are part of the URL pattern, passed from map.connect in plugins.py
-
-        logger.info('Map display requested by %s: %s, %s' % (
-            c.user, dataset_id, resource_id))
+        """
 
         """
         Need to do a few things before rendering the map. 
-        
-        2. Check that the resource_id actually exists in this dataset. This prevents users from 
-        using a malformed URL to access a resource that they are not supposed to see. 
-        3. Is this a raster or a vector layer? Use a different map template for each.
-        4. Get the extent of the layer from the bbox in resource metadata 
+        1. Get resource metadata, ensure that it is a spatial resource
+        2. Is this a raster or a vector layer? Use a different map template for each.
+        3. Get the extent of the layer from the bbox in resource metadata 
         (no need to make an extra API call to Geoserver).  
-        Steps 3 and 4 have been handled by the Node.js middleware in mapserver until now. 
+        The last two steps have until now been handled by the Node.js middleware in mapserver.  
         5. Get the Postgis table name / raster layer name, which can be derived from the 
         "map_preview_link" metadata field: https://maps.gis-hub.ca/vector/substrate_obs/obs_wcvi 
         e.g. resource c70de8dd-1547-496c-b899-e0424cc1c17a in substrate-obs dataset has layer name 'substrate_obs_obs_wcvi'
@@ -150,13 +154,17 @@ class MapDisplayController(base.BaseController):
         in the nginx auth request for each map tile. 
         """
 
+        logger.info('Map display requested by %s: resource: %s' % (
+            c.user, resource_id))
+
         # Get resource metadata
         import ckan.model as model
         from flask import abort as flask_abort
         resource = model.Resource.get(resource_id)
 
         if not resource:
-            errmsg = 'Resource %s not found! Are you sure that %s is a resource id, and not the id of some other object? (package, organization)' % (
+            errmsg = 'Resource %s not found! Are you sure that %s is a resource id, ' \
+                     'and not the id of some other object? (package, organization)' % (
                 resource_id, resource_id)
             return self.preview_error_page(errmsg)
 
@@ -187,8 +195,11 @@ class MapDisplayController(base.BaseController):
             errmsg = 'Cannot read extent from bbox field'
             return self.preview_error_page(errmsg)
 
+        logger.info('Map display requested by %s: %s (resource: %s)' % (
+            c.user, layer_name, resource_id))
+
         data = {
-            'dataset_id': str(dataset_id),
+            # 'dataset_id': str(dataset_id),
             'resource_id': str(resource_id),
             'spatial_type': str(spatial_type),
             'layer_name': str(layer_name),
