@@ -159,9 +159,10 @@ class MapDisplayController(base.BaseController):
 
         if not c.user:
             # Not logged in, redirect to login page
-            import ckan.plugins.toolkit as toolkit
+            # import ckan.plugins.toolkit as toolkit
+            import ckan.lib.helpers as h
             logger.warning('Not logged in!')
-            return toolkit.redirect_to('user.login')
+            return h.redirect_to(u'user.login')
 
         # Get resource metadata
         import ckan.model as model
