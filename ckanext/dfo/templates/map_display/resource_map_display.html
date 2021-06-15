@@ -30,8 +30,8 @@
 
     <div id="ol_resource_map_container">
         <div>
-            Map preview for {{ data.get('layer_name') }}, {{ data.get('spatial_type') }} layer: 
-            {{ data.get('gs_layer_name') }} (resource id: {{ data.get('resource_id') }})
+            {# Map preview for {{ data.get('layer_name') }}, {{ data.get('spatial_type') }} layer: 
+            {{ data.get('gs_layer_name') }} (resource id: {{ data.get('resource_id') }}) #}
         </div>
 
         <div id="ol_resource_map"
@@ -43,6 +43,8 @@
             data-module-west="{{ data.get('west') }}"
             data-module-dataset="{{ data.get('dataset_id') }}"
             data-module-resource="{{ data.get('resource_id') }}"
+            data-module-spatialtype="{{ data.get('spatial_type') }}"
+            data-module-lyrname="{{ data.get('layer_name') }}"
             style="height: 650px;">
         </div>
     </div>

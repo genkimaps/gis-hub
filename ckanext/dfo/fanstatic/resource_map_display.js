@@ -26,8 +26,7 @@ ckan.module('dfo_map_display', function ($) {
 
       // Options passed to this JavaScript module by the calling template.
       var geoserverlayer = this.options.geoserverlayer;
-      console.log('Rendering map preview: '+geoserverlayer);
-
+      var resource_id = this.options.resource;
       var north = Number.parseFloat(this.options.north);
       var east = Number.parseFloat(this.options.east);
       var south = Number.parseFloat(this.options.south);
@@ -41,9 +40,10 @@ ckan.module('dfo_map_display', function ($) {
        * https://gis-hub.ca/map_preview/blah-blah, the auth cookie will NOT be sent, because for security 
        * reasons, the browser thinks that https://www.gis-hub.ca and https://gis-hub.ca are completely 
        * different servers. 
-       */
+      */
         
-      var vector_url = 'https://www.gis-hub.ca/map_preview/' +this.options.resource+ 
+      console.log(`Map preview: ${this.options.spatialtype} layer: ${geoserverlayer}, resource: ${this.options.lyrname} (id: ${resource_id})`);
+      var vector_url = 'https://www.gis-hub.ca/map_preview/' +resource_id+ 
         '/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
         '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
       console.log('Vector preview: ' +vector_url)
@@ -53,8 +53,6 @@ ckan.module('dfo_map_display', function ($) {
           tilePixelRatio: 1, // oversampling when > 1
           tileGrid: ol.tilegrid.createXYZ({maxZoom: 15}),
           format: new ol.format.MVT(),
-          // url: 'https://maps.gis-hub.ca/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
-          //     '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
           url: vector_url
         })
       })
@@ -87,10 +85,10 @@ ckan.module('dfo_map_display', function ($) {
       var bottomLeft = [west, south];
       var topRight = [east, north];
       var ext = ol.extent.boundingExtent([bottomLeft, topRight]);
-      console.log('Extent Lat-Lon: '+JSON.stringify(ext))
+      console.debug('Extent Lat-Lon: '+JSON.stringify(ext))
 
       var extWebMercator = ol.proj.transformExtent(ext, 'EPSG:4326', 'EPSG:'+projection_epsg)
-      console.log('Extent Web Mercator: '+JSON.stringify(extWebMercator))
+      console.debug('Extent Web Mercator: '+JSON.stringify(extWebMercator))
 
       map.getView().fit(extWebMercator)
     }
