@@ -19,6 +19,53 @@ function simpleStyle(feature) {
   });
 }
 
+const urlBase = 'https://www.gis-hub.ca/map_preview/';
+
+function createTargetLayer(spatialtype, resource_id, geoserverlayer, projection_epsg){
+  /**
+   * Create an OpenLayers layer object of the appropriate type. 
+   * For raster: ol.layer.Image with a WMS source
+   * For vector: ol.layer.Tile with a XYZ source in Mapbox ol.format.MVT() format
+   */
+
+  if (spatialtype === 'raster') {
+    var raster_url = urlBase + resource_id + '/geoserver/hubdata/wms';
+    console.log('Raster preview URL: ' +raster_url)
+    var untiledRasterLayer = new ol.layer.Image({
+      source: new ol.source.ImageWMS({
+        ratio: 1,
+        url: raster_url,
+        params: {
+          'FORMAT': 'image/png',
+          'VERSION': '1.1.1',  
+          'LAYERS': 'hubdata:' +geoserverlayer,
+          'exceptions': 'application/vnd.ogc.se_inimage',
+        }
+      })
+    });
+    return untiledRasterLayer;
+
+  } else if (spatialtype === 'vector') {
+    var vector_url = urlBase + resource_id + 
+        '/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
+        '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
+    console.log('Vector preview URL: ' +vector_url)
+    
+    var mvtLayer = new ol.layer.VectorTile({
+      source: new ol.source.VectorTile({
+        tilePixelRatio: 1, // oversampling when > 1
+        tileGrid: ol.tilegrid.createXYZ({maxZoom: 15}),
+        format: new ol.format.MVT(),
+        url: vector_url
+      })
+    })
+    return mvtLayer;
+
+  } else {
+    console.error(`Unknown spatial type: ${spatialtype}`);
+  }
+}
+
 ckan.module('dfo_map_display', function ($) {
   return {
     initialize: function () {
@@ -27,6 +74,7 @@ ckan.module('dfo_map_display', function ($) {
       // Options passed to this JavaScript module by the calling template.
       var geoserverlayer = this.options.geoserverlayer;
       var resource_id = this.options.resource;
+      var spatialtype = this.options.spatialtype;
       var north = Number.parseFloat(this.options.north);
       var east = Number.parseFloat(this.options.east);
       var south = Number.parseFloat(this.options.south);
@@ -42,20 +90,9 @@ ckan.module('dfo_map_display', function ($) {
        * different servers. 
       */
         
-      console.log(`Map preview: ${this.options.spatialtype} layer: ${geoserverlayer}, resource: ${this.options.lyrname} (id: ${resource_id})`);
-      var vector_url = 'https://www.gis-hub.ca/map_preview/' +resource_id+ 
-        '/geoserver/gwc/service/tms/1.0.0/hubdata:' +geoserverlayer+
-        '@EPSG%3A' +projection_epsg+ '@pbf/{z}/{x}/{-y}.pbf'
-      console.log('Vector preview: ' +vector_url)
-      
-      var mvtLayer = new ol.layer.VectorTile({
-        source: new ol.source.VectorTile({
-          tilePixelRatio: 1, // oversampling when > 1
-          tileGrid: ol.tilegrid.createXYZ({maxZoom: 15}),
-          format: new ol.format.MVT(),
-          url: vector_url
-        })
-      })
+      console.log(`Map preview: ${spatialtype} layer: ${geoserverlayer}, resource: ${this.options.lyrname} (id: ${resource_id})`);
+
+      var targetLayer = createTargetLayer(spatialtype, resource_id, geoserverlayer, projection_epsg);
 
       var layers = [
           new ol.layer.Tile({
@@ -68,7 +105,7 @@ ckan.module('dfo_map_display', function ($) {
                 'World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
             }),
           }),    
-          mvtLayer
+          targetLayer
       ]
 
       var map = new ol.Map({
