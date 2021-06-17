@@ -183,17 +183,22 @@ class MapDisplayController(base.BaseController):
             errmsg = 'Map display requested for non-spatial resource: %s' % layer_name
             return self.preview_error_page(errmsg)
 
-        map_preview_link = resource.get('map_preview_link')
-        if not map_preview_link:
-            errmsg = 'No map preview link: user is not authorized, or map preview was not created.'
-            return self.preview_error_page(errmsg)
-
-        # The internal layer name used in Geoserver
-        gs_layer_name = self.extract_geoserver_layer_name(
-            spatial_type, map_preview_link)
+        # Get the internal layer name used in Geoserver, directly from metadata if exists
+        gs_layer_name = resource.get('geoserver_layer')
         if not gs_layer_name:
-            errmsg = 'Cannot find a valid Geoserver layer name'
-            return self.preview_error_page(errmsg)
+            # If that field does not exist, get layer name from map_preview_link field
+            logger.warning('Field geoserver_layer is empty, try map_preview_link')
+
+            map_preview_link = resource.get('map_preview_link')
+            if not map_preview_link:
+                errmsg = 'No map preview link: user is not authorized, or map preview was not created.'
+                return self.preview_error_page(errmsg)
+
+            gs_layer_name = self.extract_geoserver_layer_name(
+                spatial_type, map_preview_link)
+            if not gs_layer_name:
+                errmsg = 'Cannot find a valid Geoserver layer name'
+                return self.preview_error_page(errmsg)
 
         # Parse layer extent (lat-lon) from bbox field
         bbox = resource.get('bbox')
