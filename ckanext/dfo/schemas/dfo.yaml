@@ -747,7 +747,6 @@ dataset_fields:
 # Dataset level spatial field to hold the convex hull geometry collection
 - field_name: spatial
   label: Spatial Extent
-  form_snippet: hidden.html
   help_text: "GeoJSON geometry"
   display_group: Science
 
