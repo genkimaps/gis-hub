@@ -748,6 +748,8 @@ dataset_fields:
 - field_name: spatial
   label: Spatial Extent
   help_text: "GeoJSON geometry"
+  form_snippet: textarea.html
+  display_snippet: text.html
   display_group: Science
 
 - field_name: reliability
