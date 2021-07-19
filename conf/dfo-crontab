@@ -1,0 +1,12 @@
+# This is a crontab file for user dfo, containing custom cron commands for
+# various utility scripts on the GIS Hub.
+#
+# For more information see the manual pages of crontab(5) and cron(8)
+# 
+# m h  dom mon dow   command
+@daily /home/tk/venv/bin/paster --plugin=ckan tracking update -c /home/tk/ckan/dfo.ini && /home/tk/venv/bin/paster --plugin=ckan search-index rebuild -r -c /home/tk/ckan/dfo.ini
+@weekly /bin/bash /home/tk/ckanext-dfo/conf/send_notifications.sh
+0 00 * * 5 /bin/bash /home/tk/ckanext-dfo/conf/database_backup.sh*
+0 0 1 * * /bin/bash /home/tk/ckanext-dfo/conf/extract_maintainer_email.sh > /tmp/cronlog_sql_extract.txt 2>&1
+5 0 1 * * /bin/bash /home/tk/ckanext-dfo/conf/email_maintainer.sh > /tmp/cronlog_maintainer_py.txt 2>&1
+@hourly /bin/bash /home/tk/ckanext-dfo/conf/email_new_datasets.sh > /tmp/cronlog_new_datasets.txt 2>&1

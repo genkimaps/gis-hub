@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Solr managed schema - automatically generated - DO NOT EDIT -->
+<schema name="ckan" version="2.3">
+  <uniqueKey>index_id</uniqueKey>
+  <defaultSearchField>text</defaultSearchField>
+  <solrQueryParser defaultOperator="AND"/>
+  <fieldType name="binary" class="solr.BinaryField"/>
+  <fieldType name="boolean" class="solr.BoolField" omitNorms="true" sortMissingLast="true"/>
+  <fieldType name="booleans" class="solr.BoolField" sortMissingLast="true" multiValued="true"/>
+  <fieldType name="date" class="solr.TrieDateField" omitNorms="true" positionIncrementGap="0" precisionStep="0"/>
+  <fieldType name="double" class="solr.TrieDoubleField" omitNorms="true" positionIncrementGap="0" precisionStep="0"/>
+  <fieldType name="float" class="solr.TrieFloatField" omitNorms="true" positionIncrementGap="0" precisionStep="0"/>
+  <fieldType name="int" class="solr.TrieIntField" omitNorms="true" positionIncrementGap="0" precisionStep="0"/>
+  <fieldType name="long" class="solr.TrieLongField" omitNorms="true" positionIncrementGap="0" precisionStep="0"/>
+  <fieldType name="string" class="solr.StrField" omitNorms="true" sortMissingLast="true"/>
+  <fieldType name="tdate" class="solr.TrieDateField" omitNorms="true" positionIncrementGap="0" precisionStep="6"/>
+  <fieldType name="tdates" class="solr.TrieDateField" positionIncrementGap="0" multiValued="true" precisionStep="7"/>
+  <fieldType name="tdouble" class="solr.TrieDoubleField" omitNorms="true" positionIncrementGap="0" precisionStep="8"/>
+  <fieldType name="tdoubles" class="solr.TrieDoubleField" positionIncrementGap="0" multiValued="true" precisionStep="8"/>
+  <fieldType name="location_rpt" class="solr.SpatialRecursivePrefixTreeFieldType"
+        spatialContextFactory="com.spatial4j.core.context.jts.JtsSpatialContextFactory"
+        autoIndex="true"
+        validationRule="repairBuffer0"
+        distErrPct="0.025"
+        maxDistErr="0.000009"
+	allowMultiOverlap="true"
+        distanceUnits="degrees" />
+  <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.WordDelimiterFilterFactory" catenateNumbers="1" generateNumberParts="1" splitOnCaseChange="1" generateWordParts="1" catenateAll="0" catenateWords="1"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.SnowballPorterFilterFactory" language="English" protected="protwords.txt"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.SynonymFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
+      <filter class="solr.WordDelimiterFilterFactory" catenateNumbers="0" generateNumberParts="1" splitOnCaseChange="1" generateWordParts="1" catenateAll="0" catenateWords="0"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.SnowballPorterFilterFactory" language="English" protected="protwords.txt"/>
+      <filter class="solr.ASCIIFoldingFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="textgen" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.WordDelimiterFilterFactory" catenateNumbers="1" generateNumberParts="1" splitOnCaseChange="0" generateWordParts="1" catenateAll="0" catenateWords="1"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      <filter class="solr.SynonymFilterFactory" expand="true" ignoreCase="true" synonyms="synonyms.txt"/>
+      <filter class="solr.WordDelimiterFilterFactory" catenateNumbers="0" generateNumberParts="1" splitOnCaseChange="0" generateWordParts="1" catenateAll="0" catenateWords="0"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="tfloat" class="solr.TrieFloatField" omitNorms="true" positionIncrementGap="0" precisionStep="8"/>
+  <fieldType name="tfloats" class="solr.TrieFloatField" positionIncrementGap="0" multiValued="true" precisionStep="8"/>
+  <fieldType name="tint" class="solr.TrieIntField" omitNorms="true" positionIncrementGap="0" precisionStep="8"/>
+  <fieldType name="tints" class="solr.TrieIntField" positionIncrementGap="0" multiValued="true" precisionStep="8"/>
+  <fieldType name="tlong" class="solr.TrieLongField" omitNorms="true" positionIncrementGap="0" precisionStep="8"/>
+  <fieldType name="tlongs" class="solr.TrieLongField" positionIncrementGap="0" multiValued="true" precisionStep="8"/>
+
+  <field name="spatial_geom"  type="location_rpt" indexed="true" stored="true" multiValued="true" />
+
+  <field name="_version_" type="string" indexed="true" stored="true"/>
+  <field name="author" type="textgen" indexed="true" stored="true"/>
+  <field name="author_email" type="textgen" indexed="true" stored="true"/>
+  <field name="capacity" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="child_of" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="ckan_url" type="string" omitNorms="true" indexed="true" stored="true"/>
+  <field name="data_dict" type="string" indexed="false" stored="true"/>
+  <field name="dataset_type" type="string" indexed="true" stored="true"/>
+  <field name="dependency_of" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="depends_on" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="derives_from" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="download_url" type="string" omitNorms="true" indexed="true" stored="true"/>
+  <field name="entity_type" type="string" omitNorms="true" indexed="true" stored="true"/>
+  <field name="extras_data_format" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="extras_science_keywords" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="extras_theme" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="groups" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="has_derivation" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="id" type="string" indexed="true" required="true" stored="true"/>
+  <field name="index_id" type="string" indexed="true" required="true" stored="true"/>
+  <field name="indexed_ts" type="date" default="NOW" multiValued="false" indexed="true" stored="true"/>
+  <field name="license" type="string" indexed="true" stored="true"/>
+  <field name="license_id" type="string" indexed="true" stored="true"/>
+  <field name="linked_from" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="links_to" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="maintainer" type="textgen" indexed="true" stored="true"/>
+  <field name="maintainer_email" type="textgen" indexed="true" stored="true"/>
+  <field name="metadata_created" type="date" multiValued="false" indexed="true" stored="true"/>
+  <field name="metadata_modified" type="date" multiValued="false" indexed="true" stored="true"/>
+  <field name="name" type="string" omitNorms="true" indexed="true" stored="true"/>
+  <field name="notes" type="text" indexed="true" stored="true"/>
+  <field name="organization" type="string" multiValued="false" indexed="true" stored="true"/>
+  <field name="parent_of" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="ratings_average" type="float" indexed="true" stored="false"/>
+  <field name="ratings_count" type="int" indexed="true" stored="false"/>
+  <field name="res_description" type="textgen" multiValued="true" indexed="true" stored="true"/>
+  <field name="res_extras_data_format" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="res_format" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="res_name" type="textgen" multiValued="true" indexed="true" stored="true"/>
+  <field name="res_type" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="res_url" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="resources_accessed_recent" type="int" indexed="true" stored="false"/>
+  <field name="resources_accessed_total" type="int" indexed="true" stored="false"/>
+  <field name="revision_id" type="string" omitNorms="true" indexed="true" stored="true"/>
+  <field name="site_id" type="string" indexed="true" required="true" stored="true"/>
+  <field name="state" type="string" omitNorms="true" indexed="true" stored="true"/>
+  <field name="tags" type="string" multiValued="true" indexed="true" stored="true"/>
+  <field name="text" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="title" type="text" indexed="true" stored="true"/>
+  <field name="title_string" type="string" indexed="true" stored="false"/>
+  <field name="url" type="string" omitNorms="true" indexed="true" stored="true"/>
+  <field name="urls" type="text" multiValued="true" indexed="true" stored="false"/>
+  <field name="validated_data_dict" type="string" indexed="false" stored="true"/>
+  <field name="version" type="string" indexed="true" stored="true"/>
+  <field name="views_recent" type="int" indexed="true" stored="false"/>
+  <field name="views_total" type="int" indexed="true" stored="false"/>
+  <dynamicField name="res_extras_*" type="text" multiValued="true" indexed="true" stored="true"/>
+  <dynamicField name="extras_*" type="text" multiValued="false" indexed="true" stored="true"/>
+  <dynamicField name="vocab_*" type="string" multiValued="true" indexed="true" stored="true"/>
+  <dynamicField name="*_date" type="date" multiValued="false" indexed="true" stored="true"/>
+  <dynamicField name="*" type="string" indexed="true" stored="false"/>
+  <copyField source="author" dest="text"/>
+  <copyField source="ckan_url" dest="urls"/>
+  <copyField source="download_url" dest="urls"/>
+  <copyField source="groups" dest="text"/>
+  <copyField source="license" dest="text"/>
+  <copyField source="maintainer" dest="text"/>
+  <copyField source="name" dest="text"/>
+  <copyField source="notes" dest="text"/>
+  <copyField source="organization" dest="text"/>
+  <copyField source="res_description" dest="text"/>
+  <copyField source="res_name" dest="text"/>
+  <copyField source="res_url" dest="urls"/>
+  <copyField source="tags" dest="text"/>
+  <copyField source="text" dest="text"/>
+  <copyField source="title" dest="text"/>
+  <copyField source="url" dest="urls"/>
+  <copyField source="urls" dest="text"/>
+  <copyField source="extras_*" dest="text"/>
+  <copyField source="res_extras_*" dest="text"/>
+  <copyField source="vocab_*" dest="text"/>
+</schema>
